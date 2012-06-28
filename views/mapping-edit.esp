@@ -1,0 +1,27 @@
+<%@ layout "" %>
+
+<h1>VLAN Mapping <%= param("id") ? param("name") : "Create" %></h1>
+
+<%^start
+    EdiGrid *ports = readTable("port");
+    EdiGrid *vlans = readTable("vlan");
+
+    form(0, "{ remote: true, apply: 'div.content' }" ); 
+
+%>
+    <!-- MOB - need control for this pattern -->
+    <table border="0">
+        <!-- MOB - choices must be JSON list -->
+        <tr><td>Port</td><td><% dropdown("portId", ports, 0); %></td></tr>
+        <tr><td>VLAN</td><td><% dropdown("vlanId", vlans, 0); %></td></tr>
+        <tr><td>Tagged</td><td><% checkbox("tagged", "Tagged", 0); %></td></tr>
+    </table>
+    <% 
+        button("commit", "OK", 0);
+        if (param("id")) {
+            buttonLink("Delete", "@destroy", "{method: 'DELETE', apply: 'div.content'}");
+        } else {
+            buttonLink("Cancel", "@list", "{apply: 'div.content'}");
+        }
+    %>
+<% endform(); %>

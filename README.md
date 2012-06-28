@@ -1,4 +1,23 @@
-layer2
-======
+Embedthis Layer2 GUI
+===
 
-Layer2 GUI
+Licensing
+---
+
+This software is licensed under the Embedthish Commercial Software License.  See LICENSE.md for details.
+
+### To build:
+
+To build, you will need to install Ejscript and Built It (bit). See:
+    https://github.com/embedthis/ejs-2
+    https://github.com/embedthis/bit
+
+<pre>
+    bit
+</pre>
+
+### Copyright
+
+Copyright (c) 2003-2012 Embedthis Software, LLC. All Rights Reserved.
+Embedthis is a trademark of Embedthis Software, LLC. Other brands and 
+their products are trademarks of their respective holders.

@@ -1,0 +1,50 @@
+<%@ layout "content.esp" %>
+
+    <% tabs(makeRec("{ \
+            'Details':     'pane-1', \
+            'Mappings':    'pane-2', \
+        }"), "{toggle: true}");
+    %>
+
+    <div id="pane-1" class="-esp-pane-visible">
+        <h4>Port @#name</h4>
+        <% form(0, "{ remote: true, apply: 'div.content' }"); %>
+            <table border="0">
+                <tr><td>Name</td><td><% text("name", 0); %></td></tr>
+                <tr><td>Status</td><td>@#status</td></tr>
+
+                <tr><td>Admin Mode</td><td><% radio("adminMode", "{'Up':'Up', 'Down':'Down'}", 0); %></td></tr>
+                <tr><td>State</td><td><% radio("state", "{'Enabled': 'Enabled', 'Disabled':'Disabled'}", 0); %></td></tr>
+
+                <tr><td>Auto Negotiate</td><td><% checkbox("autoNegotiate", "Enabled", 0); %></td></tr>
+                <tr><td>Duplex</td><td><% radio("duplex", "{'Full': 'Full', 'Half':'Half'}", 0); %></td></tr>
+                <tr><td>Flow Control</td><td><% checkbox("flowControl", "Enabled", 0); %></td></tr>
+                <tr><td>Jumbo</td><td><% checkbox("jumbo", "Enabled", 0); %></td></tr>
+                <tr><td>PVID</td><td>@#pvid</td></tr>
+                <tr><td>Speed</td><td><% dropdown("speed", makeGrid("[{id: 0, speed: 100}, {id: 1, speed: 1000}, {id: 2, speed: 10000}, {id: 3, speed: 40000}]"), 0); %></td></tr>
+                <tr><td>Type</td><td>@#type</td></tr>
+            </table>
+            <% 
+                button("commit", "OK", 0);
+                buttonLink("Cancel", 0, "{remote: '@index', apply: 'div.content'}");
+            %>
+        <% endform(); %>
+    </div>
+
+    <div id="pane-2" class="-esp-pane-hidden">
+        <h4>Port Mappings for @#name</h4>
+        <% {
+            EdiGrid *grid = ediReadWhere(getDatabase(), "mapping", "portId", "==", getField("id"));
+            //  MOB - need to join mapping.vlanId with the vlan name
+            table(grid, "{ \
+                columns: { \
+                    'vlan.name':      { header: 'VLAN' }, \
+                    'mapping.name':   { header: 'Mapping' }, \
+                    'mapping.tagged': { header: 'Tagged' }, \
+                }, \
+                remote: '/mapping/edit',  \
+                apply: 'div.content'  \
+            }");
+        } %>
+        <% buttonLink("New Port Mapping", 0, "{ remote: '/mapping/init', apply: 'div.content' }"); %>
+    </div>

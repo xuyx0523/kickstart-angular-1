@@ -1,0 +1,6 @@
+<h1>Administration</h1>
+
+<ul>
+    <li><% label("Browser", "@Browser/"); %></li>
+    <li><% label("Users", "@User/"); %></li>
+</ul>

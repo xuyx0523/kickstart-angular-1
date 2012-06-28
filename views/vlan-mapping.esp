@@ -1,0 +1,14 @@
+<%@ layout "content.esp" %>
+
+<h1>VLAN List</h1>
+<% 
+    table(0, "{ \
+        columns: { \
+            id: {}, \
+            name: {}, \
+        }, \
+        remote: '@vlan/edit', \
+        apply: 'div.content', \
+    }");
+%>
+<% buttonLink("New VLAN", 0, "{remote: '@vlan/init', apply: 'div.content'}"); %>

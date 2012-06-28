@@ -1,0 +1,39 @@
+<%@ layout "content.esp" %>
+<% script("static/js/flot/jquery.flot.js", 0); %>
+
+<script type="text/javascript">
+    $(function(){
+        var data = [];
+        var period = 500;
+        function fetch() {
+            var prior = (data.length > 0) ? data[data.length - 1][1] : 0;
+            $.ajax({
+                data: { prior: prior},
+                url: "/Stats/data",
+                success: function(item) {
+                    if (data.length > 50) {
+                        data.shift();
+                    }
+                    data.push([data.length, item])
+                    for (i = 0; i < data.length; i++) {
+                        data[i][0] = i;
+                    }
+                    var where = $("#traffic-1");
+                    if (where) {
+                        $.plot(where, [data]);
+                        setTimeout(fetch, period);
+                    }
+                }
+            });
+        }
+        fetch();
+    });
+</script>
+
+<div class="tabbed-dialog">
+    <% tabs(makeRec("{'Packet Traffic': 'pane-1'}"), "{toggle: true}"); %>
+</div>
+
+<div id="pane-1">
+    <div id="traffic-1" class="plot" style="width: 600px; height: 300px; position: relative;"></div>
+</div>

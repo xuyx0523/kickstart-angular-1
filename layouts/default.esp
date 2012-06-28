@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <% securityToken(); %>
+    <% icon("/static/images/favicon.ico", 0); %>
+    <% stylesheet(0, 0); %>
+    <% stylesheet("/static/layer2.css", 0); %>
+    <% stylesheet("/static/js/treeview.css", 0); %>
+    <% script(0, "{minified: false}"); %>
+    <% script("/static/js/jquery.treeview.js", "{minified: false}"); %>
+
+    <!-- MOB - should be moved to a js file -->
+    <script type="text/javascript">
+        //  $(function()
+        $(document).ready(function(){
+            $("#tree").treeview({
+                url: "/navigation/",
+                persist: "cookie"
+            });
+            $('span[data-url]').live('click', function(e) {
+                //MOB id not used now
+                var parent = $(this).parent();
+                var url = "/" + $(this).attr("data-url");
+                $('div.content').load(url);
+                return false;
+            });
+        });
+    </script>
+    <title>@@title</title>
+</head>
+
+<body>
+    <div class="top">
+        <div class="logo"><% label("", "{data-click: '~'}"); %></div>
+        <% flash("all", NULL); %>
+        <div class="menu">
+            <%  char *logop;
+
+                logop = "login"; /* authorized ? "logout" : "login"; */
+                tabs(makeRec(sfmt("{ \
+                    Manage: '@Manage/', \
+                    Admin:  '@Admin/', \
+                    %s: '@User/%s', \
+                }", spascal(logop), logop)), 0);
+            %>
+        </div>
+    </div>
+    <div class="navigation">
+        <ul id="tree"></ul>
+    </div>
+    <div class="main">
+        <div class="content">
+            <%@ content %>
+        </div>
+    </div>
+    <!--
+        <% alert(0, "{ style: 'alert', refresh: '/alert' }"); %>
+    -->
+</body>
+</html>

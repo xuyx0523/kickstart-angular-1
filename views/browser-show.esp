@@ -1,0 +1,18 @@
+<h1>Database Browser</h1>
+
+<% label("Table List", "@index"); %>
+
+<% {
+    Edi     *edi;
+    MprList *tables;
+    cchar   *tableName;
+
+    edi = getDatabase();
+    tables = ediGetTables(edi);
+    tableName = mprGetItem(tables, stoi(param("id")));
+    table(ediReadWhere(edi, tableName, "name", "==", tableName), "{\
+        click: 'cell', \
+        width: '70%', \
+        title: tableName, \
+    }"); 
+} %>

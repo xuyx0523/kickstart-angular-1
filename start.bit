@@ -1,0 +1,20 @@
+/*
+    start.bit -- General tasks
+ */
+
+Bit.load({
+    targets: {
+        check: {
+            action: "run('ejs utils/Daily.es --verbose')",
+        },
+        reset: {
+            action: "
+                Path('db/switch.sdb').remove()
+                run('mvc migrate')
+            ",
+        },
+        run: {
+            action: "run('ejs --log stdout:3 start.es')",
+        },
+    },
+})

@@ -1,0 +1,2 @@
+<%@ layout "default.esp" %>
+<h1>Welcome to Layer<sup>2</sup></h1>

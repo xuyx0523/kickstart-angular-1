@@ -1,0 +1,97 @@
+{
+    '_EspMigrations': {
+        hints: {
+            ncols: 2
+        },
+        schema: {
+            'id': { type: 'int', autoinc: 'true', index: 'true', key: 'true' },
+            'version': { type: 'string' },
+        },
+        data: [
+            [ '1', '201004121637120', ],
+            [ '2', '201004121637121', ],
+            [ '3', '201004121637222', ],
+            [ '4', '201004121637323', ],
+        ],
+    },
+    'port': {
+        hints: {
+            ncols: 12
+        },
+        schema: {
+            'id': { type: 'int', autoinc: 'true', index: 'true', key: 'true' },
+            'adminMode': { type: 'string' },
+            'autoNegotiate': { type: 'string' },
+            'duplex': { type: 'string' },
+            'flowControl': { type: 'string' },
+            'jumbo': { type: 'string' },
+            'name': { type: 'string' },
+            'status': { type: 'string' },
+            'pvid': { type: 'int' },
+            'speed': { type: 'int' },
+            'state': { type: 'string' },
+            'type': { type: 'string' },
+        },
+        data: [
+            [ '1', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge00', 'Down', '1', '1000', 'Enabled', 'Physical', ],
+            [ '2', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge01', 'Down', '1', '1000', 'Enabled', 'Physical', ],
+            [ '3', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge02', 'Down', '1', '1000', 'Enabled', 'Physical', ],
+            [ '4', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge03', 'Down', '1', '1000', 'Enabled', 'Physical', ],
+            [ '5', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge04', 'Down', '1', '1000', 'Enabled', 'Physical', ],
+            [ '6', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge05', 'Down', '1', '1000', 'Enabled', 'Physical', ],
+            [ '7', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge06', 'Down', '1', '1000', 'Enabled', 'Physical', ],
+            [ '8', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge07', 'Down', '1', '1000', 'Enabled', 'Physical', ],
+            [ '9', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge08', 'Down', '1', '1000', 'Enabled', 'Physical', ],
+            [ '10', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge09', 'Down', '1', '1000', 'Enabled', 'Physical', ],
+            [ '11', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge10', 'Down', '1', '1000', 'Enabled', 'Physical', ],
+            [ '12', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge11', 'Down', '1', '1000', 'Enabled', 'Physical', ],
+            [ '13', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge12', 'Down', '1', '1000', 'Enabled', 'Physical', ],
+            [ '14', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge13', 'Down', '1', '1000', 'Enabled', 'Physical', ],
+            [ '15', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge14', 'Down', '1', '1000', 'Enabled', 'Physical', ],
+            [ '16', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge15', 'Down', '1', '1000', 'Enabled', 'Physical', ],
+        ],
+    },
+    'user': {
+        hints: {
+            ncols: 3
+        },
+        schema: {
+            'name': { type: 'string' },
+            'password': { type: 'string' },
+            'permissions': { type: 'int' },
+        },
+        data: [
+            [ 'admin', '', '0', ],
+        ],
+    },
+    'vlan': {
+        hints: {
+            ncols: 1
+        },
+        schema: {
+            'name': { type: 'string' },
+        },
+        data: [
+            [ 'vlan-00', ],
+            [ 'vlan-01', ],
+            [ 'vlan-02', ],
+            [ 'vlan-03', ],
+        ],
+    },
+    'mapping': {
+        hints: {
+            ncols: 3
+        },
+        schema: {
+            'portId': { type: 'int' },
+            'tagged': { type: 'string' },
+            'vlanId': { type: 'int' },
+        },
+        data: [
+            [ '0', 'untagged', '1', ],
+            [ '1', 'untagged', '1', ],
+            [ '2', 'untagged', '1', ],
+            [ '3', 'untagged', '1', ],
+        ],
+    },
+}
