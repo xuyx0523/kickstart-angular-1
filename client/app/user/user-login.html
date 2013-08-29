@@ -1,0 +1,13 @@
+<form>
+    <fieldset>
+        <legend>User Login</legend>
+        <!-- MOB <form-error> directive -->
+        <div class="form-error ng-cloak" ng-show="error" ng-cloak>
+            <h2>Invalid login name or password.</h2>
+            <p>Please retry.</p>
+        </div>
+            <label>User Name</label> <input type='text' ng-model='user.username' tabindex='1'></input>
+            <label>Password</label> <input id='password' type='password' ng-model='user.password' tabindex='2'/></input>
+    </fieldset>
+    <button class="btn btn-primary" ng-click='login()'>OK</button>
+</form>

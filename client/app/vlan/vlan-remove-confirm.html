@@ -1,0 +1,13 @@
+<div class="modal-header">
+	<h3>Are you sure?
+		<i class="icon-remove-circle pull-right" ng-click="closeConfirm(0)"></i>
+	</h3>
+</div>
+<div class="modal-body">
+	<p><i>Deletions are final.</i></p>
+	<p>Once a VLAN is deleted, all port membership will be lost.</p>
+</div>
+<div class="modal-footer">
+	<button ng-click="closeConfirm(1)" class="btn btn-primary" >Delete VLAN</button>
+	<button ng-click="closeConfirm(0)" class="btn" >Cancel</button>
+</div>

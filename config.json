@@ -1,0 +1,36 @@
+{
+    mode: "debug",
+    modes: {
+        debug: {
+            map: null,
+            showErrors: true,
+            update: true,
+            keepSource: true,
+            username: ""
+        },
+        release: {
+            showErrors: false,
+            update: false,
+            keepSource: false,
+            username: ""
+        }
+    },
+    settings: {
+        "components": [
+            "server",
+            "angular"
+        ],
+        map: "compressed",
+        redirect: "secure",
+        sendJson: true,
+        timeouts: {
+            session: 1800
+        },
+        xsrfToken: true
+    }
+    server: {
+        authStore: "app",
+        database: "mdb://layer2.mdb"
+    },
+}
+

@@ -11,3 +11,5 @@
 *.la
 *.a
 cache/*
+db/layer2.bak
+projects/*sublime*

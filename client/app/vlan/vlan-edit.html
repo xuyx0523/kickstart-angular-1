@@ -1,0 +1,33 @@
+<div ng-init="currentPane='Details'">
+    <nav>
+        <ul class="nav nav-tabs">
+            <li ng-repeat="pane in ['Details', 'Ports']"  ng-class="{active: currentPane == pane}">
+                <a ng-click="selectPane(pane)">{{pane}}</a>
+            </li>
+        </ul>
+    </nav>
+
+    <form name="vlanForm" class="form-horizontal" ng-controller='VlanControl'>
+        <div class="form-error ng-cloak" ng-show="fieldErrors">
+            <h2>The Vlan has errors that prevent it being saved.</h2>
+            <p>There were problems with the following fields:</p>
+            <ul ng-repeat="msg in fieldErrors">
+                <li>{{msg}}</li>
+            </ul>
+        </div>
+
+        <div class="control-group">
+            <div class="control-label" for="inputName">Name</div>
+            <div class="controls">
+                <div class="input-prepend">
+                    <span class="add-on">vlan</span>
+                    <input type='text' class="input-mini" ng-model='vlan.num' ng-class='{"field-error": fieldErrors.title}' 
+                        placeholder="NN">
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary" ng-click='save()'>Save</button>
+        <button class="btn" ng-click='Esp.goto("/service/vlan/list")'>Cancel</button>
+        <button class="btn" ng-show="action=='Edit'" ng-click='remove({{vlan.id}})'>Delete</button>
+    </form>
+</div>

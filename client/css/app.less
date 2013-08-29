@@ -1,0 +1,236 @@
+/*
+    app.less - Layer2 stylesheet
+ */
+
+body {
+    font-family: @font-family;
+    font-size: @font-size;
+    color: @content-color;
+    background-color: @background-color;
+}
+
+_body > _header {
+    height: 55px;
+    _background-color: #880000;
+    _background-repeat: no-repeat;
+    _background-image: url("../assets/banner.png");
+    _background-position: top left;
+    .logo {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        font-weight: bold;
+    }
+    h1 {
+        position: absolute;
+        margin-left: 20px;
+    }
+}
+
+_body > header > nav {
+    position: absolute;
+    top: 32px;
+    right: 60px;
+    margin-left: 20px;
+}
+
+_body > nav {
+    position: absolute;
+    width: 200px;
+    height: 1000px;
+    padding: 10px;
+    background-image: url("../assets/navigation.png");
+    background-repeat: repeat-y;
+    text-decoration: none;                                                                                 
+    font-size: 90%;  
+}
+
+_main {
+    _margin: 0 10px 10px 220px;
+    margin: 0;
+    color: @content-color;
+    ol li {
+        margin: 20px;
+    }
+}
+
+_main section aside {
+    float: right;
+    _margin: 20px 40px;
+    margin: 0px;
+    line-height: 140%;
+    &:empty {
+        display: none;
+    }
+}
+
+_section {
+    padding-bottom: 10px;
+    clear: both;
+}
+
+_article {
+    float: left;
+    width: 70%;
+}
+
+hr {
+    width: 100%;
+    color: @gray-light;
+}
+
+.shadow {
+    .drop-shadow();
+}
+
+[ng-click] {
+    cursor: pointer;
+}
+
+.collapse {
+    :empty {
+        display: none;
+    }
+}
+
+.form-error {
+    width: 500px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    text-indent: 10px;
+    border: 2px solid @error-color;
+    .rounded(6px);
+    .drop-shadow();
+    h2 {
+        margin: 0 0 10px 0;
+        font-size: 12pt;
+        color: white;
+        background-color: @error-color;
+    }
+    ul {
+        margin-bottom: 0;
+    }
+}
+
+.field-error {
+    border: 2px solid @error-color !important;
+}
+
+//  MOB - simplify
+.feedback {
+    position: absolute;
+    left: 50%;
+    width: 500px;
+    height: 36px;
+    margin: 0;
+    margin-left: -250px;
+    padding: 3px;
+    font-size: 110%;
+    .rounded(7px);
+    .border-radius(0, 7px, 7px, 0);
+    .drop-shadow();
+    color: white;
+    text-align: center;
+    &:empty {
+        display: none;
+    }
+    transition-property: color, top, opacity;
+    transition-duration: 5s, 0.25s, 1s;
+    transition-timing-function: ease-out, ease-out, ease-out;
+    transition-delay: 0.0s, 0.0s, 0.25s;
+    /* Final resting state feedback */
+    opacity: 0.6;
+    top: -100px;
+}
+
+.feedback-error {
+    .feedback();
+    transition-property: none, none, none;
+    top: 0;
+    .gradient(@feedback-error-background, lighten(@feedback-error-background, 10%), darken(@feedback-error-background, 10%));
+    font-weight: bold;
+}
+
+.feedback-inform {
+    .feedback();
+    .gradient(@feedback-inform-background, lighten(@feedback-inform-background, 10%), darken(@feedback-inform-background, 10%));
+}
+
+.feedback-warning {
+    .feedback();
+    transition: none;
+    top: 0;
+    .gradient(@feedback-warning-background, lighten(@feedback-warning-background, 10%), darken(@feedback-warning-background, 10%));
+}
+
+.feedback-show {
+    opacity: 1.0;
+    top: 0;
+}
+
+_.wrapeft {
+    float: left;
+    margin: 0 30px 12px 0;
+}
+
+_.wrapight {
+    float: right;
+    margin: 0 0 12px 30px;
+}
+
+_a {
+    color: @link-color;
+    text-decoration: none;
+    &:hover {
+        color: @link-hover-color;
+    }
+}
+
+_pre {
+    padding: 10px 15px 10px 15px;
+    margin: 10px 0 20px 0;
+    font-size: 110%;
+    line-height: 140%;
+    color: white;
+    background-color: @pre-background;
+    .drop-shadow();
+}
+
+_table {
+    margin-bottom: 15px;
+    border: 1px solid @border-color;
+    border-collapse: collapse;
+    border-spacing: 0;
+    .drop-shadow();
+    th {
+        padding: 6px 10px 6px 6px;
+        font-weight: bold;
+        color: @table-header-color;
+        text-align: left;
+        .gradient(@table-header-background, from(rgba(90,80,210,.75)), color-stop(1, #cff));
+        border: 1px solid @border-color;
+    }
+    td {
+        padding: 4px 8px 4px 8px;
+        border: 1px solid @border-color;
+        border-collapse: collapse;
+        border-spacing: 0;
+        a {
+            text-decoration: none;
+        }
+    }
+}
+
+_form table {
+    padding: 10px;
+    border: 1px solid @border-color;
+    border-collapse: separate;
+    td {
+        padding: 2px;
+        border-style: none;
+    }
+}
+
+td.centered {
+    text-align: center;
+}
