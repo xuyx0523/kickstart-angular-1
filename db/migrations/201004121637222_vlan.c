@@ -1,7 +1,7 @@
 /*
     vlan
  */
-#include "esp-app.h"
+#include "esp.h"
 
 static int forward(Edi *db)
 {
@@ -11,6 +11,7 @@ static int forward(Edi *db)
     rc = 0;
 
     rc += ediAddTable(db, "vlan");
+    rc += ediAddColumn(db, "vlan", "id", EDI_TYPE_INT, EDI_AUTO_INC | EDI_INDEX | EDI_KEY);
     rc += ediAddColumn(db, "vlan", "name", EDI_TYPE_STRING, 0);
     if (rc < 0) {
         return rc;
@@ -19,7 +20,7 @@ static int forward(Edi *db)
         return MPR_ERR_CANT_CREATE;
     }
     for (i = 0; i < 4; i++) {
-        if (!ediSetField(rec, "name", sfmt("vlan-%02d", i))) {
+        if (!ediSetField(rec, "name", sfmt("vlan%02d", i))) {
             mprError("Can't update field for vlan table");
             rc = MPR_ERR_CANT_WRITE;
             break;

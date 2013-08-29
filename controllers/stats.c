@@ -2,7 +2,7 @@
     Stats
  */
 
-#include "esp-app.h"
+#include "esp.h"
 
 static void data() {
     double     prior, result;
@@ -16,9 +16,11 @@ static void data() {
     render("%d", (int) result);
 }
 
+static void traffic() {}
 
-ESP_EXPORT int esp_controller_stats(HttpRoute *route, MprModule *module) 
+ESP_EXPORT int esp_module_stats(HttpRoute *route, MprModule *module) 
 {
     espDefineAction(route, "stats-data", data);
+    espDefineAction(route, "stats-cmd-traffic", traffic);
     return 0;
 }

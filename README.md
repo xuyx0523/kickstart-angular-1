@@ -1,4 +1,4 @@
-Embedthis Layer2 GUI
+Embedthis Layer2 Management Application
 ===
 
 Licensing
@@ -8,8 +8,7 @@ This software is licensed under the Embedthish Commercial Software License.  See
 
 ### To build:
 
-To build, you will need to install Ejscript and Built It (bit). See:
-    https://github.com/embedthis/ejs-2
+To build, you will need to install Bit). See:
     https://github.com/embedthis/bit
 
 <pre>
@@ -18,6 +17,6 @@ To build, you will need to install Ejscript and Built It (bit). See:
 
 ### Copyright
 
-Copyright (c) 2003-2012 Embedthis Software, LLC. All Rights Reserved.
+Copyright (c) 2003-2013 Embedthis Software, LLC. All Rights Reserved.
 Embedthis is a trademark of Embedthis Software, LLC. Other brands and 
 their products are trademarks of their respective holders.

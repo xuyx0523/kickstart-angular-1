@@ -16,82 +16,82 @@
     },
     'port': {
         hints: {
-            ncols: 12
+            ncols: 9
         },
         schema: {
             'id': { type: 'int', autoinc: 'true', index: 'true', key: 'true' },
-            'adminMode': { type: 'string' },
-            'autoNegotiate': { type: 'string' },
+            'mode': { type: 'string' },
+            'negotiate': { type: 'string' },
             'duplex': { type: 'string' },
             'flowControl': { type: 'string' },
             'jumbo': { type: 'string' },
             'name': { type: 'string' },
-            'status': { type: 'string' },
-            'pvid': { type: 'int' },
             'speed': { type: 'int' },
-            'state': { type: 'string' },
-            'type': { type: 'string' },
+            'status': { type: 'string' },
         },
         data: [
-            [ '1', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge00', 'Down', '1', '1000', 'Enabled', 'Physical', ],
-            [ '2', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge01', 'Down', '1', '1000', 'Enabled', 'Physical', ],
-            [ '3', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge02', 'Down', '1', '1000', 'Enabled', 'Physical', ],
-            [ '4', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge03', 'Down', '1', '1000', 'Enabled', 'Physical', ],
-            [ '5', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge04', 'Down', '1', '1000', 'Enabled', 'Physical', ],
-            [ '6', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge05', 'Down', '1', '1000', 'Enabled', 'Physical', ],
-            [ '7', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge06', 'Down', '1', '1000', 'Enabled', 'Physical', ],
-            [ '8', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge07', 'Down', '1', '1000', 'Enabled', 'Physical', ],
-            [ '9', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge08', 'Down', '1', '1000', 'Enabled', 'Physical', ],
-            [ '10', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge09', 'Down', '1', '1000', 'Enabled', 'Physical', ],
-            [ '11', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge10', 'Down', '1', '1000', 'Enabled', 'Physical', ],
-            [ '12', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge11', 'Down', '1', '1000', 'Enabled', 'Physical', ],
-            [ '13', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge12', 'Down', '1', '1000', 'Enabled', 'Physical', ],
-            [ '14', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge13', 'Down', '1', '1000', 'Enabled', 'Physical', ],
-            [ '15', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge14', 'Down', '1', '1000', 'Enabled', 'Physical', ],
-            [ '16', 'Up', 'Enabled', 'Full', 'Enabled', 'Disabled', 'ge15', 'Down', '1', '1000', 'Enabled', 'Physical', ],
+            [ '1', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty00', '1000', 'Normal', ],
+            [ '2', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty01', '1000', 'Normal', ],
+            [ '3', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty02', '1000', 'Normal', ],
+            [ '4', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty03', '1000', 'Normal', ],
+            [ '5', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty04', '1000', 'Normal', ],
+            [ '6', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty05', '1000', 'Normal', ],
+            [ '7', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty06', '1000', 'Normal', ],
+            [ '8', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty07', '1000', 'Normal', ],
+            [ '9', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty08', '1000', 'Normal', ],
+            [ '10', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty09', '1000', 'Normal', ],
+            [ '11', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty10', '1000', 'Normal', ],
+            [ '12', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty11', '1000', 'Normal', ],
+            [ '13', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty12', '1000', 'Normal', ],
+            [ '14', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty13', '1000', 'Normal', ],
+            [ '15', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty14', '1000', 'Normal', ],
+            [ '16', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty15', '1000', 'Normal', ],
         ],
     },
     'user': {
         hints: {
-            ncols: 3
+            ncols: 5
         },
         schema: {
-            'name': { type: 'string' },
+            'id': { type: 'int', autoinc: 'true', index: 'true', key: 'true' },
+            'username': { type: 'string' },
             'password': { type: 'string' },
-            'permissions': { type: 'int' },
+            'email': { type: 'string' },
+            'roles': { type: 'string' },
         },
         data: [
-            [ 'admin', '', '0', ],
+            [ '1', 'admin', 'BF1:00128:MWtf1SkQxG3d6o28:8+5BbUjXPfUjTrKs9ZptKSCmen1vHAHf', 'dev@embedthis.com', 'edit, view', ],
+            [ '2', 'guest', 'BF1:00016:wpy7CXyB7tiuwaON:PSwQNlLRvITVKH3HXoz/ICCqQbWNawcd', 'dev@embedthis.com', 'view', ],
         ],
     },
     'vlan': {
         hints: {
-            ncols: 1
+            ncols: 2
         },
         schema: {
+            'id': { type: 'int', autoinc: 'true', index: 'true', key: 'true' },
             'name': { type: 'string' },
         },
         data: [
-            [ 'vlan-00', ],
-            [ 'vlan-01', ],
-            [ 'vlan-02', ],
-            [ 'vlan-03', ],
+            [ '1', 'vlan00', ],
+            [ '2', 'vlan01', ],
+            [ '3', 'vlan02', ],
+            [ '4', 'vlan03', ],
         ],
     },
     'mapping': {
         hints: {
-            ncols: 3
+            ncols: 4
         },
         schema: {
-            'portId': { type: 'int' },
+            'id': { type: 'int', autoinc: 'true', index: 'true', key: 'true' },
+            'portId': { type: 'int', foreign: 'true' },
+            'vlanId': { type: 'int', foreign: 'true' },
             'tagged': { type: 'string' },
-            'vlanId': { type: 'int' },
         },
         data: [
-            [ '0', 'untagged', '1', ],
-            [ '1', 'untagged', '1', ],
-            [ '2', 'untagged', '1', ],
-            [ '3', 'untagged', '1', ],
+            [ '1', '1', '1', 'untagged', ],
+            [ '1', '2', '1', 'untagged', ],
         ],
     },
 }

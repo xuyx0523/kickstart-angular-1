@@ -1,56 +1,48 @@
 /*
-    Mapping
+    mapping.c - Port to VLAN mappings
  */
-#include "esp-app.h"
+#include "esp.h"
 
-static void create() {
-    if (updateRec(createRec("mapping", params()))) {
-        inform("New mapping created");
-        setFlash("redraw", "true");
-        renderView("mapping-list");
-    } else {
-        renderView("mapping-edit");
+static void createMapping() {
+    Edi         *db;
+    EdiRec      *vlan;
+
+    db = getDatabase();
+    if ((vlan = ediReadOneWhere(db, "vlan", "name", "==", param("vlan"))) == 0) {
+        feedback("error", "Cannot find: %s", param("vlan"));
+        renderResult(0);
+        return;
     }
-}
-
-static void destroy() {
-    if (removeRec("mapping", param("id"))) {
-        inform("Mapping %s removed", param("id"));
+    //  MOB - addParam()
+    if (!param("tagged")) {
+        setParam("tagged", "untagged");
     }
-    setFlash("redraw", "true");
-    renderView("mapping-list");
+    setParam("vlanId", getField(vlan, "id")); 
+    renderResult(createRecFromParams("mapping"));
 }
 
-static void edit() {
-    //  MOB - uses params.id
-    readRec("mapping");
+static void getMapping() {
+    renderRec(readRec("mapping", param("id")));
 }
 
-static void init() {
-    createRec("mapping", 0);
-    renderView("mapping-edit");
+static void listMappings() {
+    renderGrid(readTable("mapping"));
 }
 
-static void update() {
-    if (updateFields("mapping", params())) {
-        inform("Mapping updated successfully.");
-        renderView("mapping-list");
-    } else {
-        /* Validation failed */
-        renderView("mapping-edit");
-    }
+static void removeMapping() {
+    renderResult(removeRec("mapping", param("id")));
 }
 
-ESP_EXPORT int esp_controller_mapping(HttpRoute *route, MprModule *module) 
+static void updateMapping() {
+    renderResult(updateRecFromParams("mapping"));
+}
+
+ESP_EXPORT int esp_module_mapping(HttpRoute *route, MprModule *module)
 {
-    espDefineAction(route, "mapping-create", create);
-    espDefineAction(route, "mapping-destroy", destroy);
-    espDefineAction(route, "mapping-edit", edit);
-    espDefineAction(route, "mapping-init", init);
-#if UNUSED
-    espDefineAction(route, "mapping-list", list);
-    espDefineAction(route, "mapping-show", show);
-#endif
-    espDefineAction(route, "mapping-update", update);
+    espDefineAction(route, "mapping-create", createMapping);
+    espDefineAction(route, "mapping-get", getMapping);
+    espDefineAction(route, "mapping-list", listMappings);
+    espDefineAction(route, "mapping-remove", removeMapping);
+    espDefineAction(route, "mapping-update", updateMapping);
     return 0;
 }

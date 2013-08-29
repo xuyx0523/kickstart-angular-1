@@ -1,36 +1,33 @@
 /*
     user
  */
-#include "esp-app.h"
+#include "esp.h"
 
-static int forward(Edi *db)
-{
+static int forward(Edi *db) {
     EdiRec  *rec;
-    int     rc;
+    cchar   *password;
+    
+    ediAddTable(db, "user");
+    ediAddColumn(db, "user", "id", EDI_TYPE_INT, EDI_AUTO_INC | EDI_INDEX | EDI_KEY);
+    ediAddColumn(db, "user", "username", EDI_TYPE_STRING, 0);
+    ediAddColumn(db, "user", "password", EDI_TYPE_STRING, 0);
+    ediAddColumn(db, "user", "email", EDI_TYPE_STRING, 0);
+    ediAddColumn(db, "user", "roles", EDI_TYPE_STRING, 0);
 
-    rc = 0;
+    /*
+        The mprMakePassword API uses Blowfish. This call requests 16 bytes of salt and iterates 128 rounds.
+        Use mprCheckPassword to check.
+     */
+    password = mprMakePassword("admin", 16, 128);
+    rec = ediCreateRec(db, "user");
+    ediSetFields(rec, ediMakeHash("{ username: 'admin', password: '%s', email: 'dev@embedthis.com', roles: 'edit, view' }", password));
+    ediUpdateRec(db, rec);
 
-    rc += ediAddTable(db, "user");
-    rc += ediAddColumn(db, "user", "name", EDI_TYPE_STRING, 0);
-    rc += ediAddColumn(db, "user", "password", EDI_TYPE_STRING, 0);
-    rc += ediAddColumn(db, "user", "permissions", EDI_TYPE_INT, 0);
-    if (rc < 0) {
-        return rc;
-    }
-    if ((rec = ediCreateRec(db, "user")) == 0) {
-        return MPR_ERR_CANT_CREATE;
-    }
-    if (!ediSetField(rec, "name", "admin") ||
-        !ediSetField(rec, "password", "") ||
-        !ediSetField(rec, "permissions", "0")) {
-        mprError("Can't update fields for user table");
-        rc = MPR_ERR_CANT_WRITE;
-    }
-    if (ediUpdateRec(db, rec) < 0) {
-        mprError("Can't update record for user table");
-        rc = MPR_ERR_CANT_WRITE;
-    }
-    return rc;
+    password = mprMakePassword("guest", 16, 16);
+    rec = ediCreateRec(db, "user");
+    ediSetFields(rec, ediMakeHash("{ username: 'guest', password: '%s', email: 'dev@embedthis.com', roles: 'view' }", password));
+    ediUpdateRec(db, rec);
+    return 0;
 }
 
 static int backward(Edi *db)

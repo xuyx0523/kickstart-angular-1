@@ -1,45 +1,52 @@
 /*
     port
  */
-#include "esp-app.h"
+#include "esp.h"
 
-static void edit() {
-    readRec("port");
+static void getPort() {
+    renderRec(readRec("port", param("id")));
 }
 
-static void update() {
-    if (updateFields("port", params())) {
-        inform("Port updated successfully.");
-        renderView("port-list");
-    } else {
-        /* Validation failed */
-        renderView("port-edit");
-    }
+static void getPortVlans() {
+    Edi         *db;
+    EdiGrid     *mappings, *vlans;
+
+    db = getDatabase();
+    mappings = ediReadWhere(db, "mapping", "portId", "==", param("id"));
+    vlans = ediReadTable(db, "vlan");
+    renderGrid(ediJoin(db, mappings, vlans, NULL));
+}
+
+static void listPorts() {
+    // setStatus(404);
+    renderGrid(readTable("port"));
+}
+
+static void updatePort() {
+    renderResult(updateRecFromParams("port"));
 }
 
 
-//  MOB - demo
-static void writeMoreData()
+ESP_EXPORT int esp_module_port(HttpRoute *route, MprModule *module)
 {
-    render("Now done\n");
-    finalize();
-}
+    Edi     *edi;
 
+    edi = getDatabase();
+    espDefineAction(route, "port-get", getPort);
+    espDefineAction(route, "port-list", listPorts);
+    espDefineAction(route, "port-update", updatePort);
+    espDefineAction(route, "port-vlans", getPortVlans);
 
-/* 
-    Commet style data
- */
-static void data() {
-    dontAutoFinalize();
-    render("Hello, pausing for 5 seconds ... ");
-    flush();
-    setTimeout(writeMoreData, 5 * MPR_TICKS_PER_SEC, 0);
-} 
-
-ESP_EXPORT int esp_controller_port(HttpRoute *route, MprModule *module)
-{
-    espDefineAction(route, "port-edit", edit);
-    espDefineAction(route, "port-update", update);
-    espDefineAction(route, "port-data", data);
+//  MOB - should booleans be 0, 1?
+    ediAddValidation(edi, "format", "port", "mode", "^(Online|Offline)$");
+    ediAddValidation(edi, "format", "port", "negotiate", "^(Enabled|Disabled)$");
+    ediAddValidation(edi, "format", "port", "duplex", "^(Half|Full)$");
+    ediAddValidation(edi, "format", "port", "flowControl", "^(Enabled|Disabled)$");
+    ediAddValidation(edi, "format", "port", "jumbo", "^(Enabled|Disabled)$");
+    ediAddValidation(edi, "format", "port", "name", "^tty\\d\\d$");
+    ediAddValidation(edi, "format", "port", "speed", "^(1000|10000|40000)$");
+#if UNUSED
+    ediAddValidation(edi, "format", "port", "status", "^(Normal|Offline)$");
+#endif
     return 0;
 }
