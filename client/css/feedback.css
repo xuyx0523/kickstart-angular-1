@@ -1,0 +1,72 @@
+/*
+//  MOB - simplify
+.feedback.ng-hide-remove {
+    position: absolute;
+    left: 50%;
+    width: 500px;
+    height: 36px;
+    margin: 0;
+    margin-left: -250px;
+    padding: 3px;
+    font-size: 110%;
+    .rounded(7px);
+    .border-radius(0, 7px, 7px, 0);
+    .drop-shadow();
+    color: white;
+    text-align: center;
+    &:empty {
+        display: none;
+    }
+    transition-property: color, top, opacity;
+    transition-duration: 5s, 0.25s, 1s;
+    transition-timing-function: ease-out, ease-out, ease-out;
+    transition-delay: 0.0s, 0.0s, 0.25s;
+    /* Final resting state feedback */
+    opacity: 0.6;
+    top: -100px;
+}
+
+.feedback.ng-hide-add {
+    animation: 0.5s hide;
+}
+
+@keyframes hide {
+  from { opacity:1; }
+  to { opacity:0; }
+}
+
+.feedback.ng-hide-remove {
+    animation: 0.5s show;
+}
+
+@keyframes show {
+  from { opacity:0; }
+  to { opacity:1; }
+    display:block!important;
+}
+
+.feedback-error {
+    .feedback();
+    transition-property: none, none, none;
+    top: 0;
+    .gradient(@feedback-error-background, lighten(@feedback-error-background, 10%), darken(@feedback-error-background, 10%));
+    font-weight: bold;
+}
+
+.feedback-inform {
+    .feedback();
+    .gradient(@feedback-inform-background, lighten(@feedback-inform-background, 10%), darken(@feedback-inform-background, 10%));
+}
+
+.feedback-warning {
+    .feedback();
+    transition: none;
+    top: 0;
+    .gradient(@feedback-warning-background, lighten(@feedback-warning-background, 10%), darken(@feedback-warning-background, 10%));
+}
+
+.feedback.ng-hide-remove.ng-hide-remove-active {
+    opacity: 1.0;
+    top: 0;
+}
+*/

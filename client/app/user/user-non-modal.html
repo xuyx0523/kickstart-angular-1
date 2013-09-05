@@ -1,0 +1,30 @@
+<form class="form-horizontal">
+    <legend>User Login</legend>
+    <!-- MOB <form-error> directive -->
+    <div class="form-error ng-cloak" ng-show="error" ng-cloak>
+        <h2 class="ng-cloak" ng-cloak>Invalid login name or password.</h2>
+        <p>Please retry.</p>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">User Name</label> 
+        <div class="col-md-10">
+            <input type='text' ng-model='user.username' tabindex='1' placeholder="Email">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Password</label> 
+        <div class="col-md-10">
+            <input id='password' type='password' ng-model='user.password' tabindex='2' placeholder="Password">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type='checkbox' tabindex='3'> Remember me
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button class="btn btn-primary" ng-click='login()' tabindex='4'>OK</button>
+        </div>
+    </div>
+</form>
