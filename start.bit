@@ -24,6 +24,7 @@ Bit.load({
             build: "
                 trace('Compile', 'client/css/all.css.min.gz')
                 rm('client/css/all.min.css.gz')
+                trace('Run', 'recess -compress -compile client/css/all.less')
                 let result = Cmd.run('recess -compress -compile client/css/all.less')
                 for each (f in Path('client/css').files('*.css')) {
                     result += f.readString()
@@ -52,6 +53,8 @@ Bit.load({
                 rm('client/lib/all.js.gz')
                 let list = [
                     'client/lib/angular.min.js',
+                    'client/lib/angular-animate.min.js',
+                    'client/lib/angular-route.min.js',
                     'client/lib/angular-resource.min.js',
                     'client/lib/angular-bootstrap.min.js',
                     'client/lib/ui-bootstrap-tpls.min.js',

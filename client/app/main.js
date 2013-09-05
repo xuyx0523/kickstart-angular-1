@@ -7,7 +7,7 @@
 /*
     Create the application module
  */
-var app = angular.module('Layer2', ['ngResource', 'ui.bootstrap']);
+var app = angular.module('Layer2', ['ngResource', 'ngRoute', 'ngAnimate', 'ui.bootstrap']);
 
 /*
     Configure the default route. Other routes may be defined in controllers.

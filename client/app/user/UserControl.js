@@ -4,7 +4,7 @@
  
 'use strict';
 
-app.controller('UserControl', function ($rootScope, $scope, $location, $timeout, User, SessionStore, Esp) {
+app.controller('UserControl', function ($dialog, $rootScope, $scope, $location, $timeout, User, SessionStore, Esp) {
 
     $scope.login = function() {
         User.login($scope.user, function(response, fn) {
@@ -20,6 +20,7 @@ app.controller('UserControl', function ($rootScope, $scope, $location, $timeout,
                     Esp.user.lastAccess = Date.now();
                     SessionStore.put('user', Esp.user);
                 }
+                $scope.closeLogin();
                 $location.path("/");
             }
             $rootScope.feedback = response.feedback;
@@ -28,6 +29,7 @@ app.controller('UserControl', function ($rootScope, $scope, $location, $timeout,
 
     $scope.logout = function() {
         if (Esp.user) {
+            //  MOB - should issue logout on server also
             Esp.user = null;
             SessionStore.remove('user');
             User.logout({}, function() {
@@ -36,6 +38,38 @@ app.controller('UserControl', function ($rootScope, $scope, $location, $timeout,
         } else {
             $location.path('/service/user/login');
         }
+    };
+
+    $scope.openLogin = function() {
+        /*
+        var opts = {
+            backdrop: true,
+            dialogClass: 'modal',
+            backdropClass: 'modal-backdrop',
+            transitionClass: 'fade',
+            triggerClass: 'in',
+            backdropFade: true,
+            dialogFade: true,
+            keyboard: true,
+            backdropClick: true,
+            templateUrl: "/app/user/user-login-dialog.html",
+            controller: UserLoginController
+        };
+*/
+        $scope.options = {
+            backdropFade: true,
+            dialogFade: true,
+            dialogClass: 'modal',
+            transitionClass: 'fade',
+            keyboard: true,
+            backdropClick: true,
+            controller: UserLoginController
+        };
+        $scope.shouldBeOpen = true;
+    };
+
+    $scope.closeLogin = function() {
+        $scope.shouldBeOpen = false;
     };
 
     /*
@@ -57,12 +91,22 @@ app.controller('UserControl', function ($rootScope, $scope, $location, $timeout,
 
 });
 
+function UserLoginController($scope, dialog) {
+    $scope.close = function(result) {
+        dialog.close(result);
+    };
+}
+
 /*
     User controller routes for login
  */
 app.config(function($routeProvider) {
     $routeProvider.when('/service/user/login/', {
         templateUrl: '/app/user/user-login.html',
+        controller: 'UserControl'
+    });
+    $routeProvider.when('/service/user/logout/', {
+        template: '<p ng-init="logout()">Hello</p>',
         controller: 'UserControl'
     });
 });

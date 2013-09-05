@@ -2,92 +2,111 @@
     app.less - Layer2 stylesheet
  */
 
-body {
-    font-family: @font-family;
-    font-size: @font-size;
-    color: @content-color;
-    background-color: @background-color;
+//  MOB - nested  
+
+xmain#home {
+    background: linear-gradient(20deg, #080f1f 30%, #2b4b5a 87%, #435e67 100%);
+    background-attachment: fixed;
+    background-color: #1c2533;
+    height: 400px;
 }
 
-_body > _header {
-    height: 55px;
-    _background-color: #880000;
-    _background-repeat: no-repeat;
-    _background-image: url("../assets/banner.png");
-    _background-position: top left;
-    .logo {
-        position: absolute;
-        top: 5px;
-        right: 10px;
-        font-weight: bold;
-    }
-    h1 {
-        position: absolute;
-        margin-left: 20px;
-    }
-}
 
-_body > header > nav {
-    position: absolute;
-    top: 32px;
-    right: 60px;
-    margin-left: 20px;
-}
-
-_body > nav {
-    position: absolute;
+.navbar-header {
     width: 200px;
-    height: 1000px;
-    padding: 10px;
-    background-image: url("../assets/navigation.png");
-    background-repeat: repeat-y;
-    text-decoration: none;                                                                                 
-    font-size: 90%;  
 }
 
-_main {
-    _margin: 0 10px 10px 220px;
-    margin: 0;
-    color: @content-color;
-    ol li {
-        margin: 20px;
+.navbar i, .navbar .glyphicon {
+    font-size: 14px;
+}
+
+.navbar .form-control {
+    //MOB var
+    background-color: #141414;
+    border-color: #141414;
+    width: 220px;
+}
+
+.navbar .form-control:focus {
+    background-color: #FFFFFF;
+    -webkit-transition: all .3s linear;
+    position: relative;
+}
+
+.navbar .glyphicon-search {
+    color: #777777;
+    position: relative;
+    top: 6px;
+    left: -28px;
+}
+
+.navbar li {
+    border-left: 1px solid #101417;
+}
+
+.navbar .dropdown li {
+    border: none;
+}
+
+
+.sidebar-nav {
+    background: #FF0000;
+    color: #888;
+    width: 140px;
+    .glyphicon, i {
+        font-size: 22px;
+        color: #888;
+    }
+    .menu-item {
+        font-size: 16px;
+        color: #888;
+        display: block;
     }
 }
 
-_main section aside {
-    float: right;
-    _margin: 20px 40px;
-    margin: 0px;
-    line-height: 140%;
-    &:empty {
-        display: none;
-    }
+.modal {
+    background-image: url('../assets/background.jpg');
 }
 
-_section {
-    padding-bottom: 10px;
-    clear: both;
+#login {
+    width: 400px;
 }
 
-_article {
-    float: left;
-    width: 70%;
+.login {
+    -background: rgba(128, 128, 128, 0.5);
 }
 
-hr {
+.login.modal-content {
+    padding: 20px;
+}
+
+.login .modal-header {
+    text-align: center;
+}
+
+.login .forgot-password {
+    text-align: right;
+}
+
+.login .remember-me {
+    font-size: @font-size-small;
+}
+
+_UNUSED_hr {
     width: 100%;
     color: @gray-light;
-}
-
-.shadow {
-    .drop-shadow();
 }
 
 [ng-click] {
     cursor: pointer;
 }
 
-.collapse {
+.shadow {
+    .drop-shadow();
+}
+
+
+TABLE_ONLY.collapse {
     :empty {
         display: none;
     }
@@ -116,9 +135,9 @@ hr {
     border: 2px solid @error-color !important;
 }
 
-//  MOB - simplify
 .feedback {
     position: absolute;
+    top: 0;
     left: 50%;
     width: 500px;
     height: 36px;
@@ -134,103 +153,37 @@ hr {
     &:empty {
         display: none;
     }
-    transition-property: color, top, opacity;
-    transition-duration: 5s, 0.25s, 1s;
-    transition-timing-function: ease-out, ease-out, ease-out;
-    transition-delay: 0.0s, 0.0s, 0.25s;
-    /* Final resting state feedback */
-    opacity: 0.6;
-    top: -100px;
 }
 
 .feedback-error {
     .feedback();
-    transition-property: none, none, none;
-    top: 0;
     .gradient(@feedback-error-background, lighten(@feedback-error-background, 10%), darken(@feedback-error-background, 10%));
     font-weight: bold;
+}
+
+.feedback-warning {
+    .feedback();
+    .gradient(@feedback-warning-background, lighten(@feedback-warning-background, 10%), darken(@feedback-warning-background, 10%));
 }
 
 .feedback-inform {
     .feedback();
     .gradient(@feedback-inform-background, lighten(@feedback-inform-background, 10%), darken(@feedback-inform-background, 10%));
+    opacity: 0;
+    top: -100px;
 }
 
-.feedback-warning {
-    .feedback();
-    transition: none;
-    top: 0;
-    .gradient(@feedback-warning-background, lighten(@feedback-warning-background, 10%), darken(@feedback-warning-background, 10%));
+.feedback-inform.ng-hide-remove {
+    -webkit-animation: feedback-temp ease-in 10s;
 }
 
-.feedback-show {
-    opacity: 1.0;
-    top: 0;
+@-webkit-keyframes feedback-temp {
+    0%   { opacity: 1.0; top:    0px; }
+    80%  { opacity: 1.0; top:    0px; }
+    90%  { opacity: 0.5; top:    0px; }
+    100% { opacity: 0.0; top: -100px; }
 }
 
-_.wrapeft {
-    float: left;
-    margin: 0 30px 12px 0;
-}
-
-_.wrapight {
-    float: right;
-    margin: 0 0 12px 30px;
-}
-
-_a {
-    color: @link-color;
-    text-decoration: none;
-    &:hover {
-        color: @link-hover-color;
-    }
-}
-
-_pre {
-    padding: 10px 15px 10px 15px;
-    margin: 10px 0 20px 0;
-    font-size: 110%;
-    line-height: 140%;
-    color: white;
-    background-color: @pre-background;
-    .drop-shadow();
-}
-
-_table {
-    margin-bottom: 15px;
-    border: 1px solid @border-color;
-    border-collapse: collapse;
-    border-spacing: 0;
-    .drop-shadow();
-    th {
-        padding: 6px 10px 6px 6px;
-        font-weight: bold;
-        color: @table-header-color;
-        text-align: left;
-        .gradient(@table-header-background, from(rgba(90,80,210,.75)), color-stop(1, #cff));
-        border: 1px solid @border-color;
-    }
-    td {
-        padding: 4px 8px 4px 8px;
-        border: 1px solid @border-color;
-        border-collapse: collapse;
-        border-spacing: 0;
-        a {
-            text-decoration: none;
-        }
-    }
-}
-
-_form table {
-    padding: 10px;
-    border: 1px solid @border-color;
-    border-collapse: separate;
-    td {
-        padding: 2px;
-        border-style: none;
-    }
-}
-
-td.centered {
+_UNUSED_td.centered {
     text-align: center;
 }

@@ -54,7 +54,6 @@ app.controller('PortControl', function ($rootScope, $scope, $location, $routePar
                 $scope.fieldErrors = response.fieldErrors;
                 $rootScope.feedback.error = $rootScope.feedback.error || "Cannot Save Port";
             }
-$rootScope.feedback = { error: "XXXXXX" };
         });
     };
 

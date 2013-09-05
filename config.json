@@ -2,13 +2,13 @@
     mode: "debug",
     modes: {
         debug: {
-            map: null,
             showErrors: true,
-            update: true,
             keepSource: true,
+            update: true,
             username: ""
         },
         release: {
+            map: "compressed",
             showErrors: false,
             update: false,
             keepSource: false,
@@ -20,7 +20,6 @@
             "server",
             "angular"
         ],
-        map: "compressed",
         redirect: "secure",
         sendJson: true,
         timeouts: {
