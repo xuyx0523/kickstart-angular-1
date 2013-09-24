@@ -8,7 +8,7 @@ static void createMapping() {
     EdiRec      *vlan;
 
     db = getDatabase();
-    if ((vlan = ediReadOneWhere(db, "vlan", "name", "==", param("vlan"))) == 0) {
+    if ((vlan = ediReadRecWhere(db, "vlan", "name", "==", param("vlan"))) == 0) {
         feedback("error", "Cannot find: %s", param("vlan"));
         renderResult(0);
         return;
@@ -37,7 +37,7 @@ static void updateMapping() {
     renderResult(updateRecFromParams("mapping"));
 }
 
-ESP_EXPORT int esp_module_mapping(HttpRoute *route, MprModule *module)
+ESP_EXPORT int esp_controlle_layer2_mapping(HttpRoute *route, MprModule *module)
 {
     espDefineAction(route, "mapping-create", createMapping);
     espDefineAction(route, "mapping-get", getMapping);

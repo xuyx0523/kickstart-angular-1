@@ -27,7 +27,7 @@ static void listTables() {
     renderString(mprGetBufStart(buf));
 }
 
-ESP_EXPORT int esp_module_table(HttpRoute *route, MprModule *module)
+ESP_EXPORT int esp_controller_layer2_table(HttpRoute *route, MprModule *module)
 {
     espDefineAction(route, "table-get", getTable);
     espDefineAction(route, "table-list", listTables);

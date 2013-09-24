@@ -12,6 +12,7 @@
             [ '2', '201004121637121', ],
             [ '3', '201004121637222', ],
             [ '4', '201004121637323', ],
+            [ '5', '201004121637888', ],
         ],
     },
     'port': {
@@ -30,7 +31,7 @@
             'status': { type: 'string' },
         },
         data: [
-            [ '1', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty00', '40000', 'Normal', ],
+            [ '1', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty00', '1000', 'Normal', ],
             [ '2', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty01', '1000', 'Normal', ],
             [ '3', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty02', '1000', 'Normal', ],
             [ '4', 'Online', 'Enabled', 'Full', 'Enabled', 'Disabled', 'tty03', '1000', 'Normal', ],
@@ -60,23 +61,26 @@
             'roles': { type: 'string' },
         },
         data: [
-            [ '1', 'admin', 'BF1:00128:MWtf1SkQxG3d6o28:8+5BbUjXPfUjTrKs9ZptKSCmen1vHAHf', 'dev@embedthis.com', 'edit, view', ],
-            [ '2', 'guest', 'BF1:00016:wpy7CXyB7tiuwaON:PSwQNlLRvITVKH3HXoz/ICCqQbWNawcd', 'dev@embedthis.com', 'view', ],
+            [ '1', 'admin', 'BF1:00128:26dPCQvenHqFxATS:AzzouPHS9TaxuOUc83DAuV/jeA5uawVv', 'dev@embedthis.com', 'edit, view', ],
+            [ '2', 'guest', 'BF1:00016:9M7uxWO4AhcBysJC:LwnP7age5cCYEzWmO1LQ3PVwKgLNgFes', 'dev@embedthis.com', 'view', ],
         ],
     },
     'vlan': {
         hints: {
-            ncols: 2
+            ncols: 5
         },
         schema: {
             'id': { type: 'int', autoinc: 'true', index: 'true', key: 'true' },
             'name': { type: 'string' },
+            'description': { type: 'string' },
+            'status': { type: 'string' },
+            'mode': { type: 'string' },
         },
         data: [
-            [ '1', 'vlan00', ],
-            [ '2', 'vlan01', ],
-            [ '3', 'vlan02', ],
-            [ '4', 'vlan03', ],
+            [ '1', 'vlan00', 'General VLAN-0', 'Normal', 'Online', ],
+            [ '2', 'vlan01', 'General VLAN-1', 'Normal', 'Online', ],
+            [ '3', 'vlan02', 'General VLAN-2', 'Normal', 'Online', ],
+            [ '4', 'vlan03', 'General VLAN-3', 'Normal', 'Online', ],
         ],
     },
     'mapping': {
@@ -91,7 +95,56 @@
         },
         data: [
             [ '1', '1', '1', 'untagged', ],
-            [ '1', '2', '1', 'untagged', ],
+            [ '2', '2', '1', 'untagged', ],
+            [ '3', '3', '1', 'untagged', ],
+            [ '4', '4', '1', 'untagged', ],
+        ],
+    },
+    'log': {
+        hints: {
+            ncols: 5
+        },
+        schema: {
+            'id': { type: 'int', autoinc: 'true', index: 'true', key: 'true' },
+            'date': { type: 'int' },
+            'type': { type: 'string' },
+            'title': { type: 'string' },
+            'message': { type: 'string' },
+        },
+        data: [
+            [ '1', '1378478334411', 'warning', 'Port limit exceeded', 'Port has exceeded configured transfer limit', ],
+            [ '2', '1378478334412', 'error', 'Port stuck', 'Port not operating anymore', ],
+            [ '3', '1378478334413', 'critical', 'Port failed', 'Port interface is not operational', ],
+            [ '4', '1378478334414', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '5', '1378478334415', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '6', '1378478334416', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '7', '1378478334417', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '8', '1378478334418', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '9', '1378478334419', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '10', '1378478334420', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '11', '1378478334421', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '12', '1378478334422', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '13', '1378478334423', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '14', '1378478334424', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '15', '1378478334425', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '16', '1378478334427', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '17', '1378478334428', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '18', '1378478334429', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '19', '1378478334430', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '20', '1378478334431', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '21', '1378478334433', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '22', '1378478334434', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '23', '1378478334435', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '24', '1378478334436', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '25', '1378478334438', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '26', '1378478334439', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '27', '1378478334440', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '28', '1378478334442', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '29', '1378478334443', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '30', '1378478334445', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '31', '1378478334446', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '32', '1378478334447', 'inform', 'Port flow control', 'Port exercised flow control', ],
+            [ '33', '1378478334449', 'inform', 'Port flow control', 'Port exercised flow control', ],
         ],
     },
 }

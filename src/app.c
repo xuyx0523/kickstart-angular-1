@@ -13,7 +13,11 @@ static void base(HttpConn *conn)
             if (smatch(uri, "/service/user/login") || smatch(uri, "/service/user/logout")) {
                 return;
             }
-            httpError(conn, HTTP_CODE_UNAUTHORIZED, "Access Denied. Login required");
+            /*
+                Enable this if you wish to require login for all URIs
+
+                httpError(conn, HTTP_CODE_UNAUTHORIZED, "Access Denied. Login required");
+             */
         }
     }
 }

@@ -6,6 +6,14 @@
 
 app.controller('UserControl', function ($dialog, $rootScope, $scope, $location, $timeout, User, SessionStore, Esp) {
 
+    $scope.loginOut = function() {
+        if (Esp.user && Esp.user.name) {
+            $location.path('/service/user/logout');
+        } else {
+            $location.path('/service/user/login');
+        }
+    };
+
     $scope.login = function() {
         User.login($scope.user, function(response, fn) {
             if (response.error) {
@@ -29,47 +37,39 @@ app.controller('UserControl', function ($dialog, $rootScope, $scope, $location, 
 
     $scope.logout = function() {
         if (Esp.user) {
-            //  MOB - should issue logout on server also
             Esp.user = null;
             SessionStore.remove('user');
             User.logout({}, function() {
-                $location.path('/service/user/login');
+                // $location.path('/service/user/login');
+                $location.path('/');
+                $rootScope.feedback = { inform: "Logged Out" };
             });
         } else {
-            $location.path('/service/user/login');
+            // $location.path('/service/user/login');
+            $location.path('/');
+            $rootScope.feedback = { inform: "Logged Out" };
         }
     };
 
     $scope.openLogin = function() {
-        /*
-        var opts = {
+        $scope.options = {
             backdrop: true,
-            dialogClass: 'modal',
             backdropClass: 'modal-backdrop',
+            backdropFade: true,
+            backdropClick: true,
+            controller: UserLoginController,
+            dialogClass: 'modal',
+            dialogFade: true,
+            keyboard: true,
             transitionClass: 'fade',
             triggerClass: 'in',
-            backdropFade: true,
-            dialogFade: true,
-            keyboard: true,
-            backdropClick: true,
-            templateUrl: "/app/user/user-login-dialog.html",
-            controller: UserLoginController
+            /* templateUrl: '' */
         };
-*/
-        $scope.options = {
-            backdropFade: true,
-            dialogFade: true,
-            dialogClass: 'modal',
-            transitionClass: 'fade',
-            keyboard: true,
-            backdropClick: true,
-            controller: UserLoginController
-        };
-        $scope.shouldBeOpen = true;
+        $scope.showLogin = true;
     };
 
     $scope.closeLogin = function() {
-        $scope.shouldBeOpen = false;
+        $scope.showLogin = false;
     };
 
     /*
@@ -84,7 +84,8 @@ app.controller('UserControl', function ($dialog, $rootScope, $scope, $location, 
             } else if ((Date.now() - Esp.user.lastAccess) > (timeout - (60 * 1000))) {
                 $rootScope.feedback = { warning: "Session Will Soon Expire"};
             }
-            // console.log("SESSION TIME REMAINING", (timeout - ((Date.now() - Esp.user.lastAccess))) / 1000, "secs");
+            //  MOB
+            console.log("SESSION TIME REMAINING", (timeout - ((Date.now() - Esp.user.lastAccess))) / 1000, "secs");
             $timeout(sessionTimeout, 60 * 1000, true);
         }
     }, 60 * 1000, true);

@@ -18,18 +18,4 @@ app.config(function($routeProvider, $locationProvider) {
      */
     $routeProvider.login = "/service/user/login";
     $routeProvider.otherwise({ redirectTo: '/' });
-    //  $locationProvider.html5Mode(true);
-});
-
-
-//  MOB - move to filters. Possibly esp/proto
-app.filter('titlecase', function() {
-    var titlecaseFilter = function(str) {
-        var words = str.split(/[ \.]/g);
-        for (var i = 0; i < words.length; i++) {
-            words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
-        }
-        return words.join(' ');
-    };
-    return titlecaseFilter;
 });

@@ -1,15 +1,12 @@
-<div fade" modal="shouldBeOpen" close="closeLogin()" ng-init="openLogin()" options="options">
-    <div id="login" class="modal-dialog">
-        <div class="modal-content login">
+<div fade" modal="showLogin" close="closeLogin()" ng-init="openLogin()" options="options">
+    <div id="login" class="login modal-dialog">
+        <div class="modal-content">
             <div class="modal-header">
                 <h4>Log in</h4>
             </div>
+            <p ng-cloak>{{JUNK}}</p>
             <form class="form-horizontal">
                 <div class="modal-body">
-                    <div class="form-error ng-cloak" ng-show="error" ng-cloak>
-                        <h2 class="ng-cloak" ng-cloak>Invalid login name or password.</h2>
-                        <p>Please retry.</p>
-                    </div>
                     <div class="form-group">
                         <input type='text' class="form-control" ng-model='user.username' tabindex='1' placeholder="Username">
                     </div>

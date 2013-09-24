@@ -18,16 +18,17 @@ static void getPortVlans() {
 }
 
 static void listPorts() {
-    // setStatus(404);
     renderGrid(readTable("port"));
 }
 
 static void updatePort() {
-    renderResult(updateRecFromParams("port"));
+    if (canUser("edit", 1)) {
+        renderResult(updateRecFromParams("port"));
+    }
 }
 
 
-ESP_EXPORT int esp_module_port(HttpRoute *route, MprModule *module)
+ESP_EXPORT int esp_controller_layer2_port(HttpRoute *route, MprModule *module)
 {
     Edi     *edi;
 

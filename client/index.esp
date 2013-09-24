@@ -19,15 +19,12 @@
     -->
     <link rel='stylesheet/less' type='text/css' href='css/all.less' />
     <% } else {
-    %> <link rel='stylesheet' type='text/css' href='css/all.min.css.gz' />
+    %> <link rel='stylesheet' type='text/css' href='css/all.min.css' />
     <% } %>
     <link rel='stylesheet' type='text/css' href='css/fix.css' />
 
 </head>
 <body>
-    <header>
-        <span class="username ng-cloak" ng-cloak>{{esp.user.name}}</span>
-    </header>
     <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
         <div class="navbar-header">
             <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-tower"></span> Layer<sup>2</sup></a>
@@ -41,53 +38,58 @@
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <form class="navbar-form" role="search">
-                        <a href="#">
-                            <input class="form-control" type="text" xplaceholder="Search">
-                            <span class="glyphicon glyphicon-search">
-                        </span>
-                    </a>
+                        <input class="form-control" type="text">
+                        <span class="glyphicon glyphicon-search"></span>
                     </form>
                 </li>
                 <li><a href="#"><span class="glyphicon glyphicon-wrench"></span></a></li>
                 <li class="dropdown">
-                    <a href="#"><i class="icon-warning-sign icon-xlarge"></i></a>
+                    <a href="#" class="dropdown-toggle"><i class="icon-warning-sign icon-xlarge"></i></a>
+                    <ul class="dropdown-menu log" role="menu" ng-controller="LogControl">
+                        <li class="header">You have {{logs.data.length}} notifications</li>
+                        <div ng-repeat="log in logs.data" ng-click="click($index)">
+                            <li class="divider"></li>
+                            <li><a class="message"><i class="icon-signin icon"></i> {{log.title}} <span class="time"><i class="icon-time"></i> {{log.date}}</span></a></li>
+                        </div>
+                        <li class="footer"><a href="#/service/log/list">View all notifications</a></li>
+                    </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">{{Esp.user.name}} <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" ng-cloak>{{Esp.user.name || 'guest'}} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Profile</a></li>
-                        <li><a href="#/service/user/logout">Sign out</a></li>
+                        <li><a href="" ng-click="loginOut()" ng-controller="UserControl">{{Esp.user.name ? 'Sign out' : 'Sign in'}}</a></li>
                     </ul>
                 </li>
                 <li><a href=""><i class="icon-question icon-large icon-inverse"></i></a></li>
             </ul>
         </div>
     </nav>
-    <main id="home">
-        <section>
-            <div class="row">
-                <div class="col-md-1 text-center sidebar-nav">
-                    <!-- MOB remove NavControl -->
-                    <div class="nav-collapse" ng-controller="NavControl">
-                        <ul class="nav nav-tabs nav-stacked main-menu">
-                            <li><a href="#"><i class="icon-sitemap"></i><span class="menu-item">Dashboard</span></a></li>
-                            <li><a href="#/service/port/list"><i class="icon-sitemap"></i><span class="menu-item">Ports</span></a></li>
-                            <li><a href="#/service/vlans/list"><span class="glyphicon glyphicon-hdd"></span><span class="menu-item">VLANs</span></a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-cog"></span><span class="menu-item">Settings</span></a></li>
-                            <li><a href="#/service/users/list"><span class="glyphicon glyphicon-user"></span><span class="menu-item">Users</span></a></li>
-                            <li><a href="#"><i class="icon-signal"></i><span class="menu-item">Metrics</span></a></li>
-                        </ul>
-                    </div>
+
+    <main class="home">
+        <section class="row container">
+            <nav class="col-md-1 text-center sidebar">
+                <div class="nav-collapse">
+                    <ul class="nav nav-tabs nav-stacked main-menu">
+                        <layer2-menu href="#" class="icon-dashboard">Dashboard</layer2-menu>
+                        <layer2-menu href="#/service/port/list" class="icon-sitemap">Ports</layer2-menu>
+                        <layer2-menu href="#/service/vlan/list" class="glyphicon glyphicon-hdd">VLANs</layer2-menu>
+                        <layer2-menu href="#/service/port/1" class="glyphicon glyphicon-cog">Settings</layer2-menu>
+                        <layer2-menu href="#/service/user/list" class="glyphicon glyphicon-user">Users</layer2-menu>
+                        <layer2-menu href="#/service/log/list" class="glyphicon glyphicon-list">Log</layer2-menu>
+                        <layer2-menu href="#" class="icon-signal">Metrics</layer2-menu>
+                    </ul>
                 </div>
-                <div class="col-md-9 col-md-offset-1">
-                    <div ng-view></div>
-                </div>
-            </div>
+            </nav>
+            <section class="col-md-10 content">
+                <div ng-view></div>
+            </section>
         </section>
         <div ng-repeat="(field, msg) in feedback">
             <h1 class="ng-hide-remove" ng-class="'feedback-' + field" ng-show="feedback" ng-cloak>{{msg}}</h1>
         </div>
     </main>
+
     <% if (modeIs("debug")) { %>
     <script src='lib/angular/angular.js'></script>
     <script src='lib/angular/angular-route.js'></script>
@@ -97,10 +99,13 @@
     <script src='lib/angular-ui-bootstrap/ui-bootstrap-tpls.js'></script>
     <script src='lib/less/less.js'></script>
     <script src='app/main.js'></script>
+    <script src='lib/angular-local/LocalStore.js'></script>
+    <script src='lib/angular-session/SessionStore.js'></script>
+    <script src='lib/angular-esp/Esp.js'></script>
     <%
-    scripts("app/*/**.js,ext/**.js");
+    scripts("lib/*/ext/**.js,app/*/**.js");
     } else {
-    %> <script src='lib/all.min.js.gz'></script>
+    %> <script src='all.min.js'></script>
     <% } %>
 </body>
 </html>

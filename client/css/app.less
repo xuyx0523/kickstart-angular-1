@@ -2,113 +2,123 @@
     app.less - Layer2 stylesheet
  */
 
-//  MOB - nested  
-
-xmain#home {
-    background: linear-gradient(20deg, #080f1f 30%, #2b4b5a 87%, #435e67 100%);
-    background-attachment: fixed;
-    background-color: #1c2533;
-    height: 400px;
-}
-
-
-.navbar-header {
-    width: 200px;
-}
-
-.navbar i, .navbar .glyphicon {
-    font-size: 14px;
-}
-
-.navbar .form-control {
-    //MOB var
-    background-color: #141414;
-    border-color: #141414;
-    width: 220px;
-}
-
-.navbar .form-control:focus {
-    background-color: #FFFFFF;
-    -webkit-transition: all .3s linear;
-    position: relative;
-}
-
-.navbar .glyphicon-search {
-    color: #777777;
-    position: relative;
-    top: 6px;
-    left: -28px;
-}
-
-.navbar li {
-    border-left: 1px solid #101417;
-}
-
-.navbar .dropdown li {
-    border: none;
-}
-
-
-.sidebar-nav {
-    background: #FF0000;
-    color: #888;
-    width: 140px;
-    .glyphicon, i {
-        font-size: 22px;
-        color: #888;
+.navbar {
+    .navbar-header {
+        width: 200px;
     }
-    .menu-item {
-        font-size: 16px;
-        color: #888;
-        display: block;
+    .form-control {
+        background-color: @gray-darker;
+        border-color: @gray-darker;
+        width: 220px;
+        &:focus {
+            background-color: @gray-lighter;
+            -webkit-transition: all .3s linear;
+        }
+    }
+    .glyphicon-search {
+        color: @gray;
+        position: relative;
+        top: 6px;
+        left: -28px;
+    }
+    li {
+        border-left: 1px solid @gray-darker;
+    }
+    .dropdown li {
+        border: none;
     }
 }
 
-.modal {
+.home {
+    .container {
+    }
+    .sidebar {
+        padding-top: 40px;
+        width: 140px;
+        color: @gray;
+        .glyphicon, i {
+            font-size: @font-size-larger;
+            color: @gray;
+        }
+        .menu-item {
+            font-size: @font-size-base;
+            color: @gray;
+            display: block;
+        }
+    }
+    .content {
+        padding-left: 20px;
+        background: white;
+    }
+    footer {
+        background: @gray-darker;
+        color: @gray-lighter;
+        font-size: @font-size-small;
+        .powered {
+            text-align: right;
+        }
+    }
+}
+
+.modal-backdrop {
     background-image: url('../assets/background.jpg');
 }
 
-#login {
-    width: 400px;
-}
-
 .login {
-    -background: rgba(128, 128, 128, 0.5);
+    &.modal-dialog {
+        width: 400px;
+    }
+    .modal-header {
+        text-align: center;
+    }
+    .modal-content {
+        padding: 20px;
+    }
+    .forgot-password {
+        text-align: right;
+    }
+    .remember-me {
+        font-size: @font-size-small;
+    }
 }
 
-.login.modal-content {
-    padding: 20px;
-}
-
-.login .modal-header {
-    text-align: center;
-}
-
-.login .forgot-password {
-    text-align: right;
-}
-
-.login .remember-me {
-    font-size: @font-size-small;
-}
-
-_UNUSED_hr {
-    width: 100%;
-    color: @gray-light;
-}
-
-[ng-click] {
-    cursor: pointer;
-}
-
-.shadow {
-    .drop-shadow();
-}
-
-
-TABLE_ONLY.collapse {
-    :empty {
-        display: none;
+.UNUSEDlog {
+    padding-bottom: 0px;
+    width: 400px;
+    color: @gray;
+    li {
+        padding: 8px 0 8px 0;
+        &:hover {
+            background: @gray-lighter;
+        }
+    }
+    .divider {
+        margin: 0;
+        padding: 0;
+    }
+    .header {
+        padding: 8px 20px 4px 20px;
+        font-weight: bold;
+    }
+    .footer {
+        margin: 12px 0 0 0;
+        background: @gray-lighter;
+    }
+    .icon {
+        font-size: @font-size-large;
+        padding-right: 10px;
+    }
+    .message {
+        padding: 4px 20px 4px 20px;
+        font-size: @font-size-small;
+        text-decoration: none;
+        color: @gray;
+    }
+    .time {
+        float: right;
+        padding-right: 20px;
+        font-style: italic;
+        font-size: @font-size-small;
     }
 }
 
@@ -118,11 +128,12 @@ TABLE_ONLY.collapse {
     padding-bottom: 10px;
     text-indent: 10px;
     border: 2px solid @error-color;
-    .rounded(6px);
+    .rounded(4px);
     .drop-shadow();
     h2 {
         margin: 0 0 10px 0;
-        font-size: 12pt;
+        padding: 10px 0 10px 0;
+        font-size: @font-size-small;
         color: white;
         background-color: @error-color;
     }
@@ -140,16 +151,15 @@ TABLE_ONLY.collapse {
     top: 0;
     left: 50%;
     width: 500px;
-    height: 36px;
-    margin: 0;
-    margin-left: -250px;
-    padding: 3px;
-    font-size: 110%;
+    height: 41px;
+    margin: 0 0 0 -250px;
+    padding: 8px 3px 3px 3px;
     .rounded(7px);
     .border-radius(0, 7px, 7px, 0);
     .drop-shadow();
     color: white;
     text-align: center;
+    z-index: 2000;
     &:empty {
         display: none;
     }
@@ -171,19 +181,18 @@ TABLE_ONLY.collapse {
     .gradient(@feedback-inform-background, lighten(@feedback-inform-background, 10%), darken(@feedback-inform-background, 10%));
     opacity: 0;
     top: -100px;
+    &.ng-hide-remove {
+        -webkit-animation: feedback-transition ease-in 10s;
+    }
 }
 
-.feedback-inform.ng-hide-remove {
-    -webkit-animation: feedback-temp ease-in 10s;
-}
-
-@-webkit-keyframes feedback-temp {
+@-webkit-keyframes feedback-transition {
     0%   { opacity: 1.0; top:    0px; }
     80%  { opacity: 1.0; top:    0px; }
     90%  { opacity: 0.5; top:    0px; }
     100% { opacity: 0.0; top: -100px; }
 }
 
-_UNUSED_td.centered {
-    text-align: center;
+[ng-click] {
+    cursor: pointer;
 }

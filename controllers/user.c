@@ -4,8 +4,10 @@
 #include "esp.h"
 
 static void createUser() { 
-    setParam("password", mprMakePassword(param("password"), 0, 0));
-    renderResult(createRecFromParams("user"));
+    if (canUser("edit", 1)) {
+        setParam("password", mprMakePassword(param("password"), 0, 0));
+        renderResult(createRecFromParams("user"));
+    }
 }
 
 static void getUser() { 
@@ -17,18 +19,20 @@ static void indexUser() {
 }
 
 static void removeUser() { 
-    renderResult(removeRec("user", param("id")));
+    if (canUser("edit", 1)) {
+        renderResult(removeRec("user", param("id")));
+    }
 }
 
 static void updateUser() { 
-    setParam("password", mprMakePassword(param("password"), 0, 0));
-    renderResult(updateRecFromParams("user"));
+    if (canUser("edit", 1)) {
+        setParam("password", mprMakePassword(param("password"), 0, 0));
+        renderResult(updateRecFromParams("user"));
+    }
 }
 
 static void login() {
-    HttpConn    *conn;
-    
-    conn = getConn();
+    HttpConn    *conn = getConn();
     if (httpLogin(conn, param("username"), param("password"))) {
         render("{\"success\": 1, \"user\": {\"name\": \"%s\", \"abilities\": %s}}", conn->username, 
             mprSerialize(conn->user->abilities, MPR_JSON_QUOTES));
@@ -43,11 +47,12 @@ static void logout() {
     renderResult(1);
 }
 
-ESP_EXPORT int esp_module_user(HttpRoute *route, MprModule *module) 
+ESP_EXPORT int esp_controller_layer2_user(HttpRoute *route, MprModule *module) 
 {
     Edi     *edi;
 
     edi = getDatabase();
+    //  MOB - should ability string be included with the action?
     espDefineAction(route, "user-create", createUser);
     espDefineAction(route, "user-get", getUser);
     espDefineAction(route, "user-index", indexUser);

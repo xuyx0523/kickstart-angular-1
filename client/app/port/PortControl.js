@@ -5,6 +5,7 @@
 'use strict';
 
 app.controller('PortControl', function ($rootScope, $scope, $location, $routeParams, Port, Esp, Vlan) {
+
     if ($location.path() == "/service/port/") {
         $scope.action = "Create";
         $scope.port = new Port();
@@ -116,12 +117,6 @@ app.controller('PortControl', function ($rootScope, $scope, $location, $routePar
 });
 
 app.config(function($routeProvider) {
-    $routeProvider.when('/', {
-        templateUrl: '/app/port/port-list.html',
-        controller: 'PortControl',
-        abilities: { 'view': true },
-        resolve: { action: checkAuth },
-    });
     $routeProvider.when('/service/port/list', {
         templateUrl: '/app/port/port-list.html',
         controller: 'PortControl',

@@ -5,7 +5,7 @@
             showErrors: true,
             keepSource: true,
             update: true,
-            username: ""
+            username: "admin"
         },
         release: {
             map: "compressed",
@@ -20,13 +20,19 @@
             "server",
             "angular"
         ],
+        formats: {
+            date: 'yyyy-MM-dd',
+            float: 2,                                                                                                  
+            int: 0
+        },
         redirect: "secure",
         sendJson: true,
+        serverPrefix: "/service",
         timeouts: {
             session: 1800
         },
         xsrfToken: true
-    }
+    },
     server: {
         authStore: "app",
         database: "mdb://layer2.mdb"

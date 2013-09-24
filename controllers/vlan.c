@@ -4,7 +4,9 @@
 #include "esp.h"
 
 static void createVlan() {
-    renderResult(createRecFromParams("vlan"));
+    if (canUser("edit", 1)) {
+        renderResult(createRecFromParams("vlan"));
+    }
 }
 
 static void getVlan() {
@@ -31,11 +33,15 @@ static void listVlans() {
 }
 
 static void removeVlan() {
-    renderResult(removeRec("vlan", param("id")));
+    if (canUser("edit", 1)) {
+        renderResult(removeRec("vlan", param("id")));
+    }
 }
 
 static void updateVlan() {
-    renderResult(updateRecFromParams("vlan"));
+    if (canUser("edit", 1)) {
+        renderResult(updateRecFromParams("vlan"));
+    }
 }
 
 /*
@@ -53,7 +59,7 @@ static void addPort() {
     if (!param("tagged")) {
         setParam("tagged", "untagged");
     }
-    if ((port = ediReadOneWhere(db, "port", "name", "==", param("port"))) == 0) {
+    if ((port = ediReadRecWhere(db, "port", "name", "==", param("port"))) == 0) {
         //  MOB - better API
         feedback("error", "Cannot find: tty \"%s\"", param("port"));
         renderResult(0);
@@ -86,7 +92,7 @@ static void removePort() {
     int         i;
 
     db = getDatabase();
-    if ((port = ediReadOneWhere(db, "port", "name", "==", param("port"))) == 0) {
+    if ((port = ediReadRecWhere(db, "port", "name", "==", param("port"))) == 0) {
         //  MOB - better API
         feedback("error", "Cannot find: tty \"%s\"", param("port"));
         renderResult(0);
@@ -105,7 +111,7 @@ static void removePort() {
     renderResult(0);
 }
 
-ESP_EXPORT int esp_module_vlan(HttpRoute *route, MprModule *module)
+ESP_EXPORT int esp_controller_layer2_vlan(HttpRoute *route, MprModule *module)
 {
     Edi     *edi;
 
