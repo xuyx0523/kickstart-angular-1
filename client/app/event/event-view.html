@@ -1,0 +1,15 @@
+<div>
+    <h3>Event Details</h3>
+    <form name="eventForm" class="form-horizontal">
+
+        <esp-input-group fields="title,date,id,type,message" labels=",,ID" types=",text,,,textarea" 
+            filters=",date:'yyyy-MM-dd HH:mm:ss'" ng-model="event" rows="6" readonly></esp-input-group>
+
+       <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-10">                                                                  
+                <button class="btn btn-primary" esp-click="/event/list">Continue</button>
+                <button class="btn" xng-show="Esp.user" ng-click='remove(event.id)'>Delete</button>
+            </div>
+        </div>
+    </form>
+</div>
