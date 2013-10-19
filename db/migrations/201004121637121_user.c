@@ -1,5 +1,5 @@
 /*
-    user
+    user migration
  */
 #include "esp.h"
 
@@ -20,12 +20,12 @@ static int forward(Edi *db) {
      */
     password = mprMakePassword("admin", 16, 128);
     rec = ediCreateRec(db, "user");
-    ediSetFields(rec, ediMakeHash("{ username: 'admin', password: '%s', email: 'dev@embedthis.com', roles: 'edit, view' }", password));
+    ediSetFields(rec, ediMakeJson("{ username: 'admin', password: '%s', email: 'dev@embedthis.com', roles: 'edit, view' }", password));
     ediUpdateRec(db, rec);
 
     password = mprMakePassword("guest", 16, 16);
     rec = ediCreateRec(db, "user");
-    ediSetFields(rec, ediMakeHash("{ username: 'guest', password: '%s', email: 'dev@embedthis.com', roles: 'view' }", password));
+    ediSetFields(rec, ediMakeJson("{ username: 'guest', password: '%s', email: 'dev@embedthis.com', roles: 'view' }", password));
     ediUpdateRec(db, rec);
     return 0;
 }

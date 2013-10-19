@@ -1,5 +1,5 @@
 /*
-    port
+    ports migration
  */
 #include "esp.h"
 
@@ -20,6 +20,11 @@ static int forward(Edi *db)
     rc += ediAddColumn(db, "port", "speed", EDI_TYPE_INT, 0);
     rc += ediAddColumn(db, "port", "status", EDI_TYPE_STRING, 0);
 
+    rc += ediAddColumn(db, "port", "rxBytes", EDI_TYPE_INT, 0);
+    rc += ediAddColumn(db, "port", "rxPackets", EDI_TYPE_INT, 0);
+    rc += ediAddColumn(db, "port", "txBytes", EDI_TYPE_INT, 0);
+    rc += ediAddColumn(db, "port", "txPackets", EDI_TYPE_INT, 0);
+
     if ((rec = ediCreateRec(db, "port")) == 0) {
         return MPR_ERR_CANT_CREATE;
     }
@@ -32,7 +37,11 @@ static int forward(Edi *db)
             !ediSetField(rec, "jumbo", "Disabled") ||
             !ediSetField(rec, "name", sfmt("tty%02d", i)) ||
             !ediSetField(rec, "speed", "1000") ||
-            !ediSetField(rec, "status", "Normal")) {
+            !ediSetField(rec, "status", "Normal") ||
+            !ediSetField(rec, "rxBytes", "0") ||
+            !ediSetField(rec, "rxPackets", "0") ||
+            !ediSetField(rec, "txBytes", "0") ||
+            !ediSetField(rec, "txPackets", "0")) {
             mprError("Can't update field for port table");
             rc = MPR_ERR_CANT_WRITE;
             break;

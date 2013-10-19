@@ -2,6 +2,9 @@
     theme.less - Application theme variables
  */
 
+@grid-float-breakpoint: 0;
+@screen-xs-max: 0;
+
 // Paths
 // -------------------------
 
@@ -12,7 +15,7 @@
 // -------------------------
 
 @body-bg:               #fff;
-@text-color:            @gray-dark;
+@text-color:            #222233;	// MOB @gray-dark;
 
 // Links
 // -------------------------
@@ -36,6 +39,7 @@
 @gray:                   lighten(#000, 33.5%); // #555
 @gray-light:             lighten(#000, 60%);   // #999
 @gray-lighter:           lighten(#000, 93.5%); // #eee
+@gray-lightest:          lighten(#000, 96.0%); // #f5f5f5
 
 // Brand colors
 // -------------------------
@@ -58,6 +62,8 @@
 @font-size-large:         ceil(@font-size-base * 1.25); // ~18px
 @font-size-larger:        ceil(@font-size-base * 1.5);  // ~21px
 @font-size-small:         ceil(@font-size-base * 0.85); // ~12px
+@font-size-smaller:       ceil(@font-size-base * 0.78); // ~11px
+@font-size-smallest:      ceil(@font-size-base * 0.65); // ~10px
 
 @line-height-base:        1.428571429; // 20/14
 @line-height-computed:    floor(@font-size-base * @line-height-base); // ~20px
@@ -103,12 +109,12 @@
 @table-cell-padding:                 8px;
 @table-condensed-cell-padding:       5px;
 
-@table-bg:                           transparent; // overall background-color
-@table-bg-accent:                    #f9f9f9; // for striping
-@table-bg-hover:                     #f5f5f5;
+@table-bg:                           @gray-lightest; 				//MOB transparent; // overall background-color
+@table-bg-accent:                    white; 						//MOB #f9f9f9; // for striping
+@table-bg-hover:                     lighten(@gray-light, 25%);		//MOB #f5f5f5;
 @table-bg-active:                    @table-bg-hover;
 
-@table-border-color:                 #ddd; // table and cell border
+@table-border-color:                 @gray-light;	//MOB #ddd; // table and cell border
 
 
 // Buttons
@@ -279,7 +285,7 @@
 //
 // Reset inverted navbar basics
 @navbar-inverse-color:                      @gray-light;
-@navbar-inverse-bg:                         #222;
+@navbar-inverse-bg:                         #1f3442; // MOB was #222;
 @navbar-inverse-border:                     darken(@navbar-inverse-bg, 10%);
 
 // Inverted navbar links
@@ -376,6 +382,7 @@
 @state-warning-bg:               #fcf8e3;
 @state-warning-border:           darken(spin(@state-warning-bg, -10), 3%);
 
+@state-danger-text:              #b94a48;
 @state-danger-text:              #b94a48;
 @state-danger-bg:                #f2dede;
 @state-danger-border:            darken(spin(@state-danger-bg, -10), 3%);

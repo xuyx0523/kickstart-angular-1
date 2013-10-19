@@ -1,19 +1,15 @@
-<form name="userForm" ng-controller='UserControl'>
-    <fieldset>
-        <legend>{{action}} User</legend>
-        <div class="form-error ng-cloak" ng-show="fieldErrors">
-            <h2>The User has errors that prevent it being saved.</h2>
-            <p>There were problems with the following fields:</p>
-            <ul ng-repeat="msg in fieldErrors">
-                <li>{{msg}}</li>
-            </ul>
+<h3>{{id ? "Edit" : "Create"}} User</h3>
+<form name="userForm" class="form-horizontal">
+
+    <esp-input ng-model="user.username" width="col-xs-5"></esp-input>
+    <esp-input type="password" ng-model="user.password" width="col-xs-5"></esp-input>
+    <esp-input-group ng-model="user" fields="email,roles" width="col-xs-5"></esp-input-group>
+
+    <div class="form-group">
+        <div class="col-xs-offset-3 col-xs-4">
+            <button class="btn btn-primary" ng-click='save()'>OK</button>
+            <button class="btn" esp-click="/user/list">Cancel</button>
+            <button class="btn" ng-show="id" ng-click='remove({{user.id}})'>Delete</button>
         </div>
-        <label>Title</label> <input type='text' ng-model='user.title'
-            ng-class='{"field-error": fieldErrors.title}' tabindex='1'></input>
-        <label>Body</label> <textarea type='text' ng-model='user.body' cols='160' rows='4'
-            ng-class='{"field-error": fieldErrors.body}' tabindex='2'></textarea>
-    </fieldset>
-    <button class="btn btn-primary" ng-click='save()'>OK</button>
-    <button class="btn" ng-click='Esp.goto("/")'>Cancel</button>
-    <button class="btn" ng-show="action=='Edit'" ng-click='remove({{user.id}})'>Delete</button>
+    </div>
 </form>

@@ -1,62 +1,26 @@
-<div ng-init="currentPane='Details'">
-    <nav>
-        <ul class="nav nav-tabs">
-            <li ng-repeat="pane in ['Details', 'Ports']"  ng-class="{active: currentPane == pane}">
-                <a ng-click="selectPane(pane)">{{pane}}</a>
-            </li>
-        </ul>
-    </nav>
-
+<div>
+    <div ng-include src="'app/vlan/panes.inc'" ng-init="currentPane='Details'"></div>
     <h3>VLAN Details</h3>
-    <form name="vlanForm" class="form-horizontal" ng-controller='VlanControl'>
-        <div class="form-error ng-cloak" ng-show="fieldErrors">
-            <h2>The Vlan has errors that prevent it being saved.</h2>
-            <p>There were problems with the following fields:</p>
-            <ul ng-repeat="msg in fieldErrors">
-                <li>{{msg}}</li>
-            </ul>
-        </div>
+    <form name="vlanForm" class="form-horizontal">
+
         <div class="form-group">
-            <div class="control-label col-md-2" for="inputName">Name</div>
-            <div class="col-md-2">
-                <div class="input-group">
-                    <span class="input-group-addon">vlan</span>
-                    <input type='text' class="form-control input-small" ng-model='vlan.num' ng-class='{"field-error": fieldErrors.title}' placeholder="NN">
-                </div>
+            <label class="control-label col-xs-3">Name</label>
+            <div class="input-group col-xs-7" ng-class='{"has-error": fieldErrors.name}'>
+                <span class="input-group-addon">vlan</span>
+                <input type='text' class="form-control input-small" ng-model='vlan.num' placeholder="NN">
+                <span class="input-group-addon" ng-show="fieldErrors.name">{{fieldErrors.name}}</span>
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="control-label col-md-2">Description</label>
-            <div class="col-md-4">
-                <input type="text" class="form-control input-small uneditable-input" ng-model='vlan.description'>
-            </div>
-        </div>
+        <esp-input ng-model="vlan.description" width="col-xs-7"></esp-input>
+        <esp-input ng-model="vlan.status" width="col-xs-7"></esp-input>
+        <esp-input type="radio" ng-model="vlan.mode" width="col-xs-3" label="Admin Mode"></esp-input>
 
         <div class="form-group">
-            <label class="control-label col-md-2">Status</label>
-            <div class="col-md-4">
-                <input type="text" class="form-control input-small uneditable-input" ng-model='vlan.status'>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2">Admin Mode</label>
-            <div class="controls col-md-10">
-                <label class="radio">
-                    <input type='radio' ng-model='vlan.mode' value='Online'>Online
-                </label>
-                <label class="radio">
-                    <input type='radio' ng-model='vlan.mode' value='Offline'>Offline
-                </label>
-            </div>
-        </div>
-
-       <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="col-xs-offset-3 col-xs-8">
                 <button class="btn btn-primary" ng-click='save()'>Save</button>
-                <button class="btn" ng-click='Esp.goto("/service/vlan/list")'>Cancel</button>
-                <button class="btn" ng-show="action=='Edit'" ng-click='remove({{vlan.id}})'>Delete</button>
+                <button class="btn" esp-click="/vlan/list">Cancel</button>
+                <button class="btn" ng-show="id" ng-click='remove(vlan.id)'>Delete</button>
             </div>
         </div>
     </form>

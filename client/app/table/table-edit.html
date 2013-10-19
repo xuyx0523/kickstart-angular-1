@@ -10,21 +10,13 @@
                 <a ng-click="click('{{'#/services/' + pane | lowercase}}')">{{pane}}</a>
                 <a ng-click="pane | lowercase">{{pane}}</a>
     <li ng-class="{{panel == 'mappings'}}"><a href="#/">Details</a></li>
-    <li ng-class="Esp.navClass('/service/post/')" ng-show="Esp.can('edit')"> <a href="#/service/post/">Mappings</a></li>
+    <li ng-class="Esp.navClass('/post/')" ng-show="Esp.can('edit')"> <a href="#/post/">Mappings</a></li>
     -->
 
     <section ng-show="currentPane == 'Details'">
         <fieldset>
             <h3>Port Details</h3>
-            <form name="portForm" class="form-horizontal" ng-controller='PortControl'>
-                <div class="form-error ng-cloak" ng-show="fieldErrors">
-                    <h2>The Port has errors that prevent it being saved.</h2>
-                    <p>There were problems with the following fields:</p>
-                    <ul ng-repeat="msg in fieldErrors">
-                        <li>{{msg}}</li>
-                    </ul>
-                </div>
-
+            <form name="portForm" class="form-horizontal">
                 <div class="control-group">
                     <div class="control-label" for="inputName">Name</div>
                     <div class="controls">
@@ -101,7 +93,7 @@
                 </div>
 
                 <button class="btn btn-primary" ng-click='save()'>Save</button>
-                <button class="btn" ng-click='Esp.goto("/service/port/list")'>Cancel</button>
+                <button class="btn" esp-click="/port/list">Cancel</button>
             </form>
         </fieldset>
     </section>
@@ -109,14 +101,14 @@
     <section ng-show="currentPane == 'VLAN Mappings'">
         <h3>VLANS for Port: tty{{port.name}}</h3>
         <table class="table table-striped table-bordered table-hover table-condensed">
-            <thead><tr><th ng-repeat="header in ['VLAN', 'Tagged']" ng-click="click($index)">{{header | titlecase}}</th></tr></thead>
+            <thead><tr><th ng-repeat="header in ['VLAN']" ng-click="click($index)">{{header | titlecase}}</th></tr></thead>
             <tbody>
             <tr ng-repeat="vlan in mappings.data" ng-click="clickVlan($index)">
-                <td ng-repeat="column in ['vlan.name', 'tagged']">{{vlan[column]}}</td>
+                <td ng-repeat="column in ['vlan.name']">{{vlan[column]}}</td>
             </tr>
             </tbody>
         </table>
-        <button class="btn btn-primary" ng-show="Esp.can('edit')" ng-click="Esp.goto('/service/vlan/')">Add Port to VLAN</button>
+        <button class="btn btn-primary" ng-show="Esp.can('edit')" esp-click="/vlan/">Add Port to VLAN</button>
     </section>
     </div>
 </div>

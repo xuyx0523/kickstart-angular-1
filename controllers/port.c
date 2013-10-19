@@ -1,5 +1,5 @@
 /*
-    port
+    port.c - Port controller
  */
 #include "esp.h"
 
@@ -9,12 +9,13 @@ static void getPort() {
 
 static void getPortVlans() {
     Edi         *db;
-    EdiGrid     *mappings, *vlans;
+    EdiGrid     *mappings, *vlans, *grid;
 
     db = getDatabase();
-    mappings = ediReadWhere(db, "mapping", "portId", "==", param("id"));
+    mappings = readWhere("mapping", "portId", "==", param("id"));
     vlans = ediReadTable(db, "vlan");
-    renderGrid(ediJoin(db, mappings, vlans, NULL));
+    grid = ediJoin(db, mappings, vlans, NULL);
+    renderGrid(grid);
 }
 
 static void listPorts() {
@@ -27,7 +28,6 @@ static void updatePort() {
     }
 }
 
-
 ESP_EXPORT int esp_controller_layer2_port(HttpRoute *route, MprModule *module)
 {
     Edi     *edi;
@@ -38,7 +38,6 @@ ESP_EXPORT int esp_controller_layer2_port(HttpRoute *route, MprModule *module)
     espDefineAction(route, "port-update", updatePort);
     espDefineAction(route, "port-vlans", getPortVlans);
 
-//  MOB - should booleans be 0, 1?
     ediAddValidation(edi, "format", "port", "mode", "^(Online|Offline)$");
     ediAddValidation(edi, "format", "port", "negotiate", "^(Enabled|Disabled)$");
     ediAddValidation(edi, "format", "port", "duplex", "^(Half|Full)$");
@@ -46,8 +45,5 @@ ESP_EXPORT int esp_controller_layer2_port(HttpRoute *route, MprModule *module)
     ediAddValidation(edi, "format", "port", "jumbo", "^(Enabled|Disabled)$");
     ediAddValidation(edi, "format", "port", "name", "^tty\\d\\d$");
     ediAddValidation(edi, "format", "port", "speed", "^(1000|10000|40000)$");
-#if UNUSED
-    ediAddValidation(edi, "format", "port", "status", "^(Normal|Offline)$");
-#endif
     return 0;
 }

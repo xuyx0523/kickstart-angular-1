@@ -1,24 +1,54 @@
 /*
     app.less - Layer2 stylesheet
  */
+html, body {
+    background: @gray-lighter;
+//  MOB - change a bit and theme
+background: #393939;
+    border: none;
+    -webkit-font-smoothing: antialiased !important;
+}
 
 .navbar {
     .navbar-header {
+        .navbar-toggle {
+            float: left;
+            color: @gray-lighter;
+            padding: 12px 0 8px 12px;
+            border: none;
+        }
+        .navbar-brand {
+            padding: 6px 0 0 0;
+            //  MOB
+            color: #8eBFD0;
+        }
         width: 200px;
     }
-    .form-control {
-        background-color: @gray-darker;
-        border-color: @gray-darker;
-        width: 220px;
-        &:focus {
-            background-color: @gray-lighter;
-            -webkit-transition: all .3s linear;
+    .navbar-form {
+    //  MOB - should use navbar-search
+        .form-control {
+            //  MOB CHANGE A BIT
+            background-color: #558FAB;
+            background-color: #448099;
+    background-color: #306060;
+    background-color: #244850;
+    .gradient(#244850, darken(#244850, 3%), lighten(#244850, 3%));
+            border-color: @gray-darker;
+            width: 200px;
+            margin-top: 0px;
+            margin: 0;
+            &:focus {
+                background: none;
+                background-color: @gray-lighter;
+                -webkit-transition: all .3s linear;
+            }
         }
     }
     .glyphicon-search {
         color: @gray;
         position: relative;
-        top: 6px;
+        font-size: 16px;
+        top: 4px;
         left: -28px;
     }
     li {
@@ -27,62 +57,123 @@
     .dropdown li {
         border: none;
     }
+    .dropdown i {
+        padding-right: 10px;
+    }
 }
 
 .home {
     .container {
-    }
-    .sidebar {
-        padding-top: 40px;
-        width: 140px;
-        color: @gray;
-        .glyphicon, i {
-            font-size: @font-size-larger;
+        margin: 0;
+        padding: 0 20px 0 0;
+        max-width: 100%;
+        width: 100%;
+        .sidebar {
+            .nav-tabs {
+                border-bottom: none;
+            }
+//  MOB - change a bit and theme
+background: #393939;
+            padding: 0;
+            padding-top: 20px;
             color: @gray;
+            //MOB
+            color: @gray-lighter;
+            .glyphicon, i {
+                font-size: @font-size-larger;
+                color: @gray;
+                //MOB
+                color: @gray-light;
+            }
+            .main-menu {
+                li.selected {
+                    background: white;
+                    //MOB
+                    background: black;
+            background: #c9c9c9;
+background: #D8D8D8;
+                    .border-radius(0px, 0px, 17px, 17px);
+    .gradient(#D8D8D8, darken(#D8D8D8, 10%), lighten(#D8D8D8, 10%));
+                    margin-left: 15px;
+                    margin-right: 0;
+                    a {
+                        margin-right: 0;
+                        //-.border-radius(0px);
+                        &:hover {
+                            .border-radius(0px, 0px, 15px, 15px);
+                            background: lighten(@gray-light, 20.0%);
+                            //  MOB
+                            background: #c9c9c9;
+    border: @gray-darker;
+    background: @gray-darker;
+    padding-bottom: 12px;
+                        }
+                    }
+                    i, .menu-item {
+                        text-indent: -15px;
+                    }
+                }
+                li:not(.selected) {
+                    margin-left: 15px;
+                    margin-right: 0;
+                    a {
+                        margin-right: 0;
+                    }
+                    a:hover {
+                        .border-radius(0px, 0px, 17px, 17px);
+                        background: lighten(@gray-light, 20.0%);
+                            //  MOB
+            background: #c9c9c9;
+            background: black;
+    border-color: black;
+                        cursor: pointer;
+                    }
+                    i, .menu-item {
+                        text-indent: -15px;
+                    }
+                }
+            }
+            .menu-item {
+                font-size: @font-size-small;
+                //MOB
+                color: @gray-light;
+                display: block;
+            }
         }
-        .menu-item {
-            font-size: @font-size-base;
-            color: @gray;
-            display: block;
+        .content {
+            padding: 20px;
+            background: white;
+            //  MOB - adjust and theme
+            background: #C9C9C9;
+background: #D8D8D8;
+    .gradient(#D8D8D8, darken(#D8D8D8, 10%), lighten(#D8D8D8, 10%));
+    .drop-shadow();
+            -min-height: 733px;
+            min-height: 133px;
+            .border-radius(7px, 7px, 7px, 7px);
+            -border: 2px solid @gray-lighter;
         }
     }
-    .content {
-        padding-left: 20px;
-        background: white;
-    }
-    footer {
-        background: @gray-darker;
-        color: @gray-lighter;
-        font-size: @font-size-small;
+    .footer {
+        position: relative;
+        clear: both;
+        height: 30px;
+        margin-top: 20px;
+        padding: 8px 20px 0 20px;
+        background: @gray;
+        color: @gray-light;
+        font-size: @font-size-smaller;
+        font-style:italic;
         .powered {
-            text-align: right;
+            float: right;
         }
+        z-index: 2;
     }
 }
 
-.modal-backdrop {
-    background-image: url('../assets/background.jpg');
-}
 
-.login {
-    &.modal-dialog {
-        width: 400px;
-    }
-    .modal-header {
-        text-align: center;
-    }
-    .modal-content {
-        padding: 20px;
-    }
-    .forgot-password {
-        text-align: right;
-    }
-    .remember-me {
-        font-size: @font-size-small;
-    }
-}
-
-.UNUSEDlog {
+/* Log notification pulldown */
+.notify {
     padding-bottom: 0px;
     width: 400px;
     color: @gray;
@@ -97,11 +188,11 @@
         padding: 0;
     }
     .header {
-        padding: 8px 20px 4px 20px;
+        padding: 4px 20px 10px 20px;
         font-weight: bold;
     }
     .footer {
-        margin: 12px 0 0 0;
+        padding: 4px 0 4px 0;
         background: @gray-lighter;
     }
     .icon {
@@ -118,7 +209,37 @@
         float: right;
         padding-right: 20px;
         font-style: italic;
+        font-size: 11px;
+    }
+}
+
+.modal-backdrop {
+    -background: url('../assets/background.jpg');
+}
+
+.login {
+    &.modal-dialog {
+        width: 400px;
+    }
+    .modal-header {
+        text-align: center;
+    }
+    .modal-content {
+        padding: 20px;
+    }
+    .forgot-password {
+        display: block;
+        text-align: right;
         font-size: @font-size-small;
+    }
+    .remember-me {
+        font-size: @font-size-small;
+    }
+}
+
+.forgot {
+    &.modal-dialog {
+        width: 500px;
     }
 }
 
@@ -135,7 +256,8 @@
         padding: 10px 0 10px 0;
         font-size: @font-size-small;
         color: white;
-        background-color: @error-color;
+        //  MOB
+background: @error-color;
     }
     ul {
         margin-bottom: 0;
@@ -186,6 +308,78 @@
     }
 }
 
+
+.panel {
+    background: @gray-lightest;
+    border-color: @gray-darker;
+    border: 2px solid @gray-light;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+
+.widget {
+    background: @gray-lightest;
+    // border-color: @gray-darker;
+    border: 1px solid lighten(@gray-light, 20%);
+    border: 1px solid #AAA;
+    border-radius: 8px;
+    .drop-shadow(2px, 2px, 4px, 0.1);
+    padding: 10px;
+    margin: 10px;
+    box-sizing: border-box;
+    &:hover {
+        border: 1px solid #60A0D0;
+        .drop-shadow(2px, 2px, 4px, 0.2);
+    }
+    .label {
+        color: @gray-dark;
+    }
+    .number {
+        color: @gray;
+    }
+}
+
+    .counter {
+        .widget;
+        text-align: center;
+        font-size: @font-size-larger;
+        color: white;
+        -background-color: #f01611;
+        -border-color: @gray-darker;
+        -border: 1px solid #cccccc;
+        border-radius: 8px;
+        -margin: 10px;
+        -padding: 10px;
+    }
+    .dial {
+        .widget;
+        margin: 0 auto;
+        padding: 0;
+        height: 100px;
+        width: 100px;
+        text-align: center;
+        font-size: @font-size-larger;
+        .circle {
+            height: 100px;
+            width: 100px;
+            background: white;
+            border: 10px solid red;
+            .border-radius(50em, 50em, 50em, 50em);
+            padding: 25px 0 0 0;
+        }
+        .label {
+            padding: 0;
+            margin: 0;
+            color: black;
+        }
+    }
+
+.table-bordered {
+    .drop-shadow();
+    border: 2px solid @table-border-color;
+}
+
 @-webkit-keyframes feedback-transition {
     0%   { opacity: 1.0; top:    0px; }
     80%  { opacity: 1.0; top:    0px; }
@@ -193,6 +387,66 @@
     100% { opacity: 0.0; top: -100px; }
 }
 
-[ng-click] {
+[ng-click],[esp-click] {
     cursor: pointer;
 }
+
+/* 
+    Bootstrap non-responsive fixups
+
+    Use col-xs, as this will scale up.
+
+    .container {
+        max-width: none !important;
+        width: 1024px;
+    }
+
+    .control-label {
+        text-align: right;
+    }
+
+    .col-xs-offset-0 {
+        margin-left: 0;
+    }
+    .col-xs-offset-1 {
+        margin-left: 8.333333333333332%;
+    }
+    .col-xs-offset-2 {
+        margin-left: 16.666666666666664%;
+    }
+    .col-xs-offset-3 {
+        margin-left: 25%;
+    }
+    .col-xs-offset-4 {
+        margin-left: 33.33333333333333%;
+    }
+    .col-xs-offset-5 {
+        margin-left: 41.66666666666667%;
+    }
+    .col-xs-offset-6 {
+        margin-left: 50%;
+    }
+    .col-xs-offset-7 {
+        margin-left: 58.333333333333336%;
+    }
+    .col-xs-offset-8 {
+        margin-left: 66.66666666666666%;
+    }
+    .col-xs-offset-9 {
+        margin-left: 75%;
+    }
+    .col-xs-offset-10 {
+        margin-left: 83.33333333333334%;
+    }
+    .col-xs-offset-11 {
+        margin-left: 91.66666666666666%;
+    }
+*/
+
+
+/*
+    angular-ui fixes
+ */
+ .modal {
+    display: block;
+ }

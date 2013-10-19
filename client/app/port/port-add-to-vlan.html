@@ -1,35 +1,16 @@
-<div ng-init="currentPane='Add to VLAN'">
-    <nav>
-        <ul class="nav nav-tabs">
-            <li ng-repeat="pane in ['Details', 'VLANs']"  ng-class="{active: currentPane == pane}">
-                <a ng-click="selectPane(pane)">{{pane}}</a>
-            <li>
-        </ul>
-    </nav>
-
+<div>
+    <div ng-include src="'app/port/panes.inc'" ng-init="currentPane='VLANs'"></div>
     <h3>Add {{port.name}} to VLAN</h3>
-
-    <!--MOB should not need PortControl -->
-
-    <form name="addToVlanForm" class="form-horizontal" ng-controller='PortControl'>
-        <div class="form-error ng-cloak" ng-show="fieldErrors">
-            <h2>The Vlan has errors that prevent it being saved.</h2>
-            <p>There were problems with the following fields:</p>
-            <ul ng-repeat="msg in fieldErrors">
-                <li>{{msg}}</li>
-            </ul>
-        </div>
-
-        <div class="control-group">
-            <div class="control-label" for="inputName">Name</div>
-            <div class="controls">
-                <div class="input-prepend">
-                    <span class="add-on">vlan</span>
-                    <input type='text' class="input-small" ng-model='vlan.name' ng-class='{"field-error": fieldErrors.title}' placeholder="NN">
+    <form name="addToVlanForm" class="form-horizontal">
+        <div class="form-group">
+            <div class="col-xs-4">
+                <div class="input-group" ng-class='{"has-error": fieldErrors.title}'>
+                    <span class="input-group-addon">vlan</span>
+                    <input type='text' class="form-control input-small" ng-model='vlan.name' placeholder="NN">
                 </div>
             </div>
         </div>
         <button class="btn btn-primary" ng-click='addPortToVlan("vlan" + vlan.name)'>Add</button>
-        <button class="btn" ng-click='Esp.goto("/service/port/" + port.id + "/vlans")'>Cancel</button>
+        <button class="btn" esp-click="/port/{{id}}/vlans">Cancel</button>
     </form>
 </div>

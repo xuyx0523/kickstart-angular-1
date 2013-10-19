@@ -1,1 +1,44 @@
-<p>Dashboard</p>
+<!-- MOB - probably should have section here -->
+
+<div class="dash ng-cloak col-md-11">
+	<div class="row">
+		<div class="counter col-md-2">
+			<div class="label">Online Ports</div>
+			<div class="number">{{ports.online}} / {{ports.length}}</div>
+		</div>
+		<div class="counter col-md-2">
+			<div class="label">Active Ports</div>
+			<div class="number">{{ports.active}}</div>
+		</div>
+		<div class="counter col-md-2">
+			<div class="label">Active VLANs</div>
+			<div class="number">{{ports.length}}</div>
+		</div>
+		<div class="counter col-md-2">
+			<div class="label">Active VLANs</div>
+			<div class="number">{{ports.length}}</div>
+		</div>
+	</div>
+	<div class="row">
+		<!-- MOB could be esp-counter -->
+		<div class="counter col-md-2">
+			<div class="label">Traffic</div>
+			<div class="number">{{system.io}}</div>
+		</div>
+		<div class="counter col-md-2">
+			<div class="label">Events</div>
+			<div class="number">{{system.events}}</div>
+		</div>
+
+		<!-- MOB could be esp-dial -->
+		<div class="dial col-md-2">
+			<div class="circle">{{system.events}}</div>
+			<div class="label">Dial</div>
+		</div>
+	</div>
+</div>
+
+<!-- IDEAS
+
+<canvas width="77" height="30" style="display: inline-block; width: 77px; height: 30px; vertical-align: top;"></canvas>
+-->

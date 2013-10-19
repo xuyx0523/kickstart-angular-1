@@ -5,19 +5,21 @@
 
 static void base(HttpConn *conn) 
 {
-    cchar       *uri;
+    cchar       *loginRequired, *uri;
 
     if (!httpLoggedIn(conn)) {
         uri = getUri();
         if (sstarts(uri, "/service/")) {
-            if (smatch(uri, "/service/user/login") || smatch(uri, "/service/user/logout")) {
+            if (smatch(uri, "/service/user/login") || smatch(uri, "/service/user/logout") || smatch(uri, "/service/user/forgot")) {
                 return;
             }
             /*
                 Enable this if you wish to require login for all URIs
-
-                httpError(conn, HTTP_CODE_UNAUTHORIZED, "Access Denied. Login required");
              */
+            loginRequired = espGetConfig(conn->rx->route, "settings.loginRequired", 0);
+            if (loginRequired && *loginRequired) {
+                httpError(conn, HTTP_CODE_UNAUTHORIZED, "Access Denied. Login required");
+            }
         }
     }
 }

@@ -4,18 +4,11 @@
 #include "esp.h"
 
 static void createMapping() {
-    Edi         *db;
     EdiRec      *vlan;
 
-    db = getDatabase();
-    if ((vlan = ediReadRecWhere(db, "vlan", "name", "==", param("vlan"))) == 0) {
-        feedback("error", "Cannot find: %s", param("vlan"));
-        renderResult(0);
+    if ((vlan = readRecWhere("vlan", "name", "==", param("vlan"))) == 0) {
+        renderResult(feedback("error", "Cannot find: %s", param("vlan")));
         return;
-    }
-    //  MOB - addParam()
-    if (!param("tagged")) {
-        setParam("tagged", "untagged");
     }
     setParam("vlanId", getField(vlan, "id")); 
     renderResult(createRecFromParams("mapping"));
@@ -37,8 +30,11 @@ static void updateMapping() {
     renderResult(updateRecFromParams("mapping"));
 }
 
-ESP_EXPORT int esp_controlle_layer2_mapping(HttpRoute *route, MprModule *module)
+ESP_EXPORT int esp_controlle_layer2_mapping(HttpRoute *route)
 {
+    Edi     *edi;
+
+    edi = getDatabase();
     espDefineAction(route, "mapping-create", createMapping);
     espDefineAction(route, "mapping-get", getMapping);
     espDefineAction(route, "mapping-list", listMappings);

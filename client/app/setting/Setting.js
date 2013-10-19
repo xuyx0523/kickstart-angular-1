@@ -3,8 +3,7 @@
  */
 'use strict';
 
-app.factory('Setting', function ($resource) {
-    return $resource('/service/setting', { 
-    }, {
-    });
-});
+angular.module('app').factory('Setting', function (EspResource) {
+    /* Use group() to save routes on the server */
+    return EspResource.group("setting");
+})

@@ -4,14 +4,90 @@
 
 'use strict';
 
-app.controller('DashControl', function ($rootScope, $scope, $location, $routeParams, Dash, Esp, Vlan) {
+angular.module('app').controller('DashControl', function (Dash, Esp, $location, $scope, $timeout, $route) {
+
+	var dashPage = $location.path();
+
+	function processResponse(response) {
+		var offline = 0;
+		var active = 0;
+		angular.forEach(response.ports, function(port,key) {
+			if (port.mode != 'Online') offline++;
+			if ($scope.last) {
+				if (port.rxBytes != $scope.last.ports[key].rxBytes) {
+					active++;
+				}
+			}
+		});
+		$scope.ports.offline = offline;
+		$scope.ports.online = response.ports.length - offline;
+		$scope.ports.active = active;
+		$scope.last = response;
+	}
+
+	function startWebSockets() {
+		var uri = 'ws://' + $location.host() + ':' + $location.port() + '/' + Esp.config.routePrefix.slice(1) + '/dash/stream';
+	    console.log(uri);
+	    var ws = new WebSocket(uri, ['chat']);
+	    ws.onmessage = function (event) {
+	    	if ($location.path() != dashPage) {
+		        console.log("CLIENT CLOSE of DASH WEB SOCKET");
+	    		ws.close();
+	    	} else {
+		        var data = angular.fromJson(event.data);
+		        console.log("MSG", data);
+		        //	MOB - should be a convenience function
+                angular.forEach(data, function(value, key) {
+                    if (key == 'feedback') {
+                        $rootScope[key] = value;
+                    } else if ($scope) {
+                        $scope[key] = value;
+                    }
+                });
+		        $scope.$apply(function() {
+		        	processResponse(data);
+		    	});
+        	}
+	    };
+	    ws.onclose = function (event) {
+	    	//	MOB - timeout
+	        console.log("CLOSED");
+	        //	MOB - need to protect so we only have one active
+	    	// $scope.update = $timeout(startWebSockets, 10 * 1000, true);
+	    };
+	    ws.onerror = function (event) {
+        	console.log("Error " + event);
+	    	// $scope.update = $timeout(startWebSockets, 10 * 1000, true);
+		}
+		return ws;
+    }
+
+    function startPoll() {
+    	if ($location.path() != dashPage) {
+			$scope.update = null;
+    	} else {
+		    if (!$scope.update) {
+			    Dash.get({id: 1}, $scope, function(response) {
+			    	processResponse(response);
+		            $scope.update = $timeout(startPoll, 1 * 1000, true);
+			    });
+			}
+		}
+    }
+
+	if (window.WebSocket && false) {
+		$scope.update = startWebSockets();
+	} else {
+    	startPoll();
+    }
 });
 
 app.config(function($routeProvider) {
-    $routeProvider.when('/', {
-        templateUrl: '/app/dash/dash.html',
+    var Default = {
         controller: 'DashControl',
-        abilities: { },
         resolve: { action: checkAuth },
-    });
+    };
+    $routeProvider.when('/', angular.extend({}, Default, {
+        templateUrl: '/app/dash/dash.html'
+    }));
 });

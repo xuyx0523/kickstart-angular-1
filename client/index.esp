@@ -1,64 +1,45 @@
 <!doctype html>
-<html lang="en" ng-app="Layer2" ng-csp>
+<html lang="en" ng-csp>
+
 <head>
     <title>layer2</title>
     <meta charset="utf-8" />
-    <% securityToken(); %>
     <link href='http://data/x-icon;,' rel='shortcut icon' />
-    <!-- [if lt ie 9]>
-    <script src='lib/html5shiv/html5shiv.js'></script>
-    <![endif]-->
-
-    <link rel='stylesheet' type='text/css' href='css/fix.css' />
-    <% if (modeIs("debug")) { %>
-
-    <!--
-        <link rel='stylesheet/less' type='text/css' href='lib/bootstrap/less/bootstrap.less' />
-        <link rel='stylesheet/less' type='text/css' href='lib/bootstrap/less/theme.less' />
-        <link rel='stylesheet' type='text/css' href='lib/font-awesome/css/font-awesome.css' />
-    -->
-    <link rel='stylesheet/less' type='text/css' href='css/all.less' />
-    <% } else {
-    %> <link rel='stylesheet' type='text/css' href='css/all.min.css' />
-    <% } %>
-    <link rel='stylesheet' type='text/css' href='css/fix.css' />
-
+    <% stylesheets(NULL); %>
+    <% securityToken(); %>
 </head>
-<body>
+<body ng-controller="HomeControl">
     <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-tower"></span> Layer<sup>2</sup></a>
+            <i class="navbar-toggle icon-reorder" ng-click="showNav=!showNav"></i>
+            <a class="navbar-brand ng-cloak" href="#"><span class="glyphicon glyphicon-tower"></span> Layer<sup>2</sup></a>
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-left">
-                <li class="navbar-left" ng-class="esp.navclass('/service/manage/')" ng-show="Esp.can('edit')"> 
-                    <a href="#/service/manage/">Manage</a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right ng-cloak">
                 <li>
                     <form class="navbar-form" role="search">
                         <input class="form-control" type="text">
                         <span class="glyphicon glyphicon-search"></span>
                     </form>
                 </li>
-                <li><a href="#"><span class="glyphicon glyphicon-wrench"></span></a></li>
-                <li class="dropdown">
+                <li><a href="#/setting/"><span class="glyphicon glyphicon-wrench"></span></a></li>
+                <li class="dropdown ng-cloak" ng-controller="StatusControl" ng-show="eventCount">
                     <a href="#" class="dropdown-toggle"><i class="icon-warning-sign icon-xlarge"></i></a>
-                    <ul class="dropdown-menu log" role="menu" ng-controller="LogControl">
-                        <li class="header">You have {{logs.data.length}} notifications</li>
-                        <div ng-repeat="log in logs.data" ng-click="click($index)">
+                    <ul class="dropdown-menu notify" role="menu">
+                        <li class="header">You have {{eventCount}} event notices</li>
+                        <div ng-repeat="event in events" esp-click="/event/{{events[$index].id}}">
                             <li class="divider"></li>
-                            <li><a class="message"><i class="icon-signin icon"></i> {{log.title}} <span class="time"><i class="icon-time"></i> {{log.date}}</span></a></li>
+                            <li><a class="message"><i class="icon-signin icon"></i> {{event.title}} <span class="time">
+                                <i class="icon-time"></i> {{event.date}}</span></a></li>
                         </div>
-                        <li class="footer"><a href="#/service/log/list">View all notifications</a></li>
+                        <li class="footer"><a href="#/event/list">View all events</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" ng-cloak>{{Esp.user.name || 'guest'}} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Profile</a></li>
-                        <li><a href="" ng-click="loginOut()" ng-controller="UserControl">{{Esp.user.name ? 'Sign out' : 'Sign in'}}</a></li>
+                        <li><a href="#"><i class="icon-user"></i> Profile</a></li>
+                        <li><a ng-href="#/user/{{Esp.user ? 'logout' : 'login'}}"><i class="icon-off"></i> {{Esp.user ? 'Sign out' : 'Sign in'}}</a></li>
                     </ul>
                 </li>
                 <li><a href=""><i class="icon-question icon-large icon-inverse"></i></a></li>
@@ -66,46 +47,30 @@
         </div>
     </nav>
 
-    <main class="home">
+    <main class="home ng-cloak">
         <section class="row container">
-            <nav class="col-md-1 text-center sidebar">
+            <nav class="col-md-1 text-center sidebar" ng-show="showNav">
                 <div class="nav-collapse">
                     <ul class="nav nav-tabs nav-stacked main-menu">
-                        <layer2-menu href="#" class="icon-dashboard">Dashboard</layer2-menu>
-                        <layer2-menu href="#/service/port/list" class="icon-sitemap">Ports</layer2-menu>
-                        <layer2-menu href="#/service/vlan/list" class="glyphicon glyphicon-hdd">VLANs</layer2-menu>
-                        <layer2-menu href="#/service/port/1" class="glyphicon glyphicon-cog">Settings</layer2-menu>
-                        <layer2-menu href="#/service/user/list" class="glyphicon glyphicon-user">Users</layer2-menu>
-                        <layer2-menu href="#/service/log/list" class="glyphicon glyphicon-list">Log</layer2-menu>
-                        <layer2-menu href="#" class="icon-signal">Metrics</layer2-menu>
+                        <layer2-menu href="/" class="icon-dashboard">Dash</layer2-menu>
+                        <layer2-menu href="/port/list" class="icon-sitemap">Ports</layer2-menu>
+                        <layer2-menu href="/vlan/list" class="glyphicon glyphicon-hdd">VLANs</layer2-menu>
+                        <layer2-menu href="/setting" class="glyphicon glyphicon-cog">Settings</layer2-menu>
+                        <layer2-menu href="/user/list" class="glyphicon glyphicon-user">Users</layer2-menu>
+                        <layer2-menu href="/event/list" class="glyphicon glyphicon-list">Events</layer2-menu>
+                        <layer2-menu href="/metics" class="icon-signal">Metrics</layer2-menu>
                     </ul>
                 </div>
             </nav>
-            <section class="col-md-10 content">
-                <div ng-view></div>
+            <section class="content col-md-11" id="content">
+                <div ng-view class="ng-cloak"></div>
             </section>
         </section>
         <div ng-repeat="(field, msg) in feedback">
-            <h1 class="ng-hide-remove" ng-class="'feedback-' + field" ng-show="feedback" ng-cloak>{{msg}}</h1>
+            <span class="ng-hide-remove" ng-class="'feedback-' + field" ng-cloak>{{msg}}</span>
         </div>
+        <footer class="footer"><span>&copy; Embedthis Software 2013</span><span class="powered">Powered by ESP</span></footer>
     </main>
-
-    <% if (modeIs("debug")) { %>
-    <script src='lib/angular/angular.js'></script>
-    <script src='lib/angular/angular-route.js'></script>
-    <script src='lib/angular/angular-animate.js'></script>
-    <script src='lib/angular/angular-resource.js'></script>
-    <script src='lib/angular/angular-bootstrap.js'></script>
-    <script src='lib/angular-ui-bootstrap/ui-bootstrap-tpls.js'></script>
-    <script src='lib/less/less.js'></script>
-    <script src='app/main.js'></script>
-    <script src='lib/angular-local/LocalStore.js'></script>
-    <script src='lib/angular-session/SessionStore.js'></script>
-    <script src='lib/angular-esp/Esp.js'></script>
-    <%
-    scripts("lib/*/ext/**.js,app/*/**.js");
-    } else {
-    %> <script src='all.min.js'></script>
-    <% } %>
+    <% scripts(NULL); %>
 </body>
 </html>

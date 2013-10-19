@@ -5,37 +5,80 @@
             showErrors: true,
             keepSource: true,
             update: true,
-            username: "admin"
+            login: {
+                name: "",
+                abilities: {
+                    edit: true,
+                    view: true,
+                },
+            },
         },
         release: {
             map: "compressed",
             showErrors: false,
             update: false,
             keepSource: false,
-            username: ""
+            login: {
+                name: "",
+                abilities: {
+                    edit: true,
+                    view: true,
+                },
+            },
         }
     },
+    name: "layer2",
     settings: {
-        "components": [
-            "server",
-            "angular"
-        ],
+        components: {
+            "server": {},
+            "angular": {
+                scripts: [
+                    "angular.js",
+                    "angular-animate.js",
+                    "angular-bootstrap.js",
+                    "angular-resource.js",
+                    "angular-route.js",
+                ],
+            },
+            "angular-esp": {scripts: ['*']},
+            "bootstrap": {},
+            "html5shiv": {scripts: ['*']},
+            "angular-ui-bootstrap": {scripts: ['*']},
+            "font-awesome": {scripts: ['*']},
+            "less": {scripts: ['*']},
+            "more": {scripts: ['*']},
+            "respond": {scripts: ['*']},
+            "angular-mvc": {},
+            "layer2": {scripts: ['*']},
+        },
         formats: {
-            date: 'yyyy-MM-dd',
+            date: "yyyy-MM-dd",
             float: 2,                                                                                                  
-            int: 0
+            int: 0,
         },
+        /* Set to "/user/login" to require login for any access */
+        loginRequired: "",
         redirect: "secure",
+        routePrefix: "/service",
         sendJson: true,
-        serverPrefix: "/service",
         timeouts: {
-            session: 1800
+            session: 1800,
         },
-        xsrfToken: true
+        xsrfToken: true,
     },
     server: {
         authStore: "app",
-        database: "mdb://layer2.mdb"
+        database: "mdb://layer2.mdb",
+    },
+    generate: {
+        top: "angular-mvc",                                                                                            
+        scaffold: true,
+        clientModel: true,
+        clientController: true,
+        clientView: true,
+        controller: true,
+        migration: true,
+        view: false,
     },
 }
 

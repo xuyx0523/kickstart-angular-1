@@ -4,18 +4,52 @@
 
 'use strict';
 
-/*
-    Create the application module
- */
-var app = angular.module('Layer2', ['ngResource', 'ngRoute', 'ngAnimate', 'ui.bootstrap']);
+var app = angular.module('app', ['ngAnimate', 'ngResource', 'ngRoute', 'ui.bootstrap', 'esp', 'layer2']);
+
+app.config(function($routeProvider) {
+	/*
+	    Configure the default route. Other routes may be defined in controllers.
+ 	 */
+    $routeProvider.otherwise({ redirectTo: '/' });
+});
 
 /*
-    Configure the default route. Other routes may be defined in controllers.
+    Dynamic content resizing
  */
-app.config(function($routeProvider, $locationProvider) {
-    /*
-        Define URL to redirect toward when access is denied by server
-     */
-    $routeProvider.login = "/service/user/login";
-    $routeProvider.otherwise({ redirectTo: '/' });
+app.run(function($timeout, $window) {
+    window.onresize = function() {
+        var elt = angular.element(document.getElementById('content'));
+        var scope = angular.element(elt).scope();
+        if (scope) {
+            scope.$apply(function() {
+                elt.css('min-height', '' + ($window.innerHeight - 110) + 'px');
+                /*
+                    if (showNav) {
+                        elt.css('min-height', '' + ($window.innerHeight - 110) + 'px');
+                }
+                */
+            });
+        }
+    };
+    $timeout(window.onresize, 1, true);
+});
+
+
+/*
+    Load ESP configuration once the app is fully loaded
+    Use explicit bootstrap rather than ng-app in index.esp so that ESP can retrieve the config.json first.
+ */
+angular.element(document).ready(function() {
+    var http = new XMLHttpRequest();
+    http.onload = function() {
+        try {
+            //  MOB - need better way of doing this
+            angular.module('esp').config = JSON.parse(this.responseText);
+        } catch(e) {
+            console.log("Cannot parse ESP config", this.responseText)
+        }
+        angular.bootstrap(document, ['app']);
+    };
+    http.open("GET", "/esp/config", true);
+    http.send();
 });

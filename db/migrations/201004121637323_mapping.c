@@ -1,5 +1,5 @@
 /*
-    mapping
+    mapping migration
  */
 #include "esp.h"
 
@@ -14,7 +14,6 @@ static int forward(Edi *db)
     rc += ediAddColumn(db, "mapping", "id", EDI_TYPE_INT, EDI_AUTO_INC | EDI_INDEX | EDI_KEY);
     rc += ediAddColumn(db, "mapping", "portId", EDI_TYPE_INT, EDI_FOREIGN);
     rc += ediAddColumn(db, "mapping", "vlanId", EDI_TYPE_INT, EDI_FOREIGN);
-    rc += ediAddColumn(db, "mapping", "tagged", EDI_TYPE_STRING, 0);
     if (rc < 0) {
         return rc;
     }
@@ -23,7 +22,6 @@ static int forward(Edi *db)
     }
     for (i = 0; i < 4; i++) {
         if (!ediSetField(rec, "portId", itos(i + 1)) ||
-            !ediSetField(rec, "tagged", "untagged") ||
             !ediSetField(rec, "vlanId", "1")) {
             mprError("Can't update fields for mapping table");
             rc = MPR_ERR_CANT_WRITE;

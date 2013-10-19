@@ -1,5 +1,5 @@
 /*
-    vlan
+    vlan migration
  */
 #include "esp.h"
 
@@ -17,11 +17,11 @@ static int forward(Edi *db)
     rc += ediAddColumn(db, "vlan", "status", EDI_TYPE_STRING, 0);
     rc += ediAddColumn(db, "vlan", "mode", EDI_TYPE_STRING, 0);
 
-#if 0
-    //  MOB - need a bool type
-    rc += ediAddColumn(db, "vlan", "notifications", EDI_TYPE_INT, 0);
+    rc += ediAddColumn(db, "vlan", "rxBytes", EDI_TYPE_INT, 0);
+    rc += ediAddColumn(db, "vlan", "rxPackets", EDI_TYPE_INT, 0);
+    rc += ediAddColumn(db, "vlan", "txBytes", EDI_TYPE_INT, 0);
+    rc += ediAddColumn(db, "vlan", "txPackets", EDI_TYPE_INT, 0);
 
-#endif
     if (rc < 0) {
         return rc;
     }
@@ -32,7 +32,11 @@ static int forward(Edi *db)
         if (!ediSetField(rec, "name", sfmt("vlan%02d", i)) ||
                 !ediSetField(rec, "description", sfmt("General VLAN-%d", i)) ||
                 !ediSetField(rec, "mode", "Online") ||
-                !ediSetField(rec, "status", "Normal")) {
+                !ediSetField(rec, "status", "Normal") ||
+                !ediSetField(rec, "rxBytes", "0") ||
+                !ediSetField(rec, "rxPackets", "0") ||
+                !ediSetField(rec, "txBytes", "0") ||
+                !ediSetField(rec, "txPackets", "0")) {
             mprError("Can't update field for vlan table");
             rc = MPR_ERR_CANT_WRITE;
             break;

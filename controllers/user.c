@@ -11,11 +11,23 @@ static void createUser() {
 }
 
 static void getUser() { 
-    renderRec(readRec("user", param("id")));
+    /* Don't send the real password back to the user */
+    renderRec(setField(readRec("user", id()), "password", "   n o t p a s s w o r d   "));
 }
 
 static void indexUser() {
     renderGrid(readTable("user"));
+}
+
+static void listUsers() {
+    EdiGrid     *users;
+    int         r;
+
+    users = readTable("user");
+    for (r = 0; r < users->nrecords; r++) {
+        setField(users->records[r], "password", 0);
+    }
+    renderGrid(users);
 }
 
 static void removeUser() { 
@@ -31,14 +43,37 @@ static void updateUser() {
     }
 }
 
+static void forgot() {
+    EdiRec  *user;
+    cchar   *msg, *name, *to;
+
+    name = param("recover");
+    if ((user = readRecWhere("user", "username", "==", name)) == 0) {
+        if ((user = readRecWhere("user", "email", "==", name)) == 0) {
+            /* Security delay */
+            mprSleep(2500);
+            renderResult(feedback("error", "Unknown user."));
+            return;
+        }
+    }
+    to = getField(user, "email");
+    msg = sfmt("Password Reset\nPlease use this new temporary password %s\nLogin at %s\n",
+        "temp", sjoin(httpUri(getConn(), "~", NULL), "/user/login", NULL));
+    if (espEmail(getConn(), to, "mob@emobrien.com", "Reset Password", 0, 0, msg, 0) < 0) {
+        renderResult(feedback("error", "Cannot send password reset email."));
+    } else {
+        renderResult(feedback("inform", "Password reset details sent."));
+    }
+}
+
 static void login() {
+    bool        remember = smatch(param("remember"), "true");
     HttpConn    *conn = getConn();
     if (httpLogin(conn, param("username"), param("password"))) {
-        render("{\"success\": 1, \"user\": {\"name\": \"%s\", \"abilities\": %s}}", conn->username, 
-            mprSerialize(conn->user->abilities, MPR_JSON_QUOTES));
+        render("{\"error\": 0, \"user\": {\"name\": \"%s\", \"abilities\": %s, \"remember\": %s}}", conn->username,
+            mprSerialize(conn->user->abilities, MPR_JSON_QUOTES), remember ? "true" : "false");
     } else {
-        feedback("error", "Invalid Login");
-        renderResult(0);
+        renderResult(feedback("error", "Invalid Login"));
     }       
 }
 
@@ -52,18 +87,22 @@ ESP_EXPORT int esp_controller_layer2_user(HttpRoute *route, MprModule *module)
     Edi     *edi;
 
     edi = getDatabase();
-    //  MOB - should ability string be included with the action?
     espDefineAction(route, "user-create", createUser);
     espDefineAction(route, "user-get", getUser);
+    espDefineAction(route, "user-list", listUsers);
     espDefineAction(route, "user-index", indexUser);
     espDefineAction(route, "user-remove", removeUser);
     espDefineAction(route, "user-update", updateUser);
 
+    espDefineAction(route, "user-cmd-forgot", forgot);
     espDefineAction(route, "user-cmd-login", login);
     espDefineAction(route, "user-cmd-logout", logout);
 
-    ediAddValidation(edi, "present", "login", "username", 0);
-    ediAddValidation(edi, "unique", "login", "username", 0);
-    ediAddValidation(edi, "present", "login", "password", 0);
+    ediAddValidation(edi, "present", "user", "username", 0);
+    ediAddValidation(edi, "unique", "user", "username", 0);
+    ediAddValidation(edi, "present", "user", "email", 0);
+    ediAddValidation(edi, "format", "user", "email", ".*@.*");
+    ediAddValidation(edi, "unique", "user", "email", 0);
+    ediAddValidation(edi, "present", "user", "roles", 0);
     return 0;
 }

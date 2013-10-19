@@ -4,93 +4,71 @@
 
 'use strict';
 
-app.controller('PortControl', function ($rootScope, $scope, $location, $routeParams, Port, Esp, Vlan) {
+angular.module('app').controller('PortControl', function (Esp, Port, Vlan, $rootScope, $scope, $location, $routeParams) {
+    angular.extend($scope, $routeParams);
+    $scope.options = {
+        //  MOB - get better name than "options" more unique
+        speed: {
+            "1000":  "1000",
+            "10000": "10000",
+            "40000": "40000",
+        },
+        mode: {
+            "Online": "Online",
+            "Offline": "Offline",
+        },
+        duplex: {
+            "Half": "Half",
+            "Full": "Full",
+        },
+        negotiate: {
+            "true":  "Enabled",
+            "false": "Disabled",
+        },
+        flowControl: {
+            "true":  "Enabled",
+            "false": "Disabled",
+        },
+        jumbo: {
+            "true":  "Enabled",
+            "false": "Disabled",
+        },
+    }; 
 
-    if ($location.path() == "/service/port/") {
-        $scope.action = "Create";
-        $scope.port = new Port();
-
-    } else if ($routeParams.id) {
-        Port.get({id: $routeParams.id}, function(response) {
-            $scope.port = response.data;
+    if ($scope.id) {
+        Port.get({id: $scope.id}, $scope, {}, function(response) {
             $scope.port.num = $scope.port.name.replace('tty', '');
+
         });
         if ($location.path().indexOf("vlans") > 0) {
-            //  MOB - don't need. Could this be done on demand?
-            Port.vlans({id: $routeParams.id}, function(response) {
-                $scope.vlans = response;
-            });
+            Port.vlans({id: $scope.id}, $scope, {mappings: "data"});
         }
     } else {
-        $scope.list = Port.list({}, function(response) {
-            $scope.ports = response;
-        });
+        Port.list(null, $scope, {ports: "data"});
     }
-    if ($location.path().indexOf("add") > 0) {
-        $scope.vlan = {};
-    }
-
-    $scope.routeParams = $routeParams;
-    $scope.speeds = [
-        { id: "1000", speed: "1000" },
-        { id: "10000", speed: "10000" },
-        { id: "40000", speed: "40000" },
-    ];
-
-    $scope.remove = function() {
-        Port.remove({id: $scope.port.id}, function(response) {
-            $location.path("/service/port/list");
-            $rootScope.feedback = response.feedback;
-        });
-    };
 
     $scope.save = function() {
         $scope.port.name = 'tty' + $scope.port.num;
-        Port.save($scope.port, function(response) {
-            $rootScope.feedback = response.feedback;
+        Port.update($scope.port, $scope, function(response) {
             if (!response.error) {
-                $rootScope.feedback.inform = $scope.routeParams.id ? "Updated Port" : "Created New Port";
-                $location.path('/');
-            } else {
-                $scope.fieldErrors = response.fieldErrors;
-                $rootScope.feedback.error = $rootScope.feedback.error || "Cannot Save Port";
+                $location.path('/port/list');
             }
         });
     };
 
-    $scope.click = function(index) {
-        if (Esp.can('edit')) {
-            //  MOB - not right
-            $location.path('/service/port/' + $scope.ports.data[index].id);
-        } else {
-            $rootScope.feedback = { warning: "Insufficient Privilege to Edit Ports" };
-        }
-    };
-
-    $scope.clickVlan = function(index) {
-        if (Esp.can('edit')) {
-            $location.path('/service/vlan/' + $scope.vlans.data[index].id);
-        }
-    };
-
-    //  MOB - should be able to do this in a view
+    //  MOB - Replace this with esp-tab directive
     $scope.selectPane = function(pane) {
         $scope.currentPane = pane;
         if (pane == 'Details') {
-            $location.path('/service/port/' + $scope.port.id);
+            $location.path('/port/' + $scope.port.id);
         } else {
-            $location.path('/service/port/' + $scope.port.id + '/vlans');
+            $location.path('/port/' + $scope.port.id + '/vlans');
         }
     };
 
     $scope.addPortToVlan = function(vlan) {
-        $scope.vlans = Vlan.list({}, function(response) {
-            if (response.error) {
-                $rootScope.feedback.error = "Cannot get list of VLANs";
-                return;
-            }
-            //  MOB - must be a better way 
-            $scope.vlans = response.data;
+        Vlan.list(null, $scope, {vlans: "data"}, function(response) {
+            //  MOB - alternatively, do this on the server side?
             for (var i = 0; i < $scope.vlans.length; i++) {
                 if ($scope.vlans[i].name == vlan) {
                     break;
@@ -101,15 +79,9 @@ app.controller('PortControl', function ($rootScope, $scope, $location, $routePar
                 return;
             }
             var vlanId = $scope.vlans[i].id;
-            Vlan.addPort({id: vlanId, port: $scope.port.name}, function(response) {
-                $rootScope.feedback = response.feedback;
-                if (response.error) {
-                    $scope.fieldErrors = response.fieldErrors;
-                    $rootScope.feedback.error = $rootScope.feedback.error || "Cannot add port to VLAN";
-                } else {
-                    $rootScope.feedback.inform = "Created Port Mapping";
-                    // var url = $rootScope.referrer.$$route
-                    $location.path('/service/vlan/' + vlanId + '/ports');
+            Vlan.addPort({id: vlanId, port: $scope.port.name}, $scope, function(response) {
+                if (!response.error) {
+                    $location.path('/vlan/' + vlanId + '/ports');
                 }
             });
         });
@@ -117,28 +89,24 @@ app.controller('PortControl', function ($rootScope, $scope, $location, $routePar
 });
 
 app.config(function($routeProvider) {
-    $routeProvider.when('/service/port/list', {
-        templateUrl: '/app/port/port-list.html',
+    var Default = {
         controller: 'PortControl',
         abilities: { 'view': true },
         resolve: { action: checkAuth },
-    });
-    $routeProvider.when('/service/port/:id', {
-        templateUrl: '/app/port/port-edit.html',
-        controller: 'PortControl',
+    };
+    $routeProvider.when('/port/list', angular.extend({}, Default, { 
+        templateUrl: '/app/port/port-list.html' 
+    }));
+    $routeProvider.when('/port/:id', angular.extend({}, Default, {
+        templateUrl: '/app/port/port-edit.html', 
         abilities: { 'edit': true, 'view': true },
-        resolve: { action: checkAuth },
-    });
-    $routeProvider.when('/service/port/:id/vlans', {
+    }));
+    $routeProvider.when('/port/:id/vlans', angular.extend({}, Default, { 
         templateUrl: '/app/port/port-vlans.html',
-        controller: 'PortControl',
         abilities: { 'edit': true, 'view': true },
-        resolve: { action: checkAuth },
-    });
-    $routeProvider.when('/service/port/:id/add', {
+    }));
+    $routeProvider.when('/port/:id/add', angular.extend({}, Default, { 
         templateUrl: '/app/port/port-add-to-vlan.html',
-        controller: 'PortControl',
         abilities: { 'edit': true, 'view': true },
-        resolve: { action: checkAuth },
-    });
+    }));
 });

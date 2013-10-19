@@ -3,8 +3,11 @@
  */
 'use strict';
 
-app.factory('Table', function ($resource) {
-    return $resource('/service/table/:name', { name: '@name' }, {
-        'list':     { 'method': 'GET', url: '/service/table/list' },
+angular.module('app').factory('Table', function (EspResource) {
+    return EspResource.group("table", 
+    { 
+        name: '@name' 
+    }, {
+        list: { 'method': 'GET', url: '/service/table/list' },
     });
 });

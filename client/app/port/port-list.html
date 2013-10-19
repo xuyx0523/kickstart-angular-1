@@ -1,10 +1,11 @@
-<div class="span4">
+<div class="col-xs-10">
     <h3>Ports</h3>
+    <!-- MOB - create a single style that does this -->
     <table class="table table-striped table-bordered table-hover table-condensed"
             ng-init="columns = ['name',  'mode', 'negotiate', 'duplex', 'flowControl', 'jumbo', 'speed', 'status']">
         <thead><tr><th ng-repeat="header in columns">{{header | titlecase}}</th></tr></thead>
         <tbody>
-        <tr ng-repeat="port in ports.data" ng-click="click($index)">
+            <tr ng-repeat="port in ports" esp-click="/port/{{port.id}}">
             <td ng-repeat="column in columns">{{port[column]}}</td>
         </tr>
         </tbody>

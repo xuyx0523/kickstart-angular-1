@@ -1,60 +1,59 @@
 /*
-    Esp.js - Esp Angular Extension
+    esp.js - Esp Angular Extension
  */
 'use strict';
 
 /*
-    Global Esp object
- */
-var Esp;
-
-/*
     The Esp service provide a central place for ESP state.
-    It places a "esp" object on the $rootScope that is inherited by all $scopes.
+    It places a "Esp" object on the $rootScope that is inherited by all $scopes.
     Alternatively, injecting the Esp service provides direct access using the Esp service object.
  */
+angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.format', 'esp.input-group', 
+    'esp.input', 'esp.local', 'esp.modal', 'esp.resource', 'esp.session', 'esp.titlecase'])
+.factory('Esp', function(SessionStore, $document, $http, $location, $rootScope, $timeout) {
 
-app.factory('Esp', function($document, $rootScope, $location, SessionStore) {
-    /*
-        Define the Esp object and store in the $rootScope so all views can utilize.
-     */
-	Esp = $rootScope.Esp = {}
-
-    Esp.user = SessionStore.get('user');
-
-    /*
-     Change the URL. This can be used in view partials
-     */
-    Esp.goto = function(url) {
-        $location.path(url);
-    };
+    var Esp = {};
+    $rootScope.Esp = Esp;
 
     /*
         Is this user authorized to perform the given task
         Note: this is advisory only to provide hints in the UI. It is the server's repsonsibility to
-        restrict user abilities as appropriate. We allow !user because auto-login will not set these.
+        restrict user abilities as appropriate.
      */
     Esp.can = function(task) {
         var user = Esp.user
-        return !user || (user.abilities && user.abilities[task]);
+        return (user && user.abilities && user.abilities[task]);
     };
 
     /*
         Return enabled|disabled depending on if the user is authorized for a given task
+        MOB - rename 
+        MOB - who uses this ... tabs below
      */
     Esp.canClass = function(task) {
         return Esp.can(task) ? "enabled" : "disabled";
     };
 
-    /*
-        Determine the current login state
-     */
-    Esp.getLoginState = function() {
-        return (Esp.user && Esp.user.name) ? "Logout" : "Login";
+    Esp.login = function(user) {
+        if (user) {
+            Esp.user = user;
+            Esp.user.lastAccess = Date.now();
+            if (user.remember) {
+                SessionStore.put('user', Esp.user);
+            } else {
+                SessionStore.remove('user');
+            }
+        }
+    };
+
+    Esp.logout = function() {
+        SessionStore.remove('user');
+        Esp.user = null;
     };
 
     /*
         Return "active" if the user is authorized for the specified tab
+        MOB - who is using this
      */
     Esp.navClass = function(tab, ability) {
         var classes = [];
@@ -69,6 +68,9 @@ app.factory('Esp', function($document, $rootScope, $location, SessionStore) {
         return classes.join(' ');
     };
 
+    /*
+        Map a string to TitleCase
+     */
     Esp.titlecase = function (str) {
         var words = str.split(/[ \.]/g);
         for (var i = 0; i < words.length; i++) {
@@ -77,65 +79,104 @@ app.factory('Esp', function($document, $rootScope, $location, SessionStore) {
         return words.join(' ');
     };
 
+    Esp.inform = function (str) {
+        $rootScope.feedback = { inform: str };
+    };
+
+    Esp.error = function (str) {
+        $rootScope.feedback = { error: str };
+    };
+
+    /*
+        Remember the referrer in route changes
+     */
     $rootScope.$on("$routeChangeSuccess", function(scope, current, previous) {
         $rootScope.referrer = previous;
     });
-
 
     /*
         Whenever the user clicks something, clear the feedback
      */
     $document.bind("click", function(event){
-        $rootScope.feedback = {};
+        delete $rootScope.feedback;
         return true;
     });
 
-    return Esp;
-});
+    /*
+        Initialize Esp configuration from config.json
+     */
+    Esp.config = angular.module('esp').config;
 
-/*
-    Startup initialization. Fetch the application configuration.
- */
-app.run(function($rootScope, $http, Esp) {
-    $http.get('/esp/config').success(function(data) {
-        Esp.config = data;
-    }).error(function() {
-            console.log("Cannot fetch configuration");
-        });
-});
+    /*
+        Recover the user session information. The server still validates incase this is stale.
+     */
+    if (Esp.config.login && Esp.config.login.name) {
+        Esp.login(Esp.config.login);
+        Esp.user.auto = true;
+    } else {
+        Esp.user = SessionStore.get('user') || null;
+    }
+    if (Esp.user.length == 0) {
+        Esp.user = null;
+    }
+    if (Esp.config.mode == 'debug' && Esp.config.update) {
+        // less.watch();
+    }
 
-/*
-    Define an Http interceptor to redirect 401 responses to the login page
- */
-app.config(function($httpProvider, $routeProvider) {
-    var interceptor = ['$location', '$q', '$rootScope', '$window', function($location, $q, $rootScope, $window) {
-        function success(response) {
-            return response;
-        }
-        //  MOB - should keep a queue of outstanding requests to retry
-        function error(response) {
-            if (response.status === 401) {
-                $location.path($routeProvider.login);
-                $rootScope.feedback = response.data.feedback;
-
-            } else if (response.status >= 500) {
-                $rootScope.feedback = { warning: "Server Error. Please Retry." };
-
-            } else if (response.status >= 400) {
-                $rootScope.feedback = { warning: "Request Error: " + response.status + ", for " + response.config.url};
+    /*
+        Login session timeout
+     */
+    $timeout(function sessionTimeout() {
+        var timeout = Esp.config.timeouts.session * 1000;
+        if (Esp.user && Esp.user.lastAccess && !Esp.user.auto) {
+            if ((Date.now() - Esp.user.lastAccess) > timeout) {
+                $rootScope.feedback = { error: "Login Session Expired"};
+                $scope.logout();
+            } else if ((Date.now() - Esp.user.lastAccess) > (timeout - (60 * 1000))) {
+                $rootScope.feedback = { warning: "Session Will Soon Expire"};
             }
-            return $q.reject(response);
+            console.log("Session time remaining: ", (timeout - ((Date.now() - Esp.user.lastAccess))) / 1000, "secs");
+            $timeout(sessionTimeout, 60 * 1000, true);
         }
-        return function(promise) {
-            return promise.then(success, error);
-        }
-    }];
-    $httpProvider.responseInterceptors.push(interceptor);
+    }, 60 * 1000, true);
+
+    return Esp;
+})
+.config(function($httpProvider, $routeProvider) {
+    /*
+        Define an Http interceptor to redirect 401 responses to the login page
+        MOB - routeProvider not needed
+     */
+    $httpProvider.interceptors.push(function($location, $q, $rootScope, $window) {
+        return {
+            response: function (response) {
+                if (response.feedback) {
+                    $rootScope.feedback = response.feedback;
+                }
+                return response;
+            },
+            responseError: function (response) {
+                if (response <= 0 || response.status >= 500) {
+                    $rootScope.feedback = { warning: "Server Error. Please Retry." };
+                } else if (response.status === 401) {
+                    var esp = angular.module('esp');
+                    if (esp.config.loginRequired) {
+                        $rootScope.Esp.user = null;
+                        $location.path(esp.config.loginRequired);
+                    }
+                } else if (response.status >= 400) {
+                    $rootScope.feedback = { warning: "Request Error: " + response.status + ", for " + response.config.url};
+                } else if (response.feedback) {
+                    $rootScope.feedback = response.feedback;
+                }
+                return $q.reject(response);
+            }
+        };
+    });
 });
 
 
-//  MOB - why is this a global function?
-
+//  MOB - why is this a global function? Can it be Esp.checkAuth?
 /*
     Route resolve function for routes to verify the user's defined abilities
  */
@@ -158,10 +199,3 @@ function checkAuth($q, $location, $rootScope, $route, Esp) {
     return true;
 }
 
-
-app.filter('titlecase', function(Esp) {
-    var titlecaseFilter = function(str) {
-        return Esp.titlecase(str);
-    };
-    return titlecaseFilter;
-});

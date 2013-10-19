@@ -3,10 +3,6 @@
  */
 'use strict';
 
-app.factory('Dash', function ($resource) {
-    /*
-    return $resource('/service/setting', { 
-    }, {
-    });
-    */
+angular.module('app').factory('Dash', function (EspResource) {
+    return EspResource.group("dash");
 });

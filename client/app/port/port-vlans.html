@@ -1,20 +1,15 @@
-<div ng-init="currentPane='VLAN Membership'" xmlns="http://www.w3.org/1999/html">
-    <nav>
-        <ul class="nav nav-tabs">
-            <li ng-repeat="pane in ['Details', 'VLANs']"  ng-class="{active: currentPane == pane}">
-                <a ng-click="selectPane(pane)">{{pane}}</a>
-            <li>
-        </ul>
-    </nav>
-
-    <h3>VLANS for Port: {{port.name}}</h3>
+<div class="col-xs-6">
+    <div ng-include src="'app/port/panes.inc'" ng-init="currentPane='VLANs'"></div>
+    <h3>VLANS containing {{port.name}}</h3>
+    <!-- MOB - create a single style that does this -->
     <table class="table table-striped table-bordered table-hover table-condensed">
-        <thead><tr><th ng-repeat="header in ['VLAN', 'Tagged']" ng-click="click($index)">{{header | titlecase}}</th></tr></thead>
+        <thead><tr><th ng-repeat="header in ['VLAN']" ng-click="click($index)">{{header | titlecase}}</th></tr></thead>
         <tbody>
-        <tr ng-repeat="vlan in vlans.data" ng-click="clickVlan($index)">
-            <td ng-repeat="column in ['vlan.name', 'tagged']">{{vlan[column]}}</td>
+            <!-- MOB need esp-can to apply to clicking -->
+            <tr ng-repeat="mapping in mappings" esp-click="/vlan/{{mapping['vlan.id']}}">
+            <td ng-repeat="column in ['vlan.name']">{{mapping[column]}}</td>
         </tr>
         </tbody>
     </table>
-    <button class="btn btn-primary" ng-show="Esp.can('edit')" ng-click="Esp.goto('/service/port/' + port.id + '/add')">Add Port to VLAN</button>
+    <button class="btn btn-primary" ng-show="Esp.can('edit')" esp-click="{{'/port/' + port.id + '/add'}}">Add Port to VLAN</button>
 </div>

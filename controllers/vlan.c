@@ -4,6 +4,7 @@
 #include "esp.h"
 
 static void createVlan() {
+    addParam("mode", "Online");
     if (canUser("edit", 1)) {
         renderResult(createRecFromParams("vlan"));
     }
@@ -13,22 +14,23 @@ static void getVlan() {
     renderRec(readRec("vlan", param("id")));
 }
 
-static void getVlanPorts() {
+static void getVlanMappings() {
     Edi         *db;
-    EdiGrid     *mapping, *vlans, *ports, *result;
+    EdiGrid     *mappings, *vlans, *ports, *result;
 
     db = getDatabase();
-    mapping = ediReadWhere(db, "mapping", "vlanId", "==", param("id"));
+    mappings = ediReadWhere(db, "mapping", "vlanId", "==", param("id"));
     vlans = ediReadTable(db, "vlan");
     ports = ediReadTable(db, "port");
-    result = ediJoin(db, mapping, vlans, ports, NULL);
-//MOB
-    espDumpGrid(result);
+    result = ediJoin(db, mappings, vlans, ports, NULL);
     renderGrid(result);
 }
 
+static void initVlan() {
+    renderRec(setField(createRec("vlan", 0), "mode", "Online"));
+}
+
 static void listVlans() {
-    // setStatus(404);
     renderGrid(readTable("vlan"));
 }
 
@@ -39,14 +41,12 @@ static void removeVlan() {
 }
 
 static void updateVlan() {
+    addParam("mode", "Online");
     if (canUser("edit", 1)) {
         renderResult(updateRecFromParams("vlan"));
     }
 }
 
-/*
-    addPort: id, port
- */
 static void addPort() {
     Edi         *db;
     EdiRec      *port;
@@ -55,14 +55,8 @@ static void addPort() {
     int         i;
 
     db = getDatabase();
-    //  MOB - addParam()
-    if (!param("tagged")) {
-        setParam("tagged", "untagged");
-    }
     if ((port = ediReadRecWhere(db, "port", "name", "==", param("port"))) == 0) {
-        //  MOB - better API
-        feedback("error", "Cannot find: tty \"%s\"", param("port"));
-        renderResult(0);
+        renderResult(feedback("error", "Cannot find: tty '%s'", param("port")));
         return;
     }
     vlanId = param("id");
@@ -73,10 +67,10 @@ static void addPort() {
         Check if mapping already exists
         MOB - Need API to to multipare (AND) queries
      */
-    if ((maps = readRecsWhere("mapping", "portId", "==", port->id)) != 0) {
+    if ((maps = readWhere("mapping", "portId", "==", port->id)) != 0) {
         for (i = 0; i < maps->nrecords; i++) {
             if (smatch(getField(maps->records[i], "vlanId"), param("id"))) {
-                renderResult(1);
+                renderResult(feedback("error", "Mapping already exists"));
                 return;
             }
         }
@@ -93,13 +87,11 @@ static void removePort() {
 
     db = getDatabase();
     if ((port = ediReadRecWhere(db, "port", "name", "==", param("port"))) == 0) {
-        //  MOB - better API
-        feedback("error", "Cannot find: tty \"%s\"", param("port"));
-        renderResult(0);
+        renderResult(feedback("error", "Cannot find: tty '%s'", param("port")));
         return;
     }
     vlanId = param("id");
-    if ((maps = readRecsWhere("mapping", "portId", "==", port->id)) != 0) {
+    if ((maps = readWhere("mapping", "portId", "==", port->id)) != 0) {
         for (i = 0; i < maps->nrecords; i++) {
             if (smatch(getField(maps->records[i], "vlanId"), param("id"))) {
                 renderResult(removeRec("mapping", maps->records[i]->id));
@@ -107,8 +99,7 @@ static void removePort() {
             }
         }
     }
-    feedback("error", "Cannot find: mapping");
-    renderResult(0);
+    renderResult(feedback("error", "Cannot find: mapping"));
 }
 
 ESP_EXPORT int esp_controller_layer2_vlan(HttpRoute *route, MprModule *module)
@@ -118,13 +109,18 @@ ESP_EXPORT int esp_controller_layer2_vlan(HttpRoute *route, MprModule *module)
     edi = getDatabase();
     espDefineAction(route, "vlan-create", createVlan);
     espDefineAction(route, "vlan-get", getVlan);
+    espDefineAction(route, "vlan-init", initVlan);
     espDefineAction(route, "vlan-list", listVlans);
     espDefineAction(route, "vlan-remove", removeVlan);
     espDefineAction(route, "vlan-update", updateVlan);
-    espDefineAction(route, "vlan-ports", getVlanPorts);
-    espDefineAction(route, "vlan-add", addPort);
-    espDefineAction(route, "vlan-remove", removePort);
+    espDefineAction(route, "vlan-mappings", getVlanMappings);
+    espDefineAction(route, "vlan-addPort", addPort);
+    espDefineAction(route, "vlan-removePort", removePort);
 
+    ediAddValidation(edi, "unique", "vlan", "name", 0);
     ediAddValidation(edi, "format", "vlan", "name", "^vlan\\d\\d$");
+    ediAddValidation(edi, "format", "vlan", "mode", "^(Online|Offline)$");
+    ediAddValidation(edi, "present", "vlan", "description", 0);
+    ediAddValidation(edi, "present", "vlan", "status", 0);
     return 0;
 }

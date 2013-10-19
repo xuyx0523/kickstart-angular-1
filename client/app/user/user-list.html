@@ -1,12 +1,13 @@
 <h2>User List</h2>
-    <div class="span4">
-    <table class="table table-striped table-bordered table-hover table-condensed">
-        <thead><tr><th ng-repeat="header in list.schema.headers" ng-click="click($index)">{{header}}</th></tr></thead>
+    <div class="col-xs-8">
+    <table class="table table-striped table-bordered table-hover table-condensed"
+            ng-init="columns = ['username',  'email', 'roles']">
+        <thead><tr><th ng-repeat="header in columns">{{header | titlecase}}</th></tr></thead>
         <tbody>
-            <tr ng-repeat="user in list.data" ng-click="click($index)">
-                <td ng-repeat="column in list.schema.columns">{{user[column]}}</td>
+            <tr ng-repeat="user in users" esp-click="/user/{{user.id}}">
+                <td ng-repeat="column in columns">{{user[column]}}</td>
             </tr>
         </tbody>
     </table>
-    <button class="btn btn-primary" ng-click="Esp.goto('/service/user/')">New User</button>
+    <button class="btn btn-primary" esp-click="/user/">New User</button>
 </div>

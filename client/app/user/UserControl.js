@@ -4,110 +4,97 @@
  
 'use strict';
 
-app.controller('UserControl', function ($dialog, $rootScope, $scope, $location, $timeout, User, SessionStore, Esp) {
+angular.module('app').controller('UserControl', function (Esp, User, $rootScope, $scope, $location, $modal, $routeParams, $timeout) {
+    angular.extend($scope, $routeParams);
+    $scope.user = {};
 
-    $scope.loginOut = function() {
-        if (Esp.user && Esp.user.name) {
-            $location.path('/service/user/logout');
+    if (Esp.user || !Esp.config.loginRequired) {
+        if ($scope.id) {
+            User.get({id: $scope.id}, $scope);
         } else {
-            $location.path('/service/user/login');
+            User.list(null, $scope, {users: "data"});
         }
+    } else {
+        var loc = $location.path();
+        if ($location.path().indexOf('/user/login') == 0) {
+            $rootScope.feedback = { warning: "Insufficient Privilege to view users" };
+        }
+    }
+
+    $scope.save = function() {
+        User.update($scope.user, $scope, function(response) {
+            if (!response.error) {
+                $location.path('/user/list');
+            }
+        });
     };
 
-    $scope.login = function() {
+    $scope.login = function(dialog) {
         User.login($scope.user, function(response, fn) {
             if (response.error) {
-                if (response.feedback) {
-                    $scope.error = response.feedback.error;
-                }
-                SessionStore.remove('user');
-                Esp.user = null;
+                Esp.logout();
             } else {
-                Esp.user = response.user;
-                if (Esp.user) {
-                    Esp.user.lastAccess = Date.now();
-                    SessionStore.put('user', Esp.user);
-                }
-                $scope.closeLogin();
+                Esp.login(response.user);
+                dialog.dismiss();
                 $location.path("/");
             }
-            $rootScope.feedback = response.feedback;
         });
     };
 
     $scope.logout = function() {
         if (Esp.user) {
-            Esp.user = null;
-            SessionStore.remove('user');
+            Esp.logout();
             User.logout({}, function() {
-                // $location.path('/service/user/login');
                 $location.path('/');
                 $rootScope.feedback = { inform: "Logged Out" };
             });
         } else {
-            // $location.path('/service/user/login');
             $location.path('/');
             $rootScope.feedback = { inform: "Logged Out" };
         }
     };
 
-    $scope.openLogin = function() {
-        $scope.options = {
-            backdrop: true,
-            backdropClass: 'modal-backdrop',
-            backdropFade: true,
-            backdropClick: true,
-            controller: UserLoginController,
-            dialogClass: 'modal',
-            dialogFade: true,
-            keyboard: true,
-            transitionClass: 'fade',
-            triggerClass: 'in',
-            /* templateUrl: '' */
-        };
-        $scope.showLogin = true;
-    };
-
-    $scope.closeLogin = function() {
-        $scope.showLogin = false;
-    };
-
-    /*
-        Session timeout watchdog
-     */
-    $timeout(function sessionTimeout() {
-        var timeout = Esp.config.settings.timeouts.session * 1000;
-        if (Esp.user && Esp.user.lastAccess) {
-            if ((Date.now() - Esp.user.lastAccess) > timeout) {
-                $rootScope.feedback = { error: "Login Session Expired"};
-                $scope.logout();
-            } else if ((Date.now() - Esp.user.lastAccess) > (timeout - (60 * 1000))) {
-                $rootScope.feedback = { warning: "Session Will Soon Expire"};
+    $scope.forgot = function() {
+        var confirm = $modal.open({
+            scope: $scope,
+            templateUrl: 'app/user/user-forgot.html'
+        });
+        confirm.result.then(function(result) {
+            if (result) {
+                User.forgot($scope.user, function(response, fn) {
+                    $location.path("/");
+                });
             }
-            //  MOB
-            console.log("SESSION TIME REMAINING", (timeout - ((Date.now() - Esp.user.lastAccess))) / 1000, "secs");
-            $timeout(sessionTimeout, 60 * 1000, true);
-        }
-    }, 60 * 1000, true);
-
-});
-
-function UserLoginController($scope, dialog) {
-    $scope.close = function(result) {
-        dialog.close(result);
+        });
     };
-}
+
+    $scope.remove = function() {
+        $modal.open({
+            scope: $scope,
+            template: '<esp-confirm header="Are you sure?" body="Do you want to remove user: {{user.username}}?" ok="Delete User">',
+        }).result.then(function(result) {
+            if (result) {
+                User.remove({id: $scope.user.id}, function(response) {
+                    $location.path("/user/list");
+                });
+            }
+        });
+    };
+});
 
 /*
     User controller routes for login
  */
 app.config(function($routeProvider) {
-    $routeProvider.when('/service/user/login/', {
-        templateUrl: '/app/user/user-login.html',
-        controller: 'UserControl'
-    });
-    $routeProvider.when('/service/user/logout/', {
-        template: '<p ng-init="logout()">Hello</p>',
-        controller: 'UserControl'
-    });
+    var Default = {
+        controller: 'UserControl',
+        resolve: { action: checkAuth },
+    };
+    $routeProvider.when('/user/list',   angular.extend({}, Default, {templateUrl: '/app/user/user-list.html'}));
+    $routeProvider.when('/user/login',  angular.extend({}, Default, {templateUrl: '/app/user/user-login.html'}));
+    $routeProvider.when('/user/logout', angular.extend({}, Default, {template: '<p ng-init="logout()">Hello</p>'}));
+    $routeProvider.when('/user/:id', angular.extend({}, Default, {
+        templateUrl: '/app/user/user-edit.html', 
+        abilities: { 'edit': true, 'view': true },
+    }));
 });
