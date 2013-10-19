@@ -13,3 +13,5 @@
 cache/*
 db/layer2.bak
 projects/*sublime*
+client/all.min.js.gz
+client/lib/angular-ui-bootstrap/old.js
