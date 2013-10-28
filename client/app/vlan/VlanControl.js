@@ -94,7 +94,7 @@ angular.module('app').controller('VlanControl', function (Esp, Vlan, $modal, $ro
     };
 });
 
-app.config(function($routeProvider) {
+angular.module('app').config(function($routeProvider) {
     var Default = {
         controller: 'VlanControl',
         abilities: { edit: 'true', 'view': true },

@@ -10,8 +10,10 @@ angular.module('app').controller('UserControl', function (Esp, User, $rootScope,
 
     if (Esp.user || !Esp.config.loginRequired) {
         if ($scope.id) {
-            User.get({id: $scope.id}, $scope);
-        } else {
+            User.get({id: $scope.id}, $scope, function(response) {
+                console.log(response);
+            });
+        } else if ($location.path().indexOf('/user/list') == 0) {
             User.list(null, $scope, {users: "data"});
         }
     } else {
@@ -85,7 +87,7 @@ angular.module('app').controller('UserControl', function (Esp, User, $rootScope,
 /*
     User controller routes for login
  */
-app.config(function($routeProvider) {
+angular.module('app').config(function($routeProvider) {
     var Default = {
         controller: 'UserControl',
         resolve: { action: checkAuth },

@@ -26,7 +26,7 @@ angular.module('app').controller('EventControl', function (Esp, Event, $filter, 
     };
 });
 
-app.config(function($routeProvider) {
+angular.module('app').config(function($routeProvider) {
     var Default = {
         controller: 'EventControl',
         abilities: { 'view': true },

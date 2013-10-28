@@ -1,20 +1,23 @@
-<div>
-    <div ng-include src="'app/port/panes.inc'" ng-init="currentPane='Details'"></div>
-
-    <h3>Port Details</h3>
+<ul class="breadcrumb">
+    <li><i class="icon-home"></i> <a href="#">Home</a></li>
+    <li><a href="#/port/list">Ports</a></li>
+    <li><a href="#/port/{{id}}">Port</a></li>
+</ul>
+<div ng-include src="'app/port/panes.inc'" ng-init="currentPane='Details'"></div>
+<div class="panel">
+    <h2>Port Details</h2>
     <form name="portForm" class="form-horizontal">
-
-        <esp-input ng-model="port.name" readonly width="col-xs-4" label="Name"></esp-input>
-        <esp-input ng-model="port.status" width="col-xs-4"></esp-input>
+        <esp-input ng-model="port.name" readonly width="col-sm-4" label="Name"></esp-input>
+        <esp-input ng-model="port.status" width="col-sm-4"></esp-input>
         <esp-input type="radio" ng-model="port.mode" label="Admin Mode"></esp-input>
         <esp-input type="checkbox" ng-model="port.negotiate" label="Auto Negotiate"></esp-input>
         <esp-input type="radio" ng-model="port.duplex"></esp-input>
         <esp-input type="checkbox" ng-model="port.flowControl"></esp-input>
         <esp-input type="checkbox" ng-model="port.jumbo"></esp-input>
-        <esp-input type="select" ng-model="port.speed" width="col-xs-3"></esp-input>
+        <esp-input type="select" ng-model="port.speed" width="col-sm-3"></esp-input>
 
         <div class="form-group">
-            <div class="col-xs-offset-3 col-xs-8">
+            <div class="col-sm-offset-3 col-sm-8">
                 <button class="btn btn-primary" ng-click='save()'>Save</button>
                 <button class="btn" esp-click="/port/list">Cancel</button>
             </div>

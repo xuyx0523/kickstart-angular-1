@@ -9,68 +9,72 @@
     <% securityToken(); %>
 </head>
 <body ng-controller="HomeControl">
-    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-        <div class="navbar-header">
-            <i class="navbar-toggle icon-reorder" ng-click="showNav=!showNav"></i>
-            <a class="navbar-brand ng-cloak" href="#"><span class="glyphicon glyphicon-tower"></span> Layer<sup>2</sup></a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right ng-cloak">
-                <li>
-                    <form class="navbar-form" role="search">
-                        <input class="form-control" type="text">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </form>
-                </li>
-                <li><a href="#/setting/"><span class="glyphicon glyphicon-wrench"></span></a></li>
-                <li class="dropdown ng-cloak" ng-controller="StatusControl" ng-show="eventCount">
-                    <a href="#" class="dropdown-toggle"><i class="icon-warning-sign icon-xlarge"></i></a>
-                    <ul class="dropdown-menu notify" role="menu">
-                        <li class="header">You have {{eventCount}} event notices</li>
-                        <div ng-repeat="event in events" esp-click="/event/{{events[$index].id}}">
-                            <li class="divider"></li>
-                            <li><a class="message"><i class="icon-signin icon"></i> {{event.title}} <span class="time">
-                                <i class="icon-time"></i> {{event.date}}</span></a></li>
-                        </div>
-                        <li class="footer"><a href="#/event/list">View all events</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" ng-cloak>{{Esp.user.name || 'guest'}} <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#"><i class="icon-user"></i> Profile</a></li>
-                        <li><a ng-href="#/user/{{Esp.user ? 'logout' : 'login'}}"><i class="icon-off"></i> {{Esp.user ? 'Sign out' : 'Sign in'}}</a></li>
-                    </ul>
-                </li>
-                <li><a href=""><i class="icon-question icon-large icon-inverse"></i></a></li>
-            </ul>
-        </div>
-    </nav>
+    <header>
+        <nav class="navbar navbar-inverse navbar-static-top">
+            <div class="navbar-header">
+                <a class="navbar-brand ng-cloak" href="#"><i class="glyphicon glyphicon-tower"></i> Layer<sup>2</sup></a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right ng-cloak">
+                    <li>
+                        <form class="navbar-form">
+                            <input class="form-control" type="text">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </form>
+                    </li>
+                    <li><a href="#/setting/"><span class="glyphicon glyphicon-wrench"></span></a></li>
+                    <li class="dropdown ng-cloak" ng-controller="StatusControl" ng-show="events.length">
+                        <a href="#" class="dropdown-toggle"><i class="fa fa-warning"></i></a>
+                        <ul class="dropdown-menu notify">
+                            <li class="header">You have {{eventCount}} event notices</li>
+                            <li class="message" ng-repeat="event in events" esp-click="/event/{{events[$index].id}}">
+                                <i class="severity fa fa-inverse event-{{event.type}}" ng-class="Esp.mob(event.type)"></i>
+                                <span>{{event.title}}</span>
+                                <!-- MOB - should really convert to xx mins ago -->
+                                <span class="time"><i class="fa fa-clock-o"></i> {{event.date}}</span>
+                            </li>
+                            <li class="footer"><a href="#/event/list">View all events</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" ng-cloak>{{Esp.user.name || 'guest'}} <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
+                            <li><a ng-href="#/user/{{Esp.user ? 'logout' : 'login'}}"><i class="fa fa-power-off"></i> {{Esp.user ? 'Sign out' : 'Sign in'}}</a></li>
+                        </ul>
+                    </li>
+                    <li><a href=""><i class="fa fa-question"></i></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
 
-    <main class="home ng-cloak">
-        <section class="row container">
-            <nav class="col-md-1 text-center sidebar" ng-show="showNav">
-                <div class="nav-collapse">
-                    <ul class="nav nav-tabs nav-stacked main-menu">
-                        <layer2-menu href="/" class="icon-dashboard">Dash</layer2-menu>
-                        <layer2-menu href="/port/list" class="icon-sitemap">Ports</layer2-menu>
-                        <layer2-menu href="/vlan/list" class="glyphicon glyphicon-hdd">VLANs</layer2-menu>
-                        <layer2-menu href="/setting" class="glyphicon glyphicon-cog">Settings</layer2-menu>
-                        <layer2-menu href="/user/list" class="glyphicon glyphicon-user">Users</layer2-menu>
-                        <layer2-menu href="/event/list" class="glyphicon glyphicon-list">Events</layer2-menu>
-                        <layer2-menu href="/metics" class="icon-signal">Metrics</layer2-menu>
-                    </ul>
-                </div>
-            </nav>
-            <section class="content col-md-11" id="content">
-                <div ng-view class="ng-cloak"></div>
-            </section>
+    <main class="container ng-cloak">
+            <!-- MOB should style text-center in sidebar itself -->
+        <nav class="sidebar nav-collapse col-sm-2" ng-show="showNav">
+            <ul class="nav nav-tabs nav-stacked">
+                <layer2-menu href="/" class="fa fa-tachometer">Dash</layer2-menu>
+                <layer2-menu href="/port/list" class="fa fa-sitemap">Ports</layer2-menu>
+                <layer2-menu href="/vlan/list" class="glyphicon glyphicon-hdd">VLANs</layer2-menu>
+                <layer2-menu href="/setting" class="glyphicon glyphicon-cog">Settings</layer2-menu>
+                <layer2-menu href="/user/list" class="glyphicon glyphicon-user">Users</layer2-menu>
+                <layer2-menu href="/event/list" class="glyphicon glyphicon-list">Events</layer2-menu>
+                <layer2-menu href="/demo/demo-svg" class="icon-signal">Demo SVG</layer2-menu>
+                <layer2-menu href="/demo/demo-1" class="icon-signal">Demo 1</layer2-menu>
+                <layer2-menu href="/demo/demo-2" class="icon-signal">Demo 2</layer2-menu>
+                <layer2-menu href="/demo/demo-3" class="icon-signal">Demo 3</layer2-menu>
+            </ul>
+        </nav>
+        <section class="content col-sm-10" id="content">
+            <div ng-view class="ng-cloak"></div>
         </section>
-        <div ng-repeat="(field, msg) in feedback">
-            <span class="ng-hide-remove" ng-class="'feedback-' + field" ng-cloak>{{msg}}</span>
-        </div>
-        <footer class="footer"><span>&copy; Embedthis Software 2013</span><span class="powered">Powered by ESP</span></footer>
     </main>
-    <% scripts(NULL); %>
+    <div ng-repeat="(field, msg) in feedback">
+        <span class="ng-hide-remove" ng-class="'feedback-' + field" ng-cloak>{{msg}}</span>
+    </div>
+    <footer class="footer ng-cloak">
+        <span class="pull-right">Powered by ESP &mdash; &copy; Embedthis Software 2013</span>
+    </footer>
+    <% scripts(0); %>
 </body>
 </html>

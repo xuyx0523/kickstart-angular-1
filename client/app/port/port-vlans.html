@@ -1,15 +1,24 @@
-<div class="col-xs-6">
-    <div ng-include src="'app/port/panes.inc'" ng-init="currentPane='VLANs'"></div>
-    <h3>VLANS containing {{port.name}}</h3>
-    <!-- MOB - create a single style that does this -->
-    <table class="table table-striped table-bordered table-hover table-condensed">
-        <thead><tr><th ng-repeat="header in ['VLAN']" ng-click="click($index)">{{header | titlecase}}</th></tr></thead>
-        <tbody>
-            <!-- MOB need esp-can to apply to clicking -->
-            <tr ng-repeat="mapping in mappings" esp-click="/vlan/{{mapping['vlan.id']}}">
-            <td ng-repeat="column in ['vlan.name']">{{mapping[column]}}</td>
-        </tr>
-        </tbody>
-    </table>
-    <button class="btn btn-primary" ng-show="Esp.can('edit')" esp-click="{{'/port/' + port.id + '/add'}}">Add Port to VLAN</button>
+<ul class="breadcrumb">
+    <li><i class="icon-home"></i> <a href="#">Home</a></li>
+    <li><a href="#/port/list">Ports</a></li>
+    <li><a href="#/port/{{id}}/vlans">VLANs</a></li>
+</ul>
+<div ng-include src="'app/port/panes.inc'" ng-init="currentPane='VLANs'"></div>
+<div class="panel">
+	<h2>VLANS for {{port.name}}</h2>
+	<!-- MOB - create a single style that does this -->
+	<div class="row">
+		<div class="col-sm-2">
+			<table class="table table-striped table-bordered table-hover table-condensed">
+			    <thead><tr><th ng-repeat="header in ['VLAN']" ng-click="click($index)">{{header | titlecase}}</th></tr></thead>
+			    <tbody>
+			        <!-- MOB need esp-can to apply to clicking -->
+			        <tr ng-repeat="mapping in mappings" esp-click="/vlan/{{mapping['vlan.id']}}">
+			        <td ng-repeat="column in ['vlan.name']">{{mapping[column]}}</td>
+			    </tr>
+			    </tbody>
+			</table>
+		</div>
+	</div>
+	<button class="btn btn-primary" ng-show="Esp.can('edit')" esp-click="{{'/port/' + port.id + '/add'}}">Add Port to VLAN</button>
 </div>

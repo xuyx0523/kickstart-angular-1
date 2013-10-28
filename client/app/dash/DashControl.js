@@ -11,17 +11,34 @@ angular.module('app').controller('DashControl', function (Dash, Esp, $location, 
 	function processResponse(response) {
 		var offline = 0;
 		var active = 0;
+		var io = 0;
 		angular.forEach(response.ports, function(port,key) {
 			if (port.mode != 'Online') offline++;
 			if ($scope.last) {
 				if (port.rxBytes != $scope.last.ports[key].rxBytes) {
 					active++;
+					io += (port.rxBytes - $scope.last.ports[key].rxBytes);
 				}
 			}
 		});
 		$scope.ports.offline = offline;
 		$scope.ports.online = response.ports.length - offline;
 		$scope.ports.active = active;
+		$scope.system.io = io;
+
+		angular.forEach(response.vlans, function(vlan,key) {
+			if (vlan.mode != 'Online') offline++;
+			if ($scope.last) {
+				if (vlan.rxBytes != $scope.last.vlans[key].rxBytes) {
+					active++;
+					io += (vlan.rxBytes - $scope.last.vlans[key].rxBytes);
+				}
+			}
+		});
+		$scope.vlans.offline = offline;
+		$scope.vlans.online = response.vlans.length - offline;
+		$scope.vlans.active = active;
+
 		$scope.last = response;
 	}
 
@@ -67,9 +84,11 @@ angular.module('app').controller('DashControl', function (Dash, Esp, $location, 
 			$scope.update = null;
     	} else {
 		    if (!$scope.update) {
-			    Dash.get({id: 1}, $scope, function(response) {
+			    $scope.update = Dash.get({id: 1}, $scope, function(response) {
+			    	$scope.update = null;
 			    	processResponse(response);
-		            $scope.update = $timeout(startPoll, 1 * 1000, true);
+			    	var timeout = Esp.config.refresh || (5 * 1000);
+		            $timeout(startPoll, timeout, true);
 			    });
 			}
 		}
@@ -82,7 +101,7 @@ angular.module('app').controller('DashControl', function (Dash, Esp, $location, 
     }
 });
 
-app.config(function($routeProvider) {
+angular.module('app').config(function($routeProvider) {
     var Default = {
         controller: 'DashControl',
         resolve: { action: checkAuth },

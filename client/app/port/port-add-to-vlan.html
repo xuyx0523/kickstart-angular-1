@@ -1,12 +1,17 @@
-<div>
-    <div ng-include src="'app/port/panes.inc'" ng-init="currentPane='VLANs'"></div>
-    <h3>Add {{port.name}} to VLAN</h3>
+<ul class="breadcrumb">
+    <li><i class="icon-home"></i> <a href="#">Home</a></li>
+    <li><a href="#/port/list">Ports</a></li>
+    <li><a href="#/port/{{id}}">Port</a></li>
+</ul>
+<div ng-include src="'app/port/panes.inc'" ng-init="currentPane='VLANs'"></div>
+<div class="panel">
+    <h2>Add {{port.name}} to VLAN</h2>
     <form name="addToVlanForm" class="form-horizontal">
         <div class="form-group">
-            <div class="col-xs-4">
+            <div class="col-sm-4">
                 <div class="input-group" ng-class='{"has-error": fieldErrors.title}'>
                     <span class="input-group-addon">vlan</span>
-                    <input type='text' class="form-control input-small" ng-model='vlan.name' placeholder="NN">
+                    <input type='text' class="form-control" ng-model='vlan.name' placeholder="NN">
                 </div>
             </div>
         </div>

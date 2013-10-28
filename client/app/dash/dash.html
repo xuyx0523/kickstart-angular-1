@@ -1,44 +1,88 @@
-<!-- MOB - probably should have section here -->
+<div class="view-dashboard">
+    <h2>Dashboard</h2>
+    <div class="row">
+        <div class="col-sm-3">
+    	    <div class="widget">
+                <esp-gauge class="gauge" value="{{ports.active}}" title="Active Ports" subtitle="" range='0-16'></esp-gauge>
+    	    </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+            	<!-- MOB should have 
+                    <layer2-counter value="{{ports.active}}">Active Ports></layer2-counter>
+                -->
+                <div class="col-sm-6">
+    	            <div class="widget">
+    	                <div class="number">{{ports.active}}</div>
+    	                <div class="label">Active Ports</div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+    	            <div class="widget">
+    	                <div class="number">{{vlans.length}}</div>
+    	                <div class="label">Active VLANs</div>
+                	</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+    	            <div class="widget">
+    	                <div class="number">{{ports.online}} / {{ports.length}}</div>
+    	                <div class="label">Online Ports</div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+    	            <div class="widget">
+    	                <div class="number">{{vlans.online}} / {{vlans.length}}</div>
+    	                <div class="label">Online VLANS</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="widget events" ng-controller="StatusControl" ng-cloak>
+                <div class="title">Events</div>
+                <ul class="UNUSED-icons-ul">
+                    <li  ng-repeat="event in system.events" esp-click="/event/{{system.events[$index].id}}">
+                        <i class="fa fa-inverse event-{{event.type}}" ng-class="Esp.faclass(event.type)"></i>{{event.title}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- MOB could be esp-widget -->
+        <div class="col-sm-3">
+    	    <div class="widget">
+    	        <div class="number">{{system.io}}</div>
+    	        <div class="label">Aggregate IO</div>
+    	    </div>
+        </div>
 
-<div class="dash ng-cloak col-md-11">
-	<div class="row">
-		<div class="counter col-md-2">
-			<div class="label">Online Ports</div>
-			<div class="number">{{ports.online}} / {{ports.length}}</div>
-		</div>
-		<div class="counter col-md-2">
-			<div class="label">Active Ports</div>
-			<div class="number">{{ports.active}}</div>
-		</div>
-		<div class="counter col-md-2">
-			<div class="label">Active VLANs</div>
-			<div class="number">{{ports.length}}</div>
-		</div>
-		<div class="counter col-md-2">
-			<div class="label">Active VLANs</div>
-			<div class="number">{{ports.length}}</div>
-		</div>
-	</div>
-	<div class="row">
-		<!-- MOB could be esp-counter -->
-		<div class="counter col-md-2">
-			<div class="label">Traffic</div>
-			<div class="number">{{system.io}}</div>
-		</div>
-		<div class="counter col-md-2">
-			<div class="label">Events</div>
-			<div class="number">{{system.events}}</div>
-		</div>
+        <div class="col-sm-3">
+            <div class="widget">
+                <div class="number">{{system.io % 100}}%</div>
+                <div class="progress">
+                    <div class="progress-bar" style="width: {{(system.io % 100)}}%;"></div>
+                </div>
+                <div class="label">Network Utilization</div>
+            </div>
+        </div>
 
-		<!-- MOB could be esp-dial -->
-		<div class="dial col-md-2">
-			<div class="circle">{{system.events}}</div>
-			<div class="label">Dial</div>
-		</div>
-	</div>
+        <div class="col-sm-6">
+            <div class="widget peekaboo">
+                <div class="header">
+                    <h4><i class="icon-signal"></i>Packet Rate</h4>
+                    <span class="options">
+                        <a href="#"><i class="fa fa-chevron-down"></i></a>
+                        <a href="#"><i class="fa fa-wrench"></i></a>
+                        <a href="#"><i class="fa fa-play"></i></a>
+                        <a href="#"><i class="fa fa-pause"></i></a>
+                        <a href="#"><i class="fa fa-times"></i></a>
+                    </span>
+                </div>
+                <div class="body">Hello</div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<!-- IDEAS
-
-<canvas width="77" height="30" style="display: inline-block; width: 77px; height: 30px; vertical-align: top;"></canvas>
--->

@@ -75,7 +75,7 @@ Bit.load({
                         if (file == '*') {
                             list += Path('client/lib').join(component).files('*.min.js')
                         } else {
-                            list.push(Path('client/lib').join(component, file))
+                            list.push(Path('client/lib').join(component, Path(file).replaceExt('min.js')))
                         }
                     }
                 }

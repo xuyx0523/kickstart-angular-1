@@ -8,13 +8,14 @@
 // Paths
 // -------------------------
 
-@FontAwesomePath: "../lib/font-awesome/font";
+// @FontAwesomePath: "../lib/font-awesome/fonts";
+@fa-font-path: "../lib/font-awesome/fonts";
 @icon-font-path:  "../lib/bootstrap/fonts/";
 
 // Scaffolding
 // -------------------------
 
-@body-bg:               #fff;
+@body-bg:               #fff;	// MOB #222;		//	MOB #fff;
 @text-color:            #222233;	// MOB @gray-dark;
 
 // Links
@@ -28,7 +29,7 @@
 
 @error-color:                   #FF0000;
 @feedback-error-background:     @error-color;
-@feedback-inform-background:    #306020;
+@feedback-inform-background:    #203060;
 @feedback-warning-background:   #FF8020;
 
 // Grays
@@ -61,9 +62,13 @@
 @font-size-base:          14px;
 @font-size-large:         ceil(@font-size-base * 1.25); // ~18px
 @font-size-larger:        ceil(@font-size-base * 1.5);  // ~21px
-@font-size-small:         ceil(@font-size-base * 0.85); // ~12px
+@font-size-largest:       ceil(@font-size-base * 2.0);  // ~28px
+@font-size-huge:       	  ceil(@font-size-base * 3.05); // ~42px
+@font-size-small:         ceil(@font-size-base * 0.85); // ~36px
 @font-size-smaller:       ceil(@font-size-base * 0.78); // ~11px
 @font-size-smallest:      ceil(@font-size-base * 0.65); // ~10px
+
+@font-size-counter:		  @font-size-huge;
 
 @line-height-base:        1.428571429; // 20/14
 @line-height-computed:    floor(@font-size-base * @line-height-base); // ~20px
@@ -114,7 +119,7 @@
 @table-bg-hover:                     lighten(@gray-light, 25%);		//MOB #f5f5f5;
 @table-bg-active:                    @table-bg-hover;
 
-@table-border-color:                 @gray-light;	//MOB #ddd; // table and cell border
+@table-border-color:                 #9AC; 							// MOB #ddd; // table and cell border
 
 
 // Buttons
@@ -243,7 +248,7 @@
 // Number of columns in the grid system
 @grid-columns:              12;
 // Padding, to be divided by two and applied to the left and right of all columns
-@grid-gutter-width:         30px;
+@grid-gutter-width:         20px;	//MOB 30px;
 // Point at which the navbar stops collapsing
 @grid-float-breakpoint:     @screen-tablet;
 
@@ -271,7 +276,7 @@
 @navbar-default-link-disabled-bg:          transparent;
 
 // Navbar brand label
-@navbar-default-brand-color:               @navbar-default-link-color;
+@navbar-default-brand-color:               lighten(@navbar-inverse-bg, 35%);		//MOB was @navbar-default-link-color;
 @navbar-default-brand-hover-color:         darken(@navbar-default-link-color, 10%);
 @navbar-default-brand-hover-bg:            transparent;
 
@@ -285,7 +290,7 @@
 //
 // Reset inverted navbar basics
 @navbar-inverse-color:                      @gray-light;
-@navbar-inverse-bg:                         #1f3442; // MOB was #222;
+@navbar-inverse-bg:                         #222; // #1f3442; // MOB was #222;
 @navbar-inverse-border:                     darken(@navbar-inverse-bg, 10%);
 
 // Inverted navbar links
@@ -304,7 +309,7 @@
 
 // Inverted navbar search
 // Normal navbar needs no special styles or vars
-@navbar-inverse-search-bg:                  lighten(@navbar-inverse-bg, 25%);
+@navbar-inverse-search-bg:                  lighten(@navbar-inverse-bg, 5%);
 @navbar-inverse-search-bg-focus:            #fff;
 @navbar-inverse-search-border:              @navbar-inverse-bg;
 @navbar-inverse-search-placeholder-color:   #ccc;
@@ -568,7 +573,7 @@
 // Breadcrumbs
 // -------------------------
 @breadcrumb-bg:               #f5f5f5;
-@breadcrumb-color:            #ccc;
+@breadcrumb-color:            #5D8BB0568BE3;		//	MOB #ccc;
 @breadcrumb-active-color:     @gray-light;
 
 

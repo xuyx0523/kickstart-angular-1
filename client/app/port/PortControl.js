@@ -88,7 +88,7 @@ angular.module('app').controller('PortControl', function (Esp, Port, Vlan, $root
     };
 });
 
-app.config(function($routeProvider) {
+angular.module('app').config(function($routeProvider) {
     var Default = {
         controller: 'PortControl',
         abilities: { 'view': true },

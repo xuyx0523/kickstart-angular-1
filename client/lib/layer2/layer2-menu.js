@@ -16,7 +16,9 @@ angular.module('layer2', [])
                     scope.klass = attrs.class;
                     var active = ' ng-class="{selected: path() == \'' + attrs.href + '\'}"';
                     var html = '<li' + active + '><a href="#' + attrs.href + '"><i class="' + attrs.class + 
-                        '"></i><span class="menu-item">' + child[0].innerHTML + '</span></a></li>';
+                        '"></i><span class="menu-item">' + child[0].innerHTML + '</span>' +
+                        '<i class="arrow icon-caret-left"></i>' +
+                        '</a></li>';
                     var newelt = angular.element(html);
                     $compile(newelt)(scope);
                     element.replaceWith(newelt);

@@ -2,40 +2,23 @@
     app.less - Layer2 stylesheet
  */
 html, body {
-    background: @gray-lighter;
-//  MOB - change a bit and theme
-background: #393939;
-    border: none;
+    background: url('../assets/background.png');
     -webkit-font-smoothing: antialiased !important;
 }
 
 .navbar {
+    margin: 0;
     .navbar-header {
-        .navbar-toggle {
-            float: left;
-            color: @gray-lighter;
-            padding: 12px 0 8px 12px;
-            border: none;
+        .navbar-brand i {
+            font-size: 15px;
         }
-        .navbar-brand {
-            padding: 6px 0 0 0;
-            //  MOB
-            color: #8eBFD0;
-        }
-        width: 200px;
     }
     .navbar-form {
-    //  MOB - should use navbar-search
         .form-control {
-            //  MOB CHANGE A BIT
-            background-color: #558FAB;
-            background-color: #448099;
-    background-color: #306060;
-    background-color: #244850;
-    .gradient(#244850, darken(#244850, 3%), lighten(#244850, 3%));
+            background-color: @navbar-inverse-search-bg;
+            .gradient(@navbar-inverse-search-bg, lighten(@navbar-inverse-search-bg, 5%), darken(@navbar-inverse-search-bg, 20%));
             border-color: @gray-darker;
             width: 200px;
-            margin-top: 0px;
             margin: 0;
             &:focus {
                 background: none;
@@ -43,134 +26,168 @@ background: #393939;
                 -webkit-transition: all .3s linear;
             }
         }
-    }
-    .glyphicon-search {
-        color: @gray;
-        position: relative;
-        font-size: 16px;
-        top: 4px;
-        left: -28px;
+        i.glyphicon-search {
+            color: @gray;
+            position: relative;
+            font-size: 16px;
+            top: 4px;
+            left: -28px;
+        }
     }
     li {
         border-left: 1px solid @gray-darker;
     }
     .dropdown li {
         border: none;
-    }
-    .dropdown i {
-        padding-right: 10px;
+        i {
+            padding-right: 10px;
+        }
     }
 }
 
-.home {
-    .container {
-        margin: 0;
-        padding: 0 20px 0 0;
-        max-width: 100%;
-        width: 100%;
-        .sidebar {
-            .nav-tabs {
-                border-bottom: none;
-            }
-//  MOB - change a bit and theme
-background: #393939;
-            padding: 0;
-            padding-top: 20px;
-            color: @gray;
-            //MOB
-            color: @gray-lighter;
-            .glyphicon, i {
-                font-size: @font-size-larger;
-                color: @gray;
-                //MOB
-                color: @gray-light;
-            }
-            .main-menu {
-                li.selected {
-                    background: white;
-                    //MOB
-                    background: black;
-            background: #c9c9c9;
-background: #D8D8D8;
-                    .border-radius(0px, 0px, 17px, 17px);
-    .gradient(#D8D8D8, darken(#D8D8D8, 10%), lighten(#D8D8D8, 10%));
-                    margin-left: 15px;
-                    margin-right: 0;
+.container {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+
+    .sidebar {
+        padding: 40px 0 0 0;
+        line-height: 20px;
+        .nav-tabs {
+            border-bottom: none;
+            li {
+                margin: 0;
+                padding: 0;
+                &.selected {
+                    border-right: 4px solid green;
+                    border-right: 4px solid #D12610;
+                }
+                a {
+                    margin: 0;
+                    padding: 8px 0px 8px 15px;
+                    border-top: 1px solid #424242;
+                    border-bottom: 1px solid #282828;
+                    border-radius: 0;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                    .glyphicon, i {
+                        text-align: center;
+                        font-size: @font-size-larger;
+                        padding-right: 10px;
+                        color: @gray-light;
+                    }
+                    .menu-item {
+                        font-size: @font-size-base;
+                        color: @gray-lighter;
+                    }
+                    .arrow {
+                    padding: 6px;
+                        float: right;
+                        //text-align: center;
+                        font-size: @font-size-large;
+                        color: @gray-light;
+                    }
+                }
+                &.selected {
                     a {
-                        margin-right: 0;
-                        //-.border-radius(0px);
+                        background: #252728;
+                        border-top: 1px solid #3D0707;
+                        border-bottom: 1px solid #3D0707;
                         &:hover {
-                            .border-radius(0px, 0px, 15px, 15px);
-                            background: lighten(@gray-light, 20.0%);
-                            //  MOB
-                            background: #c9c9c9;
-    border: @gray-darker;
-    background: @gray-darker;
-    padding-bottom: 12px;
+                            border-color: #252728;
+                            i, .menu-item {
+                                color: white;
+                                margin: 0;
+                            }
                         }
                     }
                     i, .menu-item {
-                        text-indent: -15px;
+                        color: white;
                     }
                 }
-                li:not(.selected) {
-                    margin-left: 15px;
-                    margin-right: 0;
-                    a {
-                        margin-right: 0;
-                    }
+                &:not(.selected) {
                     a:hover {
-                        .border-radius(0px, 0px, 17px, 17px);
-                        background: lighten(@gray-light, 20.0%);
-                            //  MOB
-            background: #c9c9c9;
-            background: black;
-    border-color: black;
-                        cursor: pointer;
-                    }
-                    i, .menu-item {
-                        text-indent: -15px;
+                        background: black;
+                        border-color: #252728;
+                        border-top: 1px solid #424242;
+                        border-radius: 0;
+                        i, .menu-item {
+                            color: white;
+                        }
                     }
                 }
             }
-            .menu-item {
-                font-size: @font-size-small;
-                //MOB
-                color: @gray-light;
-                display: block;
-            }
-        }
-        .content {
-            padding: 20px;
-            background: white;
-            //  MOB - adjust and theme
-            background: #C9C9C9;
-background: #D8D8D8;
-    .gradient(#D8D8D8, darken(#D8D8D8, 10%), lighten(#D8D8D8, 10%));
-    .drop-shadow();
-            -min-height: 733px;
-            min-height: 133px;
-            .border-radius(7px, 7px, 7px, 7px);
-            -border: 2px solid @gray-lighter;
         }
     }
-    .footer {
-        position: relative;
-        clear: both;
-        height: 30px;
-        margin-top: 20px;
-        padding: 8px 20px 0 20px;
-        background: @gray;
-        color: @gray-light;
-        font-size: @font-size-smaller;
-        font-style:italic;
-        .powered {
-            float: right;
+    .breadcrumb {
+        float: right;
+        display: inline;
+        padding: 14px 24px 4px 6px;
+        margin: 0;
+        background: rgba(255,255,255,0);
+        font-size: @font-size-small;
+        font-weight: bold;
+        a {
+            color: @breadcrumb-color;
         }
-        z-index: 2;
+    }
+    .content {
+        background: url('../assets/content.png');
+        padding: 0 20px 0 20px;
+        .nav {
+            padding-left: 20px;
+        }
+        .panel {
+            background: white;
+            //  MOB - is color needed?
+            border: 1px solid @gray-lighter;
+            padding: 0px 20px 8px 20px;
+            min-height: 600px;
+
+            table.small {
+                width: 50%;
+            }
+            .btn {
+                margin-top: 20px;   
+            }
+
+        }
     }
 }
 
+body .footer {
+    position: relative;
+    clear: both;
+    height: 30px;
+    padding: 8px 28px 0 10px;
+    color: @gray-light;
+    font-size: @font-size-smallest;
+}
+
+/*
+    Event backgrounds
+ */
+i.severity {
+    font-size: @font-size-smallest;
+    text-align: center;
+    width: 2em;
+    padding: 4px 4px 4px 6px;
+    margin-right: 8px;
+    text-align: center;
+}
+
+.event-critical {
+    .gradient(red, darken(red, 5%), lighten(red, 5%));
+}
+
+.event-success, .event-inform {
+    .gradient(red, darken(green, 5%), lighten(green, 5%));
+}
+
+.event-warning {
+    .gradient(red, darken(gold, 5%), lighten(gold, 5%));
+}
 
 /* Log notification pulldown */
 .notify {
@@ -183,35 +200,30 @@ background: #D8D8D8;
             background: @gray-lighter;
         }
     }
-    .divider {
-        margin: 0;
-        padding: 0;
-    }
     .header {
-        padding: 4px 20px 10px 20px;
+        padding: 4px 0px 10px 20px;
         font-weight: bold;
     }
     .footer {
         padding: 4px 0 4px 0;
         background: @gray-lighter;
     }
-    .icon {
-        font-size: @font-size-large;
-        padding-right: 10px;
-    }
-    .message {
-        padding: 4px 20px 4px 20px;
+    li.message {
+        padding: 8px 20px 8px 20px;
+        border-bottom: 1px solid @gray-lightest;
         font-size: @font-size-small;
         text-decoration: none;
         color: @gray;
     }
     .time {
         float: right;
-        padding-right: 20px;
         font-style: italic;
         font-size: 11px;
     }
+
+
 }
+
 
 .modal-backdrop {
     -background: url('../assets/background.jpg');
@@ -256,9 +268,8 @@ background: #D8D8D8;
         padding: 10px 0 10px 0;
         font-size: @font-size-small;
         color: white;
-        //  MOB
-background: @error-color;
-    }
+        background: @error-color;
+        }
     ul {
         margin-bottom: 0;
     }
@@ -309,75 +320,80 @@ background: @error-color;
 }
 
 
-.panel {
-    background: @gray-lightest;
-    border-color: @gray-darker;
-    border: 2px solid @gray-light;
-    border-radius: 8px;
-    padding: 20px;
-}
-
-
+//  Make this simpler and have gauge and counter do what is required.
 .widget {
-    background: @gray-lightest;
-    // border-color: @gray-darker;
-    border: 1px solid lighten(@gray-light, 20%);
-    border: 1px solid #AAA;
-    border-radius: 8px;
-    .drop-shadow(2px, 2px, 4px, 0.1);
+    height: 100%;
+    width: 100%;
+    min-width: 160px;
     padding: 10px;
-    margin: 10px;
-    box-sizing: border-box;
+    margin: 8px 0 8px 0;
+    border: 1px solid darken(@gray-lighter, 10);
+    background: white;
+    color: @gray;
+    text-align: center;
     &:hover {
-        border: 1px solid #60A0D0;
+        border: 1px solid @gray-light;
         .drop-shadow(2px, 2px, 4px, 0.2);
     }
+    .title {
+        font-size: @font-size-larger;
+        font-weight: bold;
+    }
     .label {
-        color: @gray-dark;
+        color: @gray;
+        font-size: floor(@font-size-counter / 3);
+        font-weight: normal;
     }
     .number {
         color: @gray;
+        font-size: @font-size-counter;
+        font-weight: bold;
     }
 }
 
-    .counter {
-        .widget;
-        text-align: center;
-        font-size: @font-size-larger;
-        color: white;
-        -background-color: #f01611;
-        -border-color: @gray-darker;
-        -border: 1px solid #cccccc;
-        border-radius: 8px;
-        -margin: 10px;
-        -padding: 10px;
-    }
-    .dial {
-        .widget;
-        margin: 0 auto;
-        padding: 0;
-        height: 100px;
-        width: 100px;
-        text-align: center;
-        font-size: @font-size-larger;
-        .circle {
-            height: 100px;
-            width: 100px;
-            background: white;
-            border: 10px solid red;
-            .border-radius(50em, 50em, 50em, 50em);
-            padding: 25px 0 0 0;
+.gauge {
+    font-size: @font-size-counter;
+    background: white;
+    display: block;
+}
+
+.peekaboo {
+    padding: 0;
+    text-align: left;
+    .header {
+        height: 36px;
+        .gradient(@gray-lightest, darken(@gray-lightest, 8%), lighten(@gray-lightest, 8%));
+        h4 {
+            font-size: @font-size-base;
+            float: left;
+            padding: 0 8px 0 8px;
+            i {
+                padding-right: 6px;
+            }
         }
-        .label {
-            padding: 0;
-            margin: 0;
-            color: black;
+        .options {
+            margin: 8px;
+            float: right;
+            a {
+                color: @gray;
+                padding-right: 6px;
+            }
         }
     }
+    .body {
+        padding: 8px;
+    }
+}
 
 .table-bordered {
     .drop-shadow();
-    border: 2px solid @table-border-color;
+    border: 1px solid @table-border-color;
+    thread {
+        border-bottom: none;
+    }
+    tbody {
+        border-top: none;
+    }
 }
 
 @-webkit-keyframes feedback-transition {
@@ -391,58 +407,32 @@ background: @error-color;
     cursor: pointer;
 }
 
-/* 
-    Bootstrap non-responsive fixups
-
-    Use col-xs, as this will scale up.
-
-    .container {
-        max-width: none !important;
-        width: 1024px;
+.view-dashboard {
+    h2 {
+        // margin-top: 10px;
     }
-
-    .control-label {
-        text-align: right;
+    //  Events widget
+    .events {
+        margin: 0;
+        padding: 0;
+        ul {
+            text-align: left;
+            padding-left: 10px;
+            li {
+                padding: 4px;
+                border-bottom: 1px solid @gray-lighter;
+                list-style: none;
+                i {
+                    font-size: @font-size-smallest;
+                    text-align: center;
+                    width: 2em;
+                    padding: 4px;
+                    margin-right: 8px;
+                }
+            }
+        }
     }
-
-    .col-xs-offset-0 {
-        margin-left: 0;
-    }
-    .col-xs-offset-1 {
-        margin-left: 8.333333333333332%;
-    }
-    .col-xs-offset-2 {
-        margin-left: 16.666666666666664%;
-    }
-    .col-xs-offset-3 {
-        margin-left: 25%;
-    }
-    .col-xs-offset-4 {
-        margin-left: 33.33333333333333%;
-    }
-    .col-xs-offset-5 {
-        margin-left: 41.66666666666667%;
-    }
-    .col-xs-offset-6 {
-        margin-left: 50%;
-    }
-    .col-xs-offset-7 {
-        margin-left: 58.333333333333336%;
-    }
-    .col-xs-offset-8 {
-        margin-left: 66.66666666666666%;
-    }
-    .col-xs-offset-9 {
-        margin-left: 75%;
-    }
-    .col-xs-offset-10 {
-        margin-left: 83.33333333333334%;
-    }
-    .col-xs-offset-11 {
-        margin-left: 91.66666666666666%;
-    }
-*/
-
+}
 
 /*
     angular-ui fixes

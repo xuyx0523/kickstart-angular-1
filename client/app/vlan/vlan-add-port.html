@@ -1,17 +1,21 @@
-<div>
-    <div ng-include src="'app/vlan/panes.inc'" ng-init="currentPane='Ports'"></div>
-    <h3>Add port to {{vlan.name}}</h3>
+<ul class="breadcrumb">
+    <li><i class="icon-home"></i> <a href="#">Home</a></li>
+    <li><a href="#/vlan/list">VLANs</a></li>
+    <li><a href="#/vlan/{{id}}">VLAN</a></li>
+</ul>
+<div ng-include src="'app/vlan/panes.inc'" ng-init="currentPane='Ports'"></div>
+<div class="panel">
+    <h2>Add port to {{vlan.name}}</h2>
     <form name="addPortForm" class="form-horizontal">
         <div class="form-group">
-            <div class="control-label col-xs-2">Name</div>
-            <div class="input-group col-xs-4" ng-class='{"has-error": fieldErrors.title}'
-                    <span class="input-group-addon">tty</span>
-                        <input type='text' class="form-control" ng-model='port.num' placeholder="NN">
-                </div>
+            <label class="control-label col-sm-3">Name</label>
+            <div class="input-group col-xs-4" ng-class='{"has-error": fieldErrors.title}'>
+                <span class="input-group-addon">tty</span>
+                <input type='text' class="form-control" ng-model='port.num' placeholder="NN">
             </div>
         </div>
         <div class="form-group">
-            <div class="col-xs-offset-2 col-xs-10">
+            <div class="col-sm-offset-3 col-sm-8">
                 <button class="btn btn-primary" ng-click='addPort("tty" + port.num)'>Add</button>
                 <button class="btn" esp-click="/port/{{port.id}}/vlans">Cancel</button>
             </div>

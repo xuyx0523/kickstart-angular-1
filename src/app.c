@@ -10,7 +10,9 @@ static void base(HttpConn *conn)
     if (!httpLoggedIn(conn)) {
         uri = getUri();
         if (sstarts(uri, "/service/")) {
-            if (smatch(uri, "/service/user/login") || smatch(uri, "/service/user/logout") || smatch(uri, "/service/user/forgot")) {
+            //  MOB - perhaps revert to black-list
+            if (smatch(uri, "/service/user/login") || smatch(uri, "/service/user/logout") || smatch(uri, "/service/user/forgot") ||
+                sstarts(uri, "/service/dash") || sstarts(uri, "/service/status")) {
                 return;
             }
             /*

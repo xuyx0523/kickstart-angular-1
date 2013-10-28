@@ -56,7 +56,7 @@ static void demoData() {
 #endif
 
 static cchar *getDashData(HttpConn *conn) { 
-    EdiGrid     *ports, *vlans;
+    EdiGrid     *events, *ports, *vlans;
     EdiRec      *system;
     Edi         *db;
     MprBuf      *buf;
@@ -72,8 +72,14 @@ static cchar *getDashData(HttpConn *conn) {
     mprPutToBuf(buf, "\"vlans\": %s,", ediGridAsJson(vlans, 0));
     system = ediFilterRecFields(readRec("system", "1"), "rxBytes,rxPackets,txBytes,txPackets");
 
-    ediGetTableSchema(db, "event", &nevents, NULL);
-    mprPutToBuf(buf, "\"system\":{\"events\": %d}", nevents);
+    nevents = 0;
+    if ((events = readTable("event")) != 0) {
+        nevents = events->nrecords;
+        events->nrecords = min(events->nrecords, 5);
+    }
+    //  MOB - should this be in data/schema format?
+    mprPutToBuf(buf, "\"system\":{\"events\": %s, \"eventCount\": %d}", ediGridAsJson(events, 0), nevents);
+
     mprPutToBuf(buf, "}");
     // printf("%s\n", mprGetBufStart(buf));
 

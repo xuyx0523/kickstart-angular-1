@@ -23,7 +23,7 @@ angular.module('app').controller('TableControl', function ($rootScope, $scope, $
     };
 });
 
-app.config(function($routeProvider) {
+angular.module('app').config(function($routeProvider) {
     var Default = {
         controller: 'TableControl',
         abilities: { 'edit': true, 'view': true },

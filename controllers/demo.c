@@ -13,7 +13,7 @@ static void demo1() {
         result = random() % 100;
     }
     setHeader("Content-Type", "text/javascript");
-    render("%5.1f", result);
+    render("{\"data\": [{\"value\": \"%.1f\"}]}", result);
 }
 
 ESP_EXPORT int esp_controller_layer2_demo(HttpRoute *route, MprModule *module) 

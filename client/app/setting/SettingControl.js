@@ -16,7 +16,7 @@ angular.module('app').controller('SettingControl', function ($rootScope, $scope,
     };
 });
 
-app.config(function($routeProvider) {
+angular.module('app').config(function($routeProvider) {
     var Default = {
         controller: 'SettingControl',
         abilities: { 'edit': true, 'view': true },

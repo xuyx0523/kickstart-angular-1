@@ -30,8 +30,9 @@
     name: "layer2",
     settings: {
         components: {
-            "server": {},
-            "angular": {
+            server: {},
+            jquery: {scripts: ["jquery.js"]},
+            angular: {
                 scripts: [
                     "angular.js",
                     "angular-animate.js",
@@ -40,16 +41,16 @@
                     "angular-route.js",
                 ],
             },
-            "angular-esp": {scripts: ['*']},
-            "bootstrap": {},
-            "html5shiv": {scripts: ['*']},
-            "angular-ui-bootstrap": {scripts: ['*']},
-            "font-awesome": {scripts: ['*']},
-            "less": {scripts: ['*']},
-            "more": {scripts: ['*']},
-            "respond": {scripts: ['*']},
+            "angular-esp": {scripts: ["*"]},
+            bootstrap: {},
+            html5shiv: {scripts: ["*"]},
+            "angular-ui-bootstrap": {scripts: ["*"]},
+            "font-awesome": {},
+            less: {scripts: ["*"]},
+            more: {},
+            respond: {scripts: ["*"]},
             "angular-mvc": {},
-            "layer2": {scripts: ['*']},
+            layer2: {scripts: ["*"]},
         },
         formats: {
             date: "yyyy-MM-dd",
@@ -58,6 +59,7 @@
         },
         /* Set to "/user/login" to require login for any access */
         loginRequired: "",
+        refresh: 30000,
         redirect: "secure",
         routePrefix: "/service",
         sendJson: true,
