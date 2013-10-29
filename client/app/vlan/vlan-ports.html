@@ -1,7 +1,7 @@
 <ul class="breadcrumb">
-    <li><i class="icon-home"></i> <a href="#">Home</a></li>
+    <li>VLAN</li>
     <li><a href="#/vlan/list">VLANs</a></li>
-    <li><a href="#/vlan/{{id}}">VLAN</a></li>
+    <li><i class="icon-home"></i> <a href="#">Home</a></li>
 </ul>
 <div ng-include src="'app/vlan/panes.inc'" ng-init="currentPane='Ports'"></div>
 <div class="panel">
@@ -16,7 +16,7 @@
         <tbody>
         <tr ng-repeat="mapping in mappings">
             <td ng-repeat="column in ['port.name']" esp-click="/port/{{mapping['port.id']}}">{{mapping[column]}}</td>
-            <td class="col-sm-1 text-center"><i class="fa fa-times-circle" ng-click="removePort(mapping)"></i></td>
+            <td class="col-sm-1 text-center"><i class="fa fa-times" ng-click="removePort(mapping)"></i></td>
         </tr>
         </tbody>
     </table>

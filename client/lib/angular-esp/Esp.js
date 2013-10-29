@@ -197,6 +197,7 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
         Esp.user.auto = true;
     } else {
         Esp.user = SessionStore.get('user') || null;
+        Esp.user.lastAccess = Date().now;
     }
     if (Esp.user.length == 0) {
         Esp.user = null;
@@ -221,8 +222,8 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
                 }
                 console.log("Session time remaining: ", (timeout - ((Date.now() - Esp.user.lastAccess))) / 1000, "secs");
             }
-            $timeout(sessionTimeout, 60 * 1000, true);
         }
+        $timeout(sessionTimeout, 60 * 1000, true);
     }
     sessionTimeout();
     return Esp;

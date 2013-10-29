@@ -1,6 +1,6 @@
 <ul class="breadcrumb">
+    <li>VLANs</li>
     <li><i class="icon-home"></i> <a href="#">Home</a></li>
-    <li><a href="#/vlan/list">VLANs</a></li>
 </ul>
 <div class="panel">
     <h2>VLANs</h2>
@@ -16,7 +16,7 @@
                 <tbody>
                     <tr ng-repeat="vlan in vlans">
                         <td ng-repeat="column in schema.columns" esp-click="/vlan/{{vlans[$index].id}}">{{vlan[column]}}</td>
-                        <td class="col-sm-1 text-center"><i class="icon-remove-circle" ng-click="remove({{vlan.id}})"></i></td>
+                        <td class="col-sm-1 text-center"><i class="fa fa-times" ng-click="remove({{vlan.id}})"></i></td>
                     </tr>
                 </tbody>
             </table>

@@ -6,6 +6,7 @@
 
 angular.module('app').controller('HomeControl', function ($location, $scope) {
 	$scope.showNav = true;
+	$scope.showDemos = true;
     $scope.path = function() {
      	return $location.path();
     };

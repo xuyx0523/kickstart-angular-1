@@ -56,11 +56,11 @@ html, body {
         .nav-tabs {
             border-bottom: none;
             li {
+                list-style: none;
                 margin: 0;
                 padding: 0;
                 &.selected {
-                    border-right: 4px solid green;
-                    border-right: 4px solid #D12610;
+                    border-right: 4px solid #D12610;            //  MOB theme
                 }
                 a {
                     margin: 0;
@@ -68,23 +68,20 @@ html, body {
                     border-top: 1px solid #424242;
                     border-bottom: 1px solid #282828;
                     border-radius: 0;
+                    color: @gray-lighter;
                     &:hover {
                         cursor: pointer;
                     }
+                    //  MOB - switch to font awesome?
                     .glyphicon, i {
                         text-align: center;
                         font-size: @font-size-larger;
                         padding-right: 10px;
                         color: @gray-light;
                     }
-                    .menu-item {
-                        font-size: @font-size-base;
-                        color: @gray-lighter;
-                    }
                     .arrow {
-                    padding: 6px;
+                        padding: 6px;
                         float: right;
-                        //text-align: center;
                         font-size: @font-size-large;
                         color: @gray-light;
                     }
@@ -96,13 +93,13 @@ html, body {
                         border-bottom: 1px solid #3D0707;
                         &:hover {
                             border-color: #252728;
-                            i, .menu-item {
+                            i {
                                 color: white;
                                 margin: 0;
                             }
                         }
                     }
-                    i, .menu-item {
+                    i {
                         color: white;
                     }
                 }
@@ -112,8 +109,29 @@ html, body {
                         border-color: #252728;
                         border-top: 1px solid #424242;
                         border-radius: 0;
-                        i, .menu-item {
+                        i {
                             color: white;
+                        }
+                    }
+                }
+                ul.sub {
+                    li {
+                        margin: 0;
+                        a {
+                            margin: 0;
+                            padding: 4px 0 4px 10px;
+                            text-decoration: none;
+                        border-top: none;
+                        border-bottom: none;
+                            broder-radius: 0;
+                            border: none;
+                            display: block;
+                        }
+                        &:hover {
+                            border-color: red;  // #252728;
+                            broder-radius: 0;
+                            border: none;
+                            margin: 0;
                         }
                     }
                 }
@@ -291,6 +309,7 @@ i.severity {
     .border-radius(0, 7px, 7px, 0);
     .drop-shadow();
     color: white;
+    font-weight: bold;
     text-align: center;
     z-index: 2000;
     &:empty {

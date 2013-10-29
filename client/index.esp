@@ -53,16 +53,17 @@
             <!-- MOB should style text-center in sidebar itself -->
         <nav class="sidebar nav-collapse col-sm-2" ng-show="showNav">
             <ul class="nav nav-tabs nav-stacked">
-                <layer2-menu href="/" class="fa fa-tachometer">Dash</layer2-menu>
-                <layer2-menu href="/port/list" class="fa fa-sitemap">Ports</layer2-menu>
-                <layer2-menu href="/vlan/list" class="glyphicon glyphicon-hdd">VLANs</layer2-menu>
-                <layer2-menu href="/setting" class="glyphicon glyphicon-cog">Settings</layer2-menu>
-                <layer2-menu href="/user/list" class="glyphicon glyphicon-user">Users</layer2-menu>
-                <layer2-menu href="/event/list" class="glyphicon glyphicon-list">Events</layer2-menu>
-                <layer2-menu href="/demo/demo-svg" class="icon-signal">Demo SVG</layer2-menu>
-                <layer2-menu href="/demo/demo-1" class="icon-signal">Demo 1</layer2-menu>
-                <layer2-menu href="/demo/demo-2" class="icon-signal">Demo 2</layer2-menu>
-                <layer2-menu href="/demo/demo-3" class="icon-signal">Demo 3</layer2-menu>
+                <layer2-menu href="/" value="Dash" class="fa fa-tachometer"></layer2-menu>
+                <layer2-menu href="/port/list" value="Ports" class="fa fa-sitemap"></layer2-menu>
+                <layer2-menu href="/vlan/list" value="VLANs" class="glyphicon glyphicon-hdd"></layer2-menu>
+                <layer2-menu href="/setting" value="Settings" class="glyphicon glyphicon-cog"></layer2-menu>
+                <layer2-menu href="/user/list" value="Users" class="glyphicon glyphicon-user"></layer2-menu>
+                <layer2-menu href="/event/list" value="Events" class="glyphicon glyphicon-list"></layer2-menu>
+                <layer2-menu href="" value="Demos" class="fa fa-signal">
+                    <layer2-menu href="/demo/demo-svg" value="SVG"></layer2-menu>
+                    <layer2-menu href="/demo/demo-1" value="Demo 1"></layer2-menu>
+                    <layer2-menu href="/demo/demo-2" value="Demo 2"></layer2-menu>
+                </layer2-menu>
             </ul>
         </nav>
         <section class="content col-sm-10" id="content">

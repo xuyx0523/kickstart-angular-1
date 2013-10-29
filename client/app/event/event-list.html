@@ -1,6 +1,6 @@
 <ul class="breadcrumb">
+    <li>Events</li>
     <li><i class="icon-home"></i> <a href="#">Home</a></li>
-    <li><a href="#/port/list">Ports</a></li>
 </ul>
 
 <div class="panel" ng-init="getList()">
@@ -18,7 +18,7 @@
             <td><i class="severity fa fa-inverse event-{{event.type}}" ng-class="Esp.faclass(event.type)"></i>{{event.type}}</td>
             <td>{{event.date | date:'short'}}</td>
             <td>{{event.title}}</td>
-            <td class="text-center" ng-click="remove(event.id)"><span class="glyphicon glyphicon-remove"></span></td>
+            <td class="text-center" ng-click="remove(event.id)"><i class="fa fa-times"></i></td>
         </tr>
         <tr ng-show="eventList.data.length == 0">
             <td colspan="5">No Event Entries</td>
