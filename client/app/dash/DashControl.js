@@ -26,6 +26,7 @@ angular.module('app').controller('DashControl', function (Dash, Esp, $location, 
 		$scope.ports.active = active;
 		$scope.system.io = io;
 
+		offline = 0;
 		angular.forEach(response.vlans, function(vlan,key) {
 			if (vlan.mode != 'Online') offline++;
 			if ($scope.last) {

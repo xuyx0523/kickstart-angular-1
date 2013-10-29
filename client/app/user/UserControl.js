@@ -38,7 +38,12 @@ angular.module('app').controller('UserControl', function (Esp, User, $rootScope,
             } else {
                 Esp.login(response.user);
                 dialog.dismiss();
-                $location.path("/");
+                if ($rootScope.referrer) {
+                    $location.path($rootScope.referrer.$$route.originalPath);
+                    $rootScope.referrer = null;
+                } else {
+                    $location.path("/");
+                }
             }
         });
     };
@@ -47,12 +52,16 @@ angular.module('app').controller('UserControl', function (Esp, User, $rootScope,
         if (Esp.user) {
             Esp.logout();
             User.logout({}, function() {
-                $location.path('/');
                 $rootScope.feedback = { inform: "Logged Out" };
             });
         } else {
-            $location.path('/');
             $rootScope.feedback = { inform: "Logged Out" };
+        }
+        if ($rootScope.referrer) {
+            $location.path($rootScope.referrer.$$route.originalPath);
+            $rootScope.referrer = null;
+        } else {
+            $location.path("/");
         }
     };
 

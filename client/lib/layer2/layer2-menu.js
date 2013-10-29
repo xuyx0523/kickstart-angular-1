@@ -1,7 +1,7 @@
 /*
     layer2-menu.js - Layer2 sidebar menus
 
-    <layer2-menu text="Text" class="" href="" value="" />
+    <layer2-menu text="Text" class="" href="" value="" > ... sub menus </layer2-menu>
  */
 angular.module('layer2', [])
 .directive('layer2Menu', function($compile) {
@@ -31,10 +31,6 @@ angular.module('layer2', [])
                                 '       <span>' + attrs.value + '</span>' + arrow + 
                                 '   </a>';
                                 '</li>';
-                    if (arrow) {
-                        console.log(arrow);
-                        console.log(html);
-                    }
                     var subelt = angular.element(sub);
                     subelt.append(child);
                     var newelt = angular.element(html);

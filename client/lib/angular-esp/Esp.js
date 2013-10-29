@@ -15,6 +15,10 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
     var Esp = {};
     $rootScope.Esp = Esp;
 
+    Esp.nop = function() {
+        return function() {}
+    };
+
     /*
         Is this user authorized to perform the given task
         Note: this is advisory only to provide hints in the UI. It is the server's repsonsibility to
@@ -143,9 +147,6 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
 
     };
     Esp.faclass = function(kind) {
-        return fa_map[kind];
-    }
-    Esp.mob = function(kind) {
         return fa_map[kind];
     }
 

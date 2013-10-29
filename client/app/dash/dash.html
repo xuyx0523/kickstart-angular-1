@@ -8,9 +8,6 @@
         </div>
         <div class="col-sm-6">
             <div class="row">
-            	<!-- MOB should have 
-                    <layer2-counter value="{{ports.active}}">Active Ports></layer2-counter>
-                -->
                 <div class="col-sm-6">
     	            <div class="widget">
     	                <div class="number">{{ports.active}}</div>
@@ -42,7 +39,7 @@
         <div class="col-sm-3">
             <div class="widget events" ng-controller="StatusControl" ng-cloak>
                 <div class="title">Events</div>
-                <ul class="UNUSED-icons-ul">
+                <ul>
                     <li  ng-repeat="event in system.events" esp-click="/event/{{system.events[$index].id}}">
                         <i class="fa fa-inverse event-{{event.type}}" ng-class="Esp.faclass(event.type)"></i>{{event.title}}
                     </li>
@@ -69,19 +66,18 @@
             </div>
         </div>
 
-        <div class="col-sm-6">
-            <div class="widget peekaboo">
+        <div class="col-sm-6" ng-controller="Esp.nop">
+            <div class="widget peekaboo" ng-show='!hide'>
                 <div class="header">
                     <h4><i class="icon-signal"></i>Packet Rate</h4>
-                    <span class="options">
-                        <a href="#"><i class="fa fa-chevron-down"></i></a>
-                        <a href="#"><i class="fa fa-wrench"></i></a>
-                        <a href="#"><i class="fa fa-play"></i></a>
-                        <a href="#"><i class="fa fa-pause"></i></a>
-                        <a href="#"><i class="fa fa-times"></i></a>
+                    <span class="options" ng-init="expand=true">
+                        <a href="" ng-click='expand=!expand'><i class="fa" ng-class="{'fa-chevron-up': expand, 'fa-chevron-down': !expand}"></i></a>
+                        <a href="#/setting"><i class="fa fa-wrench"></i></a>
+                        <a href="" ng-click='play=!play'><i class="fa" ng-class="{'fa-play': play, 'fa-pause': !play}"></i></a>
+                        <a href=""><i class="fa fa-times" ng-click='hide=true'></i></a>
                     </span>
                 </div>
-                <div class="body">Hello</div>
+                <div class="body" ng-show="expand">Hello</div>
             </div>
         </div>
     </div>
