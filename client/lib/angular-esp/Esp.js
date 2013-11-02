@@ -15,7 +15,10 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
     var Esp = {};
     $rootScope.Esp = Esp;
 
-    Esp.nop = function() {
+    /*
+        Empty controller constructor
+     */
+    Esp.empty = function() {
         return function() {}
     };
 
@@ -30,13 +33,14 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
     };
 
     /*
+        UNUSED
         Return enabled|disabled depending on if the user is authorized for a given task
         MOB - rename 
         MOB - who uses this ... tabs below
-     */
     Esp.canClass = function(task) {
         return Esp.can(task) ? "enabled" : "disabled";
     };
+     */
 
     Esp.loadScript = function(url, callback) {
         if (!Esp.scriptCache) {
@@ -58,18 +62,6 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
             console.log("ERROR");
 
         });
-        /*
-        jQuery.ajax({
-            type: 'GET',
-            url: url,
-            success: function() {
-                Esp.scriptCache[url] = true;
-                callback();
-            },
-            dataType: 'script',
-            cache: true
-        });
-        */
     };
 
     Esp.login = function(user) {
@@ -86,9 +78,9 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
     };
 
     /*
+        UNUSED
         Return "active" if the user is authorized for the specified tab
         MOB - who is using this
-     */
     Esp.navClass = function(tab, ability) {
         var classes = [];
         if (tab == $location.path()) {
@@ -101,6 +93,7 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
         }
         return classes.join(' ');
     };
+     */
 
     /*
         Map a string to TitleCase
@@ -166,6 +159,10 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
         return "#" + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (B<255?B<1?0:B:255)*0x100 + (G<255?G<1?0:G:255)).toString(16).slice(1);
     };
 
+    Esp.url = function (url) {
+        return Esp.config.appPrefix + url;
+    }
+
     /*
         Remember the referrer in route changes
      */
@@ -180,7 +177,7 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
         delete $rootScope.feedback;
         if (Esp.user) {
             Esp.user.lastAccess = Date.now();
-            console.log("MOB Update last access", Esp.user.lastAccess);
+            // console.log("Update last access", Esp.user.lastAccess);
         }
         return true;
     });
@@ -232,7 +229,6 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
 .config(function($httpProvider, $routeProvider) {
     /*
         Define an Http interceptor to redirect 401 responses to the login page
-        MOB - routeProvider not needed
      */
     $httpProvider.interceptors.push(function($location, $q, $rootScope, $window) {
         return {
@@ -246,15 +242,14 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
                 if (response <= 0 || response.status >= 500) {
                     $rootScope.feedback = { warning: "Server Error. Please Retry." };
                 } else if (response.status === 401) {
-                    var esp = angular.module('esp');
-                    //  MOB - same
-                    if (esp.config.loginRequired) {
+                    /* Must use esp module as Esp depends on this */
+                    var espModule = angular.module('esp');
+                    if (espModule.$config.loginRequired) {
                         $rootScope.Esp.user = null;
-                        $location.path(esp.config.loginRequired);
+                        $location.path(espModule.$config.loginRequired);
                     } else {
                         $rootScope.Esp.user = null;
                         $rootScope.feedback = response.data.feedback;
-                        // $location.path(esp.config.loginRequired);
                     }
                 } else if (response.status >= 400) {
                     $rootScope.feedback = { warning: "Request Error: " + response.status + ", for " + response.config.url};

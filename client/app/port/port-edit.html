@@ -3,7 +3,7 @@
     <li><a href="#/port/list">Ports</a></li>
     <li><i class="icon-home"></i><a href="#">Home</a></li>
 </ul>
-<div ng-include src="'app/port/panes.inc'" ng-init="currentPane='Details'"></div>
+<div ng-include src="Esp.url('/app/port/panes.inc')" ng-init="currentPane='Details'"></div>
 <div class="panel">
     <h2>Port Details</h2>
     <form name="portForm" class="form-horizontal">

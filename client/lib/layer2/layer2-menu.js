@@ -1,7 +1,7 @@
 /*
     layer2-menu.js - Layer2 sidebar menus
 
-    <layer2-menu text="Text" class="" href="" value="" > ... sub menus </layer2-menu>
+    <layer2-menu text="Text" icon="" href="" value="" > ... sub menus </layer2-menu>
  */
 angular.module('layer2', [])
 .directive('layer2Menu', function($compile) {
@@ -13,11 +13,19 @@ angular.module('layer2', [])
             return function(scope, element, attrs) {
                 transclude(scope, function(child, innerScope) {
                     /* Child is a clone of the trancluded content */
-                    var arrow = sub = show = href = '';
+                    /*
+                        Aggregate all attributes and propagate down to the <li> element
+                     */
+                    var attributes = "";
+                    angular.forEach(attrs.$attr, function(value, key){
+                        attributes += ' ' + value + '="' + attrs[key] + '"';
+                    });
+                    var arrow = sub = toggle = href = '';
+                    // var show = attrs.ngShow ? (' ng-show="' + attrs.ngShow + '"') : '';
                     if (child.length) {
                         var id = '$layer2_' + nextId++;
-                        show = ' ng-click="' + id + '=!' + id + '"';
-                        sub = '<ul class="sub" ng-show="' + id + '"></ul>';
+                        toggle = ' ng-click="' + id + '=!' + id + '"';
+                        sub = '<ul class="nested" ng-show="' + id + '"></ul>';
                         arrow = '<i class="arrow fa" ng-class="{\'fa-caret-down\':' + id + 
                                 ', \'fa-caret-left\': !' + id + '}""></i>';
                         href = '';
@@ -25,9 +33,9 @@ angular.module('layer2', [])
                         href = '#' + attrs.href;
                     }
                     var active = ' ng-class="{selected: path() == \'' + attrs.href + '\'}"';
-                    var html = '<li' + active + '>' + 
-                                '   <a href="' + href + '"' + show + '>' + 
-                                '       <i class="' + attrs.class + '"></i>' + 
+                    var html = '<li' + attributes + active + '>' + 
+                                '   <a href="' + href + '"' + toggle + '>' + 
+                                '       <i class="' + attrs.icon + '"></i>' + 
                                 '       <span>' + attrs.value + '</span>' + arrow + 
                                 '   </a>';
                                 '</li>';

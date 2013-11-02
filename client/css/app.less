@@ -2,7 +2,9 @@
     app.less - Layer2 stylesheet
  */
 html, body {
-    background: url('../assets/background.png');
+    /* Select from concrete, linen, zigzag, tissue */
+    background: url('../assets/backgrounds/concrete.png');
+    background: url('../assets/linen.png');
     -webkit-font-smoothing: antialiased !important;
 }
 
@@ -26,7 +28,7 @@ html, body {
                 -webkit-transition: all .3s linear;
             }
         }
-        i.glyphicon-search {
+        .glyphicon-search {
             color: @gray;
             position: relative;
             font-size: 16px;
@@ -50,6 +52,7 @@ html, body {
     padding: 0;
     max-width: 100%;
 
+    //  MOB - simplify this somehow
     .sidebar {
         padding: 40px 0 0 0;
         line-height: 20px;
@@ -60,14 +63,15 @@ html, body {
                 margin: 0;
                 padding: 0;
                 &.selected {
-                    border-right: 4px solid #D12610;            //  MOB theme
+                    border-right: 4px solid @nav-tabs-stacked-active-border-color;
                 }
                 a {
                     margin: 0;
                     padding: 8px 0px 8px 15px;
-                    border-top: 1px solid #424242;
-                    border-bottom: 1px solid #282828;
                     border-radius: 0;
+                    border-top: 1px solid @nav-tabs-border-top-color;
+                    border-bottom: 1px solid @nav-tabs-border-bottom-color;
+
                     color: @gray-lighter;
                     &:hover {
                         cursor: pointer;
@@ -89,10 +93,11 @@ html, body {
                 &.selected {
                     a {
                         background: #252728;
-                        border-top: 1px solid #3D0707;
-                        border-bottom: 1px solid #3D0707;
+                        border-top: 1px solid @nav-tabs-active-border-top-color;
+                        border-bottom: 1px solid @nav-tabs-active-border-bottom-color;
                         &:hover {
-                            border-color: #252728;
+                            background: @nav-tabs-stacked-hover-bg;
+                            border-color: @nav-tabs-stacked-hover-border-color;
                             i {
                                 color: white;
                                 margin: 0;
@@ -105,31 +110,26 @@ html, body {
                 }
                 &:not(.selected) {
                     a:hover {
-                        background: black;
-                        border-color: #252728;
-                        border-top: 1px solid #424242;
+                        background: @nav-tabs-stacked-hover-bg;
+                        border-color: @nav-tabs-stacked-hover-border-color;
+                        border-top: 1px solid @nav-tabs-border-top-color;
                         border-radius: 0;
                         i {
                             color: white;
                         }
                     }
                 }
-                ul.sub {
+                .nested {
                     li {
                         margin: 0;
                         a {
                             margin: 0;
                             padding: 4px 0 4px 10px;
                             text-decoration: none;
-                        border-top: none;
-                        border-bottom: none;
-                            broder-radius: 0;
                             border: none;
                             display: block;
                         }
                         &:hover {
-                            border-color: red;  // #252728;
-                            broder-radius: 0;
                             border: none;
                             margin: 0;
                         }
@@ -138,7 +138,7 @@ html, body {
             }
         }
     }
-    .breadcrumb {
+    .breadcrumb, .play-controls {
         float: right;
         display: inline;
         padding: 14px 24px 4px 6px;
@@ -151,18 +151,16 @@ html, body {
         }
     }
     .content {
-        background: url('../assets/content.png');
+        background: url('../assets/grid_noise.png');
         padding: 0 20px 0 20px;
         .nav {
             padding-left: 20px;
         }
         .panel {
             background: white;
-            //  MOB - is color needed?
             border: 1px solid @gray-lighter;
             padding: 0px 20px 8px 20px;
             min-height: 600px;
-
             table.small {
                 width: 50%;
             }
@@ -172,39 +170,6 @@ html, body {
 
         }
     }
-}
-
-body .footer {
-    position: relative;
-    clear: both;
-    height: 30px;
-    padding: 8px 28px 0 10px;
-    color: @gray-light;
-    font-size: @font-size-smallest;
-}
-
-/*
-    Event backgrounds
- */
-i.severity {
-    font-size: @font-size-smallest;
-    text-align: center;
-    width: 2em;
-    padding: 4px 4px 4px 6px;
-    margin-right: 8px;
-    text-align: center;
-}
-
-.event-critical {
-    .gradient(red, darken(red, 5%), lighten(red, 5%));
-}
-
-.event-success, .event-inform {
-    .gradient(red, darken(green, 5%), lighten(green, 5%));
-}
-
-.event-warning {
-    .gradient(red, darken(gold, 5%), lighten(gold, 5%));
 }
 
 /* Log notification pulldown */
@@ -238,13 +203,10 @@ i.severity {
         font-style: italic;
         font-size: 11px;
     }
-
-
 }
 
-
 .modal-backdrop {
-    -background: url('../assets/background.jpg');
+    background: url('../assets/sunset.jpg');
 }
 
 .login {
@@ -273,30 +235,131 @@ i.severity {
     }
 }
 
-.form-error {
-    width: 500px;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    text-indent: 10px;
-    border: 2px solid @error-color;
-    .rounded(4px);
-    .drop-shadow();
-    h2 {
-        margin: 0 0 10px 0;
-        padding: 10px 0 10px 0;
-        font-size: @font-size-small;
-        color: white;
-        background: @error-color;
+/*
+    Dashboard view
+ */
+.view-dashboard {
+    /* Events widget */
+    .events {
+        ul {
+            text-align: left;
+            padding-left: 10px;
+            li {
+                padding: 4px;
+                border-bottom: 1px solid @gray-lighter;
+                list-style: none;
+                i {
+                    font-size: @font-size-smallest;
+                    text-align: center;
+                    width: 2em;
+                    padding: 4px;
+                    margin-right: 8px;
+                }
+            }
         }
-    ul {
-        margin-bottom: 0;
     }
 }
 
-.field-error {
-    border: 2px solid @error-color !important;
+
+/*
+    Widget classes
+ */
+.widget {
+    height: 100%;
+    width: 100%;
+    min-width: 160px;
+    padding: 10px;
+    margin: 8px 0 8px 0;
+    border: 1px solid darken(@gray-lighter, 10);
+    background: white;
+    color: @gray;
+    text-align: center;
+    &:hover {
+        border: 1px solid @gray-light;
+        .drop-shadow(2px, 2px, 4px, 0.2);
+    }
+    .title {
+        font-size: @font-size-larger;
+        font-weight: bold;
+    }
+    .label {
+        color: @gray;
+        font-size: floor(@font-size-counter / 3);
+        font-weight: normal;
+    }
+    .number {
+        color: @gray;
+        font-size: @font-size-counter;
+        font-weight: bold;
+    }
 }
 
+
+.widget-controls {
+    padding: 0;
+    text-align: left;
+    .header {
+        height: 36px;
+        .gradient(@gray-lightest, darken(@gray-lightest, 8%), lighten(@gray-lightest, 8%));
+        h4 {
+            font-size: @font-size-base;
+            float: left;
+            padding: 0 8px 0 8px;
+            i {
+                padding-right: 6px;
+            }
+        }
+        .options {
+            margin: 8px;
+            float: right;
+            a {
+                color: @gray;
+                padding-right: 6px;
+            }
+        }
+    }
+    .body {
+        padding: 8px;
+    }
+}
+
+.gauge {
+    font-size: @font-size-counter;
+    background: white;
+    display: block;
+}
+
+/*
+    Event backgrounds
+ */
+.severity {
+    font-size: @font-size-smaller;
+    text-align: center;
+    width: 2em;
+    padding: 4px 4px 4px 6px;
+    margin-right: 8px;
+    text-align: center;
+}
+
+.event-critical {
+    .gradient(red, darken(red, 5%), lighten(red, 5%));
+}
+
+.event-error {
+    .gradient(orange, darken(orange, 5%), lighten(orange, 5%));
+}
+
+.event-success, .event-inform {
+    .gradient(red, darken(green, 5%), lighten(green, 5%));
+}
+
+.event-warning {
+    .gradient(red, darken(gold, 5%), lighten(gold, 5%));
+}
+
+/*
+    Feedback and form errors
+ */
 .feedback {
     position: absolute;
     top: 0;
@@ -338,73 +401,46 @@ i.severity {
     }
 }
 
-
-//  Make this simpler and have gauge and counter do what is required.
-.widget {
-    height: 100%;
-    width: 100%;
-    min-width: 160px;
-    padding: 10px;
-    margin: 8px 0 8px 0;
-    border: 1px solid darken(@gray-lighter, 10);
-    background: white;
-    color: @gray;
-    text-align: center;
-    &:hover {
-        border: 1px solid @gray-light;
-        .drop-shadow(2px, 2px, 4px, 0.2);
+fieldset {
+    legend {
+        display: block;
     }
-    .title {
-        font-size: @font-size-larger;
-        font-weight: bold;
-    }
-    .label {
-        color: @gray;
-        font-size: floor(@font-size-counter / 3);
-        font-weight: normal;
-    }
-    .number {
-        color: @gray;
-        font-size: @font-size-counter;
-        font-weight: bold;
-    }
+    
 }
 
-.gauge {
-    font-size: @font-size-counter;
-    background: white;
-    display: block;
+@-webkit-keyframes feedback-transition {
+    0%   { opacity: 1.0; top:    0px; }
+    80%  { opacity: 1.0; top:    0px; }
+    90%  { opacity: 0.5; top:    0px; }
+    100% { opacity: 0.0; top: -100px; }
 }
 
-.peekaboo {
-    padding: 0;
-    text-align: left;
-    .header {
-        height: 36px;
-        .gradient(@gray-lightest, darken(@gray-lightest, 8%), lighten(@gray-lightest, 8%));
-        h4 {
-            font-size: @font-size-base;
-            float: left;
-            padding: 0 8px 0 8px;
-            i {
-                padding-right: 6px;
-            }
+.form-error {
+    width: 500px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    text-indent: 10px;
+    border: 2px solid @error-color;
+    .rounded(4px);
+    .drop-shadow();
+    h2 {
+        margin: 0 0 10px 0;
+        padding: 10px 0 10px 0;
+        font-size: @font-size-small;
+        color: white;
+        background: @error-color;
         }
-        .options {
-            margin: 8px;
-            float: right;
-            a {
-                color: @gray;
-                padding-right: 6px;
-            }
-        }
-    }
-    .body {
-        padding: 8px;
+    ul {
+        margin-bottom: 0;
     }
 }
 
-.table-bordered {
+.field-error {
+    border: 2px solid @error-color !important;
+}
+
+//  UNUSED MOB - is this used
+UNUSED.table-bordered {
     .drop-shadow();
     border: 1px solid @table-border-color;
     thread {
@@ -415,42 +451,27 @@ i.severity {
     }
 }
 
-@-webkit-keyframes feedback-transition {
-    0%   { opacity: 1.0; top:    0px; }
-    80%  { opacity: 1.0; top:    0px; }
-    90%  { opacity: 0.5; top:    0px; }
-    100% { opacity: 0.0; top: -100px; }
+.narrow {
+    width: 1%;
 }
 
+/*
+    ID rules
+ */
+#author {
+    position: relative;
+    clear: both;
+    height: 30px;
+    padding: 8px 28px 0 10px;
+    color: @gray-light;
+    font-size: @font-size-smallest;
+}
+
+/*
+    Universal rules
+ */
 [ng-click],[esp-click] {
     cursor: pointer;
-}
-
-.view-dashboard {
-    h2 {
-        // margin-top: 10px;
-    }
-    //  Events widget
-    .events {
-        margin: 0;
-        padding: 0;
-        ul {
-            text-align: left;
-            padding-left: 10px;
-            li {
-                padding: 4px;
-                border-bottom: 1px solid @gray-lighter;
-                list-style: none;
-                i {
-                    font-size: @font-size-smallest;
-                    text-align: center;
-                    width: 2em;
-                    padding: 4px;
-                    margin-right: 8px;
-                }
-            }
-        }
-    }
 }
 
 /*

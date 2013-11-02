@@ -13,6 +13,8 @@ angular.module('app').controller('VlanControl', function (Esp, Vlan, $modal, $ro
         },
     };
 
+    $scope.mob = 'disabled';
+
     if ($scope.id) {
         Vlan.get({id: $scope.id}, $scope, function(response) {
             $scope.vlan.num = $scope.vlan.name.replace('vlan', '');
@@ -27,9 +29,10 @@ angular.module('app').controller('VlanControl', function (Esp, Vlan, $modal, $ro
     }
 
     $scope.remove = function(id) {
+        var esp = angular.module('esp');
         var confirm = $modal.open({
             scope: $scope,
-            templateUrl: 'app/vlan/vlan-remove-confirm.html'
+            templateUrl: esp.url('/app/vlan/vlan-remove-confirm.html'),
         });
         angular.forEach($scope.vlans, function(value, key) {
             if (value.id == id) {
@@ -75,9 +78,10 @@ angular.module('app').controller('VlanControl', function (Esp, Vlan, $modal, $ro
 
     $scope.removePort = function(mapping) {
         $scope.port = { name: mapping['port.name'] };
+        var esp = angular.module('esp');
         var confirm = $modal.open({
             scope: $scope,
-            templateUrl: 'app/vlan/vlan-remove-port-confirm.html', 
+            templateUrl: esp.url('/app/vlan/vlan-remove-port-confirm.html'),
         });
         confirm.result.then(function(result) {
             if (result) {
@@ -100,11 +104,12 @@ angular.module('app').config(function($routeProvider) {
         abilities: { edit: 'true', 'view': true },
         resolve: { action: checkAuth },
     };
+    var esp = angular.module('esp');
     $routeProvider.when('/vlan/list', angular.extend({}, Default, {
-        templateUrl: '/app/vlan/vlan-list.html',
+        templateUrl: esp.url('/app/vlan/vlan-list.html'),
         abilities: { 'view': true },
     }));
-    $routeProvider.when('/vlan/:id', angular.extend({}, Default, {templateUrl: '/app/vlan/vlan-edit.html'}));
-    $routeProvider.when('/vlan/:id/ports', angular.extend({}, Default, {templateUrl: '/app/vlan/vlan-ports.html'}));
-    $routeProvider.when('/vlan/:id/add', angular.extend({}, Default, {templateUrl: '/app/vlan/vlan-add-port.html'}));
+    $routeProvider.when('/vlan/:id', angular.extend({}, Default, {templateUrl: esp.url('/app/vlan/vlan-edit.html')}));
+    $routeProvider.when('/vlan/:id/ports', angular.extend({}, Default, {templateUrl: esp.url('/app/vlan/vlan-ports.html')}));
+    $routeProvider.when('/vlan/:id/add', angular.extend({}, Default, {templateUrl: esp.url('/app/vlan/vlan-add-port.html')}));
 });

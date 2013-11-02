@@ -13,11 +13,11 @@ static void updateSettings() {
     }
 }
 
-ESP_EXPORT int esp_controller_layer2_setting(HttpRoute *route)
+ESP_EXPORT int esp_controller_layer2_setting(HttpRoute *route, MprModule *module)
 {
     Edi     *edi;
 
-    edi = getDatabase();
+    edi = espGetRouteDatabase(route);
     espDefineAction(route, "setting-get", getSettings);
     espDefineAction(route, "setting-update", updateSettings);
     ediAddValidation(edi, "format", "settings", "email", "(^$|@)");

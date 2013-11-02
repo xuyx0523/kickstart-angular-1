@@ -16,7 +16,8 @@
     The attributes override any scope values. Defaults taken from CSS for background, color and fonts.
  */
 angular.module('esp.gauge', [])
-.directive('espGauge', function(Esp, $compile, $window) {
+.directive('espGauge', function(Esp, $compile, $timeout, $window) {
+    var frameRate = 25;
     return {
         restrict: 'E',
         scope: {
@@ -28,6 +29,10 @@ angular.module('esp.gauge', [])
             var e = children[0];
             var c = e.getContext('2d');
 
+            scope.lastUpdate = Date.now();
+            scope.current = 0;
+            scope.prior = -1;
+
             /*
                 Inherit canvas size from the element style or attributes
              */
@@ -35,6 +40,7 @@ angular.module('esp.gauge', [])
                 highlight: '#60A8D8', 
                 height: element.css('height'),
                 width: element.css('width'),
+                period: 1000,
             }, attrs);
             c.canvas.height = scope.height = parseInt(scope.height);
             c.canvas.width = scope.width = parseInt(scope.width);
@@ -49,7 +55,8 @@ angular.module('esp.gauge', [])
             if (!scope.color) {
                 scope.color = Esp.rgb2hex(element.css('color'));
             }
-            scope.gauge = function(value) {
+            scope.draw = function() {
+                var value = scope.current;
                 var children = element.children();
                 var e = children[0];
                 var c = e.getContext('2d');
@@ -80,7 +87,7 @@ angular.module('esp.gauge', [])
                 c.font = 'bold ' + fontSize + 'px ' + font;
                 c.textAlign = 'center';
                 c.fillStyle = scope.color;
-                c.fillText(value, x, 40);
+                c.fillText(scope.value, x, 40);
 
                 //  Gauge background
                 c.beginPath();
@@ -133,22 +140,52 @@ angular.module('esp.gauge', [])
                 arrow((avalue - 50) / 50 * (sweep / 2));
                 c.restore();
             };
-            scope.$watch('value', function(value) {
-                var avalue = value - 0;
-                scope.prior = scope.angle;
+
+            scope.$watch('value', function(v) {
+                var value = v - 0;
                 if (scope.range) {
                     var parts = scope.range.split('-');
                     scope.low = parts[0] - 0;
                     scope.high = parts[1] - 0;
-                    if (avalue > scope.high) avalue = scope.high;
-                    if (avalue < scope.low) avalue = scope.low;
+                    if (value > scope.high) value = scope.high;
+                    if (value < scope.low) value = scope.low;
                 } else {
-                    if (avalue < 0) avalue = 0;
-                    if (avalue > 100) avalue = 100;
+                    if (value < 0) value = 0;
+                    if (value > 100) value = 100;
                     scope.low = 0;
                     scope.high = 100;
                 }
-                scope.gauge(avalue);
+                // console.log("WATCH", value, "PRIOR", scope.prior);
+                if (scope.prior == value) {
+                    return;
+                }
+                scope.value = value;
+                scope.prior = value;
+
+                var now = Date.now();
+                var period = now - scope.lastUpdate;
+                if (period <= 0) {
+                    period = 1000;
+                }
+                scope.lastUpdate = now;
+
+                var steps = period / 1000 * frameRate;
+                var inc = (value - scope.current) / steps;
+
+                function animate() {
+                    // console.log("ANIMATE VALUE ", scope.value, "CURRENT", scope.current, "INC", inc, "STEPS", steps, "PERIOD", period);
+                    if (scope.timeout) {
+                        $timeout.cancel(scope.timeout);
+                    }
+                    if (Math.abs(scope.value - scope.current) <= Math.abs(inc)) {
+                        scope.current = scope.value;
+                    } else {
+                        scope.current += inc; 
+                        scope.timeout = $timeout(animate, 1000 / frameRate);
+                    }
+                    scope.draw();
+                }
+                animate();
             });
         },
     };

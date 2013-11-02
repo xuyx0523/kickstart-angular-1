@@ -4,10 +4,19 @@
  
 'use strict';
 
-angular.module('app').controller('UserControl', function (Esp, User, $rootScope, $scope, $location, $modal, $routeParams, $timeout) {
+angular.module('app').controller('UserControl', function (Esp, User, $rootScope, $route, $scope, $location, $modal, $routeParams, $timeout) {
     angular.extend($scope, $routeParams);
+    $scope.options = { roles: {}};
+    angular.forEach(Esp.config.login.abilities, function(value, key) {
+        $scope.options.roles[key] = key;
+        $scope.options[key] = {
+            "true":  "Enabled",
+            "false": "Disabled",
+        };
+    })
     $scope.user = {};
 
+    //  MOB - reverse this loging and put the else case as then case
     if (Esp.user || !Esp.config.loginRequired) {
         if ($scope.id) {
             User.get({id: $scope.id}, $scope, function(response) {
@@ -15,6 +24,8 @@ angular.module('app').controller('UserControl', function (Esp, User, $rootScope,
             });
         } else if ($location.path().indexOf('/user/list') == 0) {
             User.list(null, $scope, {users: "data"});
+        } else if ($location.path() == "/user/") {
+            User.init(null, $scope);
         }
     } else {
         var loc = $location.path();
@@ -35,6 +46,7 @@ angular.module('app').controller('UserControl', function (Esp, User, $rootScope,
         User.login($scope.user, function(response, fn) {
             if (response.error) {
                 Esp.logout();
+                $location.path("/");
             } else {
                 Esp.login(response.user);
                 dialog.dismiss();
@@ -53,22 +65,20 @@ angular.module('app').controller('UserControl', function (Esp, User, $rootScope,
             Esp.logout();
             User.logout({}, function() {
                 $rootScope.feedback = { inform: "Logged Out" };
+                $location.path("/");
+                $route.reload();
             });
         } else {
             $rootScope.feedback = { inform: "Logged Out" };
-        }
-        if ($rootScope.referrer) {
-            $location.path($rootScope.referrer.$$route.originalPath);
-            $rootScope.referrer = null;
-        } else {
             $location.path("/");
         }
     };
 
     $scope.forgot = function() {
+        var esp = angular.module('esp');
         var confirm = $modal.open({
             scope: $scope,
-            templateUrl: 'app/user/user-forgot.html'
+            templateUrl: esp.url('/app/user/user-forgot.html'),
         });
         confirm.result.then(function(result) {
             if (result) {
@@ -101,11 +111,12 @@ angular.module('app').config(function($routeProvider) {
         controller: 'UserControl',
         resolve: { action: checkAuth },
     };
-    $routeProvider.when('/user/list',   angular.extend({}, Default, {templateUrl: '/app/user/user-list.html'}));
-    $routeProvider.when('/user/login',  angular.extend({}, Default, {templateUrl: '/app/user/user-login.html'}));
+    var esp = angular.module('esp');
+    $routeProvider.when('/user/list',   angular.extend({}, Default, {templateUrl: esp.url('/app/user/user-list.html')}));
+    $routeProvider.when('/user/login',  angular.extend({}, Default, {templateUrl: esp.url('/app/user/user-login.html')}));
     $routeProvider.when('/user/logout', angular.extend({}, Default, {template: '<p ng-init="logout()">Hello</p>'}));
     $routeProvider.when('/user/:id', angular.extend({}, Default, {
-        templateUrl: '/app/user/user-edit.html', 
+        templateUrl: esp.url('/app/user/user-edit.html'),
         abilities: { 'edit': true, 'view': true },
     }));
 });

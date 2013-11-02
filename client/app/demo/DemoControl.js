@@ -9,7 +9,7 @@ angular.module('app').controller('DemoControl', function (Demo, Esp, $scope, $ti
     $scope.gauge = {value: 100};
 
     $scope.demo1 = function() {
-        Esp.loadScript('/lib/flot/jquery.flot.js', function() {
+        Esp.loadScript(Esp.config.appPrefix + '/lib/flot/jquery.flot.js', function() {
             var gdata = [];
             var i;
             for (i = 0; i < 50; i++) {
@@ -149,16 +149,17 @@ angular.module('app').config(function($routeProvider) {
         controller: 'DemoControl',
         resolve: { action: checkAuth },
     };
+    var esp = angular.module('esp');
     $routeProvider.when('/demo/demo-1', angular.extend({}, Default, {
-        templateUrl: '/app/demo/demo-1.html'
+        templateUrl: esp.url('/app/demo/demo-1.html'),
     }));
     $routeProvider.when('/demo/demo-2', angular.extend({}, Default, {
-        templateUrl: '/app/demo/demo-2.html'
+        templateUrl: esp.url('/app/demo/demo-2.html'),
     }));
     $routeProvider.when('/demo/demo-3', angular.extend({}, Default, {
-        templateUrl: '/app/demo/demo-3.html'
+        templateUrl: esp.url('/app/demo/demo-3.html'),
     }));
     $routeProvider.when('/demo/demo-svg', angular.extend({}, Default, {
-        templateUrl: '/app/demo/demo-svg.html'
+        templateUrl: esp.url('/app/demo/demo-svg.html'),
     }));
 });

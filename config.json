@@ -57,20 +57,20 @@
             float: 2,                                                                                                  
             int: 0,
         },
-        /* Set to "/user/login" to require login for any access */
+        /* Set to "/user/login" to require login for all access */
         loginRequired: "",
-        refresh: 30000,
-        redirect: "secure",
-        routePrefix: "/service",
+        refresh: 1000,
+        serverPrefix: "/server",
         sendJson: true,
         timeouts: {
-            session: 1800,
+            session: 300,
         },
         xsrfToken: true,
     },
     server: {
-        authStore: "app",
+        auth: "app",
         database: "mdb://layer2.mdb",
+        _redirect: "secure",
     },
     generate: {
         top: "angular-mvc",                                                                                            

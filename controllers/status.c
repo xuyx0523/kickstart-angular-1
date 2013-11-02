@@ -21,7 +21,7 @@ static void getStatus() {
         count, ediGridAsJson(grid, 0), ediGetGridSchemaAsJson(grid)); 
 }
 
-ESP_EXPORT int esp_controller_layer2_status(HttpRoute *route)
+ESP_EXPORT int esp_controller_layer2_status(HttpRoute *route, MprModule *module)
 {
     espDefineAction(route, "status-get", getStatus);
     return 0;

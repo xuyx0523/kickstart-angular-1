@@ -8,6 +8,6 @@ angular.module('app').factory('Table', function (EspResource) {
     { 
         name: '@name' 
     }, {
-        list: { 'method': 'GET', url: '/service/table/list' },
+        list: { 'method': 'GET', url: '/:prefix/table/list' },
     });
 });

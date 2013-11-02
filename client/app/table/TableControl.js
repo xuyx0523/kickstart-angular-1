@@ -29,6 +29,7 @@ angular.module('app').config(function($routeProvider) {
         abilities: { 'edit': true, 'view': true },
         resolve: { action: checkAuth },
     };
-    $routeProvider.when('/table/list', angular.extend({}, Default, {templateUrl: '/app/table/table-list.html'}));
-    $routeProvider.when('/table/:id', angular.extend({}, Default, {templateUrl: '/app/table/table-edit.html'}));
+    var esp = angular.module('esp');
+    $routeProvider.when('/table/list', angular.extend({}, Default, {templateUrl: esp.url('/app/table/table-list.html')}));
+    $routeProvider.when('/table/:id',  angular.extend({}, Default, {templateUrl: esp.url('/app/table/table-edit.html')}));
 });

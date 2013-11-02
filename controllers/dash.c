@@ -93,9 +93,18 @@ static void getDash() {
     render(getDashData(getConn()));
 }
 
+/*
+    MOB - normally this would push data on-demand
+ */
 static void updateStream(HttpConn *conn) {
-mprTrace(0, "UPSTREAM %d", conn->state);
+    Esp     *esp;
+
+    esp = MPR->espService;
     if (HTTP_STATE_PARSED <= conn->state && conn->state <= HTTP_STATE_CONTENT) {
+        if (esp->reloading) {
+            httpSendClose(conn, WS_STATUS_OK, "OK");
+            return;
+        }
         if (httpSendBlock(conn, WS_MSG_TEXT, getDashData(conn), -1, 0) < 0) {
             httpError(conn, HTTP_CODE_INTERNAL_SERVER_ERROR, "Cannot send big message");
         }
@@ -105,11 +114,13 @@ mprTrace(0, "UPSTREAM %d", conn->state);
 static void getStream() {
     HttpConn    *conn;
     MprEvent    *timer;
+    MprTicks    period;
 
     conn = getConn();
     dontAutoFinalize();
     updateStream(conn);
-    timer = mprCreateTimerEvent(conn->dispatcher, "dashboard", 5000, updateStream, conn, 0);
+    period = stoi(espGetConfig(conn->rx->route, "settings.refresh", "1000"));
+    timer = mprCreateTimerEvent(conn->dispatcher, "dashboard", period, updateStream, conn, 0);
     httpSetWebSocketData(conn, timer);
 }
 

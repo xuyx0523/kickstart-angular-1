@@ -12,11 +12,15 @@ static void createUser() {
 
 static void getUser() { 
     /* Don't send the real password back to the user */
-    renderRec(setField(readRec("user", id()), "password", "   n o t p a s s w o r d   "));
+    renderRec(setField(readRec("user", param("id")), "password", "   n o t p a s s w o r d   "));
 }
 
 static void indexUser() {
     renderGrid(readTable("user"));
+}
+
+static void initUser() {
+    renderRec(createRec("user", 0));
 }
 
 static void listUsers() {
@@ -86,11 +90,12 @@ ESP_EXPORT int esp_controller_layer2_user(HttpRoute *route, MprModule *module)
 {
     Edi     *edi;
 
-    edi = getDatabase();
     espDefineAction(route, "user-create", createUser);
     espDefineAction(route, "user-get", getUser);
     espDefineAction(route, "user-list", listUsers);
     espDefineAction(route, "user-index", indexUser);
+    espDefineAction(route, "user-init", initUser);
+
     espDefineAction(route, "user-remove", removeUser);
     espDefineAction(route, "user-update", updateUser);
 
@@ -98,6 +103,7 @@ ESP_EXPORT int esp_controller_layer2_user(HttpRoute *route, MprModule *module)
     espDefineAction(route, "user-cmd-login", login);
     espDefineAction(route, "user-cmd-logout", logout);
 
+    edi = espGetRouteDatabase(route);
     ediAddValidation(edi, "present", "user", "username", 0);
     ediAddValidation(edi, "unique", "user", "username", 0);
     ediAddValidation(edi, "present", "user", "email", 0);

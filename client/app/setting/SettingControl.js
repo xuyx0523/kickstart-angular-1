@@ -22,5 +22,6 @@ angular.module('app').config(function($routeProvider) {
         abilities: { 'edit': true, 'view': true },
         resolve: { action: checkAuth },
     };
-    $routeProvider.when('/setting', angular.extend({}, Default, {templateUrl: '/app/setting/setting-edit.html'}));
+    var esp = angular.module('esp');
+    $routeProvider.when('/setting', angular.extend({}, Default, {templateUrl: esp.url('/app/setting/setting-edit.html')}));
 });

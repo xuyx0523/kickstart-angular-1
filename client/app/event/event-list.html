@@ -9,7 +9,7 @@
         <thead>
             <tr>
                 <th ng-repeat="header in columns">{{header | titlecase}}</th>
-                <th class="text-center">Remove</th>
+                <th ng-if="Esp.can('edit')" class="narrow text-center">Remove</th>
             </tr>
         </thead>
         <tbody>
@@ -18,7 +18,7 @@
             <td><i class="severity fa fa-inverse event-{{event.type}}" ng-class="Esp.faclass(event.type)"></i>{{event.type}}</td>
             <td>{{event.date | date:'short'}}</td>
             <td>{{event.title}}</td>
-            <td class="text-center" ng-click="remove(event.id)"><i class="fa fa-times"></i></td>
+            <td  ng-if="Esp.can('edit')" class="narrow text-center" ng-click="remove(event.id)"><i class="fa fa-times"></i></td>
         </tr>
         <tr ng-show="eventList.data.length == 0">
             <td colspan="5">No Event Entries</td>

@@ -32,6 +32,7 @@ angular.module('app').config(function($routeProvider) {
         abilities: { 'view': true },
         resolve: { action: checkAuth },
     };
-    $routeProvider.when('/event/list', angular.extend({}, Default, {templateUrl: '/app/event/event-list.html'}));
-    $routeProvider.when('/event/:id', angular.extend({}, Default, {templateUrl: '/app/event/event-view.html'}));
+    var esp = angular.module('esp');
+    $routeProvider.when('/event/list', angular.extend({}, Default, {templateUrl: esp.url('/app/event/event-list.html')}));
+    $routeProvider.when('/event/:id',  angular.extend({}, Default, {templateUrl: esp.url('/app/event/event-view.html')}));
 });

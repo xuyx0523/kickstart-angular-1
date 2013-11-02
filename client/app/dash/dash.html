@@ -1,9 +1,13 @@
+<ul class="play-controls">
+    <span ng-click='play=!play'><i class="fa" ng-class="{'fa-play': !play, 'fa-pause': play}"
+        tooltip="{{ play ? 'Pause' : 'Play'}}" tooltip-placement="left"></i></span>
+</ul>
 <div class="view-dashboard">
     <h2>Dashboard</h2>
     <div class="row">
         <div class="col-sm-3">
     	    <div class="widget">
-                <esp-gauge class="gauge" value="{{ports.active}}" title="Active Ports" subtitle="" range='0-16'></esp-gauge>
+                <esp-gauge class="gauge" value="{{ports.active}}" title="Active Ports" range='0-16'></esp-gauge>
     	    </div>
         </div>
         <div class="col-sm-6">
@@ -66,18 +70,16 @@
             </div>
         </div>
 
-        <div class="col-sm-6" ng-controller="Esp.nop">
-            <div class="widget peekaboo" ng-show='!hide'>
+        <div class="col-sm-6" ng-controller="Esp.empty">
+            <div class="widget widget-controls" ng-show='!hide'>
                 <div class="header">
                     <h4><i class="icon-signal"></i>Packet Rate</h4>
                     <span class="options" ng-init="expand=true">
                         <a href="" ng-click='expand=!expand'><i class="fa" ng-class="{'fa-chevron-up': expand, 'fa-chevron-down': !expand}"></i></a>
-                        <a href="#/setting"><i class="fa fa-wrench"></i></a>
-                        <a href="" ng-click='play=!play'><i class="fa" ng-class="{'fa-play': play, 'fa-pause': !play}"></i></a>
                         <a href=""><i class="fa fa-times" ng-click='hide=true'></i></a>
                     </span>
                 </div>
-                <div class="body" ng-show="expand">Hello</div>
+                <div class="body" ng-show="expand"></div>
             </div>
         </div>
     </div>

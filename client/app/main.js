@@ -56,15 +56,22 @@ angular.element(document).ready(function() {
                 console.log("Cannot get ESP config");
                 esp.$config = {};
             } else {
-            //  MOB - need better way of doing this
+                //  MOB - need better way of doing this
                 var esp = angular.module('esp');
                 esp.$config = JSON.parse(this.responseText);
+                esp.url = function(url) {
+                    return esp.$config.appPrefix + url;
+                }
+                esp.server = function(url) {
+                    return esp.$config.prefix + url;
+                }
             }
         } catch(e) {
             console.log("Cannot parse ESP config", this.responseText)
         }
         angular.bootstrap(document, ['app']);
     };
-    http.open("GET", "/esp/config", true);
+    var url = window.location.pathname + '/esp/config';
+    http.open("GET", url, true);
     http.send();
 });

@@ -41,7 +41,7 @@ static int forward(Edi *db)
     if (!createEvent(db, "warning", "Port limit exceeded", "Port 14 has exceeded maximum sustained transfer limit") ||
         !createEvent(db, "error", "Port stuck", "Port 1 not operating anymore") ||
         !createEvent(db, "critical", "Port failed", "Port 2 is not operational") ||
-        !createEvent(db, "infom", "Port enabled", "Port 7 enabled")) {
+        !createEvent(db, "inform", "Port enabled", "Port 7 enabled")) {
         return MPR_ERR_CANT_WRITE;
     }
     for (i = 0; i < 30; i++) {

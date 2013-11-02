@@ -94,19 +94,21 @@ angular.module('app').config(function($routeProvider) {
         abilities: { 'view': true },
         resolve: { action: checkAuth },
     };
+    var esp = angular.module('esp');
     $routeProvider.when('/port/list', angular.extend({}, Default, { 
-        templateUrl: '/app/port/port-list.html' 
+        //  MOB - layer routeProvider and apply esp.url() automatically
+        templateUrl: esp.url('/app/port/port-list.html'), 
     }));
     $routeProvider.when('/port/:id', angular.extend({}, Default, {
-        templateUrl: '/app/port/port-edit.html', 
+        templateUrl: esp.url('/app/port/port-edit.html'),
         abilities: { 'edit': true, 'view': true },
     }));
     $routeProvider.when('/port/:id/vlans', angular.extend({}, Default, { 
-        templateUrl: '/app/port/port-vlans.html',
+        templateUrl: esp.url('/app/port/port-vlans.html'),
         abilities: { 'edit': true, 'view': true },
     }));
     $routeProvider.when('/port/:id/add', angular.extend({}, Default, { 
-        templateUrl: '/app/port/port-add-to-vlan.html',
+        templateUrl: esp.url('/app/port/port-add-to-vlan.html'),
         abilities: { 'edit': true, 'view': true },
     }));
 });

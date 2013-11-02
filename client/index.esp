@@ -22,13 +22,13 @@
                             <i class="glyphicon glyphicon-search"></i>
                         </form>
                     </li>
-                    <li><a href="#/setting/"><span class="glyphicon glyphicon-wrench"></span></a></li>
+                    <li ng-if="Esp.can('edit')"><a href="#/setting/"><span class="glyphicon glyphicon-wrench"></span></a></li>
                     <li class="dropdown ng-cloak" ng-controller="StatusControl" ng-show="events.length">
                         <a href="#" class="dropdown-toggle"><i class="fa fa-warning"></i></a>
                         <ul class="dropdown-menu notify">
                             <li class="header">You have {{eventCount}} event notices</li>
                             <li class="message" ng-repeat="event in events" esp-click="/event/{{events[$index].id}}">
-                                <i class="severity fa fa-inverse event-{{event.type}}" ng-class="Esp.mob(event.type)"></i>
+                                <i class="severity fa fa-inverse event-{{event.type}}" ng-class="Esp.faclass(event.type)"></i>
                                 <span>{{event.title}}</span>
                                 <!-- MOB - should really convert to xx mins ago -->
                                 <span class="time"><i class="fa fa-clock-o"></i> {{event.date}}</span>
@@ -39,7 +39,6 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" ng-cloak>{{Esp.user.name || 'guest'}} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
                             <li><a ng-href="#/user/{{Esp.user ? 'logout' : 'login'}}"><i class="fa fa-power-off"></i> {{Esp.user ? 'Sign out' : 'Sign in'}}</a></li>
                         </ul>
                     </li>
@@ -53,13 +52,13 @@
             <!-- MOB should style text-center in sidebar itself -->
         <nav class="sidebar nav-collapse col-sm-2" ng-show="showNav">
             <ul class="nav nav-tabs nav-stacked">
-                <layer2-menu href="/" value="Dash" class="fa fa-tachometer"></layer2-menu>
-                <layer2-menu href="/port/list" value="Ports" class="fa fa-sitemap"></layer2-menu>
-                <layer2-menu href="/vlan/list" value="VLANs" class="glyphicon glyphicon-hdd"></layer2-menu>
-                <layer2-menu href="/setting" value="Settings" class="glyphicon glyphicon-cog"></layer2-menu>
-                <layer2-menu href="/user/list" value="Users" class="glyphicon glyphicon-user"></layer2-menu>
-                <layer2-menu href="/event/list" value="Events" class="glyphicon glyphicon-list"></layer2-menu>
-                <layer2-menu href="" value="Demos" class="fa fa-signal">
+                <layer2-menu href="/" value="Dash" icon="fa fa-tachometer"></layer2-menu>
+                <layer2-menu href="/port/list" value="Ports" icon="fa fa-sitemap"></layer2-menu>
+                <layer2-menu href="/vlan/list" value="VLANs" icon="glyphicon glyphicon-hdd"></layer2-menu>
+                <layer2-menu ng-show="Esp.can('edit')" href="/setting" value="Settings" icon="glyphicon glyphicon-cog"></layer2-menu>
+                <layer2-menu href="/user/list" value="Users" icon="glyphicon glyphicon-user"></layer2-menu>
+                <layer2-menu href="/event/list" value="Events" icon="glyphicon glyphicon-list"></layer2-menu>
+                <layer2-menu href="" value="Demos" icon="fa fa-signal">
                     <layer2-menu href="/demo/demo-svg" value="SVG"></layer2-menu>
                     <layer2-menu href="/demo/demo-1" value="Demo 1"></layer2-menu>
                     <layer2-menu href="/demo/demo-2" value="Demo 2"></layer2-menu>
@@ -73,7 +72,7 @@
     <div ng-repeat="(field, msg) in feedback">
         <span class="ng-hide-remove" ng-class="'feedback-' + field" ng-cloak>{{msg}}</span>
     </div>
-    <footer class="footer ng-cloak">
+    <footer id="author" ng-cloak>
         <span class="pull-right">Powered by ESP &mdash; &copy; Embedthis Software 2013</span>
     </footer>
     <% scripts(0); %>

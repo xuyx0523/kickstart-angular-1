@@ -1,14 +1,14 @@
 /*
     DashControl.js - Dash Controller
  */
-
 'use strict';
 
 angular.module('app').controller('DashControl', function (Dash, Esp, $location, $scope, $timeout, $route) {
 
 	var dashPage = $location.path();
+	$scope.play = true;
 
-	function processResponse(response) {
+	function prepDashData(response) {
 		var offline = 0;
 		var active = 0;
 		var io = 0;
@@ -39,21 +39,25 @@ angular.module('app').controller('DashControl', function (Dash, Esp, $location, 
 		$scope.vlans.offline = offline;
 		$scope.vlans.online = response.vlans.length - offline;
 		$scope.vlans.active = active;
-
 		$scope.last = response;
 	}
 
+    //	MOB - ESP could have a convenience function
 	function startWebSockets() {
-		var uri = 'ws://' + $location.host() + ':' + $location.port() + '/' + Esp.config.routePrefix.slice(1) + '/dash/stream';
-	    console.log(uri);
+		var proto = $location.protocol() == 'https' ? 'wss' : 'ws'
+		var uri = proto + '://' + $location.host() + ':' + $location.port() + Esp.config.prefix + '/dash/stream';
+	    console.log("Opening", uri);
 	    var ws = new WebSocket(uri, ['chat']);
 	    ws.onmessage = function (event) {
+			if (!$scope.play) {
+				//	MOB - could do more and close web socket
+	            return;
+			}
 	    	if ($location.path() != dashPage) {
-		        console.log("CLIENT CLOSE of DASH WEB SOCKET");
+	        	console.log("Closing " + uri);
 	    		ws.close();
 	    	} else {
 		        var data = angular.fromJson(event.data);
-		        console.log("MSG", data);
 		        //	MOB - should be a convenience function
                 angular.forEach(data, function(value, key) {
                     if (key == 'feedback') {
@@ -63,40 +67,55 @@ angular.module('app').controller('DashControl', function (Dash, Esp, $location, 
                     }
                 });
 		        $scope.$apply(function() {
-		        	processResponse(data);
+		        	prepDashData(data);
 		    	});
         	}
 	    };
 	    ws.onclose = function (event) {
-	    	//	MOB - timeout
-	        console.log("CLOSED");
-	        //	MOB - need to protect so we only have one active
-	    	// $scope.update = $timeout(startWebSockets, 10 * 1000, true);
+	    	if ($location.path() == dashPage) {
+		    	if ($scope.update) {
+		    		$timeout.cancel($scope.update);
+		    	}
+				$scope.update = $timeout(startWebSockets, 1000, true);
+			}
 	    };
 	    ws.onerror = function (event) {
         	console.log("Error " + event);
-	    	// $scope.update = $timeout(startWebSockets, 10 * 1000, true);
+	    	if ($location.path() == dashPage) {
+		    	if ($scope.update) {
+		    		$timeout.cancel($scope.update);
+		    	}
+				$scope.update = $timeout(startWebSockets, 1000, true);
+			}
 		}
 		return ws;
     }
 
     function startPoll() {
+		var period = Esp.config.refresh || (5 * 1000);
+		if (!$scope.play) {
+            $timeout(startPoll, period, true);
+            return;
+		}
     	if ($location.path() != dashPage) {
+    		//	MOB - use $timeout.cancel($scope.update)
 			$scope.update = null;
     	} else {
 		    if (!$scope.update) {
 			    $scope.update = Dash.get({id: 1}, $scope, function(response) {
 			    	$scope.update = null;
-			    	processResponse(response);
-			    	var timeout = Esp.config.refresh || (5 * 1000);
-		            $timeout(startPoll, timeout, true);
+			    	prepDashData(response);
+		            $timeout(startPoll, period, true);
 			    });
 			}
 		}
     }
 
-	if (window.WebSocket && false) {
-		$scope.update = startWebSockets();
+	if (window.WebSocket) {
+		if ($scope.update) {
+			$timeout.cancel($scope.update);
+		}
+		$scope.update = $timeout(startWebSockets, 0, true);
 	} else {
     	startPoll();
     }
@@ -107,7 +126,8 @@ angular.module('app').config(function($routeProvider) {
         controller: 'DashControl',
         resolve: { action: checkAuth },
     };
+    var esp = angular.module('esp');
     $routeProvider.when('/', angular.extend({}, Default, {
-        templateUrl: '/app/dash/dash.html'
+        templateUrl: esp.url('/app/dash/dash.html'),
     }));
 });

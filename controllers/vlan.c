@@ -106,7 +106,6 @@ ESP_EXPORT int esp_controller_layer2_vlan(HttpRoute *route, MprModule *module)
 {
     Edi     *edi;
 
-    edi = getDatabase();
     espDefineAction(route, "vlan-create", createVlan);
     espDefineAction(route, "vlan-get", getVlan);
     espDefineAction(route, "vlan-init", initVlan);
@@ -117,6 +116,7 @@ ESP_EXPORT int esp_controller_layer2_vlan(HttpRoute *route, MprModule *module)
     espDefineAction(route, "vlan-addPort", addPort);
     espDefineAction(route, "vlan-removePort", removePort);
 
+    edi = espGetRouteDatabase(route);
     ediAddValidation(edi, "unique", "vlan", "name", 0);
     ediAddValidation(edi, "format", "vlan", "name", "^vlan\\d\\d$");
     ediAddValidation(edi, "format", "vlan", "mode", "^(Online|Offline)$");

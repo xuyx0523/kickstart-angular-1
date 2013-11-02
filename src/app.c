@@ -5,19 +5,19 @@
 
 static void base(HttpConn *conn) 
 {
-    cchar       *loginRequired, *uri;
+    cchar       *loginRequired, *uri, *next, *prefix;
 
     if (!httpLoggedIn(conn)) {
         uri = getUri();
-        if (sstarts(uri, "/service/")) {
-            //  MOB - perhaps revert to black-list
-            if (smatch(uri, "/service/user/login") || smatch(uri, "/service/user/logout") || smatch(uri, "/service/user/forgot") ||
-                sstarts(uri, "/service/dash") || sstarts(uri, "/service/status")) {
+        prefix = espGetConfig(conn->rx->route, "settings.prefix", 0);
+        if (sstarts(uri, prefix)) {
+            next = &uri[slen(prefix)];
+            if (smatch(next, "/user/login") || smatch(next, "/user/logout") || smatch(next, "/user/forgot")) {
+                #if MOB
+                sstarts(next, "/dash") || sstarts(next, "/status"))
+                #endif
                 return;
             }
-            /*
-                Enable this if you wish to require login for all URIs
-             */
             loginRequired = espGetConfig(conn->rx->route, "settings.loginRequired", 0);
             if (loginRequired && *loginRequired) {
                 httpError(conn, HTTP_CODE_UNAUTHORIZED, "Access Denied. Login required");
@@ -55,10 +55,23 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
 
 ESP_EXPORT int esp_app_layer2(HttpRoute *route, MprModule *module)
 {
+    Edi     *edi;
+
     /*
         Establish common base class routine for all services
      */
     espDefineBase(route, base);
     httpSetAuthStoreVerify("app", verifyUser);
+    
+    /*
+        Demo Mode.
+        This code sets up a private, in-memory, readonly database for each user. 
+     */
+    if ((edi = espGetRouteDatabase(route)) == 0) {
+        mprError("Cannot get route database in esp_app_layer2");
+    } else {
+        ediSetPrivate(edi, 1);
+        ediSetReadonly(edi, 1);
+    }
     return 0;
 }

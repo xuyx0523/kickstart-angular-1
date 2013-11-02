@@ -10,13 +10,13 @@
                 <thead>
                     <tr>
                         <th ng-repeat="header in schema.headers" ng-click="click($index)">{{header | titlecase}}</th>
-                        <th>Remove</th>
+                        <th ng-if="Esp.can('edit')">Remove</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="vlan in vlans">
-                        <td ng-repeat="column in schema.columns" esp-click="/vlan/{{vlans[$index].id}}">{{vlan[column]}}</td>
-                        <td class="col-sm-1 text-center"><i class="fa fa-times" ng-click="remove({{vlan.id}})"></i></td>
+                    <tr ng-repeat="vlan in vlans"  esp-click="/vlan/{{vlans[$index].id}}">
+                        <td ng-repeat="column in schema.columns">{{vlan[column]}}</td>
+                        <td ng-if="Esp.can('edit')" class="col-sm-1 text-center"><i class="fa fa-times" ng-click="remove({{vlan.id}})"></i></td>
                     </tr>
                 </tbody>
             </table>
