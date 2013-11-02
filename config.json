@@ -1,7 +1,8 @@
 {
-    mode: "debug",
+    mode: "release",
     modes: {
         debug: {
+            flat: false,
             showErrors: true,
             keepSource: true,
             update: true,
@@ -14,6 +15,7 @@
             },
         },
         release: {
+            flat: true,
             map: "compressed",
             showErrors: false,
             update: false,
