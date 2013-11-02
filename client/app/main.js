@@ -71,7 +71,7 @@ angular.element(document).ready(function() {
         }
         angular.bootstrap(document, ['app']);
     };
-    var url = window.location.pathname + '/esp/config';
+    var url = (window.location.pathname + '/esp/config').replace(/\/\//g, '/');
     http.open("GET", url, true);
     http.send();
 });
