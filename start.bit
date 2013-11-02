@@ -8,7 +8,10 @@ Bit.load({
     },
     targets: {
         comp: {
-            build: "run('esp -r -q compile')",
+            build: "
+                run('esp -r -q compile')
+                run('esp -flat -r -q compile')
+            ",
         },
         run: {
             depends: ['comp'],
