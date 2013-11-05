@@ -22,6 +22,26 @@ Bit.load({
         bit: '0.8.6',
         sync: [ ],
         packs: [ 'bits/packs' ],
+        kick: {
+            css: {
+                minify: true,
+                flat: true,
+                compress: true,
+            },
+            html: {
+                minify: true,
+                flat: true,
+                compress: true,
+            },
+            js: {
+                minify: true,
+                flat: true,
+                compress: true,
+            },
+            c: {
+                flat: true,
+            },
+        },
 
         /*
             Installation prefix set
@@ -40,26 +60,6 @@ Bit.load({
          */
         'without-all': [ ],
 
-        kick: {
-            css: {
-                minify: true,
-                flat: true,
-                compress: true,
-            },
-            html: {
-                minify: true,
-                flat: true,
-                compress: false,
-            },
-            js: {
-                minify: false,
-                flat: false,
-                compress: false,
-            },
-            c: {
-                flat: true,
-            },
-        },
     },
 
     usage: {
@@ -96,150 +96,205 @@ Bit.load({
         },
         cleanMin: {
             type: 'clean',
-            action: "rm('**/*.min.*')"
+            action: "
+                rm('**/*.min.*')
+                rm('client/app/all.html.*')
+            "
         },
-       'all.css': {
-            path: 'client/css/all.min.css.gz',
+       'all.min.css': {
+            enable: 'bit.settings.kick.css.flat',
+            path: 'client/css/all.min.css',
             files: [ 'client/css/*.less' ],
             build: "
                 let kick = bit.settings.kick;
-                if (kick.css.flat) {
-                    trace('Compile', 'client/css/all.css.min.gz')
-                    rm('client/css/all.min.css.gz')
-                    let switches = kick.css.minify ? '-compress' : ''
-                    strace('recess ' + switches + ' -compile client/css/all.less')
-                    let result = Cmd.run('recess ' + switches + ' -compile client/css/all.less')
-                    for each (f in Path('client/css').files('*.css')) {
-                        result += f.readString()
-                    }
-                    Path('client/css/all.min.css').write(result)
-                    if (kick.css.compress) {
-                        run('gzip client/css/all.min.css')
-                    }
-                }                                                                                      
-            ",
-        },
-        'all.js': {
-            path: 'client/all.min.js.gz',
-            files: [ '**.js' ],
-            exclude: /client\/lib\/all.min.js|client\/lib\/spare\/|client\/lib\/html5shiv/,
-            depends: ['all.html'],
-            build: "
-                let kick = bit.settings.kick
-                if (kick.js.minify) {
-                dump('KICK', kick)
-                    trace('Compile', 'client/all.min.js.gz')
-                    if (!Cmd.locate('uglifyjs')) {
-                        trace('Warning', 'Cannot locate \"uglify\" to minify. Will just catenate scripts.')
-                    }
-                    if (Cmd.locate('ngmin')) {
-                        for each (f in Path('client/app').files('**.js', {exclude: /\.min.js|\.ng.js/})) {
-                            let ng = f.replaceExt('ng.js')
-                            if (!ng.exists || ng.modified < f.modified) {
-                                run('ngmin ' + f + ' ' + ng)
-                                run('uglifyjs -o ' + f.replaceExt('min.js') + ' ' + ng)
-                                ng.remove()
-                            }
-                        }
-                    }
-                    for each (f in Path('client').files('**.js', {exclude: /\.min.js/})) {
-                        let minified = f.replaceExt('min.js')
-                        if (!minified.exists || minified.modified < f.modified) {
-                            if (Cmd.locate('uglifyjs')) {
-                                run('uglifyjs -o ' + f.replaceExt('min.js') + ' ' + f)
-                            } else {
-                                f.copy(f.replaceExt('min.js'))
-                            }
-                        }
-                        if (kick.js.compress && !kick.js.flat) {
-                            run('gzip ' + minified)
-                        }
-                    }
-                    if (kick.js.flat) {
-                        rm('client/all.min.js.gz')
-                        let list = []
-                        let config = Path('config.json').readJSON();
-                        for (let [component,details] in config.settings.components) {
-                            for each (file in details.scripts) {
-                                if (file == '*') {
-                                    list += Path('client/lib').join(component).files('*.min.js')
-                                } else {
-                                    list.push(Path('client/lib').join(component, Path(file).replaceExt('min.js')))
-                                }
-                            }
-                        }
-                        /* Main.min must be first */
-                        list += ['client/app/main.min.js']
-                        list += Path('client').files('app/**.min.js', {exclude: /main.min.js/})
-                        let all = Path('client/all.min.js')
-                        strace('Files', list.join('\n'))
-                        for each (let f:Path in list) {
-                            all.append(';' + f.readString())
-                        }
-                        if (kick.js.compress) {
-                            run('gzip client/all.min.js')
-                            for each (f in Path('client').files('**.min.js', {exclude: /all.min.js.gz/})) {
-                                f.remove()
-                            }
-                        }
-                    }
+                let switches = kick.css.minify ? '-compress' : ''
+                let switches = ''
+                trace('Parse', '*.less')
+                if (kick.css.minify) {
+                    trace('Minify', TARGET.path)
+                    switches = '-compress'
                 }
+                rm(TARGET.path)
+                strace('recess ' + switches + ' -compile client/css/all.less')
+                let result = Cmd.run('recess ' + switches + ' -compile client/css/all.less')
+                for each (f in Path('client/css').files('*.css')) {
+                    result += f.readString()
+                }
+                TARGET.path.write(result)
             ",
         },
-
-        'all.html': {
-            path: 'client/app/all.html.js',
+       'all.min.css.gz': {
+            enable: 'bit.settings.kick.css.compress',
+            path: 'client/css/all.min.css.gz',
+            files: [ 'client/css/all.min.css' ],
+            depends: ['all.min.css']
+            build: "
+                trace('Compress', TARGET.path)
+                TARGET.path.remove()
+                run('gzip --keep client/css/all.min.css')
+            ",
+        },
+        'min.html': {
+            enable: 'bit.settings.kick.html.minify',
+            path: 'client/app/port/panes.min.html',
             files: [ '**.html' ],
             exclude: /client\/lib\/all.min.html/,
             build: "
                 let kick = bit.settings.kick
                 let list = []
-                if (kick.html.minify) {
-                    trace('Minify', 'HTML')
-                    if (!Cmd.locate('htmlmin')) {
-                        trace('Warning', 'Cannot locate \"htmlmin\" to minify.')
-                    }
-                    for each (f in Path('client').files('**.html', {exclude: /\.min.html/})) {
-                        let minified = f.replaceExt('min.html')
-                        if (!minified.exists || minified.modified < f.modified) {
-                            if (false && Cmd.locate('htmlmin')) {
-                                run('htmlmin ' + f)
-                            } else {
-                                f.copy(minified)
-                            }
-                        }
-                        list.push(minified)
-                        if (kick.html.compress && !kick.html.flat) {
-                            run('gzip ' + minified)
-                        }
-                    }
-                    if (kick.html.flat) {
-                        let all = Path('client/app/all.html.js')
-                        trace('Convert', all)
-                        all.append('angular.module(\"app\").run(function(Esp, $templateCache) {')
-                        strace('Files', list.join('\n'))
-                        for each (let f:Path in list) {
-                            let file = f.relativeTo('client').replace('.min.html', '.html')
-                            let data = f.readLines()
-                            for (let [key,value] in data) {
-                                data[key] = value.replace(/\"/g, '\\\\\"')
-                            }
-                            data = data.join('\\\\\n')
-                            all.append('\n    $templateCache.put(Esp.url(\"' + file + '\"), \"' + data + '\");\n')
-                            f.remove()
-                        }
-                        all.append('});')
-                        if (kick.html.compress && !kick.js.flat) {
-                            run('gzip ' + all)
-                            /* Keep all.html.js so that it won't rebuild each time */
+                trace('Minify', '*.min.html')
+                if (!Cmd.locate('htmlmin')) {
+                    trace('Warning', 'Cannot locate \"htmlmin\" to minify.')
+                }
+                for each (f in Path('client').files('**.html', {exclude: /\.min.html/})) {
+                    let minified = f.replaceExt('min.html')
+                    if (!minified.exists || minified.modified < f.modified) {
+                        if (Cmd.locate('htmlmin')) {
+                            run('htmlmin ' + f)
                         } else {
-                            /* Force a rebuild of the all.js */
-                            Path('client/all.min.js.gz').remove()
+                            f.copy(minified)
                         }
+                    }
+                    if (kick.html.compress && !kick.html.flat) {
+                        run('gzip --keep ' + minified)
                     }
                 }
             ",
         },
+        'html.js': {
+            enable: 'bit.settings.kick.html.flat',
+            path: 'client/app/all.html.js',
+            files: [ 'client/app/all.html.js' ],
+            depends: ['min.html']
+            build: "
+                let kick = bit.settings.kick
+                let list = Path('client').files('**.min.html')
+                let all = Path('client/app/all.html.js')
+                trace('Convert', all)
+                all.append('angular.module(\"app\").run(function(Esp, $templateCache) {')
+                for each (let f:Path in list) {
+                    let file = f.relativeTo('client').replace('.min.html', '.html')
+                    let data = f.readLines()
+                    for (let [key,value] in data) {
+                        data[key] = value.replace(/\"/g, '\\\\\"')
+                    }
+                    data = data.join('\\\\\n')
+                    all.append('\n    $templateCache.put(Esp.url(\"' + file + '\"), \"' + data + '\");\n')
+                }
+                all.append('});')
+            ",
+        },
+        'html.js.gz': {
+            enable: 'bit.settings.kick.html.flat && bit.settings.kick.html.compress && !bit.settings.kick.js.flat',
+            path: 'client/app/all.html.js.gz',
+            files: [ 'client/app/all.html.js' ],
+            depends: ['html.js']
+            build: "
+                run('gzip --keep client/app/all.html.js')
+            ",
+        },
+        'min.js': {
+            enable: 'bit.settings.kick.js.minify',
+            path: 'client/all.min.js.gz',
+            files: [ '**.js' ],
+            exclude: /client\/lib\/all.min.js|client\/lib\/spare\/|client\/lib\/html5shiv/,
+            depends: ['html.js'],
+            build: "
+                let kick = bit.settings.kick
+                trace('Minify', '*.js')
+                if (!Cmd.locate('uglifyjs')) {
+                    trace('Warning', 'Cannot locate \"uglify\" to minify. Will just catenate scripts.')
+                }
+                if (Cmd.locate('ngmin')) {
+                    for each (f in Path('client/app').files('**.js', {exclude: /\.min.js|\.ng.js/})) {
+                        let ng = f.replaceExt('ng.js')
+                        if (!ng.exists || ng.modified < f.modified) {
+                            run('ngmin ' + f + ' ' + ng)
+                            run('uglifyjs -o ' + f.replaceExt('min.js') + ' ' + ng)
+                            ng.remove()
+                        }
+                    }
+                }
+                let config = Path('config.json').readJSON();
+                let list = []
+                for (let [component,details] in config.settings.components) {
+                    if (component == 'less' && config.mode == 'release') continue
+                    for each (file in details.scripts) {
+                       if (file == '*') {
+                            list += Path('client/lib').join(component).files('*.js', {exclude: /\.min.js/})
+                        } else {
+                            list.push(Path('client/lib').join(component, Path(file)))
+                        }
+                    }
+                }
+                for each (f in list) {
+                    let minified = f.replaceExt('min.js')
+                    if (!minified.exists || minified.modified < f.modified) {
+                        if (Cmd.locate('uglifyjs')) {
+                            run('uglifyjs -o ' + f.replaceExt('min.js') + ' ' + f)
+                        } else {
+                            f.copy(f.replaceExt('min.js'))
+                        }
+                    }
+                    if (kick.js.compress && !kick.js.flat) {
+                        run('gzip --keep ' + minified)
+                    }
+                }
+            ",
+        },
+
+        'all.js': {
+            enable: 'bit.settings.kick.js.flat',
+            path: 'client/all.min.js',
+            files: [ '**.min.js' ],
+            //  MOB - check these
+            exclude: /client\/lib\/all.min.js|client\/lib\/spare\/|client\/lib\/html5shiv/,
+            depends: ['min.js'],
+            build: "
+                trace('Catenate', 'client/all.min.js')
+                let kick = bit.settings.kick
+                rm('client/all.min.js.gz')
+                let list = []
+                let config = Path('config.json').readJSON();
+                for (let [component,details] in config.settings.components) {
+                    if (component == 'less' && config.mode == 'release') continue
+                    for each (file in details.scripts) {
+                        if (file == '*') {
+                            list += Path('client/lib').join(component).files('*.min.js')
+                        } else {
+                            list.push(Path('client/lib').join(component, Path(file).replaceExt('min.js')))
+                        }
+                    }
+                }
+                /* Main.min must be first */
+                list += ['client/app/main.min.js']
+                list += Path('client').files('app/**.min.js', {exclude: /main.min.js/})
+                let all = Path('client/all.min.js')
+                for each (let f:Path in list) {
+                    if (!f.exists) {
+                        f = f.replace('.min.js', '.js')
+                    }
+                    if (!kick.js.minify) {
+                        f = f.replace('.min.js', '.js')
+                        all.append(';/*XXXX ' + f + ' XXXX*/\n' + f.readString() + '\n')
+                    } else {
+                        all.append(';' + f.readString())
+                    }
+                }
+            ",
+        },
+
+        'all.js.gz': {
+            enable: 'bit.settings.kick.js.compress',
+            path: 'client/all.min.js.gz',
+            files: [ 'client/all.min.js' ],
+            depends: ['all.js'],
+            build: "
+                trace('Compress', 'client/all.min.js.gz')
+                run('gzip --keep client/all.min.js')
+            ",
+        },
+
         run: {
             depends: ['comp'],
             run: 'esp run',

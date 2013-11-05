@@ -57,6 +57,10 @@ Bit.load({
                 to:     '${root}/cache/',
                 set:    'release',
 
+            },{ from:   ['db/kick.mdb'],
+                to:     '${root}/db/',
+                set:    'release',
+
             /* Source Set */
             }, {from:   [ '*.md' ],
                 to:     '${src}/',
