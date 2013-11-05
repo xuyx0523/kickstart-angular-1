@@ -1,0 +1,82 @@
+/*
+    manifest.bit - Install and Package File Manifest for Kickstart
+ */
+
+Bit.load({
+    /*
+        Package manifest instructions
+        The sets used are: binary, doc, dev, package, source
+     */
+    manifest: {
+        home: bit.dir.src,
+        packages:   {
+            install: {
+                inherit:    'embedthis-manifest',
+                prefixes:   [ 'root'],
+                sets:       [ 'release' ],
+            },
+            source: {
+                inherit:    'embedthis-manifest',
+                prefixes:   [ 'root', 'src' ],
+                formats:    [ 'tar' ],
+                sets:       [ 'source' ],
+            },
+        },
+
+        files: [ 
+            /* Release Set */
+            {   from:   [ '*.conf', '*.json'],
+                to:     '${root}',
+                set:    'release',
+
+            },{ from:   ['client/index.esp'],
+                to:     '${root}/client/',
+                set:    'release',
+
+            },{ from:   ['client/all.min.js.gz'],
+                to:     '${root}/client/',
+                set:    'release',
+
+            },{ from:   ['client/css/all.min.*.gz'],
+                to:     '${root}/client/css/',
+                set:    'release',
+
+            },{ from:   ['client/assets/'],
+                to:     '${root}/client/assets/',
+                set:    'release',
+
+            },{ from:   ['client/lib/bootstrap/fonts/'],
+                to:     '${root}/client/lib/bootstrap/fonts/',
+                set:    'release',
+
+            },{ from:   ['client/lib/font-awesome/fonts/'],
+                to:     '${root}/client/lib/font-awesome/fonts/',
+                set:    'release',
+
+            },{ from:   ['cache/*.dylib'],
+                to:     '${root}/cache/',
+                set:    'release',
+
+            /* Source Set */
+            }, {from:   [ '*.md' ],
+                to:     '${src}/',
+                fold:   true,
+                expand: true,
+                set:    'source',
+
+            },{ from:   [ 'configure' ],
+                to:     '${src}/',
+                permissions: 0755,     
+                set:    'source',
+
+            },{ from:   [ 'main.bit', '*.conf', '*.json', 'controllers', 'client', ],
+                to:     '${src}/',
+                set:    'source',
+
+            },{ from:   [ 'db/migrations/' ],
+                to:     '${src}/db/migrations',
+                set:    'source',
+            },
+        ],
+    },
+})
