@@ -30,7 +30,7 @@ static void updateMapping() {
     renderResult(updateRecFromParams("mapping"));
 }
 
-ESP_EXPORT int esp_controller_layer2_mapping(HttpRoute *route, MprModule *module)
+ESP_EXPORT int esp_controller_kick_mapping(HttpRoute *route, MprModule *module)
 {
     espDefineAction(route, "mapping-create", createMapping);
     espDefineAction(route, "mapping-get", getMapping);

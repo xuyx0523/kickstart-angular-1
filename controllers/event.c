@@ -17,7 +17,7 @@ static void removeEvent() {
     }
 }
 
-ESP_EXPORT int esp_controller_layer2_event(HttpRoute *route, MprModule *module)
+ESP_EXPORT int esp_controller_kick_event(HttpRoute *route, MprModule *module)
 {
     espDefineAction(route, "event-get", getEvent);
     espDefineAction(route, "event-list", listEvents);

@@ -53,7 +53,7 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
     return 1;
 }
 
-ESP_EXPORT int esp_app_layer2(HttpRoute *route, MprModule *module)
+ESP_EXPORT int esp_app_kick(HttpRoute *route, MprModule *module)
 {
     Edi     *edi;
 
@@ -68,7 +68,7 @@ ESP_EXPORT int esp_app_layer2(HttpRoute *route, MprModule *module)
         This code sets up a private, in-memory, readonly database for each user. 
      */
     if ((edi = espGetRouteDatabase(route)) == 0) {
-        mprError("Cannot get route database in esp_app_layer2");
+        mprError("Cannot get route database in esp_app_kick");
     } else {
         ediSetPrivate(edi, 1);
         ediSetReadonly(edi, 1);

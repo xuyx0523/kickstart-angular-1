@@ -16,7 +16,7 @@ static void demo1() {
     render("{\"data\": [{\"value\": \"%.1f\"}]}", result);
 }
 
-ESP_EXPORT int esp_controller_layer2_demo(HttpRoute *route, MprModule *module) 
+ESP_EXPORT int esp_controller_kick_demo(HttpRoute *route, MprModule *module) 
 {
     espDefineAction(route, "demo-cmd-demo1", demo1);
     return 0;

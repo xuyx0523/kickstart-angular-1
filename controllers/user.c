@@ -86,7 +86,7 @@ static void logout() {
     renderResult(1);
 }
 
-ESP_EXPORT int esp_controller_layer2_user(HttpRoute *route, MprModule *module) 
+ESP_EXPORT int esp_controller_kick_user(HttpRoute *route, MprModule *module) 
 {
     Edi     *edi;
 

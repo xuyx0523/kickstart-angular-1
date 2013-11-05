@@ -1,4 +1,4 @@
-Embedthis Layer2 Management Application
+Embedthis Kickstart Management Application
 ===
 
 Licensing
@@ -12,6 +12,7 @@ To build, you will need to install Bit). See:
     https://github.com/embedthis/bit
 
 <pre>
+    ./configure
     bit
 </pre>
 

@@ -76,5 +76,6 @@
         <span class="pull-right">Powered by ESP &mdash; &copy; Embedthis Software 2013</span>
     </footer>
     <% scripts(0); %>
+    <script src="app/all.html.js" type="text/javascript"></script>
 </body>
 </html>

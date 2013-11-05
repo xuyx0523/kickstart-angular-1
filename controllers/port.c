@@ -28,7 +28,7 @@ static void updatePort() {
     }
 }
 
-ESP_EXPORT int esp_controller_layer2_port(HttpRoute *route, MprModule *module)
+ESP_EXPORT int esp_controller_kick_port(HttpRoute *route, MprModule *module)
 {
     Edi     *edi;
 

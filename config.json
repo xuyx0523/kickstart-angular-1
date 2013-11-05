@@ -1,5 +1,5 @@
 {
-    mode: "release",
+    mode: "debug",
     modes: {
         debug: {
             flat: false,
@@ -29,7 +29,7 @@
             },
         }
     },
-    name: "layer2",
+    name: "kick",
     settings: {
         components: {
             server: {},
@@ -52,7 +52,7 @@
             more: {},
             respond: {scripts: ["*"]},
             "angular-mvc": {},
-            layer2: {scripts: ["*"]},
+            kick: {scripts: ["*"]},
         },
         formats: {
             date: "yyyy-MM-dd",
@@ -71,7 +71,7 @@
     },
     server: {
         auth: "app",
-        database: "mdb://layer2.mdb",
+        database: "mdb://kick.mdb",
         _redirect: "secure",
     },
     generate: {

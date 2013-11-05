@@ -15,7 +15,7 @@ static void data() {
 
 static void traffic() {}
 
-ESP_EXPORT int esp_controller_layer2_stats(HttpRoute *route, MprModule *module)
+ESP_EXPORT int esp_controller_kick_stats(HttpRoute *route, MprModule *module)
 {
     espDefineAction(route, "stats-data", data);
     espDefineAction(route, "stats-cmd-traffic", traffic);

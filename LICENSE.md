@@ -1,4 +1,4 @@
-Embedthis Layer2 License
+Embedthis Kickstart License
 ===
 
 This software is provided only via an Embedthis Commercial Software License. 
@@ -9,7 +9,7 @@ Third Party Components
 ---
 
 The Software contains licensed third party software components whose licenses are compatible with the Appweb commercial and
-open source licenses. See [doc/licenses](https://github.com/embedthis/layer2/tree/master/doc/licenses) for the licenses. Contributors have provided portions of the software that are covered by the Embedthis Contributor license that grants Embedthis sufficient rights to execute this license Agreement.
+open source licenses. See [doc/licenses](https://github.com/embedthis/kick/tree/master/doc/licenses) for the licenses. Contributors have provided portions of the software that are covered by the Embedthis Contributor license that grants Embedthis sufficient rights to execute this license Agreement.
 
 SubtlePatterns
 ---
