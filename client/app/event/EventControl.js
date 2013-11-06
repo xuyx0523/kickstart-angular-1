@@ -27,12 +27,12 @@ angular.module('app').controller('EventControl', function (Esp, Event, $filter, 
 });
 
 angular.module('app').config(function($routeProvider) {
+    var esp = angular.module('esp');
     var Default = {
         controller: 'EventControl',
         abilities: { 'view': true },
-        resolve: { action: checkAuth },
+        resolve: { action: esp.checkAuth },
     };
-    var esp = angular.module('esp');
     $routeProvider.when('/event/list', angular.extend({}, Default, {templateUrl: esp.url('/app/event/event-list.html')}));
     $routeProvider.when('/event/:id',  angular.extend({}, Default, {templateUrl: esp.url('/app/event/event-view.html')}));
 });

@@ -99,12 +99,12 @@ angular.module('app').controller('VlanControl', function (Esp, Vlan, $modal, $ro
 });
 
 angular.module('app').config(function($routeProvider) {
+    var esp = angular.module('esp');
     var Default = {
         controller: 'VlanControl',
         abilities: { edit: 'true', 'view': true },
-        resolve: { action: checkAuth },
+        resolve: { action: esp.checkAuth },
     };
-    var esp = angular.module('esp');
     $routeProvider.when('/vlan/list', angular.extend({}, Default, {
         templateUrl: esp.url('/app/vlan/vlan-list.html'),
         abilities: { 'view': true },

@@ -89,12 +89,12 @@ angular.module('app').controller('PortControl', function (Esp, Port, Vlan, $root
 });
 
 angular.module('app').config(function($routeProvider) {
+    var esp = angular.module('esp');
     var Default = {
         controller: 'PortControl',
         abilities: { 'view': true },
-        resolve: { action: checkAuth },
+        resolve: { action: esp.checkAuth },
     };
-    var esp = angular.module('esp');
     $routeProvider.when('/port/list', angular.extend({}, Default, { 
         //  MOB - layer routeProvider and apply esp.url() automatically
         templateUrl: esp.url('/app/port/port-list.html'), 

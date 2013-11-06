@@ -17,3 +17,5 @@ client/all.min.js.gz
 client/lib/angular-ui-bootstrap/old.js
 macosx-x64-*
 start.old
+*.gz
+client/css/all-*.css

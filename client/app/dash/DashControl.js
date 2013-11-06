@@ -122,11 +122,11 @@ angular.module('app').controller('DashControl', function (Dash, Esp, $location, 
 });
 
 angular.module('app').config(function($routeProvider) {
+    var esp = angular.module('esp');
     var Default = {
         controller: 'DashControl',
-        resolve: { action: checkAuth },
+        resolve: { action: esp.checkAuth },
     };
-    var esp = angular.module('esp');
     $routeProvider.when('/', angular.extend({}, Default, {
         templateUrl: esp.url('/app/dash/dash.html'),
     }));

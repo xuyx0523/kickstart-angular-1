@@ -107,11 +107,11 @@ angular.module('app').controller('UserControl', function (Esp, User, $rootScope,
     User controller routes for login
  */
 angular.module('app').config(function($routeProvider) {
+    var esp = angular.module('esp');
     var Default = {
         controller: 'UserControl',
-        resolve: { action: checkAuth },
+        resolve: { action: esp.checkAuth },
     };
-    var esp = angular.module('esp');
     $routeProvider.when('/user/list',   angular.extend({}, Default, {templateUrl: esp.url('/app/user/user-list.html')}));
     $routeProvider.when('/user/login',  angular.extend({}, Default, {templateUrl: esp.url('/app/user/user-login.html')}));
     $routeProvider.when('/user/logout', angular.extend({}, Default, {template: '<p ng-init="logout()">Hello</p>'}));

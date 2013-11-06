@@ -17,11 +17,11 @@ angular.module('app').controller('SettingControl', function ($rootScope, $scope,
 });
 
 angular.module('app').config(function($routeProvider) {
+    var esp = angular.module('esp');
     var Default = {
         controller: 'SettingControl',
         abilities: { 'edit': true, 'view': true },
-        resolve: { action: checkAuth },
+        resolve: { action: esp.checkAuth },
     };
-    var esp = angular.module('esp');
     $routeProvider.when('/setting', angular.extend({}, Default, {templateUrl: esp.url('/app/setting/setting-edit.html')}));
 });

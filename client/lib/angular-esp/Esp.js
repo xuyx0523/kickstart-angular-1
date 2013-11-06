@@ -2,7 +2,6 @@
     esp.js - Esp Angular Extension
  */
 'use strict';
-
 /*
     The Esp service provide a central place for ESP state.
     It places a "Esp" object on the $rootScope that is inherited by all $scopes.
@@ -10,17 +9,34 @@
  */
 angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.format', 'esp.gauge', 
     'esp.input-group', 'esp.input', 'esp.local', 'esp.modal', 'esp.resource', 'esp.session', 'esp.svg', 'esp.titlecase'])
-.factory('Esp', function(SessionStore, $document, $http, $location, $rootScope, $timeout) {
 
-    var Esp = {};
+.config(function() {
+    /*
+        Extract the route configuration data.
+     */
+    var e = angular.element('body');
+    var esp = angular.module('esp');
+    esp.$config = JSON.parse(e.attr('data-config'));
+    /* URL resolution for ngRoute templates */
+    esp.url = function(url) {
+        return esp.$config.appPrefix + url;
+    }
+
+}).factory('Esp', function(SessionStore, $document, $http, $location, $rootScope, $timeout) {
+
+    var Esp = { config: angular.module('esp').$config };
     $rootScope.Esp = Esp;
 
-    /*
-        Empty controller constructor
-     */
-    Esp.empty = function() {
-        return function() {}
+    var boot_map = {
+        inform: 'info',
+        error: 'danger', 
+        warning: 'warning',
+        success: 'success',
     };
+
+    Esp.bootclass = function(kind) {
+        return boot_map[kind];
+    }
 
     /*
         Is this user authorized to perform the given task
@@ -33,14 +49,37 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
     };
 
     /*
-        UNUSED
-        Return enabled|disabled depending on if the user is authorized for a given task
-        MOB - rename 
-        MOB - who uses this ... tabs below
-    Esp.canClass = function(task) {
-        return Esp.can(task) ? "enabled" : "disabled";
-    };
+        Empty controller constructor
      */
+    Esp.empty = function() {
+        return function() {}
+    };
+
+    Esp.error = function (str) {
+        $rootScope.feedback = { error: str };
+    };
+
+    var fa_map = {
+        success: 'fa-plus',
+        inform: 'fa-plus',
+        warning: 'fa-bell',
+        error: 'fa-bolt', 
+        critical: 'fa-bolt', 
+    };
+
+    Esp.faclass = function(kind) {
+        return fa_map[kind];
+    }
+
+    Esp.inform = function (str) {
+        $rootScope.feedback = { inform: str };
+    };
+
+    Esp.lighten = function (color, percent) {   
+        color = '' + color;
+        var num = parseInt(color.slice(1),16), amt = Math.round(2.55 * percent), R = (num >> 16) + amt, B = (num >> 8 & 0x00FF) + amt, G = (num & 0x0000FF) + amt;
+        return "#" + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (B<255?B<1?0:B:255)*0x100 + (G<255?G<1?0:G:255)).toString(16).slice(1);
+    };
 
     Esp.loadScript = function(url, callback) {
         if (!Esp.scriptCache) {
@@ -77,43 +116,6 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
         Esp.user = null;
     };
 
-    /*
-        UNUSED
-        Return "active" if the user is authorized for the specified tab
-        MOB - who is using this
-    Esp.navClass = function(tab, ability) {
-        var classes = [];
-        if (tab == $location.path()) {
-            classes.push('active');
-        } else if (tab != "/" && $location.path().indexOf(tab) >= 0) {
-            classes.push('active');
-        }
-        if (ability) {
-            classes.push(Esp.canClass(ability));
-        }
-        return classes.join(' ');
-    };
-     */
-
-    /*
-        Map a string to TitleCase
-     */
-    Esp.titlecase = function (str) {
-        var words = str.split(/[ \.]/g);
-        for (var i = 0; i < words.length; i++) {
-            words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
-        }
-        return words.join(' ');
-    };
-
-    Esp.inform = function (str) {
-        $rootScope.feedback = { inform: str };
-    };
-
-    Esp.error = function (str) {
-        $rootScope.feedback = { error: str };
-    };
-
     Esp.rgb2hex = function(color) {
         if (!color) {
             color = 'rgb(0,0,0)';
@@ -131,36 +133,37 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
         return "#" + hex(matches[1]) + hex(matches[2]) + hex(matches[3]);
     };
 
-    var fa_map = {
-        success: 'fa-plus',
-        inform: 'fa-plus',
-        warning: 'fa-bell',
-        error: 'fa-bolt', 
-        critical: 'fa-bolt', 
-
-    };
-    Esp.faclass = function(kind) {
-        return fa_map[kind];
-    }
-
-    var boot_map = {
-        inform: 'info',
-        error: 'danger', 
-        warning: 'warning',
-        success: 'success',
-    };
-    Esp.bootclass = function(kind) {
-        return boot_map[kind];
-    }
-
-    Esp.lighten = function (color, percent) {   
-        color = '' + color;
-        var num = parseInt(color.slice(1),16), amt = Math.round(2.55 * percent), R = (num >> 16) + amt, B = (num >> 8 & 0x00FF) + amt, G = (num & 0x0000FF) + amt;
-        return "#" + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (B<255?B<1?0:B:255)*0x100 + (G<255?G<1?0:G:255)).toString(16).slice(1);
+    /*
+        Map a string to TitleCase
+     */
+    Esp.titlecase = function (str) {
+        var words = str.split(/[ \.]/g);
+        for (var i = 0; i < words.length; i++) {
+            words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+        }
+        return words.join(' ');
     };
 
     Esp.url = function (url) {
         return Esp.config.appPrefix + url;
+    }
+
+    /******* body ********/
+    /*
+        Recover the user session information. The server still validates.
+     */
+    if (Esp.config.login && Esp.config.login.name) {
+        Esp.login(Esp.config.login);
+        Esp.user.auto = true;
+    } else {
+        Esp.user = SessionStore.get('user') || null;
+        Esp.user.lastAccess = Date().now;
+    }
+    if (Esp.user.length == 0) {
+        Esp.user = null;
+    }
+    if (Esp.config.mode == 'debug' && Esp.config.update) {
+        // less.watch();
     }
 
     /*
@@ -181,29 +184,6 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
         }
         return true;
     });
-
-    /*
-        Initialize Esp configuration from config.json
-        This is defined from body.data-config which is extracted in main.js.
-     */
-    Esp.config = angular.module('esp').$config;
-
-    /*
-        Recover the user session information. The server still validates.
-     */
-    if (Esp.config.login && Esp.config.login.name) {
-        Esp.login(Esp.config.login);
-        Esp.user.auto = true;
-    } else {
-        Esp.user = SessionStore.get('user') || null;
-        Esp.user.lastAccess = Date().now;
-    }
-    if (Esp.user.length == 0) {
-        Esp.user = null;
-    }
-    if (Esp.config.mode == 'debug' && Esp.config.update) {
-        // less.watch();
-    }
 
     /*
         Login session timeout
@@ -263,12 +243,12 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
     });
 });
 
-
-//  MOB - why is this a global function? Can it be Esp.checkAuth?
 /*
     Route resolve function for routes to verify the user's defined abilities
+    This function is required at config time and so must be added to the esp module instead of Esp.
  */
-function checkAuth($q, $location, $rootScope, $route, Esp) {
+var esp = angular.module('esp');
+esp.checkAuth = function($q, $location, $rootScope, $route, Esp) {
     var requiredAbilities = $route.current.$$route.abilities;
     var user = Esp.user
     for (var ability in requiredAbilities) {
@@ -286,4 +266,3 @@ function checkAuth($q, $location, $rootScope, $route, Esp) {
     }
     return true;
 }
-

@@ -145,11 +145,11 @@ angular.module('app').controller('DemoControl', function (Demo, Esp, $scope, $ti
 });
 
 angular.module('app').config(function($routeProvider) {
+    var esp = angular.module('esp');
     var Default = {
         controller: 'DemoControl',
-        resolve: { action: checkAuth },
+        resolve: { action: esp.checkAuth },
     };
-    var esp = angular.module('esp');
     $routeProvider.when('/demo/demo-1', angular.extend({}, Default, {
         templateUrl: esp.url('/app/demo/demo-1.html'),
     }));

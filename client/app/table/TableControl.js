@@ -24,12 +24,12 @@ angular.module('app').controller('TableControl', function ($rootScope, $scope, $
 });
 
 angular.module('app').config(function($routeProvider) {
+    var esp = angular.module('esp');
     var Default = {
         controller: 'TableControl',
         abilities: { 'edit': true, 'view': true },
-        resolve: { action: checkAuth },
+        resolve: { action: esp.checkAuth },
     };
-    var esp = angular.module('esp');
     $routeProvider.when('/table/list', angular.extend({}, Default, {templateUrl: esp.url('/app/table/table-list.html')}));
     $routeProvider.when('/table/:id',  angular.extend({}, Default, {templateUrl: esp.url('/app/table/table-edit.html')}));
 });
