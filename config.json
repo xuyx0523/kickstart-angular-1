@@ -30,6 +30,7 @@
         }
     },
     name: "kick",
+    version: '1.0.0',
     settings: {
         components: {
             server: {},

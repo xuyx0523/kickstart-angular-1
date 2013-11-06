@@ -4,13 +4,19 @@
 
 'use strict';
 
-var app = angular.module('app', ['ngAnimate', 'ngResource', 'ngRoute', 'ui.bootstrap', 'esp', 'layer2']);
+var app = angular.module('app', ['ngAnimate', 'ngResource', 'ngRoute', 'ui.bootstrap', 'esp', 'kick']);
 
 app.config(function($routeProvider) {
 	/*
-	    Configure the default route. Other routes may be defined in controllers.
+	    Bootstrap the configuration. Need the appPrefix when defining routes at config time.
  	 */
-    $routeProvider.otherwise({ redirectTo: '/' });
+    var e = angular.element('body');
+    var esp = angular.module('esp');
+    esp.$config = JSON.parse(e.attr('data-config'));
+    esp.url = function(url) {
+        return esp.$config.appPrefix + url;
+    }
+    $routeProvider.otherwise({ redirectTo: esp.url('/') });
 });
 
 /*
@@ -27,16 +33,11 @@ app.run(function($timeout, $window) {
                 angular.forEach(elt.children(), function(value, key) {
                     var i = value.id;
                 })
+                //  MOB - what is this?
                 var panel = elt.find('xx');
                 if (panel) {
                     elt.css('min-height', '' + ($window.innerHeight - 75) + 'px');
                 }
-
-                /*
-                    if (showNav) {
-                        elt.css('min-height', '' + ($window.innerHeight - 110) + 'px');
-                }
-                */
             });
         }
     };
@@ -68,6 +69,15 @@ angular.element(document).ready(function() {
             }
         } catch(e) {
             console.log("Cannot parse ESP config", this.responseText)
+        }
+        var esp = angular.module('esp');
+        esp.url = function(url) {
+            console.log('HERE');
+            return '';
+        }
+        esp.server = function(url) {
+            console.log('THERE');
+            return '';
         }
         angular.bootstrap(document, ['app']);
     };

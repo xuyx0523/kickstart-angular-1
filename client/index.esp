@@ -2,13 +2,14 @@
 <html lang="en" ng-csp>
 
 <head>
-    <title>layer2</title>
+    <title>Kickstart</title>
     <meta charset="utf-8" />
     <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
     <% stylesheets(NULL); %>
     <% securityToken(); %>
 </head>
-<body ng-controller="HomeControl">
+
+<body ng-controller="HomeControl" data-config='<% renderConfig(); %>'>
     <header>
         <nav class="navbar navbar-inverse navbar-static-top">
             <div class="navbar-header">
@@ -52,17 +53,17 @@
             <!-- MOB should style text-center in sidebar itself -->
         <nav class="sidebar nav-collapse col-sm-2" ng-show="showNav">
             <ul class="nav nav-tabs nav-stacked">
-                <layer2-menu href="/" value="Dash" icon="fa fa-tachometer"></layer2-menu>
-                <layer2-menu href="/port/list" value="Ports" icon="fa fa-sitemap"></layer2-menu>
-                <layer2-menu href="/vlan/list" value="VLANs" icon="glyphicon glyphicon-hdd"></layer2-menu>
-                <layer2-menu ng-show="Esp.can('edit')" href="/setting" value="Settings" icon="glyphicon glyphicon-cog"></layer2-menu>
-                <layer2-menu href="/user/list" value="Users" icon="glyphicon glyphicon-user"></layer2-menu>
-                <layer2-menu href="/event/list" value="Events" icon="glyphicon glyphicon-list"></layer2-menu>
-                <layer2-menu href="" value="Demos" icon="fa fa-signal">
-                    <layer2-menu href="/demo/demo-svg" value="SVG"></layer2-menu>
-                    <layer2-menu href="/demo/demo-1" value="Demo 1"></layer2-menu>
-                    <layer2-menu href="/demo/demo-2" value="Demo 2"></layer2-menu>
-                </layer2-menu>
+                <kick-menu href="/" value="Dash" icon="fa fa-tachometer"></kick-menu>
+                <kick-menu href="/port/list" value="Ports" icon="fa fa-sitemap"></kick-menu>
+                <kick-menu href="/vlan/list" value="VLANs" icon="glyphicon glyphicon-hdd"></kick-menu>
+                <kick-menu ng-show="Esp.can('edit')" href="/setting" value="Settings" icon="glyphicon glyphicon-cog"></kick-menu>
+                <kick-menu href="/user/list" value="Users" icon="glyphicon glyphicon-user"></kick-menu>
+                <kick-menu href="/event/list" value="Events" icon="glyphicon glyphicon-list"></kick-menu>
+                <kick-menu href="" value="Demos" icon="fa fa-signal">
+                    <kick-menu href="/demo/demo-svg" value="SVG"></kick-menu>
+                    <kick-menu href="/demo/demo-1" value="Demo 1"></kick-menu>
+                    <kick-menu href="/demo/demo-2" value="Demo 2"></kick-menu>
+                </kick-menu>
             </ul>
         </nav>
         <section class="content col-sm-10" id="content">
@@ -75,6 +76,6 @@
     <footer id="author" ng-cloak>
         <span class="pull-right">Powered by ESP &mdash; &copy; Embedthis Software 2013</span>
     </footer>
-    <% scripts(0); %>
+    <% scripts(NULL); %>
 </body>
 </html>

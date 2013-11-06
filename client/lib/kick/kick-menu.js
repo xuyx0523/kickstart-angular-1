@@ -1,10 +1,10 @@
 /*
-    layer2-menu.js - Layer2 sidebar menus
+    kick-menu.js - Kick sidebar menus
 
-    <layer2-menu text="Text" icon="" href="" value="" > ... sub menus </layer2-menu>
+    <kick-menu text="Text" icon="" href="" value="" > ... sub menus </kick-menu>
  */
-angular.module('layer2', [])
-.directive('layer2Menu', function($compile) {
+angular.module('kick', [])
+.directive('kickMenu', function($compile) {
     var nextId = 0;
     return {
         restrict: 'E',
@@ -23,7 +23,7 @@ angular.module('layer2', [])
                     var arrow = sub = toggle = href = '';
                     // var show = attrs.ngShow ? (' ng-show="' + attrs.ngShow + '"') : '';
                     if (child.length) {
-                        var id = '$layer2_' + nextId++;
+                        var id = '$kick_' + nextId++;
                         toggle = ' ng-click="' + id + '=!' + id + '"';
                         sub = '<ul class="nested" ng-show="' + id + '"></ul>';
                         arrow = '<i class="arrow fa" ng-class="{\'fa-caret-down\':' + id + 

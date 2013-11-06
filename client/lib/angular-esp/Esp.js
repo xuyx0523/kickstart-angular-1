@@ -184,6 +184,7 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
 
     /*
         Initialize Esp configuration from config.json
+        This is defined from body.data-config which is extracted in main.js.
      */
     Esp.config = angular.module('esp').$config;
 
@@ -223,7 +224,7 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
         }
         $timeout(sessionTimeout, 60 * 1000, true);
     }
-    sessionTimeout();
+    $timeout(sessionTimeout, 0, true);
     return Esp;
 })
 .config(function($httpProvider, $routeProvider) {

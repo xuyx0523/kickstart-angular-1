@@ -3,7 +3,10 @@
  */
 #include "esp.h"
 
-static void base(HttpConn *conn) 
+/*
+    Common base controller used for all requests
+ */
+static void commonController(HttpConn *conn) 
 {
     cchar       *loginRequired, *uri, *next, *prefix;
 
@@ -57,10 +60,7 @@ ESP_EXPORT int esp_app_kick(HttpRoute *route, MprModule *module)
 {
     Edi     *edi;
 
-    /*
-        Establish common base class routine for all services
-     */
-    espDefineBase(route, base);
+    espDefineBase(route, commonController);
     httpSetAuthStoreVerify("app", verifyUser);
     
     /*
