@@ -9,7 +9,7 @@
     <% securityToken(); %>
 </head>
 
-<body ng-controller="HomeControl" data-config='<% renderConfig(); %>'>
+<body id='body' ng-controller="HomeControl" data-config='<% renderConfig(); %>'>
     <header>
         <nav class="navbar navbar-inverse navbar-static-top">
             <div class="navbar-header">

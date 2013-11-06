@@ -11,7 +11,7 @@ angular.module('esp.click', [])
             attrs.$observe('esp-click', function(val) {
                 element.on('click', function() {
                     scope.$apply(function() {
-                        if (Esp.can('edit')) {
+                        if (!Esp.config.auth || Esp.can('edit')) {
                             $location.path(attrs.espClick);
                         } else {
                             /* Delay so that the feedback clear won't immediately erase */

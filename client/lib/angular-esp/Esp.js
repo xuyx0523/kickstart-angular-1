@@ -14,7 +14,7 @@ angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.form
     /*
         Extract the route configuration data.
      */
-    var e = angular.element('body');
+    var e = angular.element(document.getElementById('body'));
     var esp = angular.module('esp');
     esp.$config = JSON.parse(e.attr('data-config'));
     /* URL resolution for ngRoute templates */

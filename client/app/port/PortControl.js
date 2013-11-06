@@ -96,7 +96,6 @@ angular.module('app').config(function($routeProvider) {
         resolve: { action: esp.checkAuth },
     };
     $routeProvider.when('/port/list', angular.extend({}, Default, { 
-        //  MOB - layer routeProvider and apply esp.url() automatically
         templateUrl: esp.url('/app/port/port-list.html'), 
     }));
     $routeProvider.when('/port/:id', angular.extend({}, Default, {
