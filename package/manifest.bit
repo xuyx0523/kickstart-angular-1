@@ -33,11 +33,11 @@ Bit.load({
                 to:     '${root}/client/',
                 set:    'release',
 
-            },{ from:   ['client/all.min.js.gz'],
+            },{ from:   ['client/all-${settings.version}.min.js.gz'],
                 to:     '${root}/client/',
                 set:    'release',
 
-            },{ from:   ['client/css/all.min.*.gz'],
+            },{ from:   ['client/css/all-${settings.version}.min.*.gz'],
                 to:     '${root}/client/css/',
                 set:    'release',
 

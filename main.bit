@@ -62,6 +62,14 @@ Bit.load({
 
     usage: {
         'css.minify':       'Minify Less and CSS (true|false)',
+        'css.flat':         'Combine stylesheets into a single file (true|false)',
+        'css.compress':     'Compress flat stylesheet (true|false)',
+        'html.minify':      'Minify HTML (true|false)',
+        'html.flat':        'Combine HTML into a single Angular script file (true|false)',
+        'html.compress':    'Compress HTLM files (true|false)',
+        'js.minify':        'Minify scripts (true|false)',
+        'js.flat':          'Combine scripts into a single file (true|false)',
+        'js.compress':      'Compress flat script file (true|false)',
     },
 
     customize: [
@@ -222,7 +230,6 @@ Bit.load({
                         }
                     }
                 }
-                dump('LIST', list)
                 for each (f in list) {
                     let minified = f.replaceExt('min.js')
                     if (!minified.exists || minified.modified < f.modified) {
@@ -293,6 +300,18 @@ Bit.load({
             depends: ['comp'],
             run: 'esp run',
         },
+
+        patchVersion: {
+            build: "
+                let path = Path('config.json')
+                config = path.readJSON()
+                if (config.version != bit.settings.version) {
+                    trace('Update', 'config.json version ' + bit.settings.version)
+                    path.write(path.readString().replace(/version:.*/, 'version: \\'' + bit.settings.version + '\\','))
+                }
+
+            "
+        }
     },
 
     packDefaults: {
