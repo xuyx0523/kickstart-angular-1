@@ -19,3 +19,6 @@ macosx-x64-*
 start.old
 *.gz
 client/css/all-*.css
+*.min.js
+*.min.html
+client/app/all.html.js
