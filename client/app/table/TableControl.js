@@ -4,6 +4,9 @@
 
 'use strict';
 
+/*
+    Prototype controller to browse the database
+ */
 angular.module('app').controller('TableControl', function ($rootScope, $scope, $location, $routeParams, Table, Esp) {
     if ($routeParams.table) {
         Table.get({table: $routeParams.table}, function(response) {

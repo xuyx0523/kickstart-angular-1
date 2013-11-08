@@ -7,14 +7,14 @@
 <div class="panel">
     <h2>Port Details</h2>
     <form name="portForm" class="form-horizontal">
-        <esp-input ng-model="port.name" readonly width="col-sm-4" label="Name"></esp-input>
-        <esp-input ng-model="port.status" width="col-sm-4"></esp-input>
-        <esp-input type="radio" ng-model="port.mode" label="Admin Mode"></esp-input>
-        <esp-input type="checkbox" ng-model="port.negotiate" label="Auto Negotiate"></esp-input>
-        <esp-input type="radio" ng-model="port.duplex"></esp-input>
-        <esp-input type="checkbox" ng-model="port.flowControl"></esp-input>
-        <esp-input type="checkbox" ng-model="port.jumbo"></esp-input>
-        <esp-input type="select" ng-model="port.speed" width="col-sm-3"></esp-input>
+        <esp-input ng-model="port.name" readonly inputClass="col-sm-4" label="Name"></esp-input>
+        <esp-input ng-model="port.status" inputClass="col-sm-4"></esp-input>
+        <esp-input ng-model="port.mode" label="Admin Mode" type="radio"></esp-input>
+        <esp-input ng-model="port.negotiate" label="Auto Negotiate" type="checkbox"></esp-input>
+        <esp-input ng-model="port.duplex" type="radio"></esp-input>
+        <esp-input ng-model="port.flowControl" type="checkbox"></esp-input>
+        <esp-input ng-model="port.jumbo" type="checkbox"></esp-input>
+        <esp-input ng-model="port.speed" inputClass="col-sm-3" type="select"></esp-input>
 
         <div class="form-group">
             <div class="col-sm-offset-3 col-sm-8">

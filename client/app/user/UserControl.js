@@ -1,11 +1,17 @@
 /*
     UserControl.js - User Controller
+
+    This controller manages user login/logout and admin editing of user configuration.
  */
  
 'use strict';
 
 angular.module('app').controller('UserControl', function (Esp, User, $rootScope, $route, $scope, $location, $modal, $routeParams, $timeout) {
     angular.extend($scope, $routeParams);
+
+    /*
+        Setup form select dropdowns
+     */
     $scope.options = { roles: {}};
     angular.forEach(Esp.config.login.abilities, function(value, key) {
         $scope.options.roles[key] = key;
@@ -16,7 +22,6 @@ angular.module('app').controller('UserControl', function (Esp, User, $rootScope,
     })
     $scope.user = {};
 
-    //  MOB - reverse this loging and put the else case as then case
     if (Esp.user || !Esp.config.loginRequired) {
         if ($scope.id) {
             User.get({id: $scope.id}, $scope, function(response) {
@@ -104,7 +109,7 @@ angular.module('app').controller('UserControl', function (Esp, User, $rootScope,
 });
 
 /*
-    User controller routes for login
+    Routes for User
  */
 angular.module('app').config(function($routeProvider) {
     var esp = angular.module('esp');
@@ -114,7 +119,7 @@ angular.module('app').config(function($routeProvider) {
     };
     $routeProvider.when('/user/list',   angular.extend({}, Default, {templateUrl: esp.url('/app/user/user-list.html')}));
     $routeProvider.when('/user/login',  angular.extend({}, Default, {templateUrl: esp.url('/app/user/user-login.html')}));
-    $routeProvider.when('/user/logout', angular.extend({}, Default, {template: '<p ng-init="logout()">Hello</p>'}));
+    $routeProvider.when('/user/logout', angular.extend({}, Default, {template: '<p ng-init="logout()"> </p>'}));
     $routeProvider.when('/user/:id', angular.extend({}, Default, {
         templateUrl: esp.url('/app/user/user-edit.html'),
         abilities: { 'edit': true, 'view': true },

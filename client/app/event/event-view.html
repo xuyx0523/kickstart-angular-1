@@ -6,7 +6,7 @@
 <div class="panel">
     <h3>Event Details</h3>
     <form name="eventForm" class="form-horizontal">
-        <esp-input fields="title" ng-model="event.title" ></esp-input>
+        <esp-input ng-model="event.title"></esp-input>
 
         <div class="form-group">
             <label class="control-label col-xs-3">Type</label>
@@ -17,10 +17,10 @@
                 <input type="text" value="{{event.type}}" class="form-control input-small"></input>
             </div>
         </div>
-        <esp-input fields="id" ng-model="event.id"></esp-input>
-        <esp-input fields="date" type="text" ng-model="event.date" filter="date:'yyyy-MM-dd HH:mm:ss'"></esp-input>
-        <esp-input fields="message" type="textarea" ng-model="event.message" rows="6"></esp-input>
-        <esp-input fields="title" ng-model="event.title"></esp-input>
+        <esp-input ng-model="event.id"></esp-input>
+        <esp-input ng-model="event.date" filter="date:'yyyy-MM-dd HH:mm:ss'" type="text"></esp-input>
+        <esp-input ng-model="event.message" type="textarea" rows="6"></esp-input>
+        <esp-input ng-model="event.title"></esp-input>
            
        <div class="form-group">
             <div class="col-sm-offset-2">                                                                  

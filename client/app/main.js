@@ -1,5 +1,7 @@
 /*
     main.js - Application main script.
+
+    This script runs after all library code has been loaded and before the rest of the *.js.
  */
 
 'use strict';
@@ -18,7 +20,7 @@ angular.element(document).ready(function() {
 });
 
 /*
-    Dynamically resize the div.content when the window is resized.
+    Dynamically resize the div.content when the window is resized to be maximum height
  */
 app.run(function($timeout, $window) {
     window.onresize = function() {

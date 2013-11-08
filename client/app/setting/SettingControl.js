@@ -4,7 +4,7 @@
 
 'use strict';
 
-angular.module('app').controller('SettingControl', function ($rootScope, $scope, $location, $routeParams, Setting, Esp, Vlan) {
+angular.module('app').controller('SettingControl', function ($scope, $location, Setting) {
     Setting.get({id: 1}, $scope);
 
     $scope.save = function() {
@@ -16,6 +16,9 @@ angular.module('app').controller('SettingControl', function ($rootScope, $scope,
     };
 });
 
+/*
+    Setup the Setting routes
+ */
 angular.module('app').config(function($routeProvider) {
     var esp = angular.module('esp');
     var Default = {

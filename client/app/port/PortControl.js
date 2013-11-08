@@ -6,6 +6,10 @@
 
 angular.module('app').controller('PortControl', function (Esp, Port, Vlan, $rootScope, $scope, $location, $routeParams) {
     angular.extend($scope, $routeParams);
+
+    /*
+        Setup the select dropdowns
+     */
     $scope.options = {
         //  MOB - get better name than "options" more unique
         speed: {
@@ -88,6 +92,9 @@ angular.module('app').controller('PortControl', function (Esp, Port, Vlan, $root
     };
 });
 
+/*
+    Setup the vlan routes
+ */
 angular.module('app').config(function($routeProvider) {
     var esp = angular.module('esp');
     var Default = {

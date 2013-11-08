@@ -8,9 +8,15 @@ angular.module('app').controller('EventControl', function (Esp, Event, $filter, 
     angular.extend($scope, $routeParams);
 
     if ($scope.id) {
+        /*
+            Fetch a single event and apply the data to the scope
+         */
         Event.get({id: $scope.id}, $scope);
 
     } else {
+        /*
+            Fetch the event list and apply the data to "events" in the scope.
+         */
         Event.list(null, $scope, {events: "data"}, function(response) {
             angular.forEach($scope.events, function(value, key) {
                 //  MOB - perhaps JSON should already be in the right date format
@@ -26,6 +32,9 @@ angular.module('app').controller('EventControl', function (Esp, Event, $filter, 
     };
 });
 
+/*
+    Set the routes for Events
+ */
 angular.module('app').config(function($routeProvider) {
     var esp = angular.module('esp');
     var Default = {

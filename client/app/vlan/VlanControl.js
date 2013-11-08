@@ -6,14 +6,16 @@
 
 angular.module('app').controller('VlanControl', function (Esp, Vlan, $modal, $rootScope, $scope, $location, $routeParams) {
     angular.extend($scope, $routeParams);
+
+    /*
+        Setup VLAN form dropdowns
+     */
     $scope.options = {
         mode: {
             "Online": "Online",
             "Offline": "Offline",
         },
     };
-
-    $scope.mob = 'disabled';
 
     if ($scope.id) {
         Vlan.get({id: $scope.id}, $scope, function(response) {
@@ -98,6 +100,9 @@ angular.module('app').controller('VlanControl', function (Esp, Vlan, $modal, $ro
     };
 });
 
+/*
+    Setup VLAN routes
+ */
 angular.module('app').config(function($routeProvider) {
     var esp = angular.module('esp');
     var Default = {

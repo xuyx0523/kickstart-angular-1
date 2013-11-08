@@ -6,11 +6,12 @@
 <div class="panel">
     <h2>{{id ? "Edit" : "Create"}} User</h2>
     <form name="userForm" class="form-horizontal">
-        <esp-input ng-model="user.username" width="col-sm-5"></esp-input>
-        <esp-input type="password" ng-model="user.password" width="col-sm-5"></esp-input>
-        <esp-input ng-model="user.email" width="col-sm-5"></esp-input>
-        <esp-input type="select" ng-model="user.roles" width="col-sm-3"></esp-input>
-        <esp-input ng-repeat="role in options.roles" type="checkbox" value="{{role}}" label="{{Esp.titlecase(role)}}" ng-model="user.roles" width="col-sm-3"></esp-input>
+        <esp-input ng-model="user.username" inputClass="col-sm-5"></esp-input>
+        <esp-input ng-model="user.password" inputClass="col-sm-5" type="password"></esp-input>
+        <esp-input ng-model="user.email" inputClass="col-sm-5"></esp-input>
+        <esp-input ng-model="user.roles" inputClass="col-sm-3" type="select"></esp-input>
+        <esp-input ng-model="user.roles" ng-repeat="role in options.roles" value="{{role}}" label="{{Esp.titlecase(role)}}"
+            inputClass="col-sm-3" type="checkbox"></esp-input>
 
         <div class="form-group">
             <div class="col-sm-offset-3 col-sm-4">

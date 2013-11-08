@@ -4,6 +4,8 @@
 'use strict';
 
 angular.module('app').factory('Status', function (EspResource) {
-    /* Use group() just to minimize server-side routes. Really a singleton */
+    /* 
+        Use group() just to minimize server-side routes. Really a singleton 
+     */
     return EspResource.group("status");
 });

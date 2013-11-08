@@ -4,7 +4,10 @@
 
 'use strict';
 
-angular.module('app').controller('StatusControl', function (Esp, Status, $filter, $scope) {
+angular.module('app').controller('StatusControl', function (Status, $filter, $scope) {
+    /*
+        Get the status data
+     */
     Status.get({id: 1}, $scope, {events: "data"}, function(response) {
         angular.forEach($scope.events, function(value, key) {
             value.title = value.title.substring(0, 30);

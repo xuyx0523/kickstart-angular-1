@@ -56,92 +56,6 @@ angular.module('app').controller('DemoControl', function (Demo, Esp, $scope, $ti
         // $.plot(where, [ d1, d2, d3 ]);
         $.plot(where, [d1]);
     };
-
-    $scope.demo3 = function() {
-
-        /*
-            Need counter value centered above
-            Need bigger angule of guage
-         */
-        var e = document.getElementById('g0');
-        var c = e.getContext('2d');
-
-        var x = e.width / 2;
-        var y = e.height / 2;
-        var radius = 150;
-        var startAngle = 1.2 * Math.PI;
-        var endAngle = 1.8 * Math.PI;
-
-        c.save();
-
-        // jc.fillRect(0, 0, e.width, e.height);
-
-        c.beginPath();
-        c.moveTo(x, y);
-        c.arc(x, y, radius, startAngle, endAngle, false);
-        var g = c.createLinearGradient(100, 100, 200, 200);
-        g.addColorStop(0, '#79badd');
-        g.addColorStop(1, '#499ace');
-        c.fillStyle = g;
-        c.closePath();
-        c.fill();
-
-        // Center circle
-        c.beginPath();
-        c.moveTo(x, y);
-        c.fillStyle = '#D8D8D8';    //#F5F5F5';
-        c.fillStyle = '#A8A8A8';    //#F5F5F5';
-        c.arc(x, y, radius * .30, 0, 2 * Math.PI, false);
-        c.closePath();
-        c.fill();
-
-        arrow(0);
-
-    function arrow(angle) {
-        c.save();
-        c.beginPath();
-        c.translate(x, y);
-        c.rotate(angle * Math.PI / 180);
-
-        c.moveTo(0, 25 - y);
-        c.lineTo(4, 0);
-        c.lineTo(-4, 0);
-        c.lineTo(0, 25 -y);
-        c.closePath();
-        c.fillStyle = '#000000';
-        c.fill();
-
-        //  Arrow base
-        c.beginPath();
-        c.arc(0, 0, 4, 0, 2 * Math.PI, false);
-        c.fillStyle = '#000000';
-        c.closePath();
-        c.fill();
-        // c.translate(-x, -y);
-        c.restore();
-    }
-
-        c.restore();
-
-        var parent = $('#g0');
-        e = $('#g0-right');
-        var pos = parent.offset();
-        var top = pos.top;
-        var left = pos.left;
-        e.offset({ top: pos.top, left: pos.left});
-    };
-
-    $scope.svg = function() {
-        function fetch() {
-            var period = 1000;
-            Demo.demo1({prior: 0}, function(response) {
-                var item = response.demo[0];
-                $scope.value = item.value - 0;
-                $timeout(fetch, period, true);
-            });
-        }
-        fetch();
-    };
 });
 
 angular.module('app').config(function($routeProvider) {
@@ -155,11 +69,5 @@ angular.module('app').config(function($routeProvider) {
     }));
     $routeProvider.when('/demo/demo-2', angular.extend({}, Default, {
         templateUrl: esp.url('/app/demo/demo-2.html'),
-    }));
-    $routeProvider.when('/demo/demo-3', angular.extend({}, Default, {
-        templateUrl: esp.url('/app/demo/demo-3.html'),
-    }));
-    $routeProvider.when('/demo/demo-svg', angular.extend({}, Default, {
-        templateUrl: esp.url('/app/demo/demo-svg.html'),
     }));
 });
