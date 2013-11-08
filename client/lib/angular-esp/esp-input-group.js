@@ -28,10 +28,9 @@ angular.module('esp.input-group', [])
                             if (value == 'ng-model') return;
                             attributes += ' ' + value + '="' + attrs[key] + '"';
                         });
-                        var columns = scope.schema.columns;
-                        //  MOB - should this be fields or columns
+                        var fields = scope.schema.columns;
                         if (attrs.fields) {
-                            columns = attrs.fields.split(',');
+                            fields = attrs.fields.split(',');
                         }
                         var labels;
                         if (attrs.labels) {
@@ -57,7 +56,7 @@ angular.module('esp.input-group', [])
                         if (attrs.labelClasses) {
                             labelClasses = attrs.labelClasses.split(',');
                         }
-                        angular.forEach(columns, function(field, key) {
+                        angular.forEach(fields, function(field, key) {
                             var i = 0 + key;
                             var label = (labels && labels[i]) ? ('label="' + labels[i] + '"') : Esp.titlecase(field);
                             var klass = (classes && classes[i]) ? ('class=' + classes[i]) : '';
