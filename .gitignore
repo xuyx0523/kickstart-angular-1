@@ -13,12 +13,10 @@
 cache/*
 db/layer2.bak
 projects/*sublime*
-client/all.min.js.gz
 client/lib/angular-ui-bootstrap/old.js
 macosx-x64-*
 start.old
-*.gz
-client/css/all-*.css
 *.min.js
 *.min.html
-client/app/all.html.js
+*.html.js
+*.min.css
