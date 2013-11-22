@@ -136,36 +136,48 @@ stop: $(DEPS_2)
 #   installBinary
 #
 installBinary: $(DEPS_3)
-	mkdir -p "${root}"
-	cp app.conf ${root}/app.conf
-	cp appweb.conf ${root}/appweb.conf
+	mkdir -p "$(BIT_VAPP_PREFIX)"
+	cp appweb.conf $(BIT_VAPP_PREFIX)/appweb.conf
+	cp hosted.conf $(BIT_VAPP_PREFIX)/hosted.conf
 	mkdir -p "."
-	cp config.json ${root}
-	mkdir -p "${root}/client"
-	cp client/index.esp ${root}/client/index.esp
-	cp client/all-1.0.0.min.js.gz ${root}/client/all-1.0.0.min.js.gz
-	mkdir -p "${root}/client/css"
-	cp client/css/all-1.0.0.min.css.gz ${root}/client/css/all-1.0.0.min.css.gz
-	mkdir -p "${root}/client/assets"
-	cp client/assets/favicon.ico ${root}/client/assets/favicon.ico
-	cp client/assets/grid_noise.png ${root}/client/assets/grid_noise.png
-	cp client/assets/linen.png ${root}/client/assets/linen.png
-	cp client/assets/sunset.jpg ${root}/client/assets/sunset.jpg
-	mkdir -p "${root}/client/lib/bootstrap/fonts"
-	cp client/lib/bootstrap/fonts/glyphicons-halflings-regular.eot ${root}/client/lib/bootstrap/fonts/glyphicons-halflings-regular.eot
-	cp client/lib/bootstrap/fonts/glyphicons-halflings-regular.svg ${root}/client/lib/bootstrap/fonts/glyphicons-halflings-regular.svg
-	cp client/lib/bootstrap/fonts/glyphicons-halflings-regular.ttf ${root}/client/lib/bootstrap/fonts/glyphicons-halflings-regular.ttf
-	cp client/lib/bootstrap/fonts/glyphicons-halflings-regular.woff ${root}/client/lib/bootstrap/fonts/glyphicons-halflings-regular.woff
-	mkdir -p "${root}/client/lib/font-awesome/fonts"
-	cp client/lib/font-awesome/fonts/fontawesome-webfont.eot ${root}/client/lib/font-awesome/fonts/fontawesome-webfont.eot
-	cp client/lib/font-awesome/fonts/fontawesome-webfont.svg ${root}/client/lib/font-awesome/fonts/fontawesome-webfont.svg
-	cp client/lib/font-awesome/fonts/fontawesome-webfont.ttf ${root}/client/lib/font-awesome/fonts/fontawesome-webfont.ttf
-	cp client/lib/font-awesome/fonts/fontawesome-webfont.woff ${root}/client/lib/font-awesome/fonts/fontawesome-webfont.woff
-	cp client/lib/font-awesome/fonts/FontAwesome.otf ${root}/client/lib/font-awesome/fonts/FontAwesome.otf
-	mkdir -p "${root}/cache"
-	cp cache/kick.dylib ${root}/cache/kick.dylib
-	mkdir -p "${root}/db"
-	cp db/kick.mdb ${root}/db/kick.mdb
+	cp esp.json $(BIT_VAPP_PREFIX)
+	mkdir -p "$(BIT_VAPP_PREFIX)/client"
+	cp client/index.esp $(BIT_VAPP_PREFIX)/client/index.esp
+	cp client/all-1.0.0.min.js.gz $(BIT_VAPP_PREFIX)/client/all-1.0.0.min.js.gz
+	mkdir -p "$(BIT_VAPP_PREFIX)/client/css"
+	cp client/css/all-1.0.0.min.*.gz $(BIT_VAPP_PREFIX)/client/css/all-1.0.0.min.*.gz
+	mkdir -p "$(BIT_VAPP_PREFIX)/client/assets"
+	cp client/assets/favicon.ico $(BIT_VAPP_PREFIX)/client/assets/favicon.ico
+	cp client/assets/grid_noise.png $(BIT_VAPP_PREFIX)/client/assets/grid_noise.png
+	cp client/assets/linen.png $(BIT_VAPP_PREFIX)/client/assets/linen.png
+	cp client/assets/sunset.jpg $(BIT_VAPP_PREFIX)/client/assets/sunset.jpg
+	mkdir -p "$(BIT_VAPP_PREFIX)/client/lib/bootstrap/fonts"
+	cp client/lib/bootstrap/fonts/glyphicons-halflings-regular.eot $(BIT_VAPP_PREFIX)/client/lib/bootstrap/fonts/glyphicons-halflings-regular.eot
+	cp client/lib/bootstrap/fonts/glyphicons-halflings-regular.svg $(BIT_VAPP_PREFIX)/client/lib/bootstrap/fonts/glyphicons-halflings-regular.svg
+	cp client/lib/bootstrap/fonts/glyphicons-halflings-regular.ttf $(BIT_VAPP_PREFIX)/client/lib/bootstrap/fonts/glyphicons-halflings-regular.ttf
+	cp client/lib/bootstrap/fonts/glyphicons-halflings-regular.woff $(BIT_VAPP_PREFIX)/client/lib/bootstrap/fonts/glyphicons-halflings-regular.woff
+	mkdir -p "$(BIT_VAPP_PREFIX)/client/lib/font-awesome/fonts"
+	cp client/lib/font-awesome/fonts/fontawesome-webfont.eot $(BIT_VAPP_PREFIX)/client/lib/font-awesome/fonts/fontawesome-webfont.eot
+	cp client/lib/font-awesome/fonts/fontawesome-webfont.svg $(BIT_VAPP_PREFIX)/client/lib/font-awesome/fonts/fontawesome-webfont.svg
+	cp client/lib/font-awesome/fonts/fontawesome-webfont.ttf $(BIT_VAPP_PREFIX)/client/lib/font-awesome/fonts/fontawesome-webfont.ttf
+	cp client/lib/font-awesome/fonts/fontawesome-webfont.woff $(BIT_VAPP_PREFIX)/client/lib/font-awesome/fonts/fontawesome-webfont.woff
+	cp client/lib/font-awesome/fonts/FontAwesome.otf $(BIT_VAPP_PREFIX)/client/lib/font-awesome/fonts/FontAwesome.otf
+	mkdir -p "$(BIT_VAPP_PREFIX)/cache"
+	cp cache/app_3ca919087b84fe779f4804222110add7.dylib $(BIT_VAPP_PREFIX)/cache/app_3ca919087b84fe779f4804222110add7.dylib
+	cp cache/controller_01b72c2c6fe8cbf3d3b3fa0e8049419c.dylib $(BIT_VAPP_PREFIX)/cache/controller_01b72c2c6fe8cbf3d3b3fa0e8049419c.dylib
+	cp cache/controller_1aba15fe6e31f2109b01553e8e68e78e.dylib $(BIT_VAPP_PREFIX)/cache/controller_1aba15fe6e31f2109b01553e8e68e78e.dylib
+	cp cache/controller_334fdc191a00c718c8c765e00a79466d.dylib $(BIT_VAPP_PREFIX)/cache/controller_334fdc191a00c718c8c765e00a79466d.dylib
+	cp cache/controller_3d936798245edcc0ddb1334c751b1312.dylib $(BIT_VAPP_PREFIX)/cache/controller_3d936798245edcc0ddb1334c751b1312.dylib
+	cp cache/controller_3df9eca88b8bb1d92c75b65180a8ef80.dylib $(BIT_VAPP_PREFIX)/cache/controller_3df9eca88b8bb1d92c75b65180a8ef80.dylib
+	cp cache/controller_72d321bb855e3d34368fa643af0e9a0c.dylib $(BIT_VAPP_PREFIX)/cache/controller_72d321bb855e3d34368fa643af0e9a0c.dylib
+	cp cache/controller_886d4847c82aba55d4dd44f1cc5aba70.dylib $(BIT_VAPP_PREFIX)/cache/controller_886d4847c82aba55d4dd44f1cc5aba70.dylib
+	cp cache/controller_9bd4d87c3f479d3449278bfc165be143.dylib $(BIT_VAPP_PREFIX)/cache/controller_9bd4d87c3f479d3449278bfc165be143.dylib
+	cp cache/controller_c9fc6b13d4f842d40c3020b2a803c839.dylib $(BIT_VAPP_PREFIX)/cache/controller_c9fc6b13d4f842d40c3020b2a803c839.dylib
+	cp cache/controller_ce5d973194a100f3208dcfa664ca672f.dylib $(BIT_VAPP_PREFIX)/cache/controller_ce5d973194a100f3208dcfa664ca672f.dylib
+	cp cache/controller_e63cffce00b984793065b29c604cccb2.dylib $(BIT_VAPP_PREFIX)/cache/controller_e63cffce00b984793065b29c604cccb2.dylib
+	cp cache/view_48547d50c94180de2d6178cf0b323f0b.dylib $(BIT_VAPP_PREFIX)/cache/view_48547d50c94180de2d6178cf0b323f0b.dylib
+	mkdir -p "$(BIT_VAPP_PREFIX)/db"
+	cp db/kick.mdb $(BIT_VAPP_PREFIX)/db/kick.mdb
 
 #
 #   start

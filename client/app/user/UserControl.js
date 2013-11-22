@@ -55,13 +55,15 @@ angular.module('app').controller('UserControl', function (Esp, User, $rootScope,
             } else {
                 Esp.login(response.user);
                 dialog.dismiss();
-                if ($rootScope.referrer) {
-                    $location.path($rootScope.referrer.$$route.originalPath);
-                    $rootScope.referrer = null;
+                if (Esp.referrer) {
+                    $location.path(Esp.referrer.$$route.originalPath);
+                    Esp.referrer = null;
                 } else {
                     $location.path("/");
                 }
             }
+        }, function(response, fn) {
+            console.log(response);
         });
     };
 

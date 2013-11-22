@@ -6,21 +6,21 @@
 static void createUser() { 
     if (canUser("edit", 1)) {
         setParam("password", mprMakePassword(param("password"), 0, 0));
-        renderResult(createRecFromParams("user"));
+        sendResult(createRecFromParams("user"));
     }
 }
 
 static void getUser() { 
     /* Don't send the real password back to the user */
-    renderRec(setField(readRec("user", param("id")), "password", "   n o t p a s s w o r d   "));
+    sendRec(setField(readRec("user", param("id")), "password", "   n o t p a s s w o r d   "));
 }
 
 static void indexUser() {
-    renderGrid(readTable("user"));
+    sendGrid(readTable("user"));
 }
 
 static void initUser() {
-    renderRec(createRec("user", 0));
+    sendRec(createRec("user", 0));
 }
 
 static void listUsers() {
@@ -31,19 +31,19 @@ static void listUsers() {
     for (r = 0; r < users->nrecords; r++) {
         setField(users->records[r], "password", 0);
     }
-    renderGrid(users);
+    sendGrid(users);
 }
 
 static void removeUser() { 
     if (canUser("edit", 1)) {
-        renderResult(removeRec("user", param("id")));
+        sendResult(removeRec("user", param("id")));
     }
 }
 
 static void updateUser() { 
     if (canUser("edit", 1)) {
         setParam("password", mprMakePassword(param("password"), 0, 0));
-        renderResult(updateRecFromParams("user"));
+        sendResult(updateRecFromParams("user"));
     }
 }
 
@@ -56,17 +56,17 @@ static void forgot() {
         if ((user = readRecWhere("user", "email", "==", name)) == 0) {
             /* Security delay */
             mprSleep(2500);
-            renderResult(feedback("error", "Unknown user."));
+            sendResult(feedback("error", "Unknown user."));
             return;
         }
     }
     to = getField(user, "email");
     msg = sfmt("Password Reset\nPlease use this new temporary password %s\nLogin at %s\n",
-        "temp", sjoin(httpUri(getConn(), "~", NULL), "/user/login", NULL));
+        "temp", sjoin(httpUri(getConn(), "~"), "/user/login", NULL));
     if (espEmail(getConn(), to, "mob@emobrien.com", "Reset Password", 0, 0, msg, 0) < 0) {
-        renderResult(feedback("error", "Cannot send password reset email."));
+        sendResult(feedback("error", "Cannot send password reset email."));
     } else {
-        renderResult(feedback("inform", "Password reset details sent."));
+        sendResult(feedback("inform", "Password reset details sent."));
     }
 }
 
@@ -77,13 +77,13 @@ static void login() {
         render("{\"error\": 0, \"user\": {\"name\": \"%s\", \"abilities\": %s, \"remember\": %s}}", conn->username,
             mprSerialize(conn->user->abilities, MPR_JSON_QUOTES), remember ? "true" : "false");
     } else {
-        renderResult(feedback("error", "Invalid Login"));
+        sendResult(feedback("error", "Invalid Login"));
     }       
 }
 
 static void logout() {                                                                             
     httpLogout(getConn());
-    renderResult(1);
+    sendResult(1);
 }
 
 ESP_EXPORT int esp_controller_kick_user(HttpRoute *route, MprModule *module) 

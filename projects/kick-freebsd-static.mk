@@ -129,36 +129,47 @@ stop: $(DEPS_2)
 #   installBinary
 #
 installBinary: $(DEPS_3)
-	mkdir -p "${root}"
-	cp app.conf ${root}/app.conf
-	cp appweb.conf ${root}/appweb.conf
-	mkdir -p "."
-	cp config.json ${root}
-	mkdir -p "${root}/client"
-	cp client/index.esp ${root}/client/index.esp
-	cp client/all-1.0.0.min.js.gz ${root}/client/all-1.0.0.min.js.gz
-	mkdir -p "${root}/client/css"
-	cp client/css/all-1.0.0.min.css.gz ${root}/client/css/all-1.0.0.min.css.gz
-	mkdir -p "${root}/client/assets"
-	cp client/assets/favicon.ico ${root}/client/assets/favicon.ico
-	cp client/assets/grid_noise.png ${root}/client/assets/grid_noise.png
-	cp client/assets/linen.png ${root}/client/assets/linen.png
-	cp client/assets/sunset.jpg ${root}/client/assets/sunset.jpg
-	mkdir -p "${root}/client/lib/bootstrap/fonts"
-	cp client/lib/bootstrap/fonts/glyphicons-halflings-regular.eot ${root}/client/lib/bootstrap/fonts/glyphicons-halflings-regular.eot
-	cp client/lib/bootstrap/fonts/glyphicons-halflings-regular.svg ${root}/client/lib/bootstrap/fonts/glyphicons-halflings-regular.svg
-	cp client/lib/bootstrap/fonts/glyphicons-halflings-regular.ttf ${root}/client/lib/bootstrap/fonts/glyphicons-halflings-regular.ttf
-	cp client/lib/bootstrap/fonts/glyphicons-halflings-regular.woff ${root}/client/lib/bootstrap/fonts/glyphicons-halflings-regular.woff
-	mkdir -p "${root}/client/lib/font-awesome/fonts"
-	cp client/lib/font-awesome/fonts/fontawesome-webfont.eot ${root}/client/lib/font-awesome/fonts/fontawesome-webfont.eot
-	cp client/lib/font-awesome/fonts/fontawesome-webfont.svg ${root}/client/lib/font-awesome/fonts/fontawesome-webfont.svg
-	cp client/lib/font-awesome/fonts/fontawesome-webfont.ttf ${root}/client/lib/font-awesome/fonts/fontawesome-webfont.ttf
-	cp client/lib/font-awesome/fonts/fontawesome-webfont.woff ${root}/client/lib/font-awesome/fonts/fontawesome-webfont.woff
-	cp client/lib/font-awesome/fonts/FontAwesome.otf ${root}/client/lib/font-awesome/fonts/FontAwesome.otf
-	mkdir -p "${root}/cache"
-	cp cache/kick.dylib ${root}/cache/kick.dylib
-	mkdir -p "${root}/db"
-	cp db/kick.mdb ${root}/db/kick.mdb
+	mkdir -p "/"
+	cp appweb.conf /appweb.conf
+	cp hosted.conf /hosted.conf
+	cp esp.json /esp.json
+	mkdir -p "/client"
+	cp client/index.esp /client/index.esp
+	cp client/all-1.0.0.min.js.gz /client/all-1.0.0.min.js.gz
+	mkdir -p "/client/css"
+	cp client/css/all-1.0.0.min.*.gz /client/css/all-1.0.0.min.*.gz
+	mkdir -p "/client/assets"
+	cp client/assets/favicon.ico /client/assets/favicon.ico
+	cp client/assets/grid_noise.png /client/assets/grid_noise.png
+	cp client/assets/linen.png /client/assets/linen.png
+	cp client/assets/sunset.jpg /client/assets/sunset.jpg
+	mkdir -p "/client/lib/bootstrap/fonts"
+	cp client/lib/bootstrap/fonts/glyphicons-halflings-regular.eot /client/lib/bootstrap/fonts/glyphicons-halflings-regular.eot
+	cp client/lib/bootstrap/fonts/glyphicons-halflings-regular.svg /client/lib/bootstrap/fonts/glyphicons-halflings-regular.svg
+	cp client/lib/bootstrap/fonts/glyphicons-halflings-regular.ttf /client/lib/bootstrap/fonts/glyphicons-halflings-regular.ttf
+	cp client/lib/bootstrap/fonts/glyphicons-halflings-regular.woff /client/lib/bootstrap/fonts/glyphicons-halflings-regular.woff
+	mkdir -p "/client/lib/font-awesome/fonts"
+	cp client/lib/font-awesome/fonts/fontawesome-webfont.eot /client/lib/font-awesome/fonts/fontawesome-webfont.eot
+	cp client/lib/font-awesome/fonts/fontawesome-webfont.svg /client/lib/font-awesome/fonts/fontawesome-webfont.svg
+	cp client/lib/font-awesome/fonts/fontawesome-webfont.ttf /client/lib/font-awesome/fonts/fontawesome-webfont.ttf
+	cp client/lib/font-awesome/fonts/fontawesome-webfont.woff /client/lib/font-awesome/fonts/fontawesome-webfont.woff
+	cp client/lib/font-awesome/fonts/FontAwesome.otf /client/lib/font-awesome/fonts/FontAwesome.otf
+	mkdir -p "/cache"
+	cp cache/app_3ca919087b84fe779f4804222110add7.dylib /cache/app_3ca919087b84fe779f4804222110add7.dylib
+	cp cache/controller_01b72c2c6fe8cbf3d3b3fa0e8049419c.dylib /cache/controller_01b72c2c6fe8cbf3d3b3fa0e8049419c.dylib
+	cp cache/controller_1aba15fe6e31f2109b01553e8e68e78e.dylib /cache/controller_1aba15fe6e31f2109b01553e8e68e78e.dylib
+	cp cache/controller_334fdc191a00c718c8c765e00a79466d.dylib /cache/controller_334fdc191a00c718c8c765e00a79466d.dylib
+	cp cache/controller_3d936798245edcc0ddb1334c751b1312.dylib /cache/controller_3d936798245edcc0ddb1334c751b1312.dylib
+	cp cache/controller_3df9eca88b8bb1d92c75b65180a8ef80.dylib /cache/controller_3df9eca88b8bb1d92c75b65180a8ef80.dylib
+	cp cache/controller_72d321bb855e3d34368fa643af0e9a0c.dylib /cache/controller_72d321bb855e3d34368fa643af0e9a0c.dylib
+	cp cache/controller_886d4847c82aba55d4dd44f1cc5aba70.dylib /cache/controller_886d4847c82aba55d4dd44f1cc5aba70.dylib
+	cp cache/controller_9bd4d87c3f479d3449278bfc165be143.dylib /cache/controller_9bd4d87c3f479d3449278bfc165be143.dylib
+	cp cache/controller_c9fc6b13d4f842d40c3020b2a803c839.dylib /cache/controller_c9fc6b13d4f842d40c3020b2a803c839.dylib
+	cp cache/controller_ce5d973194a100f3208dcfa664ca672f.dylib /cache/controller_ce5d973194a100f3208dcfa664ca672f.dylib
+	cp cache/controller_e63cffce00b984793065b29c604cccb2.dylib /cache/controller_e63cffce00b984793065b29c604cccb2.dylib
+	cp cache/view_48547d50c94180de2d6178cf0b323f0b.dylib /cache/view_48547d50c94180de2d6178cf0b323f0b.dylib
+	mkdir -p "/db"
+	cp db/kick.mdb /db/kick.mdb
 
 #
 #   start

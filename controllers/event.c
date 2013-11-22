@@ -4,16 +4,16 @@
 #include "esp.h"
 
 static void getEvent() {
-    renderRec(readRec("event", param("id")));
+    sendRec(readRec("event", param("id")));
 }
 
 static void listEvents() {
-    renderGrid(readTable("event"));
+    sendGrid(readTable("event"));
 }
 
 static void removeEvent() {
     if (canUser("edit", 1)) {
-        renderResult(removeRec("event", param("id")));
+        sendResult(removeRec("event", param("id")));
     }
 }
 

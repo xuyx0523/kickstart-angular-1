@@ -213,12 +213,10 @@ Bit.load({
                             run('ngmin ' + f + ' ' + ng)
                             run('uglifyjs -o ' + f.replaceExt('min.js') + ' ' + ng)
                             ng.remove()
-                        } else {
-                        print('ELSE', ng)
                         }
                     }
                 }
-                let config = Path('config.json').readJSON();
+                let config = Path('esp.json').readJSON();
                 let list = []
                 for (let [component,details] in config.settings.components) {
                     if (component == 'less' && config.mode == 'release') continue
@@ -257,7 +255,7 @@ Bit.load({
                 trace('Catenate', 'client/all.min.js')
                 rm('client/all.min.js.gz')
                 let list = []
-                let config = Path('config.json').readJSON();
+                let config = Path('esp.json').readJSON();
                 for (let [component,details] in config.settings.components) {
                     if (component == 'less' && config.mode == 'release') continue
                     for each (file in details.scripts) {
@@ -303,10 +301,10 @@ Bit.load({
 
         patchVersion: {
             build: "
-                let path = Path('config.json')
+                let path = Path('esp.json')
                 config = path.readJSON()
                 if (config.version != bit.settings.version) {
-                    trace('Update', 'config.json version ' + bit.settings.version)
+                    trace('Update', 'esp.json version ' + bit.settings.version)
                     path.write(path.readString().replace(/version:.*/, 'version: \\'' + bit.settings.version + '\\','))
                 }
 

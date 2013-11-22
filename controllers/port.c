@@ -4,7 +4,7 @@
 #include "esp.h"
 
 static void getPort() {
-    renderRec(readRec("port", param("id")));
+    sendRec(readRec("port", param("id")));
 }
 
 static void getPortVlans() {
@@ -15,16 +15,16 @@ static void getPortVlans() {
     mappings = readWhere("mapping", "portId", "==", param("id"));
     vlans = ediReadTable(db, "vlan");
     grid = ediJoin(db, mappings, vlans, NULL);
-    renderGrid(grid);
+    sendGrid(grid);
 }
 
 static void listPorts() {
-    renderGrid(readTable("port"));
+    sendGrid(readTable("port"));
 }
 
 static void updatePort() {
     if (canUser("edit", 1)) {
-        renderResult(updateRecFromParams("port"));
+        sendResult(updateRecFromParams("port"));
     }
 }
 

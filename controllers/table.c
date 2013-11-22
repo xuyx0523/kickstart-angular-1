@@ -4,7 +4,7 @@
 #include "esp.h"
 
 static void getTable() {
-    renderGrid(readTable(param("name")));
+    sendGrid(readTable(param("name")));
 }
 
 static void listTables() {

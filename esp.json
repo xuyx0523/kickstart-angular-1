@@ -61,15 +61,15 @@
             float: 2,                                                                                                  
             int: 0,
         },
+        json: true,
         /* Set to "/user/login" to require login for all access */
         loginRequired: "",
         refresh: 1000,
-        serverPrefix: "/server",
-        sendJson: true,
+        serverPrefix: "/do",
         timeouts: {
             session: 300,
         },
-        xsrfToken: true,
+        xsrf: true,
     },
     server: {
         database: "mdb://kick.mdb",

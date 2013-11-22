@@ -7,27 +7,27 @@ static void createMapping() {
     EdiRec      *vlan;
 
     if ((vlan = readRecWhere("vlan", "name", "==", param("vlan"))) == 0) {
-        renderResult(feedback("error", "Cannot find: %s", param("vlan")));
+        sendResult(feedback("error", "Cannot find: %s", param("vlan")));
         return;
     }
     setParam("vlanId", getField(vlan, "id")); 
-    renderResult(createRecFromParams("mapping"));
+    sendResult(createRecFromParams("mapping"));
 }
 
 static void getMapping() {
-    renderRec(readRec("mapping", param("id")));
+    sendRec(readRec("mapping", param("id")));
 }
 
 static void listMappings() {
-    renderGrid(readTable("mapping"));
+    sendGrid(readTable("mapping"));
 }
 
 static void removeMapping() {
-    renderResult(removeRec("mapping", param("id")));
+    sendResult(removeRec("mapping", param("id")));
 }
 
 static void updateMapping() {
-    renderResult(updateRecFromParams("mapping"));
+    sendResult(updateRecFromParams("mapping"));
 }
 
 ESP_EXPORT int esp_controller_kick_mapping(HttpRoute *route, MprModule *module)

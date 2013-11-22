@@ -2,14 +2,6 @@
     <li>Ports</li>
     <li><i class="icon-home"></i> <a href="#">Home</a></li>
 </ul>
-<!--
-<nav>
-    <ul class="nav nav-tabs">
-    <li></li>
-    </ul>
-</nav>
--->
-
 <div class="panel">
 	<h2>Ports</h2>
 	<!-- MOB - create a single style that does this -->
@@ -18,8 +10,8 @@
 	    <thead><tr><th ng-repeat="header in columns">{{header | titlecase}}</th></tr></thead>
 	    <tbody>
 	        <tr ng-repeat="port in ports" esp-click="/port/{{port.id}}">
-	        <td ng-repeat="column in columns">{{port[column]}}</td>
-	    </tr>
+	            <td ng-repeat="column in columns">{{port[column]}}</td>
+	        </tr>
 	    </tbody>
 	</table>
 </div>

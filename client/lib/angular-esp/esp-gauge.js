@@ -188,3 +188,4 @@ angular.module('esp.gauge', [])
         },
     };
 });
+

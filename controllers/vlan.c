@@ -6,12 +6,12 @@
 static void createVlan() {
     addParam("mode", "Online");
     if (canUser("edit", 1)) {
-        renderResult(createRecFromParams("vlan"));
+        sendResult(createRecFromParams("vlan"));
     }
 }
 
 static void getVlan() {
-    renderRec(readRec("vlan", param("id")));
+    sendRec(readRec("vlan", param("id")));
 }
 
 static void getVlanMappings() {
@@ -23,27 +23,27 @@ static void getVlanMappings() {
     vlans = ediReadTable(db, "vlan");
     ports = ediReadTable(db, "port");
     result = ediJoin(db, mappings, vlans, ports, NULL);
-    renderGrid(result);
+    sendGrid(result);
 }
 
 static void initVlan() {
-    renderRec(setField(createRec("vlan", 0), "mode", "Online"));
+    sendRec(setField(createRec("vlan", 0), "mode", "Online"));
 }
 
 static void listVlans() {
-    renderGrid(readTable("vlan"));
+    sendGrid(readTable("vlan"));
 }
 
 static void removeVlan() {
     if (canUser("edit", 1)) {
-        renderResult(removeRec("vlan", param("id")));
+        sendResult(removeRec("vlan", param("id")));
     }
 }
 
 static void updateVlan() {
     addParam("mode", "Online");
     if (canUser("edit", 1)) {
-        renderResult(updateRecFromParams("vlan"));
+        sendResult(updateRecFromParams("vlan"));
     }
 }
 
@@ -56,7 +56,7 @@ static void addPort() {
 
     db = getDatabase();
     if ((port = ediReadRecWhere(db, "port", "name", "==", param("port"))) == 0) {
-        renderResult(feedback("error", "Cannot find: tty '%s'", param("port")));
+        sendResult(feedback("error", "Cannot find: tty '%s'", param("port")));
         return;
     }
     vlanId = param("id");
@@ -70,12 +70,12 @@ static void addPort() {
     if ((maps = readWhere("mapping", "portId", "==", port->id)) != 0) {
         for (i = 0; i < maps->nrecords; i++) {
             if (smatch(getField(maps->records[i], "vlanId"), param("id"))) {
-                renderResult(feedback("error", "Mapping already exists"));
+                sendResult(feedback("error", "Mapping already exists"));
                 return;
             }
         }
     }
-    renderResult(createRecFromParams("mapping"));
+    sendResult(createRecFromParams("mapping"));
 }
 
 static void removePort() {
@@ -87,19 +87,19 @@ static void removePort() {
 
     db = getDatabase();
     if ((port = ediReadRecWhere(db, "port", "name", "==", param("port"))) == 0) {
-        renderResult(feedback("error", "Cannot find: tty '%s'", param("port")));
+        sendResult(feedback("error", "Cannot find: tty '%s'", param("port")));
         return;
     }
     vlanId = param("id");
     if ((maps = readWhere("mapping", "portId", "==", port->id)) != 0) {
         for (i = 0; i < maps->nrecords; i++) {
             if (smatch(getField(maps->records[i], "vlanId"), param("id"))) {
-                renderResult(removeRec("mapping", maps->records[i]->id));
+                sendResult(removeRec("mapping", maps->records[i]->id));
                 return;
             }
         }
     }
-    renderResult(feedback("error", "Cannot find: mapping"));
+    sendResult(feedback("error", "Cannot find: mapping"));
 }
 
 ESP_EXPORT int esp_controller_kick_vlan(HttpRoute *route, MprModule *module)
