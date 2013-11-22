@@ -1,9 +1,0 @@
-/*
-    start.bit -- Startup Bit File for Embedthis Kickstart
- */
-
-Bit.load({
-    platforms: [
-        "macosx-x64-debug",
-    ],
-})
