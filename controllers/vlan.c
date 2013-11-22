@@ -82,7 +82,6 @@ static void removePort() {
     Edi         *db;
     EdiRec      *port;
     EdiGrid     *maps;
-    cchar       *vlanId;
     int         i;
 
     db = getDatabase();
@@ -90,7 +89,6 @@ static void removePort() {
         sendResult(feedback("error", "Cannot find: tty '%s'", param("port")));
         return;
     }
-    vlanId = param("id");
     if ((maps = readWhere("mapping", "portId", "==", port->id)) != 0) {
         for (i = 0; i < maps->nrecords; i++) {
             if (smatch(getField(maps->records[i], "vlanId"), param("id"))) {

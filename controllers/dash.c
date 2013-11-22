@@ -57,20 +57,18 @@ static void demoData() {
 
 static cchar *getDashData(HttpConn *conn) { 
     EdiGrid     *events, *ports, *vlans;
-    EdiRec      *system;
-    Edi         *db;
+    // EdiRec      *system;
     MprBuf      *buf;
     int         nevents;
 
     espSetConn(conn);
-    db = espGetDatabase(conn);
     buf = mprCreateBuf(0, 0);
     mprPutToBuf(buf, "{");
     ports = ediFilterGridFields(readTable("port"), "rxBytes,rxPackets,txBytes,txPackets,mode");
     mprPutToBuf(buf, "\"ports\": %s,", ediGridAsJson(ports, 0));
     vlans = ediFilterGridFields(readTable("vlan"), "rxBytes,rxPackets,txBytes,txPackets,mode");
     mprPutToBuf(buf, "\"vlans\": %s,", ediGridAsJson(vlans, 0));
-    system = ediFilterRecFields(readRec("system", "1"), "rxBytes,rxPackets,txBytes,txPackets");
+    // system = ediFilterRecFields(readRec("system", "1"), "rxBytes,rxPackets,txBytes,txPackets");
 
     nevents = 0;
     if ((events = readTable("event")) != 0) {
