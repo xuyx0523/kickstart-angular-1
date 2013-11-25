@@ -218,13 +218,13 @@ Bit.load({
                 }
                 let config = Path('esp.json').readJSON();
                 let list = []
-                for (let [component,details] in config.settings.components) {
-                    if (component == 'less' && config.mode == 'release') continue
+                for (let [pack,details] in config.settings.packs) {
+                    if (pack == 'less' && config.mode == 'release') continue
                     for each (file in details.scripts) {
                        if (file == '*') {
-                            list += Path('client/lib').join(component).files('*.js', {exclude: /\\.min.js/})
+                            list += Path('client/lib').join(pack).files('*.js', {exclude: /\\.min.js/})
                         } else {
-                            list.push(Path('client/lib').join(component, Path(file)))
+                            list.push(Path('client/lib').join(pack, Path(file)))
                         }
                     }
                 }
@@ -256,13 +256,13 @@ Bit.load({
                 rm('client/all.min.js.gz')
                 let list = []
                 let config = Path('esp.json').readJSON();
-                for (let [component,details] in config.settings.components) {
-                    if (component == 'less' && config.mode == 'release') continue
+                for (let [pack,details] in config.settings.packs) {
+                    if (pack == 'less' && config.mode == 'release') continue
                     for each (file in details.scripts) {
                         if (file == '*') {
-                            list += Path('client/lib').join(component).files('*.min.js')
+                            list += Path('client/lib').join(pack).files('*.min.js')
                         } else {
-                            list.push(Path('client/lib').join(component, Path(file).replaceExt('min.js')))
+                            list.push(Path('client/lib').join(pack, Path(file).replaceExt('min.js')))
                         }
                     }
                 }
@@ -292,6 +292,12 @@ Bit.load({
                 TARGET.path.remove()
                 run('gzip --keep ' + TARGET.path.trimExt('gz'))
             ",
+        },
+
+        'packs': {
+            type: 'file',
+            path: '/Users/mob/git/appweb/macosx-x64-debug/esp/',
+            files: [ 'packs/' ],
         },
 
         run: {

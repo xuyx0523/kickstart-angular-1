@@ -1,5 +1,5 @@
 {
-    mode: "release",
+    mode: "debug",
     modes: {
         debug: {
             flat: false,
@@ -33,19 +33,17 @@
     version: '1.0.0',
     settings: {
         auth: "app",
-        components: {
+        packs: {
             server: {},
             jquery: {scripts: ["jquery.js"]},
             angular: {
                 scripts: [
                     "angular.js",
                     "angular-animate.js",
-                    "angular-bootstrap.js",
-                    "angular-resource.js",
                     "angular-route.js",
                 ],
             },
-            "angular-esp": {scripts: ["*"]},
+            "esp-angular": {scripts: ["*"]},
             bootstrap: {},
             html5shiv: {scripts: ["*"]},
             "angular-ui-bootstrap": {scripts: ["*"]},

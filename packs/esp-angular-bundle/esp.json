@@ -1,0 +1,19 @@
+{
+    name: "bundle",
+    description: "Bundle of Extras for ESP Angular",
+    depends: [
+        'esp-angular-mvc',
+        'bootstrap',
+        'angular-ui-bootstrap',
+        'html5shiv',
+        'font-awesome',
+        'more',
+        'respond'
+    ],
+    settings: {
+        packs: {
+            "esp-angular-bundle": {scripts: ["*"]},
+        },
+        refresh: 1000,
+    },
+}

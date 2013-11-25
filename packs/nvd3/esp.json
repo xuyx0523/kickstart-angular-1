@@ -1,0 +1,12 @@
+{
+    name: "nvd3",
+    description: "NVD3 Javascript graphics library based on D3",
+    depends: [
+        'd3',
+    ],
+    settings: {
+        packs: {
+            nvd3: {scripts: ['*']},
+        },
+    },
+}

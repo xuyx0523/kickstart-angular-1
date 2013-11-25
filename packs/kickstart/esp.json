@@ -1,0 +1,13 @@
+{
+    name: "kickstart",
+    description: "Kickstart for ESP Angular",
+    depends: [
+        'esp-angular-bundle',
+    ],
+    settings: {
+        packs: {
+            "kickstart": {scripts: ["*"]},
+        },
+        refresh: 1000,
+    },
+}

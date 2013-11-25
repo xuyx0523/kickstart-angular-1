@@ -1,0 +1,9 @@
+{
+    name: "respond",
+    description: "Polyfill for CSS media queries",
+    settings: {
+        packs: {
+            respond: {scripts: ['*']},
+        },
+    },
+}
