@@ -1,9 +1,0 @@
-{
-    "name": "flot",
-    "description": "Flot jQuery graphics library",
-    "version": "0.8.1",
-    "dependencies": {
-        "jquery": ">=1.9.1",
-    },
-    "client-scripts": [ "${PAKS}/flot/*.js" ]
-}

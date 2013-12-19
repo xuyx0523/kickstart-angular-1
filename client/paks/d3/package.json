@@ -1,6 +1,0 @@
-{
-    "name": "d3",
-    "description": "D3 Javascript graphics library",
-    "version": "3.3.8",
-    "client-scripts": [ "${PAKS}/d3/*.js" ]
-}

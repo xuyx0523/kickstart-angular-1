@@ -39,6 +39,7 @@ angular.module('esp.menu', [])
                                 '       <span>' + attrs.value + '</span>' + arrow + 
                                 '   </a>';
                                 '</li>';
+                    sub = sub || '<span></span>';
                     var subelt = angular.element(sub);
                     subelt.append(child);
                     var newelt = angular.element(html);
