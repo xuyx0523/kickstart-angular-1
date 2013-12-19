@@ -1,0 +1,9 @@
+{
+    "name": "nvd3",
+    "description": "NVD3 Javascript graphics library based on D3",
+    "version": "1.1.14",
+    "dependencies": {
+        "d3": ">=3.3.8",
+    },
+    "client-scripts": [ "${PAKS}/nvd3/*.js" ]
+}

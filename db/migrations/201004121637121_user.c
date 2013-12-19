@@ -18,12 +18,12 @@ static int forward(Edi *db) {
         The mprMakePassword API uses Blowfish. This call requests 16 bytes of salt and iterates 128 rounds.
         Use mprCheckPassword to check.
      */
-    password = mprMakePassword("admin", 16, 128);
+    password = mprMakePassword("demo", 16, 128);
     rec = ediCreateRec(db, "user");
     ediSetFields(rec, ediMakeJson("{ username: 'admin', password: '%s', email: 'dev@embedthis.com', roles: 'edit, view' }", password));
     ediUpdateRec(db, rec);
 
-    password = mprMakePassword("guest", 16, 16);
+    password = mprMakePassword("demo", 16, 16);
     rec = ediCreateRec(db, "user");
     ediSetFields(rec, ediMakeJson("{ username: 'guest', password: '%s', email: 'guest@example.com', roles: 'view' }", password));
     ediUpdateRec(db, rec);

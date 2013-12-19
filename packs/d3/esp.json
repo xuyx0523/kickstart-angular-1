@@ -1,9 +1,0 @@
-{
-    name: "d3",
-    description: "D3 Javascript graphics library",
-    settings: {
-        packs: {
-            d3: {scripts: ['*']},
-        },
-    },
-}

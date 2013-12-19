@@ -1,0 +1,9 @@
+{
+    "name": "xcharts",
+    "description": "Xcharts Javascript graphics library",
+    "version": "0.3.0",
+    "dependencies": {
+        "d3": "3.3.8",
+    },
+    "client-scripts": [ "${PAKS}/xcharts/xcharts.js" ]
+}

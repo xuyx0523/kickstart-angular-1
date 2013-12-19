@@ -44,7 +44,7 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
         mprLog(5, "verifyUser: Unknown user \"%s\"", username);
         return 0;
     }
-    if (password && !mprCheckPassword(password, getField(urec, "password"))) {
+    if (!mprCheckPassword(password, getField(urec, "password"))) {
         mprLog(5, "Password for user \"%s\" failed to authenticate", username);
         return 0;
     }
@@ -56,7 +56,7 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
     return 1;
 }
 
-ESP_EXPORT int esp_app_kick(HttpRoute *route, MprModule *module)
+ESP_EXPORT int esp_app_kickstart(HttpRoute *route, MprModule *module)
 {
     Edi     *edi;
 

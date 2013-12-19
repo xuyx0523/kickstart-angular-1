@@ -1,0 +1,15 @@
+{
+    "name": "esp-angular",
+    "description": "Embedthis ESP for Angular",
+    "version": "4.4.0",
+    "dependencies": {
+        "esp-server": "*",
+        "angular": ">=1.2.0"
+    },
+    "precious": true,
+    "esp": {
+        "scripts": {
+            "esp-angular": ["*"]
+        }
+    }
+}

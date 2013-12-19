@@ -122,7 +122,7 @@ static void getStream() {
     httpSetWebSocketData(conn, timer);
 }
 
-ESP_EXPORT int esp_controller_kick_dash(HttpRoute *route, MprModule *module) 
+ESP_EXPORT int esp_controller_kickstart_dash(HttpRoute *route, MprModule *module) 
 {
     espDefineAction(route, "dash-get", getDash);
     espDefineAction(route, "dash-cmd-stream", getStream);

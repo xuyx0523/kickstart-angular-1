@@ -326,6 +326,7 @@ main.container {
 .gauge {
     font-size: @font-size-counter;
     background: white;
+    background: white;
     display: block;
 }
 
@@ -414,7 +415,7 @@ fieldset {
     100% { opacity: 0.0; top: -100px; }
 }
 
-.form-error {
+UNUSED.form-error {
     width: 500px;
     margin-bottom: 20px;
     padding-bottom: 10px;
@@ -434,20 +435,18 @@ fieldset {
     }
 }
 
-.field-error {
+.has-error .form-control {
     border: 2px solid @error-color !important;
 }
 
-//  UNUSED MOB - is this used
-UNUSED.table-bordered {
-    .drop-shadow();
-    border: 1px solid @table-border-color;
-    thread {
-        border-bottom: none;
-    }
-    tbody {
-        border-top: none;
-    }
+.has-error .field-error {
+    color: @error-color;
+    background-color: #FFF;
+    position: relative;
+    top: -35px;
+    left: 100%;
+    margin-left: 20px;
+    font-weight: bold;
 }
 
 .narrow {

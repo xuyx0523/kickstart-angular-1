@@ -1,0 +1,139 @@
+<!-- BeginDsi "dsi/head.html" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Embedthis Kickstart 1.0.0 Documentation</title>
+    <meta name="keywords" content="management console, AngularJS, embedded web server, web server software, embedded HTTP" />
+    <meta name="description" content="Embedthis Kickstart." />
+	<meta name="robots" content="index,follow" />
+	<link href="../doc.css" rel="stylesheet" type="text/css" />
+	<link href="../print.css" rel="stylesheet" type="text/css" media="print"/>
+    <!--[if IE]>
+    <link href="../iehacks.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    <link href="http://www.google.com/cse/style/look/default.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="top">
+        <a class="logo" href="http://embedthis.com/">&nbsp;</a>
+        <div class="topRight">
+            <div class="search">
+                <div id="cse-search-form"></div>
+                <div class="version">Embedthis Kickstart 1.0.0</div>
+            </div>
+        </div>
+        <div class="crumbs">
+            <a href="../index.html">Home</a>
+<!-- EndDsi -->
+             &gt; <b>Release Notes</b>
+        </div>
+    </div>
+    <div class="content">
+        <div class="contentRight">
+            <h1>Quick Nav</h1>
+            <ul>
+                <li><a href="#licensing">License</a></li>
+                <li><a href="#requirements">System Requirements</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#issues">Known Issues</a></li>
+                <li><a href="#hints">Helpful Hints</a></li>
+            </ul>
+<!-- BeginDsi "dsi/see.html" -->
+		        <h1>See Also</h1>
+		        <ul class="nav">
+		          <li><a href="../overview.html">Kickstart Overview</a></li>
+		          <li><a href="../spec.html">Kickstart Spec</a></li>
+		        </ul>
+<!-- EndDsi -->
+        </div><a id="features"></a>
+        <div class="contentLeft">
+            <a id="releaseNotes"></a>
+            <h1>Release Notes</h1>
+            <p>Welcome to the Embedthis Kickstart&trade; installation release notes. This document provides
+            release-specific information for Kickstart. This package contains a pre-built stand-alone (binary) web server
+            and the development libraries and headers needed to embed Kickstart in a device or application.</p>
+            <a id="licensing"></a>
+            <h2 class="section">License</h2>
+            <p>This software is copyrighted and distributed under a commercial license. It is not 
+            available under an open source license. Please contact Embedthis for further details.</p>
+            <p>Kickstart includes support for several external packages such as 
+                <a href="http://angularjs.org">AngularJS</a>, and 
+                <a href="getbootstrap.org">Bootstrap</a>. These packages have their own licenses. 
+                Make sure you check the 
+                <a href="https://github.com/embedthis/appweb-4/blob/master/LICENSE.md">LICENSE.md</a> 
+                file to ensure you are complying with their licenses.</p>
+            <a id="requirements"></a>
+            <h2 class="section">System Requirements</h2>
+            <p>The following operating systems are be supported:</p>
+            <ul>
+                <li>FreeBSD</li>
+                <li>Linux 2.4 and 2.6</li>
+                <li>MAC OS X</li>
+                <li>VxWorks 5.4 and 6.X</li>
+                <li>Windows</li>
+            </ul>
+            <p>The following CPU architectures are supported: arm, mips, ppc, xscale, x86, x64, sparc.</p>
+            <h2 class="section">Run-time System Requirements</h2>
+            <p>To install Kickstart on a development system, your system will need at least the following:</p>
+            <ul>
+                <li>40 MB Disk</li>
+                <li>1GB MB RAM</li>
+            </ul>
+            <p>To deploy Kickstart in an embedded environment, you will need at least the following:</p>
+            <ul>
+                <li>1-2 MB Disk/ROM space</li>
+                <li>1-2 MB RAM</li>
+            </ul>
+            <p>To develop with the ESP web framework, you will need a "C" compiler installed. Production use of ESP 
+            does not require a "C" language compiler. These are the supported compilers:</p>
+            <ul>
+                <li>Windows &mdash; Visual Studio 10 (express editions are fine)</li>
+                <li>MAC OS X &mdash; Xcode</li>
+                <li>Linux &mdash; the gcc compiler</li>
+            </ul>
+            <p>To rebuild Kickstart from source code, you will need at least</p>
+            <ul>
+                <li>60 MB disk space</li>
+            </ul>
+            <h2 class="section">Development Environment Hardware Platform Support</h2>
+            <p>If you wish to build Kickstart from source code, you will need to use the 
+            <a href="http://embedthis.com/products/bit/">Bit</a> build tool.</p>
+            <a id="maintenance"></a>
+            <h2 class="section">Maintenance</h2>
+            <p>Kickstart is provided as the starting template for your application. Once you begin to 
+            customize Kickstart, it is not desireable to easily with future versions of Kickstart which may
+            not be compatible with your version.</p>
+        </div>
+    </div>
+<!-- BeginDsi "dsi/bottom.html" -->
+	<div class="bottom">
+		<p class="footnote"> 
+            <a href="../product/copyright.html" >&copy; Embedthis Software LLC, 2003-2013.
+            All rights reserved. Embedthis, Appweb, ESP, Ejscript and Embedthis GoAhead are trademarks of Embedthis Software LLC.</a>
+		</p>
+	</div>
+    <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+    <script type="text/javascript"> 
+      google.load('search', '1', {language : 'en'});
+      google.setOnLoadCallback(function() {
+        var customSearchControl = new google.search.CustomSearchControl(
+          '000262706376373952077:1hs0lhenihk');
+        customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+        var options = new google.search.DrawOptions();
+        options.enableSearchboxOnly("http://embedthis.com/search.html");
+        customSearchControl.draw('cse-search-form', options);
+      }, true);
+    </script>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-179169-2']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+</body>
+</html>

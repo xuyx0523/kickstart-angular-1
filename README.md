@@ -8,8 +8,11 @@ This software is licensed under the Embedthish Commercial Software License.  See
 
 ### To build:
 
-To build, you will need to install Bit). See:
+To build, you will need to install Bit. See:
+
     https://github.com/embedthis/bit
+and
+    http://embedthis.com/products/bit
 
 <pre>
     ./configure

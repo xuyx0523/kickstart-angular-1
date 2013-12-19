@@ -13,7 +13,7 @@ static void updateSettings() {
     }
 }
 
-ESP_EXPORT int esp_controller_kick_setting(HttpRoute *route, MprModule *module)
+ESP_EXPORT int esp_controller_kickstart_setting(HttpRoute *route, MprModule *module)
 {
     Edi     *edi;
 
