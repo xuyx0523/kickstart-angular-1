@@ -23,3 +23,4 @@ start.old
 *.min.css
 start.bit
 *.gz
+db/kickstart.*
