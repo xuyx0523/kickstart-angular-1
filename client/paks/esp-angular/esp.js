@@ -2,14 +2,13 @@
     esp.js - Esp Angular Extension
  */
 // 'use strict';
-
 /*
     The Esp service provide a central place for ESP state.
     It places a "Esp" object on the $rootScope that is inherited by all $scopes.
     Alternatively, injecting the Esp service provides direct access using the Esp service object.
  */
-angular.module('esp', ['esp.click', 'esp.confirm', 'esp.field-errors', 'esp.format', 'esp.gauge', 
-    'esp.input-group', 'esp.input', 'esp.local', 'esp.modal', 'esp.resource', 'esp.session', 'esp.titlecase', 'esp.menu'])
+angular.module('esp', ['esp.click', 'esp.field-errors', 'esp.format', 'esp.input-group', 'esp.input', 
+                       'esp.resource', 'esp.session', 'esp.titlecase'])
 
 .config(function() {
     /*

@@ -1,12 +1,15 @@
 {
     "name": "esp-server",
     "description": "ESP Server Framework",
-    "version": "4.4.0",
+    "version": "4.5.0",
+    "precious": true,
     "dirs": {
-        "base": ".",
+        "client": "client",
         "paks": "client/paks"
     },
-    "precious": true,
+    "export": [
+        "templates/**"
+    ],
     "esp": {
         "serverPrefix": "/do"
     }

@@ -29,6 +29,8 @@ static void commonController(HttpConn *conn)
     }
 }
 
+
+//  MOB - move to user.c in controllers per esp-user
 /*
     Verify user credentials from database password.
     Callback from httpLogin to verify the username/password

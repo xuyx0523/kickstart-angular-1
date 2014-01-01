@@ -64,11 +64,11 @@ static cchar *getDashData(HttpConn *conn) {
     espSetConn(conn);
     buf = mprCreateBuf(0, 0);
     mprPutToBuf(buf, "{");
-    ports = ediFilterGridFields(readTable("port"), "rxBytes,rxPackets,txBytes,txPackets,mode");
+    ports = ediFilterGridFields(readTable("port"), "rxBytes,rxPackets,txBytes,txPackets,mode", 1);
     mprPutToBuf(buf, "\"ports\": %s,", ediGridAsJson(ports, 0));
-    vlans = ediFilterGridFields(readTable("vlan"), "rxBytes,rxPackets,txBytes,txPackets,mode");
+    vlans = ediFilterGridFields(readTable("vlan"), "rxBytes,rxPackets,txBytes,txPackets,mode", 1);
     mprPutToBuf(buf, "\"vlans\": %s,", ediGridAsJson(vlans, 0));
-    // system = ediFilterRecFields(readRec("system", "1"), "rxBytes,rxPackets,txBytes,txPackets");
+    // system = ediFilterRecFields(readRec("system", "1"), "rxBytes,rxPackets,txBytes,txPackets", 1);
 
     nevents = 0;
     if ((events = readTable("event")) != 0) {

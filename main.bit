@@ -297,12 +297,6 @@ Bit.load({
             ",
         },
 
-        'packs': {
-            type: 'file',
-            path: '/Users/mob/git/appweb/macosx-x64-debug/esp/',
-            files: [ 'packs/' ],
-        },
-
         run: {
             depends: ['comp'],
             run: 'esp run',
@@ -310,10 +304,10 @@ Bit.load({
 
         patchVersion: {
             build: "
-                let path = Path('esp.json')
+                let path = Path('package.json')
                 config = path.readJSON()
                 if (config.version != bit.settings.version) {
-                    trace('Update', 'esp.json version ' + bit.settings.version)
+                    trace('Update', 'package.json version ' + bit.settings.version)
                     path.write(path.readString().replace(/version:.*/, 'version: \\'' + bit.settings.version + '\\','))
                 }
 

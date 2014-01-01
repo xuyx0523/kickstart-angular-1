@@ -1,13 +1,11 @@
 <!doctype html>
 <html lang="en" ng-csp>
-
 <head>
     <title>Kickstart</title>
     <meta charset="utf-8" />
     <link rel="icon" href="@~/assets/favicon.ico" type="image/x-icon">
     <% stylesheets(NULL); %>
 </head>
-
 <body id='body' ng-controller="HomeControl" data-config='<% renderConfig(); %>'>
     <header>
         <nav class="navbar navbar-inverse navbar-static-top">
@@ -59,9 +57,9 @@
                 <esp-menu href="/user/list" value="Users" icon="glyphicon glyphicon-user"></esp-menu>
                 <esp-menu href="/event/list" value="Events" icon="glyphicon glyphicon-list"></esp-menu>
                 <esp-menu href="" value="Demos" icon="fa fa-signal">
-                    <esp-menu href="/demo/demo-svg" value="SVG"></esp-menu>
-                    <esp-menu href="/demo/demo-1" value="Demo 1"></esp-menu>
-                    <esp-menu href="/demo/demo-2" value="Demo 2"></esp-menu>
+                    <esp-menu href="/demo/demo-svg" value="SVG" icon="fa fa-tachometer"></esp-menu>
+                    <esp-menu href="/demo/demo-1" value="Demo 1" icon="fa fa-tachometer"></esp-menu>
+                    <esp-menu href="/demo/demo-2" value="Demo 2" icon="fa fa-tachometer"></esp-menu>
                 </esp-menu>
             </ul>
         </nav>
