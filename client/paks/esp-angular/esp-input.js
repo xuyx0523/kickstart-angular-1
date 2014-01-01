@@ -56,8 +56,8 @@ angular.module('esp.input', [])
             }
 
             scope.$watch('schema', function (val) {
-                if (scope.schema && element.parent().length && element.children().length == 0) {
-                    var dataType = scope.schema.types[field].type;
+                if (element.parent().length && element.children().length == 0) {
+                    var dataType = scope.schema ? scope.schema.types[field].type : 'string';
                     var inputClass = (attrs.inputClass) ? attrs.inputClass : 'col-xs-6';
                     var errorHighlight = " ng-class='{\"has-error\": fieldErrors." + field + "}'";
                     var label = attrs.label ? attrs.label : title(field);
@@ -130,7 +130,7 @@ angular.module('esp.input', [])
                     element.removeAttr('readonly');
                     $compile(newelt)(scope);
 
-                    if (!value) {
+                    if (!value && scope[model]) {
                         value = scope[model][field];
                     }
                     if (attrs.filter) {

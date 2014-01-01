@@ -4,11 +4,6 @@
     "version": "0.8.0",
     "dependencies": {
         "esp-best": "*",
-        "esp-gui": "*",
-    },
-    "esp": {
-        "scripts": {
-            "esp-mgr": ["*"],
-        },
+        "esp-gui": "*"
     },
 }

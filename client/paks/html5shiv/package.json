@@ -2,9 +2,5 @@
     name: "html5shiv",
     "description": "Javascript polyfill for IE 8 and before",
     "version": "3.6.2",
-    "esp": {
-        "scripts": {
-            "html5shiv": ['*'],
-        },
-    },
+    "client-scripts": [ "${PAKS}/html5shiv.js" ]
 }

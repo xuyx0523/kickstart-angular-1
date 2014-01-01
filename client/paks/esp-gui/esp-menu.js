@@ -48,10 +48,7 @@ angular.module('esp.menu', [])
                     $compile(newelt)(scope);
                     try {
                         element.replaceWith(newelt);
-                    } catch (e) {
-                        console.log(e);
-                    }
-                    console.log(html)
+                    } catch (e) {}
                 });
             };
         },
