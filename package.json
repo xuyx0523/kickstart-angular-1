@@ -39,7 +39,7 @@
     },
     "precious": true,
     "esp": {
-        "mode": "debug",
+        "mode": "release",
         "modes": {
             "debug": {
                 "flat": false,
