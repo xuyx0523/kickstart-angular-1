@@ -63,8 +63,8 @@ ESP_EXPORT int esp_app_kickstart(HttpRoute *route, MprModule *module)
     Edi     *edi;
 
     espDefineBase(route, commonController);
-    httpSetAuthStoreVerify("app", verifyUser);
-    
+    httpSetAuthVerify(route->auth, verifyUser);
+
     /*
         Demo Mode.
         This code sets up a private, in-memory, readonly database for each user. 
