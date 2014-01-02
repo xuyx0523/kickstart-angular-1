@@ -25,7 +25,12 @@
         "paks/angular/angular-route.js",
         "paks/angular-bootstrap/*.js",
         "paks/esp-angular/*.js",
-        "paks/esp-gui/*.js"
+        "app/main.js",
+        "app/*/**.js*",
+        "paks/esp-gui/*.js",
+        "paks/html5shiv/html5shiv.js",
+        "paks/less/less.js",
+        "paks/respond/respond.js"
     ],
     "dirs": {
         "client": "client",
@@ -77,33 +82,24 @@
         "serverPrefix": "/do",
         "xsrf": true,
         "server": {
-            "database": "${DATABASE}://${NAME}.${DATABASE}",
+            "database": "mdb://kickstart.mdb",
             "_redirect": "secure",
             "generate": {
                 "top": "angular-mvc",
-                "scaffold": true,
-                "clientModel": true,
-                "clientController": true,
-                "clientView": true,
-                "controller": true,
-                "migration": true,
-                "view": false
+                "clientModel": "esp-angular-mvc/model.js",
+                "clientController": "esp-angular-mvc/controller.js",
+                "controller": "esp-server/controller.c",
+                "migration": "esp-server/migration.c",
+                "appweb": "esp-server/appweb.conf",
+                "clientList": "esp-angular-mvc/list.html",
+                "clientEdit": "esp-angular-mvc/edit.html",
+                "controller-singleton": "esp-server/controller.c",
+                "files": [
+                    "esp-server/src/app.c"
+                ]
             }
         },
-        "scripts": {
-            "esp-mgr": [
-                "*"
-            ],
-            "html5shiv": [
-                "*"
-            ],
-            "less": [
-                "*"
-            ],
-            "respond": [
-                "*"
-            ]
-        }
+        "flat": false
     },
     "ignore": [
         "doc",
