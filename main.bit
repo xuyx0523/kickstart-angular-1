@@ -89,8 +89,11 @@ Bit.load({
     targets: {
         comp: {
             build: `
-                bit.settings.c.flat = Path('package.json').readJSON().esp.flat
-                if (bit.settings.c.flat) {
+                let spec = Path('package.json').readJSON()
+                let mode = spec.esp.mode
+                let flat = spec.esp.modes[mode].flat
+                bit.settings.c.flat = flat
+                if (flat) {
                     run('esp -flat -r -q compile')
                 } else {
                     run('esp -r -q compile')
