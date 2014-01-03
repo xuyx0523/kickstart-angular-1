@@ -96,6 +96,7 @@ static void getDash() {
  */
 static void updateStream(HttpConn *conn) {
     Esp     *esp;
+    ssize   count;
 
     esp = MPR->espService;
     if (HTTP_STATE_PARSED <= conn->state && conn->state <= HTTP_STATE_CONTENT) {
@@ -103,7 +104,8 @@ static void updateStream(HttpConn *conn) {
             httpSendClose(conn, WS_STATUS_OK, "OK");
             return;
         }
-        if (httpSendBlock(conn, WS_MSG_TEXT, getDashData(conn), -1, 0) < 0) {
+        if ((count = httpSendBlock(conn, WS_MSG_TEXT, getDashData(conn), -1, 0)) < 0) {
+            mprLog(0, "Count %Ld", count);
             httpError(conn, HTTP_CODE_INTERNAL_SERVER_ERROR, "Cannot send big message");
         }
     }

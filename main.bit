@@ -93,6 +93,7 @@ Bit.load({
                 let mode = spec.esp.mode
                 let flat = spec.esp.modes[mode].flat
                 bit.settings.c.flat = flat
+                trace('Compile', 'esp compile')
                 if (flat) {
                     run('esp -flat -r -q compile')
                 } else {
