@@ -3,6 +3,10 @@
  */
 #include "esp.h"
 
+static void checkAuthenticated() {
+    sendResult(httpIsAuthenticated(getConn()));
+}
+
 static void createUser() { 
     if (canUser("edit", 1)) {
         setParam("password", mprMakePassword(param("password"), 0, 0));
@@ -47,7 +51,7 @@ static void updateUser() {
     }
 }
 
-static void forgot() {
+static void forgotPassword() {
     EdiRec  *user;
     cchar   *msg, *name, *to;
 
@@ -70,9 +74,12 @@ static void forgot() {
     }
 }
 
-static void login() {
-    bool        remember = smatch(param("remember"), "true");
-    HttpConn    *conn = getConn();
+static void loginUser() {
+    HttpConn    *conn;
+    bool        remember;
+
+    conn = getConn();
+    remember = smatch(param("remember"), "true");
     if (httpLogin(conn, param("username"), param("password"))) {
         render("{\"error\": 0, \"user\": {\"name\": \"%s\", \"abilities\": %s, \"remember\": %s}}", conn->username,
             mprSerialize(conn->user->abilities, MPR_JSON_QUOTES), remember ? "true" : "false");
@@ -81,14 +88,14 @@ static void login() {
     }       
 }
 
-static void logout() {                                                                             
+static void logoutUser() {                                                                             
     httpLogout(getConn());
     sendResult(1);
 }
 
 ESP_EXPORT int esp_controller_kickstart_user(HttpRoute *route, MprModule *module) 
 {
-    Edi     *edi;
+    Edi         *edi;
 
     espDefineAction(route, "user-create", createUser);
     espDefineAction(route, "user-get", getUser);
@@ -99,10 +106,17 @@ ESP_EXPORT int esp_controller_kickstart_user(HttpRoute *route, MprModule *module
     espDefineAction(route, "user-remove", removeUser);
     espDefineAction(route, "user-update", updateUser);
 
-    espDefineAction(route, "user-cmd-forgot", forgot);
-    espDefineAction(route, "user-cmd-login", login);
-    espDefineAction(route, "user-cmd-logout", logout);
+    espDefineAction(route, "user-cmd-check", checkAuthenticated);
+    espDefineAction(route, "user-cmd-forgot", forgotPassword);
+    espDefineAction(route, "user-cmd-login", loginUser);
+    espDefineAction(route, "user-cmd-logout", logoutUser);
 
+#if UNUSED
+    HttpRoute   *rp;
+    if ((rp = httpLookupRoute(route->host, "/do/*/default")) != 0) {
+        rp->flags &= ~HTTP_ROUTE_XSRF;
+    }
+#endif
     edi = espGetRouteDatabase(route);
     ediAddValidation(edi, "present", "user", "username", 0);
     ediAddValidation(edi, "unique", "user", "username", 0);

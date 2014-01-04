@@ -55,6 +55,7 @@ angular.module('app').controller('DashControl', function (Dash, Esp, $location, 
 		$scope.vlans.online = response.vlans.length - offline;
 		$scope.vlans.active = active;
 		$scope.last = response;
+        Esp.access();
 	}
 
     /*

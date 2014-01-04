@@ -34,8 +34,8 @@
                             <li class="footer"><a href="#/event/list">View all events</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" ng-cloak>{{Esp.user.name || 'guest'}} <b class="caret"></b></a>
+                    <li class="dropdown" ng-controller="UserControl">
+                        <a href="#" class="dropdown-toggle" ng-cloak>{{authname()}} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a ng-href="#/user/{{Esp.user ? 'logout' : 'login'}}"><i class="fa fa-power-off"></i> {{Esp.user ? 'Sign out' : 'Sign in'}}</a></li>
                         </ul>
@@ -56,11 +56,13 @@
                 <esp-menu ng-show="Esp.can('edit')" href="/setting" value="Settings" icon="glyphicon glyphicon-cog"></esp-menu>
                 <esp-menu href="/user/list" value="Users" icon="glyphicon glyphicon-user"></esp-menu>
                 <esp-menu href="/event/list" value="Events" icon="glyphicon glyphicon-list"></esp-menu>
+                <!--
                 <esp-menu href="" value="Demos" icon="fa fa-signal">
                     <esp-menu href="/demo/demo-svg" value="SVG" icon="fa fa-tachometer"></esp-menu>
                     <esp-menu href="/demo/demo-1" value="Demo 1" icon="fa fa-tachometer"></esp-menu>
                     <esp-menu href="/demo/demo-2" value="Demo 2" icon="fa fa-tachometer"></esp-menu>
                 </esp-menu>
+                -->
             </ul>
         </nav>
         <section class="content col-sm-10" id="content">

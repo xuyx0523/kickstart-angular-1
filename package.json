@@ -28,7 +28,7 @@
         "app/main.js",
         "app/*/**.js*",
         "paks/esp-gui/*.js",
-        "paks/html5shiv/html5shiv.js",
+        "paks/html5shiv.js",
         "paks/less/less.js",
         "paks/respond/respond.js"
     ],
@@ -98,6 +98,9 @@
                     "esp-server/src/app.c"
                 ]
             }
+        },
+        timeouts: {
+            session: 1800
         },
         "flat": false
     },
