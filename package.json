@@ -42,7 +42,7 @@
         "mode": "release",
         "modes": {
             "debug": {
-                "flat": false,
+                "combined": false,
                 "showErrors": true,
                 "keepSource": true,
                 "update": true,
@@ -55,7 +55,7 @@
                 }
             },
             "release": {
-                "flat": true,
+                "combined": true,
                 "compressed": true,
                 "cache": 86400,
                 "showErrors": false,
@@ -102,7 +102,7 @@
         timeouts: {
             session: 1800
         },
-        "flat": false
+        "combined": false
     },
     "ignore": [
         "doc",

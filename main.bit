@@ -18,9 +18,7 @@ Bit.load({
         product: 'kick',
         title: 'Embedthis Kickstart',
         company: 'Embedthis',
-        version: '1.0.0',
-        buildNumber: '0',
-        bit: '0.8.6',
+        bit: '0.9.3',
         sync: [ ],
         packs: [ 'bits/packs' ],
         css: {
