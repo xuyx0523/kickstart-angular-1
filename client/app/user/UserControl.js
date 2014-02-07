@@ -71,12 +71,12 @@ angular.module('app').controller('UserControl', function (Esp, User, $rootScope,
 
     $scope.logout = function() {
         if (Esp.user) {
-            Esp.logout();
             User.logout({}, function() {
                 $rootScope.feedback = { inform: "Logged Out" };
                 $location.path("/");
                 $route.reload();
             });
+            Esp.logout();
         } else {
             $rootScope.feedback = { inform: "Logged Out" };
             $location.path("/");
