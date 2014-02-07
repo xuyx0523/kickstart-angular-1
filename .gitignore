@@ -17,9 +17,8 @@ client/lib/angular-ui-bootstrap/old.js
 macosx-x64-*
 linux-*-*
 start.old
-*.min.js
 *.min.html
 *.html.js
-*.min.css
+*.min.js
 start.bit
 db/kickstart.*
