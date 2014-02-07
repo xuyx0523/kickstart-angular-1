@@ -36,9 +36,6 @@ Bit.load({
             flat: true,
             compress: true,
         },
-        c: {
-            flat: true,
-        },
 
         /*
             Installation prefix set
@@ -87,16 +84,8 @@ Bit.load({
     targets: {
         comp: {
             build: `
-                let spec = Path('package.json').readJSON()
-                let mode = spec.esp.mode
-                let flat = spec.esp.modes[mode].flat
-                bit.settings.c.flat = flat
                 trace('Compile', 'esp compile')
-                if (flat) {
-                    run('esp -flat -r -q compile')
-                } else {
-                    run('esp -r -q compile')
-                }
+                run('esp -r -q compile')
             `,
         },
         cleanCache: {

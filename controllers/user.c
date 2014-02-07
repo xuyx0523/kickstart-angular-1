@@ -89,7 +89,9 @@ static void loginUser() {
 }
 
 static void logoutUser() {                                                                             
-    httpLogout(getConn());
+    HttpConn    *conn = getConn();
+    httpLogout(conn);
+    espClearCurrentSession(conn);
     sendResult(1);
 }
 

@@ -30,7 +30,7 @@ static void commonController(HttpConn *conn)
 }
 
 
-//  MOB - move to user.c in controllers per esp-user
+//  MOB - move to controllers/user.c in controllers per esp-user (DONE)
 /*
     Verify user credentials from database password.
     Callback from httpLogin to verify the username/password
@@ -39,9 +39,12 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
 {
     HttpAuth    *auth;
     HttpUser    *user;
+    HttpRx      *rx;
+    EspRoute    *eroute;
     EdiRec      *urec;
 
-    auth = conn->rx->route->auth;
+    rx = conn->rx;
+    auth = rx->route->auth;
     if ((urec = readRecWhere("user", "username", "==", username)) == 0) {
         mprLog(5, "verifyUser: Unknown user \"%s\"", username);
         return 0;
@@ -50,6 +53,18 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
         mprLog(5, "Password for user \"%s\" failed to authenticate", username);
         return 0;
     }
+    /*
+        Restrict to a single simultaneous login
+     */
+    if (espTestConfig(rx->route, "esp.login.single", "true")) {
+        eroute = rx->route->eroute;
+        if (!espIsCurrentSession(conn)) {
+            feedback("error", "Another user still logged in");
+            mprLog(5, "verifyUser: Too many simultaneous users");
+            return 0;
+        }
+        espSetCurrentSession(conn);
+    }
     if ((user = httpLookupUser(auth, username)) == 0) {
         user = httpAddUser(auth, username, 0, ediGetFieldValue(urec, "roles"));
     }
@@ -57,6 +72,7 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
     mprLog(5, "User \"%s\" authenticated", username);
     return 1;
 }
+
 
 ESP_EXPORT int esp_app_kickstart(HttpRoute *route, MprModule *module)
 {

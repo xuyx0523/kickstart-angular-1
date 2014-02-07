@@ -28,7 +28,7 @@
         "app/main.js",
         "app/*/**.js*",
         "paks/esp-gui/*.js",
-        "paks/html5shiv.js",
+        "paks/html5shiv/html5shiv.js",
         "paks/less/less.js",
         "paks/respond/respond.js"
     ],
@@ -51,7 +51,8 @@
                     "abilities": {
                         "edit": true,
                         "view": true
-                    }
+                    },
+                    single: false
                 }
             },
             "release": {
@@ -66,7 +67,8 @@
                     "abilities": {
                         "edit": true,
                         "view": true
-                    }
+                    },
+                    single: false
                 }
             }
         },
@@ -85,19 +87,20 @@
             "database": "mdb://kickstart.mdb",
             "_redirect": "secure",
             "generate": {
-                "top": "angular-mvc",
+                "appweb": "esp-angular-mvc/appweb.conf",
+                "migration": "esp-server/migration.c",
+                "controller": "esp-angular-mvc/controller.c",
+                "controller-singleton": "esp-angular-mvc/controller-singleton.c",
+                "files": [
+                    "esp-server/src/app.c",
+                    "esp-angular-mvc/start.bit",
+                    "esp-angular-mvc/client/**"
+                ],
                 "clientModel": "esp-angular-mvc/model.js",
                 "clientController": "esp-angular-mvc/controller.js",
-                "controller": "esp-server/controller.c",
-                "migration": "esp-server/migration.c",
-                "appweb": "esp-server/appweb.conf",
                 "clientList": "esp-angular-mvc/list.html",
-                "clientEdit": "esp-angular-mvc/edit.html",
-                "controller-singleton": "esp-server/controller.c",
-                "files": [
-                    "esp-server/src/app.c"
-                ]
-            }
+                "clientEdit": "esp-angular-mvc/edit.html"
+            },
         },
         timeouts: {
             session: 1800
