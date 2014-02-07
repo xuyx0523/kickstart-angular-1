@@ -40,7 +40,6 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
     HttpAuth    *auth;
     HttpUser    *user;
     HttpRx      *rx;
-    EspRoute    *eroute;
     EdiRec      *urec;
 
     rx = conn->rx;
@@ -57,7 +56,6 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
         Restrict to a single simultaneous login
      */
     if (espTestConfig(rx->route, "esp.login.single", "true")) {
-        eroute = rx->route->eroute;
         if (!espIsCurrentSession(conn)) {
             feedback("error", "Another user still logged in");
             mprLog(5, "verifyUser: Too many simultaneous users");
