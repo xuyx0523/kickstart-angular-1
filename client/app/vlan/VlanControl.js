@@ -114,6 +114,7 @@ angular.module('app').config(function($routeProvider) {
         templateUrl: esp.url('/app/vlan/vlan-list.html'),
         abilities: { 'view': true },
     }));
+    $routeProvider.when('/vlan/', angular.extend({}, Default, {templateUrl: esp.url('/app/vlan/vlan-edit.html')}));
     $routeProvider.when('/vlan/:id', angular.extend({}, Default, {templateUrl: esp.url('/app/vlan/vlan-edit.html')}));
     $routeProvider.when('/vlan/:id/ports', angular.extend({}, Default, {templateUrl: esp.url('/app/vlan/vlan-ports.html')}));
     $routeProvider.when('/vlan/:id/add', angular.extend({}, Default, {templateUrl: esp.url('/app/vlan/vlan-add-port.html')}));

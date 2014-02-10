@@ -9,7 +9,7 @@
 	        ng-init="columns = ['name',  'mode', 'negotiate', 'duplex', 'flowControl', 'jumbo', 'speed', 'status']">
 	    <thead><tr><th ng-repeat="header in columns">{{header | titlecase}}</th></tr></thead>
 	    <tbody>
-	        <tr ng-repeat="port in ports" esp-click="/port/{{port.id}}">
+	        <tr ng-repeat="port in ports" esp-edit="/port/{{port.id}}">
 	            <td ng-repeat="column in columns">{{port[column]}}</td>
 	        </tr>
 	    </tbody>

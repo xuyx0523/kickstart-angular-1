@@ -44,7 +44,7 @@
             <div class="widget events" ng-controller="StatusControl" ng-cloak>
                 <div class="title">Events</div>
                 <ul>
-                    <li  ng-repeat="event in system.events" esp-click="/event/{{system.events[$index].id}}">
+                    <li ng-repeat="event in system.events" esp-click="/event/{{system.events[$index].id}}">
                         <i class="fa fa-inverse event-{{event.type}}" ng-class="Esp.faclass(event.type)"></i>{{event.title}}
                     </li>
                 </ul>

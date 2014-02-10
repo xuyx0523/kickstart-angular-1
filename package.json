@@ -52,7 +52,7 @@
                         "edit": true,
                         "view": true
                     },
-                    single: false
+                    "single": false
                 }
             },
             "release": {
@@ -68,7 +68,7 @@
                         "edit": true,
                         "view": true
                     },
-                    single: false
+                    "single": false
                 }
             }
         },
@@ -100,10 +100,10 @@
                 "clientController": "esp-angular-mvc/controller.js",
                 "clientList": "esp-angular-mvc/list.html",
                 "clientEdit": "esp-angular-mvc/edit.html"
-            },
+            }
         },
-        timeouts: {
-            session: 1800
+        "timeouts": {
+            "session": 1800
         },
         "combined": false
     },

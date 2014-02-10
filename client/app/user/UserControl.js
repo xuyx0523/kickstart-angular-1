@@ -128,8 +128,8 @@ angular.module('app').config(function($routeProvider) {
     $routeProvider.when('/user/list',   angular.extend({}, Default, {templateUrl: esp.url('/app/user/user-list.html')}));
     $routeProvider.when('/user/login',  angular.extend({}, Default, {templateUrl: esp.url('/app/user/user-login.html')}));
     $routeProvider.when('/user/logout', angular.extend({}, Default, {template: '<p ng-init="logout()"> </p>'}));
-    $routeProvider.when('/user/:id', angular.extend({}, Default, {
-        templateUrl: esp.url('/app/user/user-edit.html'),
-        abilities: { 'edit': true, 'view': true },
-    }));
+    $routeProvider.when('/user/:id', angular.extend({}, Default, {templateUrl: esp.url('/app/user/user-edit.html'),
+        abilities: { 'edit': true, 'view': true }}));
+    $routeProvider.when('/user/', angular.extend({}, Default, {templateUrl: esp.url('/app/user/user-edit.html'),
+        abilities: { 'edit': true, 'view': true }}));
 });

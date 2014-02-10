@@ -415,26 +415,6 @@ fieldset {
     100% { opacity: 0.0; top: -100px; }
 }
 
-UNUSED.form-error {
-    width: 500px;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    text-indent: 10px;
-    border: 2px solid @error-color;
-    .rounded(4px);
-    .shadow();
-    h2 {
-        margin: 0 0 10px 0;
-        padding: 10px 0 10px 0;
-        font-size: @font-size-small;
-        color: white;
-        background: @error-color;
-        }
-    ul {
-        margin-bottom: 0;
-    }
-}
-
 .has-error .form-control {
     border: 2px solid @error-color !important;
 }
@@ -468,13 +448,25 @@ UNUSED.form-error {
 /*
     Universal rules
  */
-[ng-click],[esp-click] {
+[ng-click],[esp-click],[esp-edit] {
     cursor: pointer;
 }
 
 /*
     angular-ui fixes
  */
- .modal {
+.modal {
     display: block;
- }
+}
+
+/*
+    angular csp fixes
+ */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak,
+.ng-hide {
+  display: none !important;
+}
+
+ng\:form {
+  display: block;
+}

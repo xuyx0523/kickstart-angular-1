@@ -13,14 +13,7 @@ angular.module('esp.click', [])
             attrs.$observe('esp-click', function(val) {
                 element.on('click', function() {
                     scope.$apply(function() {
-                        if (!Esp.config.auth || Esp.can('edit')) {
-                            $location.path(attrs.espClick);
-                        } else {
-                            /* Delay so that the feedback clear won't immediately erase */
-                            $timeout(function() {
-                                $rootScope.feedback = { error: "Insufficient Privilege" };
-                            }, 0, true);
-                        }
+                        $location.path(attrs.espClick);
                     });
                 });
             });
