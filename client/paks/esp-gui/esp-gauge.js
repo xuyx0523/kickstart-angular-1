@@ -16,12 +16,13 @@
     The attributes override any scope values. Defaults taken from CSS for background, color and fonts.
  */
 angular.module('esp.gauge', [])
-.directive('espGauge', function(Esp, $compile, $timeout, $window) {
+.directive('espGauge', function(Esp, $compile, $rootScope, $timeout, $window) {
     var frameRate = 25;
     return {
         restrict: 'E',
         scope: {
             value: '@',
+            range: '@',
         },
         template: '<canvas>' + 'This text is displayed if your browser does not support HTML5 Canvas.' + '</canvas>',
         link: function (scope, element, attrs) {
@@ -51,6 +52,7 @@ angular.module('esp.gauge', [])
             var w = angular.element($window);
             w.bind('resize', function() {
                 c.canvas.width = scope.width = parseInt(box.clientWidth);
+                scope.draw();
             });
             if (!scope.background) {
                 scope.background = Esp.rgb2hex(styles['background-color']);
@@ -90,7 +92,15 @@ angular.module('esp.gauge', [])
                 c.font = 'bold ' + fontSize + 'px ' + font;
                 c.textAlign = 'center';
                 c.fillStyle = scope.color;
-                c.fillText(scope.value, x, 40);
+                c.fillText(scope.current.toFixed(0), x, height / 4);
+
+                //  Gauge max, min
+                c.font = '' + (fontSize / 4) + 'px ' + font;
+                c.textAlign = 'right';
+                c.fillText('Max ' + (scope.high - 0).toFixed(0), width - 6, height * 0.75);
+
+                c.textAlign = 'left';
+                c.fillText('Min ' + (scope.low - 0).toFixed(0), 6, height * 0.75);
 
                 //  Gauge background
                 c.beginPath();
@@ -144,20 +154,26 @@ angular.module('esp.gauge', [])
                 c.restore();
             };
 
-            scope.$watch('value', function(v) {
+            scope.update = function(v) {
                 var value = v - 0;
                 if (scope.range) {
                     var parts = scope.range.split('-');
                     scope.low = parts[0] - 0;
                     scope.high = parts[1] - 0;
-                    if (value > scope.high) value = scope.high;
-                    if (value < scope.low) value = scope.low;
+                    if (scope.low == scope.high) {
+                        scope.low = 0;
+                        scope.high = 100;
+                    }
                 } else {
                     if (value < 0) value = 0;
                     if (value > 100) value = 100;
                     scope.low = 0;
                     scope.high = 100;
                 }
+                if (value > scope.high) scope.high = value;
+                if (value < scope.low) scope.low = value;
+                if (scope.current < scope.low) scope.low = scope.current;
+                
                 if (scope.prior == value) {
                     return;
                 }
@@ -187,8 +203,8 @@ angular.module('esp.gauge', [])
                     scope.draw();
                 }
                 animate();
-            });
+            };
+            scope.$watch('value', scope.update);
         },
     };
 });
-

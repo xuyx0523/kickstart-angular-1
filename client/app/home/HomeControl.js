@@ -7,7 +7,7 @@
 angular.module('app').controller('HomeControl', function (Esp, $location, $scope) {
 	$scope.showNav = true;
 	$scope.showDemos = true;
-    //  MOB - is this used
+    //  Used by esp-menu to highlight the current menu selection
     $scope.path = function() {
      	return $location.path();
     };

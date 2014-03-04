@@ -115,7 +115,11 @@ angular.module('app').controller('DashControl', function (Dash, Esp, $location, 
 		    	}
 				$scope.update = $timeout(startWebSockets, 1000, true);
 			}
-		}
+		};
+        $scope.off = $rootScope.$on("$locationChangeSuccess", function(scope, current, previous) {
+            ws.close();
+            $scope.off();
+        });
 		return ws;
     }
 

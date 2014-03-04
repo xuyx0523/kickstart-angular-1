@@ -31,6 +31,7 @@ angular.module('app').controller('VlanControl', function (Esp, Vlan, $modal, $ro
     }
 
     $scope.remove = function(id) {
+        //  MOB - why not just use Esp?
         var esp = angular.module('esp');
         var confirm = $modal.open({
             scope: $scope,

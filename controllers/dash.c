@@ -57,7 +57,6 @@ static void demoData() {
 
 static cchar *getDashData(HttpConn *conn) { 
     EdiGrid     *events, *ports, *vlans;
-    // EdiRec      *system;
     MprBuf      *buf;
     int         nevents;
 
@@ -79,7 +78,6 @@ static cchar *getDashData(HttpConn *conn) {
     mprPutToBuf(buf, "\"system\":{\"events\": %s, \"eventCount\": %d}", ediGridAsJson(events, 0), nevents);
 
     mprPutToBuf(buf, "}");
-    // printf("%s\n", mprGetBufStart(buf));
 
 #if DEMO || 1
     demoData();
