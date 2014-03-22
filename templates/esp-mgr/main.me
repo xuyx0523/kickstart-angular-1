@@ -1,0 +1,287 @@
+/*
+    main.me -- Main MakeMe file for ${APP}
+
+    This file contains the rules for targets to build and default settings for configuration.
+    The MakeMe utility (http://embedthis.com/products/makeme) may be used to build instead of make. 
+    MakeMe provides for configured builds and generates projects files.
+
+    Alternatively, build using the "make" utility in which case this file is not used.
+ */
+
+Me.load({
+    blend: [
+        "${MAKEME}/embedthis.me",
+    ],
+
+    settings: {
+        name: '${APP}',
+        title: '${TITLE}',
+        company: 'Embedthis',
+        packs: [ 'makeme/probes' ],
+        css: {
+            minify: true,
+            flat: true,
+            compress: true,
+        },
+        html: {
+            minify: true,
+            flat: true,
+            compress: true,
+        },
+        js: {
+            minify: true,
+            flat: true,
+            compress: true,
+        },
+
+        /*
+            Installation prefix set
+         */
+        prefixes: 'embedthis-prefixes',
+        manifest: 'package/manifest.me',
+
+        extensions: {
+            require:  [ 'appweb' ],
+            discover: [ 'dsi', 'man', 'man2html', 'pmaker', 'utest', 'zip' ],
+        },
+    },
+
+    usage: {
+        'css.minify':       'Minify Less and CSS (true|false)',
+        'css.flat':         'Combine stylesheets into a single file (true|false)',
+        'css.compress':     'Compress flat stylesheet (true|false)',
+        'html.minify':      'Minify HTML (true|false)',
+        'html.flat':        'Combine HTML into a single Angular script file (true|false)',
+        'html.compress':    'Compress HTLM files (true|false)',
+        'js.minify':        'Minify scripts (true|false)',
+        'js.flat':          'Combine scripts into a single file (true|false)',
+        'js.compress':      'Compress flat script file (true|false)',
+    },
+
+    customize: [
+        /* 
+            The optional custom.me file is loaded after main.me is fully processed. It can
+            thus override any setting. Feel free to create and customize. 
+         */
+        'custom.me',
+    ],
+
+    scripts: {
+        postconfig: "
+        ",
+    },
+
+    targets: {
+        comp: {
+            build: `
+                trace('Compile', 'esp compile')
+                run('esp -r -q compile')
+            `,
+        },
+        cleanCache: {
+            type: 'clean',
+            action: "rm('cache/*')",
+        },
+        cleanMin: {
+            type: 'clean',
+            action: `
+                rm('**/*.min.*')
+                rm('client/app/all.html.*')
+            `
+        },
+        'all.min.css': {
+            enable: 'me.settings.css.flat',
+            path: 'client/css/all-${settings.version}.min.css',
+            files: [ 'client/css/*.less' ],
+            build: `
+                let switches = me.settings.css.minify ? '-compress' : ''
+                let switches = ''
+                trace('Parse', '*.less')
+                if (me.settings.css.minify) {
+                    trace('Minify', TARGET.path.relative)
+                    switches = '-compress'
+                }
+                rm(TARGET.path)
+                strace('Run', 'recess ' + switches + ' -compile client/css/all.less')
+                let result = Cmd.run('recess ' + switches + ' -compile client/css/all.less')
+                for each (f in Path('client/css').files('*.css')) {
+                    result += f.readString()
+                }
+                TARGET.path.write(result)
+            `,
+        },
+        'all.min.css.gz': {
+            enable: 'me.settings.css.compress',
+            path: 'client/css/all-${settings.version}.min.css.gz',
+            files: [ 'client/css/all-${settings.version}.min.css' ],
+            depends: ['all.min.css']
+            build: `
+                trace('Compress', TARGET.path.relative)
+                TARGET.path.remove()
+                run('gzip --keep client/css/all-${settings.version}.min.css')
+            `,
+        },
+        'min.html': {
+            enable: 'me.settings.html.minify',
+            path: 'client/app/all.html.js',
+            files: [ '**.html' ],
+            exclude: /client\/lib\/all.min.html/,
+            build: `
+                let list = []
+                trace('Minify', '*.min.html')
+                if (!Cmd.locate('htmlmin')) {
+                    trace('Warning', 'Cannot locate \"htmlmin\" to minify.')
+                }
+                for each (f in Path('client').files('**.html', {exclude: /\\.min.html/})) {
+                    let minified = f.replaceExt('min.html')
+                    if (!minified.exists || minified.modified < f.modified) {
+                        if (Cmd.locate('htmlmin')) {
+                            run('htmlmin ' + f)
+                        } else {
+                            f.copy(minified)
+                        }
+                    }
+                    if (me.settings.html.compress && !me.settings.html.flat) {
+                        run('gzip --keep ' + minified)
+                    }
+                }
+            `,
+        },
+        'html.js': {
+            enable: 'me.settings.html.flat',
+            path: 'client/app/all.html.js',
+            files: [ 'client/app/all.html.js' ],
+            depends: ['min.html']
+            build: `
+                let list = Path('client').files('**.min.html')
+                let all = Path('client/app/all.html.js')
+                trace('Convert', all)
+                all.append('angular.module(\"app\").run(function(Esp, $templateCache) {')
+                for each (let f:Path in list) {
+                    let file = f.relativeTo('client').replace('.min.html', '.html')
+                    let data = f.readLines()
+                    for (let [key,value] in data) {
+                        data[key] = value.replace(/\"/g, '\\\\\"')
+                    }
+                    data = data.join('\\\\\n')
+                    all.append('\n    $templateCache.put(Esp.url(\"/' + file + '\"), \"' + data + '\");\n')
+                    f.remove()
+                }
+                all.append('});')
+            `,
+        },
+        'html.js.gz': {
+            enable: 'me.settings.html.flat && me.settings.html.compress && !me.settings.js.flat',
+            path: 'client/app/all.html.js.gz',
+            files: [ 'client/app/all.html.js' ],
+            depends: ['html.js']
+            build: `
+                run('gzip --keep client/app/all.html.js')
+            `,
+        },
+        'min.js': {
+            enable: 'me.settings.js.minify',
+            path: 'client/all-${settings.version}.min.js',
+            files: [ '**.js' ],
+            exclude: /client\/paks\/all.min.js|client\/paks\/spare\/|client\/paks\/html5shiv/,
+            depends: ['html.js'],
+            build: `
+                trace('Minify', '*.js')
+                if (!Cmd.locate('uglifyjs')) {
+                    trace('Warning', 'Cannot locate \"uglify\" to minify. Will just catenate scripts.')
+                }
+                if (Cmd.locate('ngmin')) {
+                    for each (f in Path('client/app').files('**.js', {exclude: /\\.min.js|\\.ng.js/})) {
+                        let ng = f.replaceExt('ng.js')
+                        if (!ng.exists || ng.modified < f.modified) {
+                            run('ngmin ' + f + ' ' + ng)
+                            run('uglifyjs -o ' + f.replaceExt('min.js') + ' ' + ng)
+                            ng.remove()
+                        }
+                    }
+                }
+                let config = Path('package.json').readJSON();
+                let list = []
+                for each (pattern in config['client-scripts']) {
+                    if (pattern.contains('less/less.js') && config.mode == 'release') continue
+                    for each (script in Path('client').files(pattern, {exclude: /\\.min.js/})) {
+                        list.push(script)
+                    }
+                }
+                for each (f in list) {
+                    let minified = f.replaceExt('min.js')
+                    if (!minified.exists || minified.modified < f.modified) {
+                        if (Cmd.locate('uglifyjs')) {
+                            run('uglifyjs -o ' + f.replaceExt('min.js') + ' ' + f)
+                        } else {
+                            f.copy(f.replaceExt('min.js'))
+                        }
+                    }
+                    if (me.settings.js.compress && !me.settings.js.flat) {
+                        run('gzip --keep ' + minified)
+                    }
+                }
+            `,
+        },
+
+        'all.js': {
+            enable: 'me.settings.js.flat',
+            path: 'client/all-${settings.version}.min.js',
+            files: [ '**.min.js' ],
+            exclude: /client\/paks\/all.min.js|client\/paks\/spare\/|client\/paks\/html5shiv/,
+            depends: ['min.js'],
+            build: `
+                trace('Catenate', TARGET.path)
+                rm('client/all.min.js.gz')
+                let list = []
+                let config = Path('package.json').readJSON();
+                for each (pattern in config['client-scripts']) {
+                    if (pattern.contains('less/less.js') && config.mode == 'release') continue
+                    for each (script in Path('client').files(pattern, {exclude: /\\.min.js/})) {
+                        list.push(script.replaceExt('min.js'))
+                    }
+                }
+                list += Path('client').files('app/**.min.js', {exclude: /main.min.js/})
+                let all = TARGET.path
+                for each (let f:Path in list) {
+                    if (!f.exists) {
+                        f = f.replace('.min.js', '.js')
+                    }
+                    strace('Append', f)
+                    if (!me.settings.js.minify) {
+                        f = f.replace('.min.js', '.js')
+                    }
+                    all.append(';' + f.readString())
+                }
+            `,
+        },
+
+        'all.js.gz': {
+            enable: 'me.settings.js.compress',
+            path: 'client/all-${settings.version}.min.js.gz',
+            files: [ 'client/all-${settings.version}.min.js' ],
+            depends: ['all.js'],
+            build: `
+                trace('Compress', TARGET.path.relative)
+                TARGET.path.remove()
+                run('gzip --keep ' + TARGET.path.trimExt('gz'))
+            `,
+        },
+
+        run: {
+            depends: ['comp'],
+            run: 'appweb -v',
+        },
+
+        patchVersion: {
+            build: `
+                let path = Path('package.json')
+                config = path.readJSON()
+                if (config.version != me.settings.version) {
+                    trace('Update', 'package.json version ' + me.settings.version)
+                    path.write(path.readString().replace(/version:.*/, 'version: \\'' + me.settings.version + '\\','))
+                }
+            `
+        }
+    },
+})

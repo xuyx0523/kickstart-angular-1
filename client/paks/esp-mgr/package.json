@@ -1,9 +1,21 @@
 {
     "name": "esp-mgr",
     "description": "ESP Management Console Skeleton",
-    "version": "0.8.0",
+    "version": "0.9.0",
     "dependencies": {
         "esp-best": "*",
         "esp-gui": "*"
     },
+    "export": [
+        "templates/**"
+    ],
+    "esp": {
+        "server": {
+            "generate": {
+                "files": [
+                    "esp-mgr/**",
+                ]
+            }
+        }
+    }
 }

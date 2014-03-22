@@ -1,14 +1,14 @@
 /*
-    manifest.bit - Install and Package File Manifest for Kickstart
+    manifest.me - MakeMe manifest for Kickstart
  */
 
-Bit.load({
+Me.load({
     /*
         Package manifest instructions
         The sets used are: binary, doc, dev, package, source
      */
     manifest: {
-        home: bit.dir.src,
+        home: me.dir.src,
         packages:   {
             install: {
                 inherit:    'embedthis-manifest',
@@ -73,7 +73,7 @@ Bit.load({
                 permissions: 0755,     
                 set:    'source',
 
-            },{ from:   [ 'main.bit', '*.conf', '*.json', 'controllers', 'client', ],
+            },{ from:   [ 'main.me', '*.conf', '*.json', 'controllers', 'client', ],
                 to:     '${src}/',
                 set:    'source',
 

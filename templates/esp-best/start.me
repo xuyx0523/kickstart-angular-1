@@ -1,26 +1,9 @@
 /*
-    main.bit -- Main Bit file for Kickstart
-
-    This file contains the rules for targets to build and default settings for configuration.
-    The Bit utility (http://ejscript.org) may be used to build GoAhead instead of make. Bit provides
-    for configured builds and generates projects files.
-
-    Alternatively, build using the "make" utility in which case this file is not used.
+    start.me - MakeMe file (esp-best)
  */
 
-Bit.load({
-    blend: [
-        "${BITS}/embedthis.bit",
-        "doc/doc.bit",
-    ],
-
+Me.load({
     settings: {
-        product: 'kick',
-        title: 'Embedthis Kickstart',
-        company: 'Embedthis',
-        bit: '0.9.3',
-        sync: [ ],
-        packs: [ 'bits/packs' ],
         css: {
             minify: true,
             flat: true,
@@ -36,61 +19,16 @@ Bit.load({
             flat: true,
             compress: true,
         },
-
-        /*
-            Installation prefix set
-         */
-        prefixes: 'embedthis-prefixes',
-        manifest: 'package/manifest.bit',
-
-        /*
-            Optional packs to automatically discover and configure
-         */
-        '+discover': [ 'dsi', 'man', 'man2html', 'pmaker', 'utest', 'zip' ],
-        '+requires': [ 'appweb' ],
-
-        /*
-            Packs to disable when using --without all
-         */
-        '+discover': [ 'dsi', 'man', 'man2html', 'pmaker', 'utest', 'zip' ],
-
     },
-
-    usage: {
-        'css.minify':       'Minify Less and CSS (true|false)',
-        'css.flat':         'Combine stylesheets into a single file (true|false)',
-        'css.compress':     'Compress flat stylesheet (true|false)',
-        'html.minify':      'Minify HTML (true|false)',
-        'html.flat':        'Combine HTML into a single Angular script file (true|false)',
-        'html.compress':    'Compress HTLM files (true|false)',
-        'js.minify':        'Minify scripts (true|false)',
-        'js.flat':          'Combine scripts into a single file (true|false)',
-        'js.compress':      'Compress flat script file (true|false)',
-    },
-
-    customize: [
-        /* 
-            The optional custom.bit file is loaded after main.bit is fully processed. It can
-            thus override any setting. Feel free to create and customize. 
-         */
-        'custom.bit',
-    ],
-
-    scripts: {
-        postconfig: "
-        ",
-    },
-
     targets: {
         comp: {
             build: `
-                trace('Compile', 'esp compile')
                 run('esp -r -q compile')
             `,
         },
         cleanCache: {
             type: 'clean',
-            action: "rm('cache/*')",
+            action: `rm('cache/*')`,
         },
         cleanMin: {
             type: 'clean',
@@ -100,14 +38,14 @@ Bit.load({
             `
         },
         'all.min.css': {
-            enable: 'bit.settings.css.flat',
+            enable: 'me.settings.css.flat',
             path: 'client/css/all-${settings.version}.min.css',
             files: [ 'client/css/*.less' ],
             build: `
-                let switches = bit.settings.css.minify ? '-compress' : ''
+                let switches = me.settings.css.minify ? '-compress' : ''
                 let switches = ''
                 trace('Parse', '*.less')
-                if (bit.settings.css.minify) {
+                if (me.settings.css.minify) {
                     trace('Minify', TARGET.path.relative)
                     switches = '-compress'
                 }
@@ -121,7 +59,7 @@ Bit.load({
             `,
         },
         'all.min.css.gz': {
-            enable: 'bit.settings.css.compress',
+            enable: 'me.settings.css.compress',
             path: 'client/css/all-${settings.version}.min.css.gz',
             files: [ 'client/css/all-${settings.version}.min.css' ],
             depends: ['all.min.css']
@@ -132,15 +70,15 @@ Bit.load({
             `,
         },
         'min.html': {
-            enable: 'bit.settings.html.minify',
+            enable: 'me.settings.html.minify',
             path: 'client/app/all.html.js',
             files: [ '**.html' ],
-            exclude: /client\/lib\/all.min.html/,
+            exclude: /client\/paks\/all.min.html/,
             build: `
                 let list = []
                 trace('Minify', '*.min.html')
                 if (!Cmd.locate('htmlmin')) {
-                    trace('Warning', 'Cannot locate \"htmlmin\" to minify.')
+                    trace('Warning', 'Cannot locate "htmlmin" to minify.')
                 }
                 for each (f in Path('client').files('**.html', {exclude: /\\.min.html/})) {
                     let minified = f.replaceExt('min.html')
@@ -151,14 +89,14 @@ Bit.load({
                             f.copy(minified)
                         }
                     }
-                    if (bit.settings.html.compress && !bit.settings.html.flat) {
+                    if (me.settings.html.compress && !me.settings.html.flat) {
                         run('gzip --keep ' + minified)
                     }
                 }
             `,
         },
         'html.js': {
-            enable: 'bit.settings.html.flat',
+            enable: 'me.settings.html.flat',
             path: 'client/app/all.html.js',
             files: [ 'client/app/all.html.js' ],
             depends: ['min.html']
@@ -166,22 +104,22 @@ Bit.load({
                 let list = Path('client').files('**.min.html')
                 let all = Path('client/app/all.html.js')
                 trace('Convert', all)
-                all.append('angular.module(\"app\").run(function(Esp, $templateCache) {')
+                all.append('angular.module("app").run(function(Esp, $templateCache) {')
                 for each (let f:Path in list) {
                     let file = f.relativeTo('client').replace('.min.html', '.html')
                     let data = f.readLines()
                     for (let [key,value] in data) {
-                        data[key] = value.replace(/\"/g, '\\\\\"')
+                        data[key] = value.replace(/"/g, '\\\\"')
                     }
                     data = data.join('\\\\\n')
-                    all.append('\n    $templateCache.put(Esp.url(\"/' + file + '\"), \"' + data + '\");\n')
+                    all.append('\n    $templateCache.put(Esp.url("/' + file + '"), "' + data + '");\n')
                     f.remove()
                 }
                 all.append('});')
             `,
         },
         'html.js.gz': {
-            enable: 'bit.settings.html.flat && bit.settings.html.compress && !bit.settings.js.flat',
+            enable: 'me.settings.html.flat && me.settings.html.compress && !me.settings.js.flat',
             path: 'client/app/all.html.js.gz',
             files: [ 'client/app/all.html.js' ],
             depends: ['html.js']
@@ -190,7 +128,7 @@ Bit.load({
             `,
         },
         'min.js': {
-            enable: 'bit.settings.js.minify',
+            enable: 'me.settings.js.minify',
             path: 'client/all-${settings.version}.min.js',
             files: [ '**.js' ],
             exclude: /client\/paks\/all.min.js|client\/paks\/spare\/|client\/paks\/html5shiv/,
@@ -198,7 +136,7 @@ Bit.load({
             build: `
                 trace('Minify', '*.js')
                 if (!Cmd.locate('uglifyjs')) {
-                    trace('Warning', 'Cannot locate \"uglify\" to minify. Will just catenate scripts.')
+                    trace('Warning', 'Cannot locate "uglify" to minify. Will just catenate scripts.')
                 }
                 if (Cmd.locate('ngmin')) {
                     for each (f in Path('client/app').files('**.js', {exclude: /\\.min.js|\\.ng.js/})) {
@@ -227,7 +165,7 @@ Bit.load({
                             f.copy(f.replaceExt('min.js'))
                         }
                     }
-                    if (bit.settings.js.compress && !bit.settings.js.flat) {
+                    if (me.settings.js.compress && !me.settings.js.flat) {
                         run('gzip --keep ' + minified)
                     }
                 }
@@ -235,7 +173,7 @@ Bit.load({
         },
 
         'all.js': {
-            enable: 'bit.settings.js.flat',
+            enable: 'me.settings.js.flat',
             path: 'client/all-${settings.version}.min.js',
             files: [ '**.min.js' ],
             exclude: /client\/paks\/all.min.js|client\/paks\/spare\/|client\/paks\/html5shiv/,
@@ -258,7 +196,7 @@ Bit.load({
                         f = f.replace('.min.js', '.js')
                     }
                     strace('Append', f)
-                    if (!bit.settings.js.minify) {
+                    if (!me.settings.js.minify) {
                         f = f.replace('.min.js', '.js')
                     }
                     all.append(';' + f.readString())
@@ -267,7 +205,7 @@ Bit.load({
         },
 
         'all.js.gz': {
-            enable: 'bit.settings.js.compress',
+            enable: 'me.settings.js.compress',
             path: 'client/all-${settings.version}.min.js.gz',
             files: [ 'client/all-${settings.version}.min.js' ],
             depends: ['all.js'],
@@ -282,21 +220,5 @@ Bit.load({
             depends: ['comp'],
             run: 'appweb -v',
         },
-
-        patchVersion: {
-            build: `
-                let path = Path('package.json')
-                config = path.readJSON()
-                if (config.version != bit.settings.version) {
-                    trace('Update', 'package.json version ' + bit.settings.version)
-                    path.write(path.readString().replace(/version:.*/, 'version: \\'' + bit.settings.version + '\\','))
-                }
-
-            `
-        }
-    },
-
-    packDefaults: {
-        appweb: true,
     },
 })

@@ -10,12 +10,15 @@
         "esp-angular": "*",
         "esp-angular-mvc": "*",
         "esp-best": "*",
-        "esp-gui": "0.8.0",
-        "esp-mgr": "0.8.0",
+        "esp-gui": "*",
+        "esp-mgr": "*",
         "esp-server": "*",
         "font-awesome": "*",
         "html5shiv": "*",
         "less": ">=1.3.3",
+        "me-dev": "~0.8",
+        "me-doc": "~0.8",
+        "me-package": "~0.8",
         "more": "*",
         "respond": "*"
     },
@@ -53,7 +56,8 @@
                         "view": true
                     },
                     "single": false
-                }
+                },
+                "flat": false
             },
             "release": {
                 "combined": true,
@@ -69,7 +73,8 @@
                         "view": true
                     },
                     "single": false
-                }
+                },
+                "flat": true
             }
         },
         "auth": "app",
@@ -87,14 +92,12 @@
             "database": "mdb://kickstart.mdb",
             "_redirect": "secure",
             "generate": {
-                "appweb": "esp-angular-mvc/appweb.conf",
+                "appweb": "esp-server/appweb.conf",
                 "migration": "esp-server/migration.c",
-                "controller": "esp-angular-mvc/controller.c",
-                "controller-singleton": "esp-angular-mvc/controller-singleton.c",
+                "controller": "esp-server/controller.c",
+                "controller-singleton": "esp-server/controller.c",
                 "files": [
-                    "esp-server/src/app.c",
-                    "esp-angular-mvc/start.bit",
-                    "esp-angular-mvc/client/**"
+                    "esp-server/src/app.c"
                 ],
                 "clientModel": "esp-angular-mvc/model.js",
                 "clientController": "esp-angular-mvc/controller.js",
@@ -105,7 +108,9 @@
         "timeouts": {
             "session": 1800
         },
-        "combined": false
+        "combined": false,
+        "flat": false,
+        "update": true
     },
     "ignore": [
         "doc",

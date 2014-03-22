@@ -4,19 +4,19 @@ Embedthis Kickstart Management Application
 Licensing
 ---
 
-This software is licensed under the Embedthish Commercial Software License.  See LICENSE.md for details.
+This software is licensed under the Embedthis Commercial Software License.  See LICENSE.md for details.
 
 ### To build:
 
-To build, you will need to install Bit. See:
+To build, you will need to install MakeMe. See:
 
-    https://github.com/embedthis/bit
+    https://github.com/embedthis/makeme
 and
-    http://embedthis.com/products/bit
+    http://embedthis.com/products/makeme
 
 <pre>
     ./configure
-    bit
+    me
 </pre>
 
 ### Copyright
