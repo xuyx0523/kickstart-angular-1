@@ -17,8 +17,6 @@
         "html5shiv": "*",
         "less": ">=1.3.3",
         "me-dev": "~0.8",
-        "me-doc": "~0.8",
-        "me-package": "~0.8",
         "more": "*",
         "respond": "*"
     },

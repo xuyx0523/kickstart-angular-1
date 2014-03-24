@@ -1,9 +1,9 @@
 {
     "name": "esp-best",
     "description": "ESP Best Practices Angular Skeleton",
-    "version": "0.9.0",
+    "version": "5.0.0",
     "dependencies": {
-        "esp-angular-mvc": "~0.9",
+        "esp-angular-mvc": "~5.0",
         "less": ">=1.3.3",
         "bootstrap": "~3",
         "angular-bootstrap": ">=0.7.0",

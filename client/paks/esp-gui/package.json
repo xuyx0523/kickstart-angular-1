@@ -1,9 +1,9 @@
 {
     "name": "esp-gui",
     "description": "ESP GUI Extensions for Angular",
-    "version": "0.9.0",
+    "version": "5.0.0",
     "dependencies": {
-        "esp-best": "*",
+        "esp-best": "~5.0",
     },
     "export": ["client/**", "start.me"],
     "client-scripts": [ "${PAKS}/esp-gui/*.js" ],
