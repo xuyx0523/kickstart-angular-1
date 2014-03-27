@@ -3,6 +3,9 @@
     "title": "Kickstart",
     "description": "Kickstart for ESP",
     "version": "0.8.0",
+    "keywords": [
+        "esp"
+    ],
     "dependencies": {
         "angular": ">=1.2.0",
         "angular-bootstrap": "0.7.0",
@@ -40,7 +43,7 @@
     },
     "precious": true,
     "esp": {
-        "mode": "debug",
+        "mode": "release",
         "modes": {
             "debug": {
                 "combined": false,
@@ -55,7 +58,10 @@
                     },
                     "single": false
                 },
-                "flat": false
+                "loginRequired": "",
+                "server": {
+                    "redirect": ""
+                }
             },
             "release": {
                 "combined": true,
@@ -72,7 +78,10 @@
                     },
                     "single": false
                 },
-                "flat": true
+                "loginRequired": "/user/login",
+                "server": {
+                    "redirect": "secure"
+                }
             }
         },
         "auth": "app",
@@ -82,13 +91,11 @@
             "int": 0
         },
         "json": true,
-        "loginRequired": "",
         "refresh": 1000,
         "serverPrefix": "/do",
         "xsrf": true,
         "server": {
             "database": "mdb://kickstart.mdb",
-            "_redirect": "secure",
             "generate": {
                 "appweb": "esp-server/appweb.conf",
                 "migration": "esp-server/migration.c",
@@ -107,7 +114,6 @@
             "session": 1800
         },
         "combined": false,
-        "flat": false,
         "update": true
     },
     "ignore": [
