@@ -19,6 +19,14 @@ Me.load({
         discovers: [ ],
     },
 
+    mixin: `
+        function gzip(path: Path) {
+            path.joinExt('gz', true).remove()
+            run('gzip ' + path)
+            path.write(run('gunzip -c ' + path + '.gz', {noshow: true}))
+        }
+    `,
+
     settings: {
         css: {
             minify: true,
@@ -114,20 +122,19 @@ Me.load({
             depends: ['all.min.css']
             build: `
                 trace('Compress', TARGET.path.relative)
-                TARGET.path.remove()
-                run('gzip --keep client/css/all-${settings.version}.min.css')
+                gzip('client/css/all-${settings.version}.min.css')
             `,
         },
         'min.html': {
             enable: 'me.settings.html.minify',
             path: 'client/app/all.html.js',
             files: [ '**.html' ],
-            exclude: /client\/lib\/all.min.html/,
+            exclude: /client\/paks\/all.min.html/,
             build: `
                 let list = []
                 trace('Minify', '*.min.html')
                 if (!Cmd.locate('htmlmin')) {
-                    trace('Warning', 'Cannot locate \"htmlmin\" to minify.')
+                    trace('Warning', 'Cannot locate "htmlmin" to minify.')
                 }
                 for each (f in Path('client').files('**.html', {exclude: /\\.min.html/})) {
                     let minified = f.replaceExt('min.html')
@@ -139,7 +146,7 @@ Me.load({
                         }
                     }
                     if (me.settings.html.compress && !me.settings.html.flat) {
-                        run('gzip --keep ' + minified)
+                        gzip(minified)
                     }
                 }
             `,
@@ -153,15 +160,15 @@ Me.load({
                 let list = Path('client').files('**.min.html')
                 let all = Path('client/app/all.html.js')
                 trace('Convert', all)
-                all.append('angular.module(\"app\").run(function(Esp, $templateCache) {')
+                all.append('angular.module("app").run(function(Esp, $templateCache) {')
                 for each (let f:Path in list) {
                     let file = f.relativeTo('client').replace('.min.html', '.html')
                     let data = f.readLines()
                     for (let [key,value] in data) {
-                        data[key] = value.replace(/\"/g, '\\\\\"')
+                        data[key] = value.replace(/"/g, '\\\\"')
                     }
                     data = data.join('\\\\\n')
-                    all.append('\n    $templateCache.put(Esp.url(\"/' + file + '\"), \"' + data + '\");\n')
+                    all.append('\n    $templateCache.put(Esp.url("/' + file + '"), "' + data + '");\n')
                     f.remove()
                 }
                 all.append('});')
@@ -173,7 +180,7 @@ Me.load({
             files: [ 'client/app/all.html.js' ],
             depends: ['html.js']
             build: `
-                run('gzip --keep client/app/all.html.js')
+                gzip('client/app/all.html.js')
             `,
         },
         'min.js': {
@@ -185,7 +192,7 @@ Me.load({
             build: `
                 trace('Minify', '*.js')
                 if (!Cmd.locate('uglifyjs')) {
-                    trace('Warning', 'Cannot locate \"uglify\" to minify. Will just catenate scripts.')
+                    trace('Warning', 'Cannot locate "uglify" to minify. Will just catenate scripts.')
                 }
                 if (Cmd.locate('ngmin')) {
                     for each (f in Path('client/app').files('**.js', {exclude: /\\.min.js|\\.ng.js/})) {
@@ -215,7 +222,7 @@ Me.load({
                         }
                     }
                     if (me.settings.js.compress && !me.settings.js.flat) {
-                        run('gzip --keep ' + minified)
+                        gzip(minified)
                     }
                 }
             `,
@@ -260,8 +267,7 @@ Me.load({
             depends: ['all.js'],
             build: `
                 trace('Compress', TARGET.path.relative)
-                TARGET.path.remove()
-                run('gzip --keep ' + TARGET.path.trimExt('gz'))
+                gzip(TARGET.path.trimExt('gz'))
             `,
         },
 
