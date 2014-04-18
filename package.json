@@ -15,6 +15,7 @@
         "esp-best": "*",
         "esp-gui": "*",
         "esp-mgr": "*",
+        "esp-mvc": "*",
         "esp-server": "*",
         "font-awesome": "*",
         "html5shiv": "*",
@@ -56,9 +57,9 @@
                         "edit": true,
                         "view": true
                     },
-                    "single": false
+                    "single": false,
+                    "required": "",
                 },
-                "loginRequired": "",
                 "server": {
                     "redirect": ""
                 }
@@ -76,9 +77,9 @@
                         "edit": true,
                         "view": true
                     },
-                    "single": false
+                    "single": false,
+                    "required": "/user/login",
                 },
-                "loginRequired": "/user/login",
                 "server": {
                     "redirect": "secure"
                 }
@@ -101,9 +102,6 @@
                 "migration": "esp-server/migration.c",
                 "controller": "esp-server/controller.c",
                 "controller-singleton": "esp-server/controller.c",
-                "files": [
-                    "esp-server/src/app.c"
-                ],
                 "clientModel": "esp-angular-mvc/model.js",
                 "clientController": "esp-angular-mvc/controller.js",
                 "clientList": "esp-angular-mvc/list.html",
