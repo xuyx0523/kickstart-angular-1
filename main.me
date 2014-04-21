@@ -25,42 +25,18 @@ Me.load({
             run('gzip ' + path)
             path.write(run('gunzip -c ' + path + '.gz', {noshow: true}))
         }
+        let esp = me.package.esp
+        blend(esp, esp.modes[esp.mode])
+        let content = esp.content
+        trace('ESP Mode', esp.mode)
     `,
 
     settings: {
-        css: {
-            minify: true,
-            flat: true,
-            compress: true,
-        },
-        html: {
-            minify: true,
-            flat: true,
-            compress: true,
-        },
-        js: {
-            minify: true,
-            flat: true,
-            compress: true,
-        },
-
         /*
             Installation prefix set
          */
         prefixes: 'embedthis-prefixes',
         manifest: 'package/manifest.me',
-    },
-
-    usage: {
-        'css.minify':       'Minify Less and CSS (true|false)',
-        'css.flat':         'Combine stylesheets into a single file (true|false)',
-        'css.compress':     'Compress flat stylesheet (true|false)',
-        'html.minify':      'Minify HTML (true|false)',
-        'html.flat':        'Combine HTML into a single Angular script file (true|false)',
-        'html.compress':    'Compress HTLM files (true|false)',
-        'js.minify':        'Minify scripts (true|false)',
-        'js.flat':          'Combine scripts into a single file (true|false)',
-        'js.compress':      'Compress flat script file (true|false)',
     },
 
     customize: [
@@ -72,8 +48,7 @@ Me.load({
     ],
 
     scripts: {
-        postconfig: "
-        ",
+        postconfig: ``,
     },
 
     targets: {
@@ -95,14 +70,14 @@ Me.load({
             `
         },
         'all.min.css': {
-            enable: 'me.settings.css.flat',
+            enable: 'content.css.combine',
             path: 'client/css/all-${settings.version}.min.css',
             files: [ 'client/css/*.less' ],
             build: `
-                let switches = me.settings.css.minify ? '-compress' : ''
+                let switches = content.css.minify ? '-compress' : ''
                 let switches = ''
                 trace('Parse', '*.less')
-                if (me.settings.css.minify) {
+                if (content.css.minify) {
                     trace('Minify', TARGET.path.relative)
                     switches = '-compress'
                 }
@@ -114,10 +89,9 @@ Me.load({
                 }
                 TARGET.path.write(result)
             `,
-            enable: `Path('package.json').readJSON().esp.mode == "release"`
         },
         'all.min.css.gz': {
-            enable: 'me.settings.css.compress',
+            enable: 'content.css.compress',
             path: 'client/css/all-${settings.version}.min.css.gz',
             files: [ 'client/css/all-${settings.version}.min.css' ],
             depends: ['all.min.css']
@@ -125,10 +99,9 @@ Me.load({
                 trace('Compress', TARGET.path.relative)
                 gzip('client/css/all-${settings.version}.min.css')
             `,
-            enable: `Path('package.json').readJSON().esp.mode == "release"`
         },
         'min.html': {
-            enable: 'me.settings.html.minify',
+            enable: 'content.html.minify',
             path: 'client/app/all.html.js',
             files: [ '**.html' ],
             exclude: /client\/paks\/all.min.html/,
@@ -147,15 +120,14 @@ Me.load({
                             f.copy(minified)
                         }
                     }
-                    if (me.settings.html.compress && !me.settings.html.flat) {
+                    if (content.html.compress && !content.html.combine) {
                         gzip(minified)
                     }
                 }
             `,
-            enable: `Path('package.json').readJSON().esp.mode == "release"`
         },
         'html.js': {
-            enable: 'me.settings.html.flat',
+            enable: 'content.html.combine',
             path: 'client/app/all.html.js',
             files: [ 'client/app/all.html.js' ],
             depends: ['min.html']
@@ -176,20 +148,18 @@ Me.load({
                 }
                 all.append('});')
             `,
-            enable: `Path('package.json').readJSON().esp.mode == "release"`
         },
         'html.js.gz': {
-            enable: 'me.settings.html.flat && me.settings.html.compress && !me.settings.js.flat',
+            enable: 'content.html.combine && content.html.compress && !content.js.combine',
             path: 'client/app/all.html.js.gz',
             files: [ 'client/app/all.html.js' ],
             depends: ['html.js']
             build: `
                 gzip('client/app/all.html.js')
             `,
-            enable: `Path('package.json').readJSON().esp.mode == "release"`
         },
         'min.js': {
-            enable: 'me.settings.js.minify',
+            enable: 'content.js.minify',
             path: 'client/all-${settings.version}.min.js',
             files: [ '**.js' ],
             exclude: /client\/paks\/all.min.js|client\/paks\/spare\/|client\/paks\/html5shiv/,
@@ -209,10 +179,9 @@ Me.load({
                         }
                     }
                 }
-                let config = Path('package.json').readJSON();
                 let list = []
-                for each (pattern in config['client-scripts']) {
-                    if (pattern.contains('less/less.js') && config.mode == 'release') continue
+                for each (pattern in me.package['client-scripts']) {
+                    if (pattern.contains('less/less.js') && content.css.combine) continue
                     for each (script in Path('client').files(pattern, {exclude: /\\.min.js/})) {
                         list.push(script)
                     }
@@ -226,27 +195,25 @@ Me.load({
                             f.copy(f.replaceExt('min.js'))
                         }
                     }
-                    if (me.settings.js.compress && !me.settings.js.flat) {
+                    if (content.js.compress && !content.js.combine) {
                         gzip(minified)
                     }
                 }
             `,
-            enable: `Path('package.json').readJSON().esp.mode == "release"`
         },
 
         'all.js': {
-            enable: 'me.settings.js.flat',
+            enable: 'content.js.combine',
             path: 'client/all-${settings.version}.min.js',
             files: [ '**.min.js' ],
             exclude: /client\/paks\/all.min.js|client\/paks\/spare\/|client\/paks\/html5shiv/,
             depends: ['min.js'],
             build: `
                 trace('Catenate', TARGET.path)
-                rm('client/all.min.js.gz')
+                rm('client/all.min.js')
                 let list = []
-                let config = Path('package.json').readJSON();
-                for each (pattern in config['client-scripts']) {
-                    if (pattern.contains('less/less.js') && config.mode == 'release') continue
+                for each (pattern in me.package['client-scripts']) {
+                    if (pattern.contains('less/less.js') && content.css.combine) continue
                     for each (script in Path('client').files(pattern, {exclude: /\\.min.js/})) {
                         list.push(script.replaceExt('min.js'))
                     }
@@ -258,17 +225,16 @@ Me.load({
                         f = f.replace('.min.js', '.js')
                     }
                     strace('Append', f)
-                    if (!me.settings.js.minify) {
+                    if (!content.js.minify) {
                         f = f.replace('.min.js', '.js')
                     }
                     all.append(';' + f.readString())
                 }
             `,
-            enable: `Path('package.json').readJSON().esp.mode == "release"`
         },
 
         'all.js.gz': {
-            enable: 'me.settings.js.compress',
+            enable: 'content.js.compress',
             path: 'client/all-${settings.version}.min.js.gz',
             files: [ 'client/all-${settings.version}.min.js' ],
             depends: ['all.js'],
@@ -276,7 +242,6 @@ Me.load({
                 trace('Compress', TARGET.path.relative)
                 gzip(TARGET.path.trimExt('gz'))
             `,
-            enable: `Path('package.json').readJSON().esp.mode == "release"`
         },
 
         run: {
@@ -287,12 +252,10 @@ Me.load({
         patchVersion: {
             build: `
                 let path = Path('package.json')
-                config = path.readJSON()
-                if (config.version != me.settings.version) {
+                if (me.package.version != me.settings.version) {
                     trace('Update', 'package.json version ' + me.settings.version)
                     path.write(path.readString().replace(/version:.*/, 'version: \\'' + me.settings.version + '\\','))
                 }
-
             `
         }
     },

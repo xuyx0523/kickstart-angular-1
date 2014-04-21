@@ -3,7 +3,7 @@
  */
 'use strict';
 
-angular.module('app').controller('DashControl', function (Dash, Esp, $location, $scope, $timeout, $route) {
+angular.module('app').controller('DashControl', function (Dash, Esp, $location, $scope, $timeout, $rootScope, $route) {
     /*
         Remember the dashboard page so we can cancel data updates when the user navigates away
      */

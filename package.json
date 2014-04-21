@@ -42,15 +42,35 @@
         "paks": "client/paks",
         "base": "."
     },
-    "precious": true,
     "esp": {
+        "auth": "app",
+        "formats": {
+            "date": "yyyy-MM-dd",
+            "float": 2,
+            "int": 0
+        },
+        "json": true,
         "mode": "release",
         "modes": {
             "debug": {
-                "combined": false,
-                "showErrors": true,
-                "keepSource": true,
-                "update": true,
+                "combine": false,
+                "content": {
+                    "css": {
+                        "combine": false,
+                        "minify": false,
+                        "compress": false
+                    },
+                    "html": {
+                        "combine": false,
+                        "minify": false,
+                        "compress": false
+                    },
+                    "js": {
+                        "combine": false,
+                        "minify": false,
+                        "compress": false
+                    }
+                },
                 "login": {
                     "name": "",
                     "abilities": {
@@ -58,18 +78,36 @@
                         "view": true
                     },
                     "single": false,
-                    "required": "",
+                    "required": ""
                 },
                 "server": {
                     "redirect": ""
-                }
+                },
+                "keepSource": true,
+                "showErrors": true,
+                "update": true
             },
             "release": {
-                "combined": true,
-                "compressed": true,
                 "cache": 86400,
-                "showErrors": false,
-                "update": false,
+                "combine": true,
+                "compressed": true,
+                "content": {
+                    "css": {
+                        "combine": true,
+                        "minify": true,
+                        "compress": true
+                    },
+                    "html": {
+                        "combine": true,
+                        "minify": true,
+                        "compress": true
+                    },
+                    "js": {
+                        "combine": true,
+                        "minify": true,
+                        "compress": true
+                    }
+                },
                 "keepSource": false,
                 "login": {
                     "name": "",
@@ -78,23 +116,17 @@
                         "view": true
                     },
                     "single": false,
-                    "required": "/user/login",
+                    "required": "/user/login"
                 },
                 "server": {
                     "redirect": "secure"
-                }
+                },
+                "showErrors": false,
+                "update": false
             }
         },
-        "auth": "app",
-        "formats": {
-            "date": "yyyy-MM-dd",
-            "float": 2,
-            "int": 0
-        },
-        "json": true,
         "refresh": 1000,
         "serverPrefix": "/do",
-        "xsrf": true,
         "server": {
             "database": "mdb://kickstart.mdb",
             "generate": {
@@ -111,8 +143,8 @@
         "timeouts": {
             "session": 1800
         },
-        "combined": false,
-        "update": true
+        "update": true,
+        "xsrf": true
     },
     "ignore": [
         "doc",
