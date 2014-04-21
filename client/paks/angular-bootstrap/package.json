@@ -2,6 +2,9 @@
     "name": "angular-bootstrap",
     "description": "Angular UI Bootstrap support",
     "version": "0.7.0",
+    "keywords": [
+        "esp",
+    ],
     "dependencies": {
         "angular": ">=1.2.0", 
         "bootstrap": ">=3.0.0", 

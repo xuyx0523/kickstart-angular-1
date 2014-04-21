@@ -50,7 +50,7 @@
             "int": 0
         },
         "json": true,
-        "mode": "release",
+        "mode": "debug",
         "modes": {
             "debug": {
                 "combine": false,
@@ -85,7 +85,8 @@
                 },
                 "keepSource": true,
                 "showErrors": true,
-                "update": true
+                "update": true,
+                "combined": false
             },
             "release": {
                 "cache": 86400,
@@ -122,7 +123,8 @@
                     "redirect": "secure"
                 },
                 "showErrors": false,
-                "update": false
+                "update": false,
+                "combined": true
             }
         },
         "refresh": 1000,
@@ -130,7 +132,7 @@
         "server": {
             "database": "mdb://kickstart.mdb",
             "generate": {
-                "appweb": "esp-server/appweb.conf",
+                "appweb": "esp-best/appweb.conf",
                 "migration": "esp-server/migration.c",
                 "controller": "esp-server/controller.c",
                 "controller-singleton": "esp-server/controller.c",
@@ -144,7 +146,8 @@
             "session": 1800
         },
         "update": true,
-        "xsrf": true
+        "xsrf": true,
+        "loginRequired": ""
     },
     "ignore": [
         "doc",
