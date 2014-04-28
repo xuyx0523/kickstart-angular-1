@@ -7,18 +7,18 @@ Me.load({
         'dev.es',
     ],
 
-    internal: {
-        platforms: [ 'local' ],
-    },
-
     settings: {
         depth: App.getenv('BUILD_DEPTH') || 1,
+    },
+
+    internal: {
+        platforms: [ 'local' ],
     },
 
     targets: {
         publish: {
             home: '${TOP}',
-            action: "publishToGit()",
+            action: `publishToGit()`,
         },
 
         removeFiles: {
@@ -27,11 +27,11 @@ Me.load({
             rule: 'gui'
             sources: [ 'package/windows/removeFiles.c' ],
             platforms: [ 'local' ],
-            enable: "me.platform.like == 'windows' && Path('package/windows/removeFiles.c').exists",
+            enable: `me.platform.like == 'windows' && Path('package/windows/removeFiles.c').exists`,
         },
 
         projects: {
-            action: "genProjects()",
+            action: `genProjects()`,
             home: '${TOP}',
         },
 
@@ -39,7 +39,7 @@ Me.load({
             Target to build a personal project for the current configuration
          */
         mine: {
-            action: "
+            action: `
                 let cmd = Cmd.locate('me')
                 let runopt = {dir: me.dir.src, show: true}
                 /* Xcode and VS use separate profiles */
@@ -49,18 +49,19 @@ Me.load({
                     run(cmd + ' -q -d -platform windows-x86-mine -configure . -gen vs', runopt)
                 }
                 run(cmd + ' -q -configure . ', runopt)
-            ",
+            `,
         },
 
         'projects-clobber': {
-            action: "
+            action: `
                 rm(['${dir.proj}/*.mk', '${dir.proj}/*.sh'])
                 rmdir(['${dir.proj}/*-*-default'])
-            "
+            `
         },
 
         upload: {
-            action: "
+            action: `
+                me.settings.depth = App.getenv('BUILD_DEPTH') || me.settings.depth
                 if (me.settings.depth < 2) {
                     trace('Info', 'Upload skipped at build depth ' + me.settings.depth)
                 } else {
@@ -74,13 +75,16 @@ Me.load({
                     if (!uri) {
                         throw 'Missing a farm upload URI'
                     }
-                    let base = s.product + '-' + s.version
+                    let base = s.name + '-' + s.version
                     let files = me.dir.rel.files('*' + base + '*.pkg*')
                     files += me.dir.rel.files('*' + base + '*x86.exe.zip*')
                     if (App.getenv('BUILD_UPLOAD_SOURCE') == 'true') {
                         files += me.dir.rel.files('*' + base + '-src*')
                         files += me.dir.rel.files('*' + base + '-flat*')
-                        files += me.dir.rel.files(s.product + '-flat.tgz')
+                        files += me.dir.rel.files(s.name + '-flat.tgz')
+                    }
+                    if (files.length == 0) {
+                        trace('Info', 'No files to upload')
                     }
                     for each (file in files) {
                         let http = new Http
@@ -92,12 +96,13 @@ Me.load({
                         }
                     }
                 }
-            ",
+            `,
         },
 
         unit_test: {
             type: 'test',
-            action: "
+            home: '${TOP}',
+            action: `
                 if (!me.targets.test) {
                     let utest = Cmd.locate('utest')
                     if (!utest) {
@@ -111,17 +116,17 @@ Me.load({
                         trace('Test', 'The utest program cannot be located')
                     }
                 }
-            ",
+            `,
         }
 
         upgrade: {
             home: '${TOP}',
-            action: "sh('pak -f upgrade ; me build')",
+            action: `sh('pak -f upgrade ; me build')`,
         },
 
         sync: {
             home: '${TOP}',
-            action: "sh('pak -f upgrade')",
+            action: `sh('pak -f upgrade')`,
         },
     },
 })

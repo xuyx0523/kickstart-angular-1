@@ -8,20 +8,20 @@
     ],
     "dependencies": {
         "esp-mgr": "*",
-        "me-dev": "~0.8",
+        "me-dev": "~0.8"
     },
     "client-scripts": [
-        "paks/angular/angular.js",
-        "paks/angular/angular-animate.js",
-        "paks/angular/angular-route.js",
-        "paks/angular-bootstrap/*.js",
-        "paks/esp-angular/*.js",
+        "lib/angular/angular.js",
+        "lib/angular/angular-animate.js",
+        "lib/angular/angular-route.js",
+        "lib/angular-bootstrap/*.js",
+        "lib/esp-angular/*.js",
         "app/main.js",
         "app/*/**.js*",
-        "paks/esp-gui/*.js",
-        "paks/html5shiv/html5shiv.js",
-        "paks/less/less.js",
-        "paks/respond/respond.js"
+        "lib/esp-gui/*.js",
+        "lib/html5shiv/html5shiv.js",
+        "lib/less/less.js",
+        "lib/respond/respond.js"
     ],
     "dirs": {
         "client": "client",
@@ -73,7 +73,8 @@
                 "keepSource": true,
                 "showErrors": true,
                 "update": true,
-                "combined": false
+                "combined": false,
+                "compile": "symbols"
             },
             "release": {
                 "cache": 86400,
@@ -111,7 +112,8 @@
                 },
                 "showErrors": false,
                 "update": false,
-                "combined": true
+                "combined": true,
+                "compile": "optimized"
             }
         },
         "refresh": 1000,
@@ -126,13 +128,16 @@
                 "clientModel": "esp-angular-mvc/model.js",
                 "clientController": "esp-angular-mvc/controller.js",
                 "clientList": "esp-angular-mvc/list.html",
-                "clientEdit": "esp-angular-mvc/edit.html"
-            }
+                "clientEdit": "esp-angular-mvc/edit.html",
+                "module": "esp-mvc/generate/src/app.c"
+            },
+            "routes": "esp-angular-mvc"
         },
         "timeouts": {
             "session": 1800
         },
         "xsrf": true,
+        "logRoutes": false
     },
     "ignore": [
         "doc",

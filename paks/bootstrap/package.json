@@ -2,4 +2,18 @@
     "name": "bootstrap",
     "description": "Bootstrap client-side web styles",
     "version": "3.0.0",
+    "keywords": [
+        "esp",
+    ],
+    "export": [
+        {
+            from: [
+                "js/*.js",
+                "css/*.css",
+                "less/*.less",
+                "fonts/*",
+            ],
+            to: '${JSLIB}/bootstrap',
+        }
+    ],
 }

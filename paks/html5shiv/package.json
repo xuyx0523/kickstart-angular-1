@@ -5,5 +5,11 @@
     "keywords": [
         "esp",
     ],
-    "client-scripts": [ "${PAKS}/html5shiv/html5shiv.js" ]
+    "export": [
+        {
+            from: "*.js",
+            to: '${JSLIB}/html5shiv',
+        }
+    ],
+    "client-scripts": [ "${JSLIB}/html5shiv/html5shiv.js" ]
 }

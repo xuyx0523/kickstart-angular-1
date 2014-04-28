@@ -1,16 +1,32 @@
 {
     "name": "esp-gui",
     "description": "ESP GUI Extensions for Angular",
-    "version": "5.0.0",
+    "version": "5.0.0-rc0",
+    "keywords": [
+        "esp",
+    ],
     "dependencies": {
         "esp-best": "~5.0",
     },
-    "export": ["client/**", "start.me"],
-    "client-scripts": [ "${PAKS}/esp-gui/*.js" ],
+    "licenses": [
+        {
+            "type": "Commercial",
+            "url": "http://embedthis.com/licensing/"
+        }
+    ],
+    "export": [
+        {
+            from: [
+                "*.js",
+            ],
+            to: "${JSLIB}/esp-gui",
+        }
+    ],
+    "client-scripts": [ 
+        "${JSLIB}/esp-gui/*.js" 
+    ],
     "ignore": [
         "doc/**",
+        "start.me",
     ],
-    "files": [
-        "client/**"
-    ]
 }

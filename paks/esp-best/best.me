@@ -191,7 +191,7 @@ Me.load({
             exclude: /client\/paks\/all.min.js|client\/paks\/spare\/|client\/paks\/html5shiv/,
             depends: ['min.js'],
             build: `
-                trace('Catenate', TARGET.path)
+                trace('Catenate', TARGET.path.relative)
                 rm('client/all.min.js')
                 let list = []
                 for each (pattern in me.package['client-scripts']) {
@@ -226,6 +226,5 @@ Me.load({
                 gzip(TARGET.path.trimExt('gz'))
             `,
         },
-
     },
 })

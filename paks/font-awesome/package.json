@@ -5,4 +5,14 @@
     "keywords": [
         "esp",
     ],
+    "export": [
+        {
+            from: [
+                "css/*",
+                "font/*",
+                "less/*",
+            ],
+            to: '${JSLIB}/font-awesome',
+        }
+    ],
 }

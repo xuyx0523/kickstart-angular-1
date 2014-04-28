@@ -5,4 +5,10 @@
     "keywords": [
         "esp",
     ],
+    "export": [
+        {
+            from: "*.less",
+            to: '${JSLIB}/more',
+        }
+    ],
 }

@@ -10,5 +10,13 @@
         "bootstrap": ">=3.0.0", 
         "html5shiv": "*",
     },
-    "client-scripts": [ "${PAKS}/angular-bootstrap/*.js" ]
+    "export": [
+        {
+            from: "*.js",
+            to: '${JSLIB}/angular-bootstrap',
+        }
+    ],
+    "client-scripts": [ 
+        "${JSLIB}/angular-bootstrap/*.js" 
+    ]
 }

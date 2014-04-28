@@ -5,5 +5,11 @@
     "keywords": [
         "esp",
     ],
-    "client-scripts": [ "${PAKS}/less/less.js" ]
+    "export": [
+        {
+            from: "*.js",
+            to: '${JSLIB}/less',
+        }
+    ],
+    "client-scripts": [ "${JSLIB}/less/less.js" ]
 }

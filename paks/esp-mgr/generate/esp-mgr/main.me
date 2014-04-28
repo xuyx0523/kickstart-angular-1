@@ -1,27 +1,23 @@
 /*
-    start.me - MakeMe file (esp-best)
+    main.me -- Main MakeMe file for ${APP}
+
+    This file contains the rules for targets to build and default settings for configuration.
+    The MakeMe utility (http://embedthis.com/products/makeme) may be used to build instead of make. 
+    MakeMe provides for configured builds and generates projects files.
+
+    Alternatively, build using the "make" utility in which case this file is not used.
  */
 
 Me.load({
-
     blend: [
-        "client/paks/*/*.me",
+        "${MAKEME}/embedthis.me",
     ],
 
-    configure: {
-        requires:  [ 'appweb' ],
-        discovers: [ ],
-    },
-
-    mixin: `
-        function gzip(path: Path) {
-            path.joinExt('gz', true).remove()
-            run('gzip ' + path)
-            path.write(run('gunzip -c ' + path + '.gz', {noshow: true}))
-        }
-    `,
-
     settings: {
+        name: '${APP}',
+        title: '${TITLE}',
+        company: 'Embedthis',
+        packs: [ 'makeme/probes' ],
         css: {
             minify: true,
             flat: true,
@@ -37,16 +33,54 @@ Me.load({
             flat: true,
             compress: true,
         },
+
+        /*
+            Installation prefix set
+         */
+        prefixes: 'embedthis-prefixes',
+        manifest: 'package/manifest.me',
+
+        extensions: {
+            require:  [ 'appweb' ],
+            discover: [ 'dsi', 'man', 'man2html', 'pmaker', 'utest', 'zip' ],
+        },
     },
+
+    usage: {
+        'css.minify':       'Minify Less and CSS (true|false)',
+        'css.flat':         'Combine stylesheets into a single file (true|false)',
+        'css.compress':     'Compress flat stylesheet (true|false)',
+        'html.minify':      'Minify HTML (true|false)',
+        'html.flat':        'Combine HTML into a single Angular script file (true|false)',
+        'html.compress':    'Compress HTLM files (true|false)',
+        'js.minify':        'Minify scripts (true|false)',
+        'js.flat':          'Combine scripts into a single file (true|false)',
+        'js.compress':      'Compress flat script file (true|false)',
+    },
+
+    customize: [
+        /* 
+            The optional custom.me file is loaded after main.me is fully processed. It can
+            thus override any setting. Feel free to create and customize. 
+         */
+        'custom.me',
+    ],
+
+    scripts: {
+        postconfig: "
+        ",
+    },
+
     targets: {
         comp: {
             build: `
+                trace('Compile', 'esp compile')
                 run('esp -r -q compile')
             `,
         },
         cleanCache: {
             type: 'clean',
-            action: `rm('cache/*')`,
+            action: "rm('cache/*')",
         },
         cleanMin: {
             type: 'clean',
@@ -75,7 +109,6 @@ Me.load({
                 }
                 TARGET.path.write(result)
             `,
-            enable: `Path('package.json').readJSON().esp.mode == "release"`
         },
         'all.min.css.gz': {
             enable: 'me.settings.css.compress',
@@ -84,20 +117,20 @@ Me.load({
             depends: ['all.min.css']
             build: `
                 trace('Compress', TARGET.path.relative)
-                gzip('client/css/all-${settings.version}.min.css')
+                TARGET.path.remove()
+                run('gzip --keep client/css/all-${settings.version}.min.css')
             `,
-            enable: `Path('package.json').readJSON().esp.mode == "release"`
         },
         'min.html': {
             enable: 'me.settings.html.minify',
             path: 'client/app/all.html.js',
             files: [ '**.html' ],
-            exclude: /client\/paks\/all.min.html/,
+            exclude: /client\/lib\/all.min.html/,
             build: `
                 let list = []
                 trace('Minify', '*.min.html')
                 if (!Cmd.locate('htmlmin')) {
-                    trace('Warning', 'Cannot locate "htmlmin" to minify.')
+                    trace('Warning', 'Cannot locate \"htmlmin\" to minify.')
                 }
                 for each (f in Path('client').files('**.html', {exclude: /\\.min.html/})) {
                     let minified = f.replaceExt('min.html')
@@ -109,11 +142,10 @@ Me.load({
                         }
                     }
                     if (me.settings.html.compress && !me.settings.html.flat) {
-                        gzip(minified)
+                        run('gzip --keep ' + minified)
                     }
                 }
             `,
-            enable: `Path('package.json').readJSON().esp.mode == "release"`
         },
         'html.js': {
             enable: 'me.settings.html.flat',
@@ -124,20 +156,19 @@ Me.load({
                 let list = Path('client').files('**.min.html')
                 let all = Path('client/app/all.html.js')
                 trace('Convert', all)
-                all.append('angular.module("app").run(function(Esp, $templateCache) {')
+                all.append('angular.module(\"app\").run(function(Esp, $templateCache) {')
                 for each (let f:Path in list) {
                     let file = f.relativeTo('client').replace('.min.html', '.html')
                     let data = f.readLines()
                     for (let [key,value] in data) {
-                        data[key] = value.replace(/"/g, '\\\\"')
+                        data[key] = value.replace(/\"/g, '\\\\\"')
                     }
                     data = data.join('\\\\\n')
-                    all.append('\n    $templateCache.put(Esp.url("/' + file + '"), "' + data + '");\n')
+                    all.append('\n    $templateCache.put(Esp.url(\"/' + file + '\"), \"' + data + '\");\n')
                     f.remove()
                 }
                 all.append('});')
             `,
-            enable: `Path('package.json').readJSON().esp.mode == "release"`
         },
         'html.js.gz': {
             enable: 'me.settings.html.flat && me.settings.html.compress && !me.settings.js.flat',
@@ -145,9 +176,8 @@ Me.load({
             files: [ 'client/app/all.html.js' ],
             depends: ['html.js']
             build: `
-                gzip('client/app/all.html.js')
+                run('gzip --keep client/app/all.html.js')
             `,
-            enable: `Path('package.json').readJSON().esp.mode == "release"`
         },
         'min.js': {
             enable: 'me.settings.js.minify',
@@ -158,7 +188,7 @@ Me.load({
             build: `
                 trace('Minify', '*.js')
                 if (!Cmd.locate('uglifyjs')) {
-                    trace('Warning', 'Cannot locate "uglify" to minify. Will just catenate scripts.')
+                    trace('Warning', 'Cannot locate \"uglify\" to minify. Will just catenate scripts.')
                 }
                 if (Cmd.locate('ngmin')) {
                     for each (f in Path('client/app').files('**.js', {exclude: /\\.min.js|\\.ng.js/})) {
@@ -188,11 +218,10 @@ Me.load({
                         }
                     }
                     if (me.settings.js.compress && !me.settings.js.flat) {
-                        gzip(minified)
+                        run('gzip --keep ' + minified)
                     }
                 }
             `,
-            enable: `Path('package.json').readJSON().esp.mode == "release"`
         },
 
         'all.js': {
@@ -225,7 +254,6 @@ Me.load({
                     all.append(';' + f.readString())
                 }
             `,
-            enable: `Path('package.json').readJSON().esp.mode == "release"`
         },
 
         'all.js.gz': {
@@ -235,14 +263,25 @@ Me.load({
             depends: ['all.js'],
             build: `
                 trace('Compress', TARGET.path.relative)
-                gzip(TARGET.path.trimExt('gz'))
+                TARGET.path.remove()
+                run('gzip --keep ' + TARGET.path.trimExt('gz'))
             `,
-            enable: `Path('package.json').readJSON().esp.mode == "release"`
         },
 
         run: {
             depends: ['comp'],
             run: 'appweb -v',
         },
+
+        patchVersion: {
+            build: `
+                let path = Path('package.json')
+                config = path.readJSON()
+                if (config.version != me.settings.version) {
+                    trace('Update', 'package.json version ' + me.settings.version)
+                    path.write(path.readString().replace(/version:.*/, 'version: \\'' + me.settings.version + '\\','))
+                }
+            `
+        }
     },
 })
