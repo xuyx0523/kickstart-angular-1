@@ -7,22 +7,8 @@
         "esp"
     ],
     "dependencies": {
-        "angular": ">=1.2.0",
-        "angular-bootstrap": "0.7.0",
-        "bootstrap": ">=3.0.0",
-        "esp-angular": "*",
-        "esp-angular-mvc": "*",
-        "esp-best": "*",
-        "esp-gui": "*",
         "esp-mgr": "*",
-        "esp-mvc": "*",
-        "esp-server": "*",
-        "font-awesome": "*",
-        "html5shiv": "*",
-        "less": ">=1.3.3",
         "me-dev": "~0.8",
-        "more": "*",
-        "respond": "*"
     },
     "client-scripts": [
         "paks/angular/angular.js",
@@ -145,9 +131,7 @@
         "timeouts": {
             "session": 1800
         },
-        "update": true,
         "xsrf": true,
-        "loginRequired": ""
     },
     "ignore": [
         "doc",
