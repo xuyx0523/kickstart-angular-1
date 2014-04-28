@@ -1,0 +1,231 @@
+/*
+    best.me -- esp-best build targets
+ */
+
+Me.load({
+    mixin: `
+        function gzip(path: Path) {
+            path.joinExt('gz', true).remove()
+            run('gzip ' + path)
+            path.write(run('gunzip -c ' + path + '.gz', {noshow: true}))
+        }
+        let esp = me.package.esp
+        blend(esp, esp.modes[esp.mode])
+        let content = esp.content
+        trace('ESP Mode', esp.mode)
+    `,
+
+    targets: {
+        'build-best': {
+            home: '${TOP}',
+            build: `
+                trace('Compile', 'esp compile')
+                run('esp -q compile')
+            `,
+        },
+
+        'clean-best': {
+            home: '${TOP}',
+            type: 'clean',
+            action: "rm('cache/*')",
+        },
+
+        'clean-best-minified': {
+            home: '${TOP}',
+            type: 'clean',
+            action: `
+                rm('**/*.min.*')
+                rm('client/app/all.html.*')
+            `
+        },
+
+        'all.min.css': {
+            home: '${TOP}',
+            enable: 'content.css.combine',
+            path: 'client/css/all-${settings.version}.min.css',
+            files: [ 'client/css/*.less' ],
+            build: `
+                let switches = content.css.minify ? '-compress' : ''
+                let switches = ''
+                trace('Parse', '*.less')
+                if (content.css.minify) {
+                    trace('Minify', TARGET.path.relative)
+                    switches = '-compress'
+                }
+                rm(TARGET.path)
+                strace('Run', 'recess ' + switches + ' -compile client/css/all.less')
+                let result = Cmd.run('recess ' + switches + ' -compile client/css/all.less')
+                for each (f in Path('client/css').files('*.css')) {
+                    result += f.readString()
+                }
+                TARGET.path.write(result)
+            `,
+        },
+
+        'all.min.css.gz': {
+            home: '${TOP}',
+            enable: 'content.css.compress',
+            path: 'client/css/all-${settings.version}.min.css.gz',
+            files: [ 'client/css/all-${settings.version}.min.css' ],
+            depends: ['all.min.css']
+            build: `
+                trace('Compress', TARGET.path.relative)
+                gzip('client/css/all-${settings.version}.min.css')
+            `,
+        },
+
+        'min.html': {
+            home: '${TOP}',
+            enable: 'content.html.minify',
+            path: 'client/app/all.html.js',
+            files: [ '**.html' ],
+            exclude: /client\/paks\/all.min.html/,
+            build: `
+                let list = []
+                trace('Minify', '*.min.html')
+                if (!Cmd.locate('htmlmin')) {
+                    trace('Warning', 'Cannot locate "htmlmin" to minify.')
+                }
+                for each (f in Path('client').files('**.html', {exclude: /\\.min.html/})) {
+                    let minified = f.replaceExt('min.html')
+                    if (!minified.exists || minified.modified < f.modified) {
+                        if (Cmd.locate('htmlmin')) {
+                            run('htmlmin ' + f)
+                        } else {
+                            f.copy(minified)
+                        }
+                    }
+                    if (content.html.compress && !content.html.combine) {
+                        gzip(minified)
+                    }
+                }
+            `,
+        },
+
+        'html.js': {
+            home: '${TOP}',
+            enable: 'content.html.combine',
+            path: 'client/app/all.html.js',
+            files: [ 'client/app/all.html.js' ],
+            depends: ['min.html']
+            build: `
+                let list = Path('client').files('**.min.html')
+                let all = Path('client/app/all.html.js')
+                trace('Convert', all)
+                all.append('angular.module("app").run(function(Esp, $templateCache) {')
+                for each (let f:Path in list) {
+                    let file = f.relativeTo('client').replace('.min.html', '.html')
+                    let data = f.readLines()
+                    for (let [key,value] in data) {
+                        data[key] = value.replace(/"/g, '\\\\"')
+                    }
+                    data = data.join('\\\\\n')
+                    all.append('\n    $templateCache.put(Esp.url("/' + file + '"), "' + data + '");\n')
+                    f.remove()
+                }
+                all.append('});')
+            `,
+        },
+
+        'html.js.gz': {
+            home: '${TOP}',
+            enable: 'content.html.combine && content.html.compress && !content.js.combine',
+            path: 'client/app/all.html.js.gz',
+            files: [ 'client/app/all.html.js' ],
+            depends: ['html.js']
+            build: `
+                gzip('client/app/all.html.js')
+            `,
+        },
+
+        'min.js': {
+            home: '${TOP}',
+            enable: 'content.js.minify',
+            path: 'client/all-${settings.version}.min.js',
+            files: [ '**.js' ],
+            exclude: /client\/paks\/all.min.js|client\/paks\/spare\/|client\/paks\/html5shiv/,
+            depends: ['html.js'],
+            build: `
+                trace('Minify', '*.js')
+                if (!Cmd.locate('uglifyjs')) {
+                    trace('Warning', 'Cannot locate "uglify" to minify. Will just catenate scripts.')
+                }
+                if (Cmd.locate('ngmin')) {
+                    for each (f in Path('client/app').files('**.js', {exclude: /\\.min.js|\\.ng.js/})) {
+                        let ng = f.replaceExt('ng.js')
+                        if (!ng.exists || ng.modified < f.modified) {
+                            run('ngmin ' + f + ' ' + ng)
+                            run('uglifyjs -o ' + f.replaceExt('min.js') + ' ' + ng)
+                            ng.remove()
+                        }
+                    }
+                }
+                let list = []
+                for each (pattern in me.package['client-scripts']) {
+                    if (pattern.contains('less/less.js') && content.css.combine) continue
+                    for each (script in Path('client').files(pattern, {exclude: /\\.min.js/})) {
+                        list.push(script)
+                    }
+                }
+                for each (f in list) {
+                    let minified = f.replaceExt('min.js')
+                    if (!minified.exists || minified.modified < f.modified) {
+                        if (Cmd.locate('uglifyjs')) {
+                            run('uglifyjs -o ' + f.replaceExt('min.js') + ' ' + f)
+                        } else {
+                            f.copy(f.replaceExt('min.js'))
+                        }
+                    }
+                    if (content.js.compress && !content.js.combine) {
+                        gzip(minified)
+                    }
+                }
+            `,
+        },
+
+        'all.js': {
+            home: '${TOP}',
+            enable: 'content.js.combine',
+            path: 'client/all-${settings.version}.min.js',
+            files: [ '**.min.js' ],
+            exclude: /client\/paks\/all.min.js|client\/paks\/spare\/|client\/paks\/html5shiv/,
+            depends: ['min.js'],
+            build: `
+                trace('Catenate', TARGET.path)
+                rm('client/all.min.js')
+                let list = []
+                for each (pattern in me.package['client-scripts']) {
+                    if (pattern.contains('less/less.js') && content.css.combine) continue
+                    for each (script in Path('client').files(pattern, {exclude: /\\.min.js/})) {
+                        list.push(script.replaceExt('min.js'))
+                    }
+                }
+                list += Path('client').files('app/**.min.js', {exclude: /main.min.js/})
+                let all = TARGET.path
+                for each (let f:Path in list) {
+                    if (!f.exists) {
+                        f = f.replace('.min.js', '.js')
+                    }
+                    strace('Append', f)
+                    if (!content.js.minify) {
+                        f = f.replace('.min.js', '.js')
+                    }
+                    all.append(';' + f.readString())
+                }
+            `,
+        },
+
+        'all.js.gz': {
+            home: '${TOP}',
+            enable: 'content.js.compress',
+            path: 'client/all-${settings.version}.min.js.gz',
+            files: [ 'client/all-${settings.version}.min.js' ],
+            depends: ['all.js'],
+            build: `
+                trace('Compress', TARGET.path.relative)
+                gzip(TARGET.path.trimExt('gz'))
+            `,
+        },
+
+    },
+})

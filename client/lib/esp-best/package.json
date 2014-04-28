@@ -1,0 +1,63 @@
+{
+    "name": "esp-best",
+    "description": "ESP Best Practices Angular Skeleton",
+    "version": "1.0.0-rc0",
+    "keywords": [
+        "esp",
+    ],
+    "dependencies": {
+        "esp-angular-mvc": "~1.0",
+        "less": ">=1.3.3",
+        "bootstrap": "~3",
+        "angular-bootstrap": ">=0.7.0",
+        "html5shiv": "*",
+        "font-awesome": "*",
+        "more": "*",
+        "respond": "*"
+    },
+    "export": [
+        "client/**", 
+        "start.me",
+        "generate/**",
+    ],
+    "esp": {
+        "auth": "app",
+        "mode": "debug",
+        "modes": {
+            "debug": {
+                "combined": false,
+                "showErrors": true,
+                "keepSource": true,
+                "update": true,
+                "login": {
+                    "name": "",
+                    "abilities": {
+                        "edit": true,
+                        "view": true
+                    }
+                }
+            },
+            "release": {
+                "combined": true,
+                "cache": 86400,
+                "compressed": true,
+                "showErrors": false,
+                "update": false,
+                "keepSource": false,
+                "login": {
+                    "name": "",
+                    "abilities": {
+                        "edit": true,
+                        "view": true
+                    }
+                }
+            }
+        },
+        "loginRequired": "",
+        "server": {
+            "generate": {
+                "appweb": "esp-best/appweb.conf",
+            }
+        }
+    }
+}

@@ -25,7 +25,8 @@
     ],
     "dirs": {
         "client": "client",
-        "paks": "client/paks",
+        "paks": "paks",
+        "jslib": "client/lib",
         "base": "."
     },
     "esp": {
