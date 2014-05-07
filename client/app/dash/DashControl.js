@@ -63,7 +63,7 @@ angular.module('app').controller('DashControl', function (Dash, Esp, $location, 
      */
 	function startWebSockets() {
 		var proto = $location.protocol() == 'https' ? 'wss' : 'ws'
-		var uri = proto + '://' + $location.host() + ':' + $location.port() + Esp.config.prefix + '/dash/stream';
+		var uri = proto + '://' + $location.host() + ':' + $location.port() + Esp.config.server + '/dash/stream';
 	    console.log("Opening", uri);
 	    var ws = new WebSocket(uri, ['chat']);
 	    ws.onmessage = function (event) {

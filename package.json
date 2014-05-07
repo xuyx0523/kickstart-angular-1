@@ -10,31 +10,70 @@
         "esp-mgr": "*",
         "me-dev": "~0.8"
     },
-    "client-scripts": [
-        "lib/angular/angular.js",
-        "lib/angular/angular-animate.js",
-        "lib/angular/angular-route.js",
-        "lib/angular-bootstrap/*.js",
-        "lib/esp-angular/*.js",
-        "app/main.js",
-        "app/*/**.js*",
-        "lib/esp-gui/*.js",
-        "lib/html5shiv/html5shiv.js",
-        "lib/less/less.js",
-        "lib/respond/respond.js"
-    ],
-    "dirs": {
-        "client": "client",
-        "paks": "paks",
-        "jslib": "client/lib",
-        "base": "."
-    },
-    "esp": {
-        "auth": "app",
-        "formats": {
-            "date": "yyyy-MM-dd",
-            "float": 2,
-            "int": 0
+    "app": {
+        "client": {
+            "mappings": {
+                "auth": "app.http.auth",
+                "prefix": "app.http.prefix",
+                "serverPrefix": "app.http.serverPrefix",
+                "formats": "app.http.formats",
+                "login": {
+                    "name": "app.http.auth.login.name",
+                    "url": "app.http.auth.require.login",
+                    "url'": "app.http.auth.login.url"
+                },
+                "timeouts": {
+                    "session": "app.http.timeouts.session",
+                    "refresh": "app.http.timeouts.refresh"
+                }
+            },
+            "scripts": [
+                "lib/angular/angular.js",
+                "lib/angular/angular-animate.js",
+                "lib/angular/angular-route.js",
+                "lib/angular-bootstrap/*.js",
+                "lib/esp-angular/*.js",
+                "app/main.js",
+                "app/*/**.js*",
+                "lib/esp-gui/*.js",
+                "lib/html5shiv/html5shiv.js",
+                "lib/less/less.js",
+                "lib/respond/respond.js"
+            ],
+        },
+        "esp": {
+            "generate": {
+                "appweb": "esp-best/appweb.conf",
+                "migration": "esp-server/migration.c",
+                "controller": "esp-server/controller.c",
+                "controller-singleton": "esp-server/controller.c",
+                "clientModel": "esp-angular-mvc/model.js",
+                "clientController": "esp-angular-mvc/controller.js",
+                "clientList": "esp-angular-mvc/list.html",
+                "clientEdit": "esp-angular-mvc/edit.html",
+                "module": "esp-mvc/src/app.c"
+            },
+        },
+        "http": {
+            "auth": {
+                type: "app",
+            },
+            "database": "mdb://kickstart.mdb",
+            "formats": {
+                "date": "yyyy-MM-dd",
+                "float": 2,
+                "int": 0
+            },
+            "routes": "esp-angular-mvc",
+            "server": {
+                "listen": [ "127.0.0.1:4000" ]
+            },
+            "serverPrefix": "/do",
+            "timeouts": {
+                "refresh": 1000,
+                "session": 1800
+            },
+            "xsrf": true,
         },
         "json": true,
         "mode": "debug",
@@ -116,8 +155,6 @@
                 "compile": "optimized"
             }
         },
-        "refresh": 1000,
-        "serverPrefix": "/do",
         "server": {
             "database": "mdb://kickstart.mdb",
             "generate": {
@@ -131,13 +168,7 @@
                 "clientEdit": "esp-angular-mvc/edit.html",
                 "module": "esp-mvc/generate/src/app.c"
             },
-            "routes": "esp-angular-mvc"
         },
-        "timeouts": {
-            "session": 1800
-        },
-        "xsrf": true,
-        "logRoutes": false
     },
     "ignore": [
         "doc",
