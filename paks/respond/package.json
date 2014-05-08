@@ -7,11 +7,15 @@
     ],
     "export": [
         {
-            from: [
-                "*.js",
-            ],
-            to: '${JSLIB}/respond',
+            from: "*.js",
+            to: '${LIB}/respond',
         }
     ],
-    "client-scripts": [ "${JSLIB}/respond/respond.js" ]
+    "app": {
+        "client": {
+            "+scripts": [ 
+                "${LIB}/respond/respond.js" 
+            ]
+        }
+    }
 }

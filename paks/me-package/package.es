@@ -34,7 +34,7 @@ public function deploy(manifest, prefixes, package): Array {
         }
         let prior = App.dir
         if (item.home) {
-            App.chdir(item.home)
+            App.chdir(expand(item.home))
         }
         for (let [key,value] in item) {
             if (value is String && value.contains('${')) {
@@ -109,6 +109,9 @@ public function deploy(manifest, prefixes, package): Array {
                     makeDir(dir, item)
                     strace('Create', dir.relativeTo(me.dir.top))
                 }
+            }
+            if (item.copy) {
+                eval('require ejs.unix\n' + expand(item.copy))
             }
             if (item.from) {
                 copy(item.from, item.to, item)
@@ -349,29 +352,6 @@ public function packagePak() {
         makeSimplePackage(package, prefixes, 'pak')
     }
 }
-
-
-/* UNUSED
-public function packageCombo() {
-    let [manifest, package, prefixes] = setupPackage('combo')
-    if (package) {
-        trace('Package', me.settings.title + ' Combo')
-        deploy(manifest, prefixes, package)
-        makeSimplePackage(package, prefixes, 'combo')
-    }
-}
-
-
-public function packageFlat() {
-    let [manifest, package, prefixes] = setupPackage('flat')
-    if (package) {
-        trace('Package', me.settings.title + ' Flat')
-        deploy(manifest, prefixes, package)
-        flatten()
-        makeSimplePackage(package, prefixes, 'flat')
-    }
-}
-*/
 
 
 function checkRoot() {
@@ -844,13 +824,14 @@ function packageWindows(prefixes) {
         let pass = Path('/crt/signing.pass').readString().trim()
         trace('Sign', outfile)
         Cmd.run([me.targets.winsdk.path.join('bin/x86/signtool.exe'),
-            'sign', '/f', cert, '/p', pass, '/t', 'http://tsa.starfieldtech.com', outfile], {noshow: true})
+            'sign', '/f', cert, '/p', pass, '/t', 'http://timestamp.verisign.com/scripts/timestamp.dll', outfile], 
+            {noshow: true})
     }
     /* Wrap in a zip archive */
     let zipfile = outfile.joinExt('zip', true)
     zipfile.remove()
     trace('Package', zipfile)
-    run([me.targets.zip.path, '-q', zipfile.basename, outfile.basename], {dir: me.dir.rel})
+    run(['zip', '-q', zipfile.basename, outfile.basename], {dir: me.dir.rel})
     me.dir.rel.join('md5-' + base).joinExt('exe.zip.txt', true).write(md5(zipfile.readString()))
     outfile.remove()
 }

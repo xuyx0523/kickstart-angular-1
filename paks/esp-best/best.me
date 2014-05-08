@@ -9,10 +9,14 @@ Me.load({
             run('gzip ' + path)
             path.write(run('gunzip -c ' + path + '.gz', {noshow: true}))
         }
-        let esp = me.package.esp
-        blend(esp, esp.modes[esp.mode])
-        let content = esp.content
-        trace('ESP Mode', esp.mode)
+        let app = me.package.app
+        blend(app, app.modes[app.mode])
+        app.esp ||= {}
+        app.esp.content ||= {}
+        let combine = app.esp.content.combine
+        let compress = app.esp.content.compress
+        let minify = app.esp.content.minify
+        trace('ESP Mode', app.mode)
     `,
 
     targets: {
@@ -41,14 +45,14 @@ Me.load({
 
         'all.min.css': {
             home: '${TOP}',
-            enable: 'content.css.combine',
+            enable: `combine.contains('css')`,
             path: 'client/css/all-${settings.version}.min.css',
             files: [ 'client/css/*.less' ],
             build: `
-                let switches = content.css.minify ? '-compress' : ''
+                let switches = minify.contains('css') ? '-compress' : ''
                 let switches = ''
                 trace('Parse', '*.less')
-                if (content.css.minify) {
+                if (minify.contains('css')) {
                     trace('Minify', TARGET.path.relative)
                     switches = '-compress'
                 }
@@ -64,7 +68,7 @@ Me.load({
 
         'all.min.css.gz': {
             home: '${TOP}',
-            enable: 'content.css.compress',
+            enable: `compress.contains('css')`,
             path: 'client/css/all-${settings.version}.min.css.gz',
             files: [ 'client/css/all-${settings.version}.min.css' ],
             depends: ['all.min.css']
@@ -76,7 +80,7 @@ Me.load({
 
         'min.html': {
             home: '${TOP}',
-            enable: 'content.html.minify',
+            enable: `minify.contains('html')`,
             path: 'client/app/all.html.js',
             files: [ '**.html' ],
             exclude: /client\/paks\/all.min.html/,
@@ -95,7 +99,7 @@ Me.load({
                             f.copy(minified)
                         }
                     }
-                    if (content.html.compress && !content.html.combine) {
+                    if (compress.contains('html') && !combine.contains('html')) {
                         gzip(minified)
                     }
                 }
@@ -104,7 +108,7 @@ Me.load({
 
         'html.js': {
             home: '${TOP}',
-            enable: 'content.html.combine',
+            enable: `combine.contains('html')`,
             path: 'client/app/all.html.js',
             files: [ 'client/app/all.html.js' ],
             depends: ['min.html']
@@ -129,7 +133,7 @@ Me.load({
 
         'html.js.gz': {
             home: '${TOP}',
-            enable: 'content.html.combine && content.html.compress && !content.js.combine',
+            enable: `combine.contains('html') && compress.contains('html') && !combine.contains('js')`,
             path: 'client/app/all.html.js.gz',
             files: [ 'client/app/all.html.js' ],
             depends: ['html.js']
@@ -140,7 +144,7 @@ Me.load({
 
         'min.js': {
             home: '${TOP}',
-            enable: 'content.js.minify',
+            enable: `minify.contains('js')`,
             path: 'client/all-${settings.version}.min.js',
             files: [ '**.js' ],
             exclude: /client\/paks\/all.min.js|client\/paks\/spare\/|client\/paks\/html5shiv/,
@@ -162,7 +166,7 @@ Me.load({
                 }
                 let list = []
                 for each (pattern in me.package['client-scripts']) {
-                    if (pattern.contains('less/less.js') && content.css.combine) continue
+                    if (pattern.contains('less/less.js') && combine.contains('css')) continue
                     for each (script in Path('client').files(pattern, {exclude: /\\.min.js/})) {
                         list.push(script)
                     }
@@ -176,7 +180,7 @@ Me.load({
                             f.copy(f.replaceExt('min.js'))
                         }
                     }
-                    if (content.js.compress && !content.js.combine) {
+                    if (compress.contains('js') && !combine.contains('js')) {
                         gzip(minified)
                     }
                 }
@@ -185,7 +189,7 @@ Me.load({
 
         'all.js': {
             home: '${TOP}',
-            enable: 'content.js.combine',
+            enable: `combine.contains('js')`,
             path: 'client/all-${settings.version}.min.js',
             files: [ '**.min.js' ],
             exclude: /client\/paks\/all.min.js|client\/paks\/spare\/|client\/paks\/html5shiv/,
@@ -195,7 +199,7 @@ Me.load({
                 rm('client/all.min.js')
                 let list = []
                 for each (pattern in me.package['client-scripts']) {
-                    if (pattern.contains('less/less.js') && content.css.combine) continue
+                    if (pattern.contains('less/less.js') && combine.contains('css')) continue
                     for each (script in Path('client').files(pattern, {exclude: /\\.min.js/})) {
                         list.push(script.replaceExt('min.js'))
                     }
@@ -207,7 +211,7 @@ Me.load({
                         f = f.replace('.min.js', '.js')
                     }
                     strace('Append', f)
-                    if (!content.js.minify) {
+                    if (!minify.contains('js')) {
                         f = f.replace('.min.js', '.js')
                     }
                     all.append(';' + f.readString())
@@ -217,7 +221,7 @@ Me.load({
 
         'all.js.gz': {
             home: '${TOP}',
-            enable: 'content.js.compress',
+            enable: `compress.contains('js')`,
             path: 'client/all-${settings.version}.min.js.gz',
             files: [ 'client/all-${settings.version}.min.js' ],
             depends: ['all.js'],

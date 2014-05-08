@@ -8,8 +8,14 @@
     "export": [
         {
             from: "*.js",
-            to: '${JSLIB}/html5shiv',
+            to: '${LIB}/html5shiv',
         }
     ],
-    "client-scripts": [ "${JSLIB}/html5shiv/html5shiv.js" ]
+    "app": {
+        "client": {
+            "+scripts": [ 
+                "${LIB}/html5shiv/html5shiv.js" 
+            ]
+        }
+    }
 }

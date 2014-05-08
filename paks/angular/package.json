@@ -13,12 +13,16 @@
                 "angular-animate.js",
                 "angular-route.js",
             ],
-            to: '${JSLIB}/angular',
+            to: '${LIB}/angular',
         }
     ],
-    "client-scripts": [
-        "${JSLIB}/angular/angular.js",
-        "${JSLIB}/angular/angular-animate.js",
-        "${JSLIB}/angular/angular-route.js",
-    ]
+    "app": {
+        "client": {
+            "+scripts": [
+                "${LIB}/angular/angular.js",
+                "${LIB}/angular/angular-animate.js",
+                "${LIB}/angular/angular-route.js",
+            ]
+        }
+    }
 }

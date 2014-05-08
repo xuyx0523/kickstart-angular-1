@@ -19,12 +19,16 @@
             from: [
                 "*.js",
             ],
-            to: "${JSLIB}/esp-gui",
+            to: "${LIB}/esp-gui",
         }
     ],
-    "client-scripts": [ 
-        "${JSLIB}/esp-gui/*.js" 
-    ],
+    "app": {
+        "client": {
+            "+scripts": [ 
+                "${LIB}/esp-gui/*.js" 
+            ],
+        },
+    },
     "ignore": [
         "doc/**",
         "start.me",

@@ -15,52 +15,73 @@
         "more": "*",
         "respond": "*"
     },
-    "licenses": [
-        {
+    "licenses": [ {
             "type": "GPL",
             "url": "http://www.gnu.org/licenses/gpl-2.0.html"
-        },
-        {
+        }, {
             "type": "Commercial",
             "url": "http://embedthis.com/licensing/"
         }
     ],
-    "export": [
-        {
+    "export": [ {
             from: "*.less",
-            to: '${JSLIB}/esp-best',
+            to: '${LIB}/esp-best',
         }
     ],
-    "esp": {
-        "?auth": "app",
-        "?mode": "debug",
-        "modes": {
-            "debug": {
-                "login": {
-                    "?name": "",
-                    "?abilities": {
-                        "edit": true,
-                        "view": true
-                    },
-                    "?required": "",
-                }
-            },
-            "release": {
-                "login": {
-                    "?name": "",
-                    "?abilities": {
-                        "edit": true,
-                        "view": true
-                    },
-                    "?required": "",
-                }
-            }
-        },
-        "server": {
+    "app": {
+        "esp": {
             "generate": {
                 "-appweb": "esp-angular-mvc/appweb.conf",
                 "?appweb": "esp-best/appweb.conf",
             }
-        }
-    }
+        },
+        "http": {
+            "?auth": {
+                type: "app",
+                "?require": {
+                    "?users": ["*"],
+                },
+            },
+        },
+        "?mode": "debug",
+        "modes": {
+            "debug": {
+                "http": {
+                    "auth": {
+                        "login": {
+                            "?name": "",
+                            "?abilities": [ "*" ],
+                        },
+                    },
+                    content: {
+                        "?stylesheets": "less",
+                    },
+                },
+            },
+            "release": {
+                "http": {
+                    "auth": {
+                        "login": {
+                            "url": "",
+                        },
+                    },
+                    "cache": [{
+                        "lifespan": {
+                            "client": "1day",
+                        },
+                        "extensions": [ "css", "gif", "ico", "jpeg", "jpg", "js", "html", "less", "png", "pdf", "txt" ],
+                    }],
+                    "content": {
+                        "?combine":     [ "c", "css", "html", "js" ],
+                        "?compress":    [ "css", "html", "js", "txt", "xml" ],
+                        "?minify":      [ "css", "html", "js" ],
+                        "?stylesheets": "css",
+                    },
+                    "redirect": [{
+                        "to": "https://"
+                    }],
+                },
+            },
+        },
+    },
 }

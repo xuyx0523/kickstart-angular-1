@@ -5,19 +5,19 @@ angular.module('app').factory('Demo', [
     return EspResource.group('demo', {}, {
       'demo1': {
         'method': 'GET',
-        url: '/:server/demo/demo1'
+        url: '/:prefix/demo/demo1'
       },
       'demo2': {
         'method': 'GET',
-        url: '/:server/demo/demo2'
+        url: '/:prefix/demo/demo2'
       },
       'demo3': {
         'method': 'GET',
-        url: '/:server/demo/demo3'
+        url: '/:prefix/demo/demo3'
       },
       'demo4': {
         'method': 'GET',
-        url: '/:server/demo/demo4'
+        url: '/:prefix/demo/demo4'
       }
     });
   }

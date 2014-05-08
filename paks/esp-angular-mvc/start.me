@@ -4,16 +4,19 @@
 
 Me.load({
     targets: {
-        comp: {
-            run: 'esp -r -q compile',
+        'build-angular-mvc': {
+            build: `
+                trace('Compile', 'esp compile')
+                run('esp -q compile')
+            `,
         },
         run: {
-            depends: ['comp'],
+            depends: ['build-angular-mvc'],
             run: 'esp -v',
         },
         cleanCache: {
             type: 'clean',
-            action: "rm('cache/*')",
+            action: `rm('cache/*')`,
         },
     },
 })

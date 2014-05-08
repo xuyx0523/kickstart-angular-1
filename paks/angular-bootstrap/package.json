@@ -13,10 +13,14 @@
     "export": [
         {
             from: "*.js",
-            to: '${JSLIB}/angular-bootstrap',
+            to: '${LIB}/angular-bootstrap',
         }
     ],
-    "client-scripts": [ 
-        "${JSLIB}/angular-bootstrap/*.js" 
-    ]
+    "app": {
+        "client": {
+            "+scripts": [ 
+                "${LIB}/angular-bootstrap/*.js" 
+            ]
+        }
+    }
 }

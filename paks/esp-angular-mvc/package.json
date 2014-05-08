@@ -18,12 +18,11 @@
     "dependencies": {
         "esp-angular": "~5.0"
     },
-    "export": [
-        {
+    "export": [ {
             from: [
                 "css/*",
             ],
-            to: '${JSLIB}/esp-angular-mvc',
+            to: '${LIB}/esp-angular-mvc',
         }, {
             overwrite: false,
             from: [
@@ -33,21 +32,18 @@
             to: '.',
         }
     ],
-    "client-scripts": [
-        "app/main.js",
-        "app/*/**.js*"
-    ],
-    "esp": {
-        "formats": {
-            "?date": "yyyy-MM-dd",
-            "?float": 2
+    "app": {
+        "client": {
+            "+scripts": [
+                "app/main.js",
+                "app/*/**.js*"
+            ],
         },
-        "json": true,
-        "server": {
+        "esp": {
             "generate": {
                 "-appweb": "esp-mvc/generate/appweb.conf",
                 "-controller": "esp-mvc/generate/controller.c",
-                "-controller-singleton": "esp-mvc/generate/controller.c",
+                "-controllerSingleton": "esp-mvc/generate/controller.c",
 
                 "?appweb": "esp-angular-mvc/generate/appweb.conf",
                 "?clientModel": "esp-angular-mvc/generate/model.js",
@@ -55,10 +51,20 @@
                 "?clientList": "esp-angular-mvc/generate/list.html",
                 "?clientEdit": "esp-angular-mvc/generate/edit.html",
                 "?controller": "esp-angular-mvc/generate/controller.c",
-                "?controller-singleton": "esp-angular-mvc/generate/controller-singleton.c",
+                "?controllerSingleton": "esp-angular-mvc/generate/controller-singleton.c",
+            },
+        },
+        "http": {
+            "content": {
+                "stylesheets": "css",
+            },
+            "formats": {
+                "response": "json",
+                "?date": "yyyy-MM-dd",
+                "?float": 2
             },
             "-routes": "esp-server",
             "?routes": "esp-angular-mvc",
-        }
-    }
+        },
+    },
 }

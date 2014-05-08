@@ -13,7 +13,7 @@
                 "less/*.less",
                 "fonts/*",
             ],
-            to: '${JSLIB}/bootstrap',
+            to: '${LIB}/bootstrap',
         }
     ],
 }

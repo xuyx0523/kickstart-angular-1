@@ -9,13 +9,20 @@
         "esp-best": "~5.0",
         "esp-gui": "~5.0"
     },
-    "export": [
-        "generate/**"
-    ],
-    "esp": {
-        "server": {
-            "generate": {
-            }
+    "licenses": [
+        {
+            "type": "GPL",
+            "url": "http://www.gnu.org/licenses/gpl-2.0.html"
+        },
+        {
+            "type": "Commercial",
+            "url": "http://embedthis.com/licensing/"
         }
-    }
+    ],
+    "export": [
+        {
+            from: [ "index.esp" ],
+            to: "client",
+        }
+    ],
 }

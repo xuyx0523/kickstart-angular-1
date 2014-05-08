@@ -12,7 +12,7 @@
                 "font/*",
                 "less/*",
             ],
-            to: '${JSLIB}/font-awesome',
+            to: '${LIB}/font-awesome',
         }
     ],
 }

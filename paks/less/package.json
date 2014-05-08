@@ -8,8 +8,14 @@
     "export": [
         {
             from: "*.js",
-            to: '${JSLIB}/less',
+            to: '${LIB}/less',
         }
     ],
-    "client-scripts": [ "${JSLIB}/less/less.js" ]
+    "app": {
+        "client": {
+            "+scripts": [ 
+                "${LIB}/less/less.js" 
+            ]
+        }
+    }
 }

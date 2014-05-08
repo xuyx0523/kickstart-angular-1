@@ -8,7 +8,7 @@
     "export": [
         {
             from: "*.less",
-            to: '${JSLIB}/more',
+            to: '${LIB}/more',
         }
     ],
 }

@@ -7,6 +7,8 @@
         "esp"
     ],
     "dependencies": {
+        "angular": "~1.2",
+        "esp-best": "~5.0",
         "esp-mgr": "*",
         "me-dev": "~0.8"
     },
@@ -39,7 +41,7 @@
                 "lib/html5shiv/html5shiv.js",
                 "lib/less/less.js",
                 "lib/respond/respond.js"
-            ],
+            ]
         },
         "esp": {
             "generate": {
@@ -51,22 +53,26 @@
                 "clientController": "esp-angular-mvc/controller.js",
                 "clientList": "esp-angular-mvc/list.html",
                 "clientEdit": "esp-angular-mvc/edit.html",
-                "module": "esp-mvc/src/app.c"
-            },
+                "module": "esp-mvc/src/app.c",
+                "controllerSingleton": "esp-angular-mvc/generate/controller-singleton.c"
+            }
         },
         "http": {
             "auth": {
-                type: "app",
+                "type": "app"
             },
             "database": "mdb://kickstart.mdb",
             "formats": {
                 "date": "yyyy-MM-dd",
                 "float": 2,
-                "int": 0
+                "int": 0,
+                "response": "json"
             },
             "routes": "esp-angular-mvc",
             "server": {
-                "listen": [ "127.0.0.1:4000" ]
+                "listen": [
+                    "127.0.0.1:4000"
+                ]
             },
             "serverPrefix": "/do",
             "timeouts": {
@@ -74,6 +80,9 @@
                 "session": 1800
             },
             "xsrf": true,
+            "content": {
+                "stylesheets": "css"
+            }
         },
         "json": true,
         "mode": "debug",
@@ -113,7 +122,28 @@
                 "showErrors": true,
                 "update": true,
                 "combined": false,
-                "compile": "symbols"
+                "compile": "symbols",
+                "esp": {
+                    "compile": "symbols"
+                },
+                "http": {
+                    "content": {
+                        "keep": [
+                            "c"
+                        ],
+                        "stylesheets": "less"
+                    },
+                    "showErrors": true,
+                    "update": true,
+                    "auth": {
+                        "login": {
+                            "name": "",
+                            "abilities": [
+                                "*"
+                            ]
+                        }
+                    }
+                }
             },
             "release": {
                 "cache": 86400,
@@ -152,7 +182,65 @@
                 "showErrors": false,
                 "update": false,
                 "combined": true,
-                "compile": "optimized"
+                "compile": "optimized",
+                "esp": {
+                    "compile": "optimized"
+                },
+                "http": {
+                    "showErrors": false,
+                    "update": false,
+                    "auth": {
+                        "login": {
+                            "url": ""
+                        }
+                    },
+                    "cache": [
+                        {
+                            "lifespan": {
+                                "client": "1day"
+                            },
+                            "extensions": [
+                                "css",
+                                "gif",
+                                "ico",
+                                "jpeg",
+                                "jpg",
+                                "js",
+                                "html",
+                                "less",
+                                "png",
+                                "pdf",
+                                "txt"
+                            ]
+                        }
+                    ],
+                    "content": {
+                        "combine": [
+                            "c",
+                            "css",
+                            "html",
+                            "js"
+                        ],
+                        "compress": [
+                            "css",
+                            "html",
+                            "js",
+                            "txt",
+                            "xml"
+                        ],
+                        "minify": [
+                            "css",
+                            "html",
+                            "js"
+                        ],
+                        "stylesheets": "css"
+                    },
+                    "redirect": [
+                        {
+                            "to": "https://"
+                        }
+                    ]
+                }
             }
         },
         "server": {
@@ -167,8 +255,8 @@
                 "clientList": "esp-angular-mvc/list.html",
                 "clientEdit": "esp-angular-mvc/edit.html",
                 "module": "esp-mvc/generate/src/app.c"
-            },
-        },
+            }
+        }
     },
     "ignore": [
         "doc",
