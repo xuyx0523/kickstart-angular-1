@@ -1,9 +1,0 @@
-{
-    name: "html5shiv",
-    "description": "Javascript polyfill for IE 8 and before",
-    "version": "3.6.2",
-    "keywords": [
-        "esp",
-    ],
-    "client-scripts": [ "${PAKS}/html5shiv/html5shiv.js" ]
-}
