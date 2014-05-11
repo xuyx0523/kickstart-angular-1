@@ -8,20 +8,18 @@
  */
 static void commonController(HttpConn *conn) 
 {
-    cchar       *loginRequired, *uri, *next, *prefix;
+    HttpRoute   *route;
+    cchar       *loginRequired, *uri, *stem;
 
     if (!httpLoggedIn(conn)) {
         uri = getUri();
-        prefix = espGetConfig(conn->rx->route, "settings.prefix", 0);
-        if (sstarts(uri, prefix)) {
-            next = &uri[slen(prefix)];
-            if (smatch(next, "/user/login") || smatch(next, "/user/logout") || smatch(next, "/user/forgot")) {
-                #if MOB
-                sstarts(next, "/dash") || sstarts(next, "/status"))
-                #endif
+        route = conn->rx->route;
+        if (!route->serverPrefix || sstarts(uri, route->serverPrefix)) {
+            stem = (route->serverPrefix) ?  &uri[slen(route->serverPrefix)] : uri;
+            if (smatch(stem, "/user/login") || smatch(stem, "/user/logout") || smatch(stem, "/user/forgot")) {
                 return;
             }
-            loginRequired = espGetConfig(conn->rx->route, "settings.loginRequired", 0);
+            loginRequired = espGetConfig(conn->rx->route, "app.http.auth.require.users", 0);
             if (loginRequired && *loginRequired) {
                 httpError(conn, HTTP_CODE_UNAUTHORIZED, "Access Denied. Login required");
             }
@@ -55,7 +53,7 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
     /*
         Restrict to a single simultaneous login
      */
-    if (espTestConfig(rx->route, "esp.login.single", "true")) {
+    if (espTestConfig(rx->route, "app.http.login.single", "true")) {
         if (!espIsCurrentSession(conn)) {
             feedback("error", "Another user still logged in");
             mprLog(5, "verifyUser: Too many simultaneous users");
@@ -84,7 +82,7 @@ ESP_EXPORT int esp_app_kickstart(HttpRoute *route, MprModule *module)
         This code sets up a private, in-memory, readonly database for each user. 
      */
     if ((edi = espGetRouteDatabase(route)) == 0) {
-        mprError("Cannot get route database in esp_app_kick");
+        mprError("Cannot get route database in esp_app_kickstart");
     } else {
         ediSetPrivate(edi, 1);
         ediSetReadonly(edi, 1);

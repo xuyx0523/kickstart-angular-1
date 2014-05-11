@@ -11,11 +11,11 @@ Me.load({
         }
         let app = me.package.app
         blend(app, app.modes[app.mode])
-        app.esp ||= {}
-        app.esp.content ||= {}
-        let combine = app.esp.content.combine
-        let compress = app.esp.content.compress
-        let minify = app.esp.content.minify
+        app.http ||= {}
+        app.http.content ||= {}
+        let combine = app.http.content.combine
+        let compress = app.http.content.compress
+        let minify = app.http.content.minify
         trace('ESP Mode', app.mode)
     `,
 

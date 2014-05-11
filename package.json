@@ -7,8 +7,6 @@
         "esp"
     ],
     "dependencies": {
-        "angular": "~1.2",
-        "esp-best": "~5.0",
         "esp-mgr": "*",
         "me-dev": "~0.8"
     },
@@ -21,8 +19,7 @@
                 "formats": "app.http.formats",
                 "login": {
                     "name": "app.http.auth.login.name",
-                    "url": "app.http.auth.require.login",
-                    "url'": "app.http.auth.login.url"
+                    "url": "app.http.auth.login.url"
                 },
                 "timeouts": {
                     "session": "app.http.timeouts.session",
@@ -48,7 +45,6 @@
                 "appweb": "esp-best/appweb.conf",
                 "migration": "esp-server/migration.c",
                 "controller": "esp-server/controller.c",
-                "controller-singleton": "esp-server/controller.c",
                 "clientModel": "esp-angular-mvc/model.js",
                 "clientController": "esp-angular-mvc/controller.js",
                 "clientList": "esp-angular-mvc/list.html",
@@ -69,11 +65,6 @@
                 "response": "json"
             },
             "routes": "esp-angular-mvc",
-            "server": {
-                "listen": [
-                    "127.0.0.1:4000"
-                ]
-            },
             "serverPrefix": "/do",
             "timeouts": {
                 "refresh": 1000,
@@ -84,45 +75,9 @@
                 "stylesheets": "css"
             }
         },
-        "json": true,
         "mode": "debug",
         "modes": {
             "debug": {
-                "combine": false,
-                "content": {
-                    "css": {
-                        "combine": false,
-                        "minify": false,
-                        "compress": false
-                    },
-                    "html": {
-                        "combine": false,
-                        "minify": false,
-                        "compress": false
-                    },
-                    "js": {
-                        "combine": false,
-                        "minify": false,
-                        "compress": false
-                    }
-                },
-                "login": {
-                    "name": "",
-                    "abilities": {
-                        "edit": true,
-                        "view": true
-                    },
-                    "single": false,
-                    "required": ""
-                },
-                "server": {
-                    "redirect": ""
-                },
-                "keepSource": true,
-                "showErrors": true,
-                "update": true,
-                "combined": false,
-                "compile": "symbols",
                 "esp": {
                     "compile": "symbols"
                 },
@@ -133,12 +88,10 @@
                         ],
                         "stylesheets": "less"
                     },
-                    "showErrors": true,
-                    "update": true,
                     "auth": {
                         "login": {
                             "name": "",
-                            "abilities": [
+                            "roles": [
                                 "*"
                             ]
                         }
@@ -146,49 +99,10 @@
                 }
             },
             "release": {
-                "cache": 86400,
-                "combine": true,
-                "compressed": true,
-                "content": {
-                    "css": {
-                        "combine": true,
-                        "minify": true,
-                        "compress": true
-                    },
-                    "html": {
-                        "combine": true,
-                        "minify": true,
-                        "compress": true
-                    },
-                    "js": {
-                        "combine": true,
-                        "minify": true,
-                        "compress": true
-                    }
-                },
-                "keepSource": false,
-                "login": {
-                    "name": "",
-                    "abilities": {
-                        "edit": true,
-                        "view": true
-                    },
-                    "single": false,
-                    "required": "/user/login"
-                },
-                "server": {
-                    "redirect": "secure"
-                },
-                "showErrors": false,
-                "update": false,
-                "combined": true,
-                "compile": "optimized",
                 "esp": {
                     "compile": "optimized"
                 },
                 "http": {
-                    "showErrors": false,
-                    "update": false,
                     "auth": {
                         "login": {
                             "url": ""
@@ -235,26 +149,8 @@
                         ],
                         "stylesheets": "css"
                     },
-                    "redirect": [
-                        {
-                            "to": "https://"
-                        }
-                    ]
+                    "redirect": "https://"
                 }
-            }
-        },
-        "server": {
-            "database": "mdb://kickstart.mdb",
-            "generate": {
-                "appweb": "esp-best/appweb.conf",
-                "migration": "esp-server/migration.c",
-                "controller": "esp-server/controller.c",
-                "controller-singleton": "esp-server/controller.c",
-                "clientModel": "esp-angular-mvc/model.js",
-                "clientController": "esp-angular-mvc/controller.js",
-                "clientList": "esp-angular-mvc/list.html",
-                "clientEdit": "esp-angular-mvc/edit.html",
-                "module": "esp-mvc/generate/src/app.c"
             }
         }
     },
