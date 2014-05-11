@@ -20,3 +20,5 @@ linux-*-*
 *.min.js
 db/kickstart.*
 /start.me
+all.html.js
+all*.min.css

@@ -75,7 +75,7 @@
                 "stylesheets": "css"
             }
         },
-        "mode": "debug",
+        "mode": "release",
         "modes": {
             "debug": {
                 "esp": {
