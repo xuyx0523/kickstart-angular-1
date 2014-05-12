@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" ng-csp>
 <head>
-    <title>Kickstart</title>
+    <title>${APP}</title>
     <meta charset="utf-8" />
     <link rel="icon" href="@~/assets/favicon.ico" type="image/x-icon">
     <% stylesheets(NULL); %>
@@ -10,7 +10,7 @@
     <header>
         <nav class="navbar navbar-inverse navbar-static-top">
             <div class="navbar-header">
-                <a class="navbar-brand ng-cloak" href="#"><i class="glyphicon glyphicon-eye-open"></i> Kickstart</a>
+                <a class="navbar-brand ng-cloak" href="#"><i class="glyphicon glyphicon-eye-open"></i> ${APP}</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right ng-cloak">
@@ -74,7 +74,7 @@
         <span class="ng-hide-remove" ng-class="'feedback-' + field" ng-cloak>{{msg}}</span>
     </div>
     <footer id="author" ng-cloak>
-        <span class="pull-right">Powered by ESP &mdash; &copy; Embedthis Software 2014</span>
+        <span class="pull-right">Powered by ESP &mdash; &copy; Embedthis Software 2013</span>
     </footer>
     <% scripts(NULL); %>
 </body>
