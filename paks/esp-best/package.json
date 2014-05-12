@@ -77,9 +77,7 @@
                         "?minify":      [ "css", "html", "js" ],
                         "?stylesheets": "css",
                     },
-                    "redirect": [{
-                        "to": "https://"
-                    }],
+                    "redirect": "https://",
                 },
             },
         },

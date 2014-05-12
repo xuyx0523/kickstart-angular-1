@@ -8,7 +8,8 @@
     ],
     "dependencies": {
         "esp-mgr": "*",
-        "me-dev": "~0.8"
+        "me-dev": "~0.8",
+        "me-package": "~0.8"
     },
     "app": {
         "client": {
@@ -164,8 +165,5 @@
     "ignore": [
         "doc",
         "start.bit"
-    ],
-    "directories": {
-        "paks": "src/paks"
-    }
+    ]
 }
