@@ -74,7 +74,7 @@
         <span class="ng-hide-remove" ng-class="'feedback-' + field" ng-cloak>{{msg}}</span>
     </div>
     <footer id="author" ng-cloak>
-        <span class="pull-right">Powered by ESP &mdash; &copy; Embedthis Software 2013</span>
+        <span class="pull-right">Powered by ESP &mdash; &copy; Embedthis Software 2014</span>
     </footer>
     <% scripts(NULL); %>
 </body>
