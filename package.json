@@ -93,9 +93,14 @@
                             "name": "",
                             "roles": [
                                 "*"
+                            ],
+                            "abilities": [
+                                "*"
                             ]
                         }
-                    }
+                    },
+                    "showErrors": true,
+                    "update": true
                 }
             },
             "release": {
@@ -149,7 +154,13 @@
                         ],
                         "stylesheets": "css"
                     },
-                    "redirect": "https://"
+                    "redirect": [
+                        {
+                            "to": "https://"
+                        }
+                    ],
+                    "showErrors": false,
+                    "update": false
                 }
             }
         }
@@ -157,5 +168,8 @@
     "ignore": [
         "doc",
         "start.bit"
-    ]
+    ],
+    "directories": {
+        "paks": "src/paks"
+    }
 }
