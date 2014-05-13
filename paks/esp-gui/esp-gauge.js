@@ -55,10 +55,10 @@ angular.module('esp.gauge', [])
                 scope.draw();
             });
             if (!scope.background) {
-                scope.background = Esp.rgb2hex(styles['background-color']);
+                scope.background = Esp.rgb2hex(styles.getPropertyValue('background-color'));
             }
             if (!scope.color) {
-                scope.color = Esp.rgb2hex(styles['color']);
+                scope.color = Esp.rgb2hex(styles.getPropertyValue('color'));
             }
             scope.draw = function() {
                 var value = scope.current;
@@ -78,9 +78,9 @@ angular.module('esp.gauge', [])
                 var sweep = 0.7 * Math.PI;
                 var startAngle = (1.5 * Math.PI) - (sweep / 2);
                 var endAngle = (1.5 * Math.PI) + (sweep / 2);
-                var font = styles['font-family'].split(',')[0]; 
-                var fontSize = parseInt(styles['font-size']);
-                var fontWeight = styles['font-weight'];
+                var font = styles.getPropertyValue('font-family').split(',')[0]; 
+                var fontSize = parseInt(styles.getPropertyValue('font-size'));
+                var fontWeight = styles.getPropertyValue('font-weight');
 
                 c.save();
                 c.fillStyle = scope.background;
