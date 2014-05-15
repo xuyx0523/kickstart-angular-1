@@ -43,7 +43,7 @@
             "generate": {
                 "-appweb": "esp-mvc/generate/appweb.conf",
                 "-controller": "esp-mvc/generate/controller.c",
-                "-controllerSingleton": "esp-mvc/generate/controller.c",
+                "-controllerSingleton": "esp-mvc/generate/controllerSingleton.c",
 
                 "?appweb": "esp-angular-mvc/generate/appweb.conf",
                 "?clientModel": "esp-angular-mvc/generate/model.js",
@@ -51,7 +51,7 @@
                 "?clientList": "esp-angular-mvc/generate/list.html",
                 "?clientEdit": "esp-angular-mvc/generate/edit.html",
                 "?controller": "esp-angular-mvc/generate/controller.c",
-                "?controllerSingleton": "esp-angular-mvc/generate/controller-singleton.c",
+                "?controllerSingleton": "esp-angular-mvc/generate/controllerSingleton.c",
             },
         },
         "http": {

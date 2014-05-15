@@ -165,7 +165,11 @@
                         ],
                         "stylesheets": "css"
                     },
-                    "redirect": "https://",
+                    "redirect": [
+                        {
+                            "to": "https://"
+                        }
+                    ],
                     "showErrors": false,
                     "update": false
                 }
