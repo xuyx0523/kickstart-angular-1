@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" ng-csp>
 <head>
-    <title>${APP}</title>
+    <title>esp-mgr</title>
     <meta charset="utf-8" />
     <link rel="icon" href="@~/assets/favicon.ico" type="image/x-icon">
     <% stylesheets(NULL); %>
