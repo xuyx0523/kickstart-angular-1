@@ -51,12 +51,12 @@
                 "clientList": "esp-angular-mvc/list.html",
                 "clientEdit": "esp-angular-mvc/edit.html",
                 "module": "esp-mvc/src/app.c",
-                "controllerSingleton": "esp-angular-mvc/generate/controller-singleton.c"
+                "controllerSingleton": "esp-angular-mvc/generate/controllerSingleton.c"
             }
         },
         "http": {
             "auth": {
-                "type": "app"
+                "store": "app"
             },
             "database": "mdb://kickstart.mdb",
             "formats": {
@@ -94,18 +94,12 @@
                 },
                 "http": {
                     "content": {
-                        "keep": [
-                            "c"
-                        ],
                         "stylesheets": "less"
                     },
                     "auth": {
                         "login": {
                             "name": "",
                             "roles": [
-                                "*"
-                            ],
-                            "abilities": [
                                 "*"
                             ]
                         }
@@ -126,9 +120,7 @@
                     },
                     "cache": [
                         {
-                            "lifespan": {
-                                "client": "1day"
-                            },
+                            "client": "1day",
                             "extensions": [
                                 "css",
                                 "gif",
@@ -167,7 +159,7 @@
                     },
                     "redirect": [
                         {
-                            "to": "https://"
+                            "to": "https://${request.originalUri}"
                         }
                     ],
                     "showErrors": false,
