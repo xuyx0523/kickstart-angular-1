@@ -43,11 +43,11 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
     rx = conn->rx;
     auth = rx->route->auth;
     if ((urec = readRecWhere("user", "username", "==", username)) == 0) {
-        mprLog(5, "verifyUser: Unknown user \"%s\"", username);
+        httpTrace(conn, "error", "Cannot verify user", "username=%s", username);
         return 0;
     }
     if (!mprCheckPassword(password, getField(urec, "password"))) {
-        mprLog(5, "Password for user \"%s\" failed to authenticate", username);
+        httpTrace(conn, "error", "Password failed to authenticate", "username=%s", username);
         return 0;
     }
     /*
@@ -56,7 +56,7 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
     if (espTestConfig(rx->route, "app.http.login.single", "true")) {
         if (!espIsCurrentSession(conn)) {
             feedback("error", "Another user still logged in");
-            mprLog(5, "verifyUser: Too many simultaneous users");
+            httpTrace(conn, "error", "Too many simultaneous users", 0, 0);
             return 0;
         }
         espSetCurrentSession(conn);
@@ -65,7 +65,7 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
         user = httpAddUser(auth, username, 0, ediGetFieldValue(urec, "roles"));
     }
     httpSetConnUser(conn, user);
-    mprLog(5, "User \"%s\" authenticated", username);
+    httpTrace(conn, "info", "User authenticated", "username=%s", username);
     return 1;
 }
 
@@ -82,7 +82,7 @@ ESP_EXPORT int esp_app_kickstart(HttpRoute *route, MprModule *module)
         This code sets up a private, in-memory, readonly database for each user. 
      */
     if ((edi = espGetRouteDatabase(route)) == 0) {
-        mprError("Cannot get route database in esp_app_kickstart");
+        mprLog("kickstart", 0, "Cannot get route database in esp_app_kickstart");
     } else {
         ediSetPrivate(edi, 1);
         ediSetReadonly(edi, 1);

@@ -44,8 +44,8 @@
         "esp": {
             "generate": {
                 "appweb": "esp-best/appweb.conf",
-                "migration": "esp-server/migration.c",
-                "controller": "esp-server/controller.c",
+                "migration": "esp-mvc/generate/migration.c",
+                "controller": "esp-mvc/controller.c",
                 "clientModel": "esp-angular-mvc/model.js",
                 "clientController": "esp-angular-mvc/controller.js",
                 "clientList": "esp-angular-mvc/list.html",
@@ -55,8 +55,17 @@
             }
         },
         "http": {
+            "server": {
+                "listen": [
+                    "http://127.0.0.1:4000",
+                    "https://127.0.0.1:4443"
+                ]
+            },
             "auth": {
                 "store": "app"
+            },
+            "content": {
+                "stylesheets": "css"
             },
             "database": "mdb://kickstart.mdb",
             "formats": {
@@ -65,25 +74,20 @@
                 "int": 0,
                 "response": "json"
             },
+            "redirect": [
+                {
+                    "to": "https://${request.originalUri}"
+                }
+            ],
             "routes": "esp-angular-mvc",
-            "server": {
-                "listen": [
-                    "http://127.0.0.1:4000",
-                    "https://127.0.0.1:4443"
-                ]
-            },
             "serverPrefix": "/do",
             "ssl": {
                 "certificate": "crt/self.crt",
                 "key": "crt/self.key"
             },
             "timeouts": {
-                "refresh": 1000,
-                "session": 1800
-            },
-            "xsrf": true,
-            "content": {
-                "stylesheets": "css"
+                "refresh": "1sec",
+                "session": "30mins"
             }
         },
         "mode": "release",
@@ -103,9 +107,7 @@
                                 "*"
                             ]
                         }
-                    },
-                    "showErrors": true,
-                    "update": true
+                    }
                 }
             },
             "release": {
@@ -113,11 +115,6 @@
                     "compile": "optimized"
                 },
                 "http": {
-                    "auth": {
-                        "login": {
-                            "url": ""
-                        }
-                    },
                     "cache": [
                         {
                             "client": "1day",
@@ -156,14 +153,7 @@
                             "js"
                         ],
                         "stylesheets": "css"
-                    },
-                    "redirect": [
-                        {
-                            "to": "https://${request.originalUri}"
-                        }
-                    ],
-                    "showErrors": false,
-                    "update": false
+                    }
                 }
             }
         }

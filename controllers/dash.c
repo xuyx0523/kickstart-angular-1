@@ -103,7 +103,6 @@ static void updateStream(HttpConn *conn) {
             return;
         }
         if ((count = httpSendBlock(conn, WS_MSG_TEXT, getDashData(conn), -1, 0)) < 0) {
-            mprLog(0, "Count %Ld", count);
             httpError(conn, HTTP_CODE_INTERNAL_SERVER_ERROR, "Cannot send big message");
         }
     }

@@ -74,7 +74,7 @@ angular.module('app').controller('DashControl', function (Dash, Esp, $location, 
 	    	if ($location.path() != dashPage) {
                 /* Navigate away from dash page, so close the web socket */
 	        	console.log("Closing " + uri);
-	    		ws.close();
+                try { ws.close(); } catch (e) {};
 	    	} else {
                 /* 
                     Extract feedback and apply to the root scope
@@ -117,7 +117,7 @@ angular.module('app').controller('DashControl', function (Dash, Esp, $location, 
 			}
 		};
         $scope.off = $rootScope.$on("$locationChangeSuccess", function(scope, current, previous) {
-            ws.close();
+            try { ws.close(); } catch (e) {};
             $scope.off();
         });
 		return ws;
@@ -127,7 +127,7 @@ angular.module('app').controller('DashControl', function (Dash, Esp, $location, 
         Get dash data via long polling if web sockets are not available
      */
     function startPoll() {
-		var period = Esp.config.refresh || (5 * 1000);
+		var period = Esp.config.timeouts.refresh || (5 * 1000);
 		if (!$scope.play) {
             $timeout(startPoll, period, true);
             return;
