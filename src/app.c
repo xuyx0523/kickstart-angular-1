@@ -56,7 +56,7 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
     if (espTestConfig(rx->route, "app.http.login.single", "true")) {
         if (!espIsCurrentSession(conn)) {
             feedback("error", "Another user still logged in");
-            httpTrace(conn, "error", "Too many simultaneous users", 0, 0);
+            httpTrace(conn, "error", "Too many simultaneous users", 0);
             return 0;
         }
         espSetCurrentSession(conn);
