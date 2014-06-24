@@ -83,7 +83,8 @@
             "timeouts": {
                 "refresh": "1sec",
                 "session": "30mins"
-            }
+            },
+            "xsrf": true
         },
         "mode": "release",
         "modes": {
@@ -150,7 +151,12 @@
                         ],
                         "stylesheets": "css"
                     },
-                    "redirect": "https://"
+                    "redirect": "https://",
+                    "auth": {
+                        "login": {
+                            "url": ""
+                        }
+                    }
                 }
             }
         }

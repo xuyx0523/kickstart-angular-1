@@ -9,6 +9,7 @@
         {
             from: "*.less",
             to: '${LIB}/more',
+            overwrite: true,
         }
-    ],
+    ]
 }

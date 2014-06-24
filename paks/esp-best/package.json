@@ -1,7 +1,7 @@
 {
     "name": "esp-best",
     "description": "ESP Best Practices Angular Skeleton",
-    "version": "5.0.0-rc0",
+    "version": "5.0.0-rc2",
     "keywords": [
         "esp",
     ],
@@ -26,6 +26,7 @@
     "export": [ {
             from: "*.less",
             to: '${LIB}/esp-best',
+            overwrite: true,
         }
     ],
     "app": {
@@ -37,7 +38,7 @@
         },
         "http": {
             "?auth": {
-                type: "app",
+                "store": "app",
                 "?require": {
                     "?users": ["*"],
                 },
@@ -66,9 +67,7 @@
                         },
                     },
                     "cache": [{
-                        "lifespan": {
-                            "client": "1day",
-                        },
+                        "client": "1day",
                         "extensions": [ "css", "gif", "ico", "jpeg", "jpg", "js", "html", "less", "png", "pdf", "txt" ],
                     }],
                     "content": {

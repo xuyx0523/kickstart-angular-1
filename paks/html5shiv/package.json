@@ -9,6 +9,7 @@
         {
             from: "*.js",
             to: '${LIB}/html5shiv',
+            overwrite: true,
         }
     ],
     "app": {

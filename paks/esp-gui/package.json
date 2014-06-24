@@ -1,7 +1,7 @@
 {
     "name": "esp-gui",
     "description": "ESP GUI Extensions for Angular",
-    "version": "5.0.0-rc0",
+    "version": "5.0.0-rc2",
     "keywords": [
         "esp",
     ],
@@ -20,6 +20,7 @@
                 "*.js",
             ],
             to: "${LIB}/esp-gui",
+            overwrite: true,
         }
     ],
     "app": {

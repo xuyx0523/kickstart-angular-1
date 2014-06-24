@@ -7,13 +7,13 @@
     ],
     "export": [
         {
-            overwrite: true,
             from: [
                 "angular.js",
                 "angular-animate.js",
                 "angular-route.js",
             ],
             to: '${LIB}/angular',
+            overwrite: true,
         }
     ],
     "app": {

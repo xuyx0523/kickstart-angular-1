@@ -16,10 +16,22 @@ angular.module('esp', ['esp.click', 'esp.edit', 'esp.field-errors', 'esp.fixnum'
      */
     var e = angular.element(document.getElementById('body'));
     var esp = angular.module('esp');
-    esp.$config = JSON.parse(e.attr('data-config'));
+    var config = e.attr('data-config');
+    if (config) {
+        esp.$config = JSON.parse(config);
+        if (esp.$config.login) {
+            var abilities = {}
+            angular.forEach(esp.$config.login.abilities, function(value,key) {
+                abilities[value] = true;
+            });
+            esp.$config.login.abilities = abilities;
+        }
+    } else {
+        esp.$config = {prefix:"",serverPrefix:"/do",formats:{response:"json"}};
+    }
     esp.$config = angular.extend({
         timeouts: {
-            session: 1800,
+            session: 1800 * 1000,
         },
         login: {}
     }, esp.$config);
@@ -39,9 +51,10 @@ angular.module('esp', ['esp.click', 'esp.edit', 'esp.field-errors', 'esp.fixnum'
     $rootScope.Esp = Esp;
 
     var boot_map = {
-        inform: 'info',
+        debug: 'info',
+        info: 'info',
         error: 'danger', 
-        warning: 'warning',
+        warn: 'warning',
         success: 'success',
     };
 
@@ -78,8 +91,9 @@ angular.module('esp', ['esp.click', 'esp.edit', 'esp.field-errors', 'esp.fixnum'
 
     var fa_map = {
         success: 'fa-plus',
-        inform: 'fa-plus',
-        warning: 'fa-bell',
+        debug: 'fa-plus',
+        info: 'fa-plus',
+        warn: 'fa-bell',
         error: 'fa-bolt', 
         critical: 'fa-bolt', 
     };
@@ -103,7 +117,7 @@ angular.module('esp', ['esp.click', 'esp.edit', 'esp.field-errors', 'esp.fixnum'
     }
 
     Esp.inform = function (str) {
-        $rootScope.feedback = { inform: str };
+        $rootScope.feedback = { info: str };
     };
 
     Esp.lighten = function (color, percent) {   
@@ -192,7 +206,7 @@ angular.module('esp', ['esp.click', 'esp.edit', 'esp.field-errors', 'esp.fixnum'
     } else {
         Esp.user = SessionStore.get('user') || null;
         Esp.user.fromSession = true;
-        var timeout = Esp.config.timeouts.session * 1000;
+        var timeout = Esp.config.timeouts.session;
         if ((Esp.user.lastAccess + timeout) <  Date.now()) {
             Esp.user = null;
         }
@@ -229,25 +243,25 @@ angular.module('esp', ['esp.click', 'esp.edit', 'esp.field-errors', 'esp.fixnum'
                     if (response.error) {
                         Esp.logout();
                         $location.path("/");
-                        $rootScope.feedback = { warning: "Session Expired, Please Log In"};
+                        $rootScope.feedback = { warn: "Session Expired, Please Log In"};
                     }
                 });
             }
-            var timeout = Esp.config.timeouts.session * 1000;
+            var timeout = Esp.config.timeouts.session;
             if ((Date.now() - Esp.user.lastAccess) > timeout) {
                 $rootScope.feedback = { error: "Login Session Expired"};
                 console.log("Session time expired. Log out");
                 Esp.logout();
             } else {
                 if ((Date.now() - Esp.user.lastAccess) > (timeout - (60 * 1000))) {
-                    $rootScope.feedback = { warning: "Session Will Soon Expire"};
+                    $rootScope.feedback = { warn: "Session Will Soon Expire"};
                 }
                 console.log("Session time remaining: ", (timeout - ((Date.now() - Esp.user.lastAccess))) / 1000, "secs");
             }
         } else {
             if (Esp.config.login && Esp.config.login.url && !Esp.config.login.name) {
                 $rootScope.Esp.user = null;
-                $rootScope.feedback = { warning: "Session Expired, Please Log In"};
+                $rootScope.feedback = { warn: "Session Expired, Please Log In"};
                 $location.path(Esp.config.login.url);
             }
         }
@@ -270,7 +284,7 @@ angular.module('esp', ['esp.click', 'esp.edit', 'esp.field-errors', 'esp.fixnum'
             },
             responseError: function (response) {
                 if (response <= 0 || response.status >= 500) {
-                    $rootScope.feedback = { warning: "Server Error. Please Retry." };
+                    $rootScope.feedback = { warn: "Server Error. Please Retry." };
                 } else if (response.status === 401) {
                     if (response.data && response.data.retry && !response.config.retried) {
                         /*
@@ -284,7 +298,7 @@ angular.module('esp', ['esp.click', 'esp.edit', 'esp.field-errors', 'esp.fixnum'
                     }
                     /* Must use esp module as Esp depends on this interceptor */
                     var espModule = angular.module('esp');
-                    if (espModule.$config.login && espModule.login.url && !espModule.$config.login.name) {
+                    if (espModule.$config.login && espModule.$config.login.url && !espModule.$config.login.name) {
                         $rootScope.Esp.user = null;
                         $location.path(espModule.$config.login.url);
                     } else {
@@ -292,7 +306,7 @@ angular.module('esp', ['esp.click', 'esp.edit', 'esp.field-errors', 'esp.fixnum'
                         $rootScope.feedback = response.data.feedback;
                     }
                 } else if (response.status >= 400) {
-                    $rootScope.feedback = { warning: "Request Error: " + response.status + ", for " + response.config.url};
+                    $rootScope.feedback = { warn: "Request Error: " + response.status + ", for " + response.config.url};
                 } else if (response.data && response.data.feedback) {
                     $rootScope.feedback = response.feedback;
                 }
@@ -313,7 +327,7 @@ esp.checkAuth = function($q, $location, $rootScope, $route, Esp) {
     for (var ability in requiredAbilities) {
         if (user && user.abilities && user.abilities[ability] == null) {
             if ($location.path() != "/" && !Esp.config.login.name) {
-                $rootScope.feedback = { inform: "Insufficient Privilege"};
+                $rootScope.feedback = { info: "Insufficient Privilege"};
                 $location.path(Esp.lastLocation || "/");
                 return $q.reject($rootScope.feedback);
             }

@@ -58,6 +58,9 @@ Me.load({
                 rm(TARGET.path)
                 strace('Run', 'recess ' + switches + ' -compile client/css/all.less')
                 let result = Cmd.run('recess ' + switches + ' -compile client/css/all.less')
+                if (result == '') {
+                    throw 'Cannot build recess ' + switches + ' -compile client/css/all.less'
+                }
                 rm('client/css/all.css')
                 for each (f in Path('client/css').files('*.css')) {
                     result += f.readString()

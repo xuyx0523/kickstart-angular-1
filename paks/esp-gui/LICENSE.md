@@ -3,8 +3,7 @@ Embedthis License
 
 This software is distributed under a commercial software license only.
 
-* [Embedthis Commercial License](http://embedthis.com/licensing/index.html)
-
+* [Embedthis Commercial License](http://embedthis.com/licensing/)
 
 Trademarks and Copyrights
 ---

@@ -13,6 +13,7 @@
                 "less/*",
             ],
             to: '${LIB}/font-awesome',
+            overwrite: true,
         }
-    ],
+    ]
 }

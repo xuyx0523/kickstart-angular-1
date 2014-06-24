@@ -1,7 +1,7 @@
 {
     "name": "esp-angular-mvc",
     "description": "ESP Angular MVC Application Skeleton",
-    "version": "5.0.0-rc0",
+    "version": "5.0.0-rc2",
     "licenses": [
         {
             "type": "GPL",
@@ -23,13 +23,14 @@
                 "css/*",
             ],
             to: '${LIB}/esp-angular-mvc',
+            overwrite: true,
         }, {
-            overwrite: false,
             from: [
                 "client/**",
                 "start.me",
             ],
             to: '.',
+            overwrite: false,
         }
     ],
     "app": {
@@ -65,6 +66,10 @@
             },
             "-routes": "esp-server",
             "?routes": "esp-angular-mvc",
+            "xsrf": true,
         },
     },
+    "ignore": [
+        "start.me",
+    ],
 }

@@ -182,14 +182,18 @@ angular.module('esp.gauge', [])
 
                 var now = Date.now();
                 var period = now - scope.lastUpdate;
-                if (period <= 0) {
+                if (period <= 1000) {
                     period = 1000;
+                } else if (period > 2000) {
+                    period = 2000;
                 }
                 scope.lastUpdate = now;
 
                 var steps = period / 1000 * frameRate;
+                if (scope.current == 0) {
+                    steps = 1;
+                }
                 var inc = (value - scope.current) / steps;
-
                 function animate() {
                     if (scope.timeout) {
                         $timeout.cancel(scope.timeout);
