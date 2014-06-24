@@ -43,11 +43,11 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
     rx = conn->rx;
     auth = rx->route->auth;
     if ((urec = readRecWhere("user", "username", "==", username)) == 0) {
-        httpTrace(conn, "error", "Cannot verify user", "username=%s", username);
+        httpTrace(conn, "auth.login.error", "error", "msg=\"Cannot verify user\", username=%s", username);
         return 0;
     }
     if (!mprCheckPassword(password, getField(urec, "password"))) {
-        httpTrace(conn, "error", "Password failed to authenticate", "username=%s", username);
+        httpTrace(conn, "auth.login.error", "error", "msg=\"Password failed to authenticate\", username=%s", username);
         return 0;
     }
     /*
@@ -56,7 +56,7 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
     if (espTestConfig(rx->route, "app.http.login.single", "true")) {
         if (!espIsCurrentSession(conn)) {
             feedback("error", "Another user still logged in");
-            httpTrace(conn, "error", "Too many simultaneous users", 0);
+            httpTrace(conn, "auth.login.error", "error", "msg=\"Too many simultaneous users\"");
             return 0;
         }
         espSetCurrentSession(conn);
@@ -65,7 +65,7 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
         user = httpAddUser(auth, username, 0, ediGetFieldValue(urec, "roles"));
     }
     httpSetConnUser(conn, user);
-    httpTrace(conn, "info", "User authenticated", "username=%s", username);
+    httpTrace(conn, "app.login.authenticated", "context", "msg=\"User authenticated\", username=%s", username);
     return 1;
 }
 

@@ -4,7 +4,7 @@
 #include "esp.h"
 
 static void checkAuthenticated() {
-    sendResult(httpIsAuthenticated(getConn()));
+    sendResult(httpAuthenticate(getConn()));
 }
 
 static void createUser() { 

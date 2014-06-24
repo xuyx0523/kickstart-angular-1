@@ -36,8 +36,8 @@
                             <li class="footer"><a href="#/event/list">View all events</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" ng-cloak>{{Esp.user.name || 'guest'}} <b class="caret"></b></a>
+                    <li class="dropdown" ng-controller="UserControl">
+                        <a href="#" class="dropdown-toggle" ng-cloak>{{authname()}} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a ng-href="#/user/{{Esp.user ? 'logout' : 'login'}}"><i class="fa fa-power-off"></i> {{Esp.user ? 'Sign out' : 'Sign in'}}</a></li>
                         </ul>
