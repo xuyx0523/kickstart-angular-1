@@ -2,7 +2,7 @@
     "name": "kickstart",
     "title": "Kickstart",
     "description": "Kickstart for ESP",
-    "version": "0.8.0",
+    "version": "0.8.1",
     "keywords": [
         "esp"
     ],
