@@ -14,18 +14,14 @@
     "app": {
         "client": {
             "mappings": {
-                "auth": "app.http.auth",
+                "auth": {
+                    "login": "app.http.auth.login",
+                    "store": "app.http.auth.store"
+                },
                 "prefix": "app.http.prefix",
                 "serverPrefix": "app.http.serverPrefix",
                 "formats": "app.http.formats",
-                "login": {
-                    "name": "app.http.auth.login.name",
-                    "url": "app.http.auth.login.url"
-                },
-                "timeouts": {
-                    "session": "app.http.timeouts.session",
-                    "refresh": "app.http.timeouts.refresh"
-                }
+                "timeouts": "app.http.timeouts"
             },
             "scripts": [
                 "lib/angular/angular.js",
@@ -62,7 +58,19 @@
                 ]
             },
             "auth": {
-                "store": "app"
+                "login": {
+                    "url": "/user/login"
+                },
+                "roles": {
+                    "user": [
+                        "view"
+                    ],
+                    "administrator": [
+                        "view",
+                        "edit"
+                    ]
+                },
+                "store": "app",
             },
             "content": {
                 "stylesheets": "css"
@@ -93,18 +101,17 @@
                     "compile": "symbols"
                 },
                 "http": {
+                    "auth": {
+                        "login": {
+                            "name": "admin",
+                            "roles": [
+                                "administrator"
+                            ]
+                        }
+                    },
                     "content": {
                         "stylesheets": "less"
                     },
-                    "auth": {
-                        "login": {
-                            "name": "",
-                            "roles": [
-                                "*"
-                            ],
-                            "url": "/user/login"
-                        }
-                    }
                 }
             },
             "release": {
@@ -152,11 +159,6 @@
                         "stylesheets": "css"
                     },
                     "redirect": "https://",
-                    "auth": {
-                        "login": {
-                            "url": ""
-                        }
-                    }
                 }
             }
         }
