@@ -28,7 +28,6 @@ static void commonController(HttpConn *conn)
 }
 
 
-//  MOB - move to controllers/user.c in controllers per esp-user (DONE)
 /*
     Verify user credentials from database password.
     Callback from httpLogin to verify the username/password
@@ -42,18 +41,24 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
 
     rx = conn->rx;
     auth = rx->route->auth;
+
     if ((urec = readRecWhere("user", "username", "==", username)) == 0) {
         httpTrace(conn, "auth.login.error", "error", "msg=\"Cannot verify user\", username=%s", username);
         return 0;
     }
-    if (!mprCheckPassword(password, getField(urec, "password"))) {
+    if (username && *username && smatch(username, auth->username)) {
+        /* Autologin */
+        httpTrace(conn, "auth.login.authenticated", "context", "msg=\"Auto login\", username=%s", username);
+
+    } else if (!mprCheckPassword(password, getField(urec, "password"))) {
         httpTrace(conn, "auth.login.error", "error", "msg=\"Password failed to authenticate\", username=%s", username);
+        mprSleep(500);
         return 0;
     }
     /*
         Restrict to a single simultaneous login
      */
-    if (espTestConfig(rx->route, "app.http.login.single", "true")) {
+    if (espTestConfig(rx->route, "app.http.auth.login.single", "true")) {
         if (!espIsCurrentSession(conn)) {
             feedback("error", "Another user still logged in");
             httpTrace(conn, "auth.login.error", "error", "msg=\"Too many simultaneous users\"");
@@ -65,7 +70,7 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
         user = httpAddUser(auth, username, 0, ediGetFieldValue(urec, "roles"));
     }
     httpSetConnUser(conn, user);
-    httpTrace(conn, "app.login.authenticated", "context", "msg=\"User authenticated\", username=%s", username);
+    httpTrace(conn, "auth.login.authenticated", "context", "msg=\"User authenticated\", username=%s", username);
     return 1;
 }
 

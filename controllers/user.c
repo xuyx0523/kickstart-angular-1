@@ -4,7 +4,7 @@
 #include "esp.h"
 
 static void checkAuthenticated() {
-    sendResult(httpAuthenticate(getConn()));
+    sendResult(httpIsAuthenticated(getConn()));
 }
 
 static void createUser() { 
@@ -15,8 +15,14 @@ static void createUser() {
 }
 
 static void getUser() { 
-    /* Don't send the real password back to the user */
-    sendRec(setField(readRec("user", param("id")), "password", "   n o t p a s s w o r d   "));
+    EdiRec      *rec;
+    if ((rec = readRec("user", param("id"))) != 0) {
+        /* Don't send the real password back to the user */
+        setField(rec, "password", "        ");
+        sendRec(rec);
+    } else {
+        sendResult(0);
+    }
 }
 
 static void indexUser() {
@@ -45,9 +51,21 @@ static void removeUser() {
 }
 
 static void updateUser() { 
+    EdiRec  *rec;
+    cchar   *password;
     if (canUser("edit", 1)) {
-        setParam("password", mprMakePassword(param("password"), 0, 0));
-        sendResult(updateRecFromParams("user"));
+        password = strim(param("password"), " ", 0);
+        if (smatch(password, "") && (rec = readRec("user", param("id"))) != 0) {
+            password = getField(rec, "password");
+            setParam("password", password);
+        } else {
+            setParam("password", mprMakePassword(password, 0, 0));
+        }
+        if (!updateRecFromParams("user") || ediSave(getDatabase()) < 0) {
+            sendResult(0);
+        } else {
+            sendResult(1);
+        }
     }
 }
 
@@ -75,11 +93,9 @@ static void forgotPassword() {
 }
 
 static void loginUser() {
-    HttpConn    *conn;
-    bool        remember;
+    HttpConn    *conn = getConn();
+    bool        remember = smatch(param("remember"), "true");
 
-    conn = getConn();
-    remember = smatch(param("remember"), "true");
     if (httpLogin(conn, param("username"), param("password"))) {
         render("{\"error\": 0, \"user\": {\"name\": \"%s\", \"abilities\": %s, \"remember\": %s}}", conn->username,
             mprSerialize(conn->user->abilities, MPR_JSON_QUOTES), remember ? "true" : "false");
@@ -89,15 +105,14 @@ static void loginUser() {
 }
 
 static void logoutUser() {                                                                             
-    HttpConn    *conn = getConn();
-    httpLogout(conn);
-    espClearCurrentSession(conn);
+    httpLogout(getConn());
+    espClearCurrentSession(getConn());
     sendResult(1);
 }
 
 ESP_EXPORT int esp_controller_kickstart_user(HttpRoute *route, MprModule *module) 
 {
-    Edi         *edi;
+    Edi     *edi;
 
     espDefineAction(route, "user-create", createUser);
     espDefineAction(route, "user-get", getUser);
@@ -113,12 +128,6 @@ ESP_EXPORT int esp_controller_kickstart_user(HttpRoute *route, MprModule *module
     espDefineAction(route, "user-cmd-login", loginUser);
     espDefineAction(route, "user-cmd-logout", logoutUser);
 
-#if UNUSED
-    HttpRoute   *rp;
-    if ((rp = httpLookupRoute(route->host, "/do/*/default")) != 0) {
-        rp->flags &= ~HTTP_ROUTE_XSRF;
-    }
-#endif
     edi = espGetRouteDatabase(route);
     ediAddValidation(edi, "present", "user", "username", 0);
     ediAddValidation(edi, "unique", "user", "username", 0);

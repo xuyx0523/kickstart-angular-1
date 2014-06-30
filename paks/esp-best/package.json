@@ -39,9 +39,6 @@
         "http": {
             "?auth": {
                 "store": "app",
-                "?require": {
-                    "?users": ["*"],
-                },
             },
         },
         "?mode": "debug",

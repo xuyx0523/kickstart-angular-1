@@ -18,9 +18,9 @@
                     "login": "app.http.auth.login",
                     "store": "app.http.auth.store"
                 },
+                "formats": "app.http.formats",
                 "prefix": "app.http.prefix",
                 "serverPrefix": "app.http.serverPrefix",
-                "formats": "app.http.formats",
                 "timeouts": "app.http.timeouts"
             },
             "scripts": [
@@ -70,7 +70,7 @@
                         "edit"
                     ]
                 },
-                "store": "app",
+                "store": "app"
             },
             "content": {
                 "stylesheets": "css"
@@ -94,7 +94,7 @@
             },
             "xsrf": true
         },
-        "mode": "release",
+        "mode": "debug",
         "modes": {
             "debug": {
                 "esp": {
@@ -111,7 +111,7 @@
                     },
                     "content": {
                         "stylesheets": "less"
-                    },
+                    }
                 }
             },
             "release": {
@@ -159,6 +159,11 @@
                         "stylesheets": "css"
                     },
                     "redirect": "https://",
+                    "auth": {
+                        "login": {
+                            "url": ""
+                        }
+                    }
                 }
             }
         }
