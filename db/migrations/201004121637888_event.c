@@ -10,7 +10,7 @@ static bool createEvent(Edi *db, cchar *type, cchar *title, cchar *msg)
     if ((rec = ediCreateRec(db, "event")) == 0) {
         return MPR_ERR_CANT_CREATE;
     }
-    if (!ediSetField(rec, "date", sfmt("%Ld", mprGetTime() + (rand() % 3600000))) || 
+    if (!ediSetField(rec, "date", sfmt("%lld", mprGetTime() + (rand() % 3600000))) || 
         !ediSetField(rec, "type", type) || 
         !ediSetField(rec, "title", title) || 
         !ediSetField(rec, "message", msg)) {
