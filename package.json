@@ -8,6 +8,7 @@
     ],
     "dependencies": {
         "esp-angular": "~5.0",
+        "esp-best": "~5.0",
         "esp-mgr": "*",
         "me-dev": "~0.8",
         "me-package": "~0.8"
