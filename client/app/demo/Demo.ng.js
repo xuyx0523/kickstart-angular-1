@@ -1,4 +1,3 @@
-'use strict';
 angular.module('app').factory('Demo', [
   'EspResource',
   function (EspResource) {

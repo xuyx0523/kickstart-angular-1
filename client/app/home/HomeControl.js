@@ -2,8 +2,6 @@
     HomeControl.js - Home Controller
  */
 
-'use strict';
-
 angular.module('app').controller('HomeControl', function (Esp, $location, $scope) {
 	$scope.showNav = true;
 	$scope.showDemos = true;

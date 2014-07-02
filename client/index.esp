@@ -37,9 +37,15 @@
                         </ul>
                     </li>
                     <li class="dropdown" ng-controller="UserControl">
-                        <a href="#" class="dropdown-toggle" ng-cloak>{{authname()}} <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" ng-cloak>{{authname()}} 
+                            <b class="caret"></b>
+                        </a>
                         <ul class="dropdown-menu">
-                            <li><a ng-href="#/user/{{Esp.user ? 'logout' : 'login'}}"><i class="fa fa-power-off"></i> {{Esp.user ? 'Sign out' : 'Sign in'}}</a></li>
+                            <li>
+                                <a ng-href="#/user/{{Esp.user ? 'logout' : 'login'}}">
+                                    <i class="fa fa-power-off"></i> {{Esp.user ? 'Sign out' : 'Sign in'}}
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li><a href=""><i class="fa fa-question"></i></a></li>

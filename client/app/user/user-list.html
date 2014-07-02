@@ -10,12 +10,12 @@
 			        ng-init="columns = ['username',  'email', 'roles']">
 			    <thead><tr><th ng-repeat="header in columns">{{header | titlecase}}</th></tr></thead>
 			    <tbody>
-			        <tr ng-repeat="user in users" esp-click="/user/{{user.id}}">
+			        <tr ng-repeat="user in users" esp-click="edit@/user/{{user.id}}">
 			            <td ng-repeat="column in columns">{{user[column]}}</td>
 			        </tr>
 			    </tbody>
 			</table>
 		</div>
 	</div>
-	<button class="btn btn-primary" esp-click="/user/">New User</button>
+	<button class="btn btn-primary" esp-click="edit@/user/">New User</button>
 </div>

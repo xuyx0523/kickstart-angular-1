@@ -2,8 +2,6 @@
     PortControl.js - Port Controller
  */
 
-'use strict';
-
 angular.module('app').controller('PortControl', function (Esp, Port, Vlan, $rootScope, $scope, $location, $routeParams) {
     angular.extend($scope, $routeParams);
 

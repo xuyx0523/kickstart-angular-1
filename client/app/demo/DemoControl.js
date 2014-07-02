@@ -2,8 +2,6 @@
     DemoControl.js - Demo Controller
  */
 
-'use strict';
-
 angular.module('app').controller('DemoControl', function (Demo, Esp, $scope, $timeout) {
 
     $scope.gauge = {value: 100};

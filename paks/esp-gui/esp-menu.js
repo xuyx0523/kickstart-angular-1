@@ -1,8 +1,9 @@
 /*
-    esp-menu.js - Kick sidebar menus
+    esp-menu.js - Sidebar menus
 
     <esp-menu text="Text" icon="" href="" value="" > ... sub menus </esp-menu>
  */
+
 angular.module('esp.menu', [])
 .directive('espMenu', function($compile) {
     var nextId = 0;

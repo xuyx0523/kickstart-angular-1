@@ -1,6 +1,10 @@
 <ul class="play-controls">
-    <span ng-click='play=!play'><i class="fa" ng-class="{'fa-play': !play, 'fa-pause': play}"
-        xtooltip="{{ play ? 'Pause' : 'Play'}}" xtooltip-placement="left"></i></span>
+    <span ng-click='resetRange()'><i class="fa fa-repeat"></i>
+        &nbsp;
+    </span>
+    <span ng-click='toggleStreaming()'>
+        <i class="fa" ng-class="{'fa-play': !streaming(), 'fa-pause': streaming()}"></i>
+    </span>
 </ul>
 <div class="view-dashboard">
     <h2>Dashboard</h2>

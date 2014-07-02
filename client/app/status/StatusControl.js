@@ -2,8 +2,6 @@
     StatusControl.js - Status Controller
  */
 
-'use strict';
-
 angular.module('app').controller('StatusControl', function (Status, $filter, $scope) {
     /*
         Get the status data

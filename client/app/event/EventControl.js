@@ -2,8 +2,6 @@
     EventControl.js - Event Controller
  */
 
-'use strict';
-
 angular.module('app').controller('EventControl', function (Esp, Event, $filter, $rootScope, $scope, $location, $routeParams) {
     angular.extend($scope, $routeParams);
 

@@ -1,7 +1,6 @@
 /*
     Status.js - Status model
  */
-'use strict';
 
 angular.module('app').factory('Status', function (EspResource) {
     /* 

@@ -1,8 +1,9 @@
 /*
     Dash.js - Dash model
  */
-'use strict';
 
 angular.module('app').factory('Dash', function (EspResource) {
-    return EspResource.group("dash");
+    return EspResource.group("dash", {}, {
+        'reset':  { 'method': 'POST',   url: '/:server/dash/:id/reset' },
+    });
 });

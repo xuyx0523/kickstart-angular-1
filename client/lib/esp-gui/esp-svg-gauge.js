@@ -3,8 +3,10 @@
 
     This is a prototype only and not supported.
 
-    <esp-svg width="100" height="100" background="" color="" highlight="" title="Title" subtitle="Footnote" value="{{value}} range="low-high">
+    <esp-svg width="100" height="100" background="" color="" highlight="" title="Title" 
+        subtitle="Footnote" value="{{value}} range="low-high">
  */
+
 angular.module('esp.svg', [])
 .directive('espSvg', function(Esp, $compile) {
     return {

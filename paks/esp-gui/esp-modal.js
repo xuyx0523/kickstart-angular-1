@@ -5,7 +5,6 @@
         body
     </esp-modal>
  */
-'use strict';
 
 angular.module('esp.modal', [])
 .directive('espModal', function ($parse, $modal) {

@@ -2,8 +2,6 @@
     Vlan Controller
  */
 
-'use strict';
-
 angular.module('app').controller('VlanControl', function (Esp, Vlan, $modal, $rootScope, $scope, $location, $routeParams) {
     angular.extend($scope, $routeParams);
 

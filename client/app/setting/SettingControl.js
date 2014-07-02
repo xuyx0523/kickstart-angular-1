@@ -2,8 +2,6 @@
     SettingControl.js - Setting Controller
  */
 
-'use strict';
-
 angular.module('app').controller('SettingControl', function ($scope, $location, Setting) {
     Setting.get({id: 1}, $scope);
 

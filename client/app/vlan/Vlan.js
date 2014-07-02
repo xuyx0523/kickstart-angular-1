@@ -1,7 +1,6 @@
 /*
     Vlan.js - Vlan model
  */
-'use strict';
 
 angular.module('app').factory('Vlan', function (EspResource) {
     return EspResource.group("vlan", {}, {

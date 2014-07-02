@@ -1,11 +1,7 @@
 /*
     Demo.js - Demo model
  */
-'use strict';
 
-/*
-    Just a few demo pages
- */
 angular.module('app').factory('Demo', function (EspResource) {
     return EspResource.group("demo", {}, {
         'demo1':  { 'method': 'GET',   url: '/:server/demo/demo1' },

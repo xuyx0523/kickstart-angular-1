@@ -1,7 +1,6 @@
 /*
     esp-local.js - Local storage service
  */
-'use strict';
 
 angular.module('esp.local', [])
 .factory('LocalStore', function() {

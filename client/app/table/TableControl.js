@@ -2,8 +2,6 @@
     TableControl.js - Database table table Controller
  */
 
-'use strict';
-
 /*
     Prototype controller to browse the database
  */
