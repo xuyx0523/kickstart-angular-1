@@ -94,7 +94,7 @@
             },
             "xsrf": true
         },
-        "mode": "debug",
+        "mode": "release",
         "modes": {
             "debug": {
                 "esp": {
