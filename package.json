@@ -59,7 +59,7 @@
                 "ssl": {
                     "certificate": "crt/self.crt",
                     "key": "crt/self.key"
-                },
+                }
             },
             "auth": {
                 "login": {

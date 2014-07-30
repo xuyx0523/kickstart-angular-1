@@ -1,13 +1,13 @@
 {
     "name": "esp-mgr",
     "description": "ESP Management Console Skeleton",
-    "version": "5.0.0",
+    "version": "5.1.0",
     "keywords": [
         "esp",
     ],
     "dependencies": {
-        "esp-best": "~5.0",
-        "esp-gui": "~5.0"
+        "esp-best": "~5",
+        "esp-gui": "~5"
     },
     "licenses": [
         {

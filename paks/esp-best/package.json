@@ -1,12 +1,12 @@
 {
     "name": "esp-best",
     "description": "ESP Best Practices Angular Skeleton",
-    "version": "5.0.0",
+    "version": "5.1.0",
     "keywords": [
         "esp",
     ],
     "dependencies": {
-        "esp-angular-mvc": "~5.0",
+        "esp-angular-mvc": "~5",
         "less": ">=1.3.3",
         "bootstrap": "~3",
         "angular-bootstrap": ">=0.7.0",
@@ -73,9 +73,7 @@
                         "?minify":      [ "css", "html", "js" ],
                         "?stylesheets": "css",
                     },
-                    "?redirect": [{
-                        "to": "https://"
-                    }],
+                    "?redirect": "https://"
                 },
             },
         },

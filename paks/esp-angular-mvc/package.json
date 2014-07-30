@@ -1,7 +1,7 @@
 {
     "name": "esp-angular-mvc",
     "description": "ESP Angular MVC Application Skeleton",
-    "version": "5.0.0",
+    "version": "5.1.0",
     "licenses": [
         {
             "type": "GPL",
@@ -16,7 +16,7 @@
         "esp",
     ],
     "dependencies": {
-        "esp-angular": "~5.0"
+        "esp-angular": "~5"
     },
     "export": [ {
             from: [
