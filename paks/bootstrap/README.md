@@ -1,4 +1,4 @@
-pak-bootstrap
+bootstrap
 ===
 
 Package of [bootstrap](http://getbootstrap.com) for the [Pak Package Manager](https://github.com/embedthis/pak).

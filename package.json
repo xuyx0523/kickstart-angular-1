@@ -11,7 +11,7 @@
         "me-dev": "~0.8",
         "me-package": "~0.8"
     },
-    import: true,
+    "import": true,
     "app": {
         "client": {
             "mappings": {
@@ -172,5 +172,7 @@
     "ignore": [
         "doc",
         "start.bit"
-    ]
+    ],
+    "optionalDependencies": {
+    }
 }

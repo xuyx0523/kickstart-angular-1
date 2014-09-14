@@ -1,7 +1,7 @@
 {
     "name": "esp-mgr",
     "description": "ESP Management Console Skeleton",
-    "version": "5.1.0",
+    "version": "5.2.0",
     "keywords": [
         "esp",
     ],
@@ -16,7 +16,7 @@
         },
         {
             "type": "Commercial",
-            "url": "http://embedthis.com/licensing/"
+            "url": "https://embedthis.com/licensing/"
         }
     ],
     "export": [

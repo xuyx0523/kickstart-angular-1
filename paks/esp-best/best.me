@@ -6,9 +6,10 @@ Me.load({
     mixin: `
         function gzip(path: Path) {
             path.joinExt('gz', true).remove()
-            run('gzip ' + path)
-            path.write(run('gunzip -c ' + path + '.gz', {noshow: true}))
+            run('gzip ' + path, {filter: true})
+            path.write(run('gunzip -c ' + path + '.gz', {filter: true}))
         }
+        me.package = me.dir.src.join('package.json').readJSON()
         let app = me.package.app
         blend(app, app.modes[app.mode])
         app.http ||= {}
@@ -57,7 +58,7 @@ Me.load({
                 }
                 rm(TARGET.path)
                 strace('Run', 'recess ' + switches + ' -compile client/css/all.less')
-                let result = Cmd.run('recess ' + switches + ' -compile client/css/all.less')
+                let result = Cmd.run('recess ' + switches + ' -compile client/css/all.less', {filter: true})
                 if (result == '') {
                     throw 'Cannot build recess ' + switches + ' -compile client/css/all.less'
                 }
@@ -100,16 +101,11 @@ Me.load({
                     let minified = f.replaceExt('min.html')
                     if (!minified.exists || minified.modified < f.modified) {
                         if (Cmd.locate('htmlmin')) {
-                            run('htmlmin ' + f)
+                            run('htmlmin ' + f, {filter: true})
                         } else {
                             f.copy(minified)
                         }
                     }
-/* UNUSED
-                    if (compress.contains('html') && !combine.contains('html')) {
-                        gzip(minified)
-                    }
-*/
                 }
             `,
         },
@@ -181,8 +177,8 @@ Me.load({
                     for each (f in Path('client/app').files('**.js', {exclude: /\\.min.js|\\.ng.js/})) {
                         let ng = f.replaceExt('ng.js')
                         if (!ng.exists || ng.modified < f.modified) {
-                            run('ngmin ' + f + ' ' + ng)
-                            run('uglifyjs -o ' + f.replaceExt('min.js') + ' ' + ng)
+                            run('ngmin ' + f + ' ' + ng, {filter: true})
+                            run('uglifyjs -o ' + f.replaceExt('min.js') + ' ' + ng, {filter: true})
                             ng.remove()
                         }
                     }
@@ -198,7 +194,7 @@ Me.load({
                     let minified = f.replaceExt('min.js')
                     if (!minified.exists || minified.modified < f.modified) {
                         if (Cmd.locate('uglifyjs')) {
-                            run('uglifyjs -o ' + f.replaceExt('min.js') + ' ' + f)
+                            run('uglifyjs -o ' + f.replaceExt('min.js') + ' ' + f, {filter: true})
                         } else {
                             f.copy(f.replaceExt('min.js'))
                         }

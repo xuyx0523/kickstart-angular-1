@@ -37,25 +37,22 @@ public function apidoc(dox: Path, headers, title: String, tags) {
     let tstr = tags ? tags.map(function(i) '--tags ' + Path(i).absolute).join(' ') : ''
 
     run('ejs ' + me.dir.src.join('src/paks/me-doc/gendoc.es') + ' --bare ' + '--title \"' + 
-        me.settings.name.toUpper() + ' - ' + title + ' Native API\" --out ' + name + 
-        'Bare.html ' +  tstr + ' ' + files.join(' '), {dir: api})
+        me.settings.name.toUpper() + ' - ' + title + ' Native API\" --out ' + name + '.html ' +  
+        tstr + ' ' + files.join(' '), {dir: api})
     if (!me.options.keep) {
         rmdir([api.join('html'), api.join('xml')])
     }
 }
 
 
-public function apiwrap(patterns) {
-    let files = Path('.').files(patterns)
-    if (files.length == 0) {
-        files = [Path(patterns)]
-    }
-    for each (dfile in files) {
-        let name = dfile.replace('.html', '')
-        let data = Path(name + 'Bare.html').readString()
-        let contents = Path(name + 'Header.tem').readString() + data + Path(name).dirname.join('apiFooter.tem').readString() + '\n'
-        dfile.joinExt('html').write(contents)
-    }
+public function apiLayout(from: Path, to: Path)
+{
+    trace('Generate', to)
+    let contents = from.readString().replace(/\$/mg, '$$$$')
+    let data = to.readString()
+    to.write(data.
+        replace(/DOC_CONTENT/g, contents).
+        replace(/Bare.html/g, 'html'))
 }
 
 /*

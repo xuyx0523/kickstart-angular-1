@@ -1,7 +1,7 @@
 {
     "name": "esp-best",
     "description": "ESP Best Practices Angular Skeleton",
-    "version": "5.1.0",
+    "version": "5.2.0",
     "keywords": [
         "esp",
     ],
@@ -20,7 +20,7 @@
             "url": "http://www.gnu.org/licenses/gpl-2.0.html"
         }, {
             "type": "Commercial",
-            "url": "http://embedthis.com/licensing/"
+            "url": "https://embedthis.com/licensing/"
         }
     ],
     "export": [ {
