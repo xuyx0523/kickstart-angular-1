@@ -23,64 +23,66 @@ Me.load({
             },
         },
 
-        files: [ 
-            /* Release Set */
-            {   from:   [ '*.conf', '*.json'],
-                to:     '${root}',
-                set:    'release',
+        sets: { 
+            release: [
+                {   
+                    from:   [ '*.conf', '*.json'],
+                    to:     '${root}',
 
-            },{ from:   ['client/index.esp'],
-                to:     '${root}/client/',
-                set:    'release',
+                }, { 
+                    from:   'client/index.esp',
+                    to:     '${root}/client/',
 
-            },{ from:   ['client/all-${settings.version}.min.js.gz'],
-                to:     '${root}/client/',
-                set:    'release',
+                }, { 
+                    from:   ['client/all-${settings.version}.min.js.gz'],
+                    to:     '${root}/client/',
 
-            },{ from:   ['client/css/all-${settings.version}.min.*.gz'],
-                to:     '${root}/client/css/',
-                set:    'release',
+                }, { 
+                    from:   ['client/css/all-${settings.version}.min.*.gz'],
+                    to:     '${root}/client/css/',
 
-            },{ from:   ['client/assets/'],
-                to:     '${root}/client/assets/',
-                set:    'release',
+                }, { 
+                    from:   'client/assets/',
+                    to:     '${root}/client/assets/',
 
-            },{ from:   ['client/lib/bootstrap/fonts/'],
-                to:     '${root}/client/lib/bootstrap/fonts/',
-                set:    'release',
+                }, { 
+                    from:   'client/lib/bootstrap/fonts/',
+                    to:     '${root}/client/lib/bootstrap/fonts/',
 
-            },{ from:   ['client/lib/font-awesome/fonts/'],
-                to:     '${root}/client/lib/font-awesome/fonts/',
-                set:    'release',
+                }, { 
+                    from:   'client/lib/font-awesome/fonts/',
+                    to:     '${root}/client/lib/font-awesome/fonts/',
 
-            },{ from:   ['cache/*.dylib'],
-                to:     '${root}/cache/',
-                set:    'release',
+                }, { 
+                    from:   'cache/*.dylib',
+                    to:     '${root}/cache/',
 
-            },{ from:   ['db/kick.mdb'],
-                to:     '${root}/db/',
-                set:    'release',
+                }, { 
+                    from:   'db/kick.mdb',
+                    to:     '${root}/db/',
+                }
+            ],
+            source: [
+                {
+                    from:   '*.md',
+                    to:     '${src}/',
+                    fold:   true,
+                    patch:  true,
 
-            /* Source Set */
-            }, {from:   [ '*.md' ],
-                to:     '${src}/',
-                fold:   true,
-                expand: true,
-                set:    'source',
+                }, { 
+                    from:   'configure',
+                    to:     '${src}/',
+                    permissions: 0755,     
 
-            },{ from:   [ 'configure' ],
-                to:     '${src}/',
-                permissions: 0755,     
-                set:    'source',
+                }, { 
+                    from:   [ 'main.me', '*.conf', '*.json', 'controllers', 'client', ],
+                    to:     '${src}/',
 
-            },{ from:   [ 'main.me', '*.conf', '*.json', 'controllers', 'client', ],
-                to:     '${src}/',
-                set:    'source',
-
-            },{ from:   [ 'db/migrations/' ],
-                to:     '${src}/db/migrations',
-                set:    'source',
-            },
-        ],
+                }, { 
+                    from:   'db/migrations/',
+                    to:     '${src}/db/migrations',
+                },
+            ],
+        },
     },
 })

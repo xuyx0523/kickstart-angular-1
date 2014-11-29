@@ -7,9 +7,7 @@
         "esp"
     ],
     "dependencies": {
-        "esp-mgr": "*",
-        "me-dev": "~0.8",
-        "me-package": "~0.8"
+        "esp-mgr": "*"
     },
     "import": true,
     "app": {
@@ -28,14 +26,14 @@
                 "lib/angular/angular.js",
                 "lib/angular/angular-animate.js",
                 "lib/angular/angular-route.js",
-                "lib/angular-bootstrap/*.js",
                 "lib/esp-angular/*.js",
                 "app/main.js",
                 "app/*/**.js*",
-                "lib/esp-gui/*.js",
-                "lib/html5shiv/html5shiv.js",
                 "lib/less/less.js",
-                "lib/respond/respond.js"
+                "lib/html5shiv/html5shiv.js",
+                "lib/angular-bootstrap/*.js",
+                "lib/respond/respond.js",
+                "lib/esp-gui/*.js"
             ]
         },
         "esp": {
@@ -63,7 +61,7 @@
                 }
             },
             "auth": {
-                "login": {
+                "auto": {
                     "url": "/user/login"
                 },
                 "roles": {
@@ -87,7 +85,21 @@
                 "int": 0,
                 "response": "json"
             },
-            "routes": "esp-angular-mvc",
+            "headers": {
+                "add": {
+                    "Content-Security-Policy": "allow 'self'; unsafe-inline; img-src 'self'"
+                }
+            },
+            "routes": [
+                "esp-angular-mvc",
+                {
+                    "pattern": "^/do/{controller}/stream",
+                    "timeouts": {
+                        "inactivity": "2mins",
+                        "request": "10mins"
+                    }
+                }
+            ],
             "serverPrefix": "/do",
             "timeouts": {
                 "refresh": "1sec",
@@ -103,7 +115,7 @@
                 },
                 "http": {
                     "auth": {
-                        "login": {
+                        "auto": {
                             "name": "admin",
                             "roles": [
                                 "administrator"
@@ -159,9 +171,9 @@
                         ],
                         "stylesheets": "css"
                     },
-                    "redirect": "https://",
+                    "redirect": "secure",
                     "auth": {
-                        "login": {
+                        "auto": {
                             "url": ""
                         }
                     }

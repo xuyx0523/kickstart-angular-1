@@ -7,6 +7,8 @@ angular.module('app').controller('DemoControl', function (Demo, Esp, $scope, $ti
     $scope.gauge = {value: 100};
 
     $scope.demo1 = function() {
+        /* Temporarily disabled */
+        return;
         Esp.loadScript(Esp.config.appPrefix + '/lib/flot/jquery.flot.js', function() {
             var gdata = [];
             var i;

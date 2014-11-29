@@ -1,12 +1,12 @@
 {
     "name": "esp-gui",
     "description": "ESP GUI Extensions for Angular",
-    "version": "5.2.0",
+    "version": "5.2.1",
     "keywords": [
         "esp",
     ],
     "dependencies": {
-        "esp-best": "~5",
+        "esp-best": "~5.2",
     },
     "licenses": [
         {
