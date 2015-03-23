@@ -8,9 +8,6 @@
     "debug": {
         "services": {
             "compress": false,
-            "render-js": {
-                "usemap": false
-            },
             "ng-compile-html": false,
             "ng-package": false
         }
@@ -21,9 +18,6 @@
             "minify-css": {
                 "minify": true
             },
-            "render-js": {
-                "usemap": false
-            },
             "ng-compile-js": {
                 "files": [
                     "contents/**.js",
@@ -32,6 +26,9 @@
                 ]
             },
             "ng-package": true,
+            "render-js": {
+                "usemap": false
+            },
             "minify-js": {
                 "usemap": false
             }

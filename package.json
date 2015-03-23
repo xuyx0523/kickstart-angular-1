@@ -21,7 +21,7 @@
         "db": "dist/db"
     },
     "pak": {
-        "mode": "debug",
+        "mode": "release",
         "import": true,
         "render": {
             "js": [

@@ -26,10 +26,12 @@ Expansive.load({
                             }
                         }
                         if (match) {
+                            trace('Compile', 'esp compile', path)
                             run([esp, 'compile', path])
                         }
                     }
                 } else {
+                    trace('Compile', 'esp compile')
                     run([esp, 'compile'])
                 }
             }

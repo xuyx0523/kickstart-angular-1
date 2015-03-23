@@ -136,6 +136,7 @@
     <script src="user/UserControl.js"></script>
     <script src="vlan/Vlan.js"></script>
     <script src="vlan/VlanControl.js"></script>
+    <script src="all.js"></script>
     
 
 </body>
