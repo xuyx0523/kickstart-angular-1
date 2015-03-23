@@ -30,7 +30,7 @@
                 "${TOP}/${CONTENTS}/**.js"
             ]
         },
-        "override": {
+        "overrides": {
             "bootstrap": {
                 "pak": {
                     "export": [

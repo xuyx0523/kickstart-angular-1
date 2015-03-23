@@ -90,7 +90,14 @@
                 "css/bootstrap.*",
                 "css/bootstrap-theme.*"
             ]
-        }
+        },
+        "export": [
+            "less/**",
+            {
+                "from": "dist/fonts/**",
+                "trim": 1
+            }
+        ]
     },
     "files": [
         "dist/**",

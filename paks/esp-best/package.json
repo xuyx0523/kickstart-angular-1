@@ -5,10 +5,12 @@
     "keywords": [
         "esp"
     ],
-    "licenses": [ {
+    "licenses": [
+        {
             "type": "GPL",
             "url": "http://www.gnu.org/licenses/gpl-2.0.html"
-        }, {
+        },
+        {
             "type": "Commercial",
             "url": "https://embedthis.com/licensing/"
         }
@@ -26,16 +28,18 @@
     },
     "pak": {
         "export": [
-            {  
-                "from": "js/*.js", 
-                "to": "esp-best/" 
-            }, {  
-                "from": "contents/**", 
-                "to": "${TOP}", 
+            {
+                "from": "js/*.js",
+                "to": "esp-best/"
+            },
+            {
+                "from": "contents/**",
+                "to": "${TOP}",
                 "overwrite": false
             }
         ],
         "manage": "esp.json",
-        "version": ">=0.10.0"
+        "version": ">=0.10.0",
+        "origin": "embedthis/esp-best"
     }
 }

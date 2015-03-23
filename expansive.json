@@ -31,6 +31,10 @@
             },
             "minify-js": {
                 "usemap": false
+            },
+            "render-css": {
+                "usemap": false,
+                "usemin": true
             }
         }
     }

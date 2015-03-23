@@ -15,11 +15,12 @@
     release: {
         services: {
             "compress": false,
-            "minify-js": {
+            "render-js": {
                 "usemap": false
             },
-            "minify-css": {
-                "minify": true
+            "render-css": {
+                "usemap": false,
+                "usemin": true
             },
             "ng-compile-js": {
                 "files": [

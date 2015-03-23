@@ -9,7 +9,8 @@
         {
             "type": "GPL",
             "url": "http://www.gnu.org/licenses/gpl-2.0.html"
-        }, {
+        },
+        {
             "type": "Commercial",
             "url": "https://embedthis.com/licensing/"
         }
@@ -43,12 +44,15 @@
                         "${TOP}/${CONTENTS}/**.js"
                     ]
                 },
-                "?override": {
+                "?overrides": {
                     "bootstrap": {
                         "pak": {
                             "export": [
                                 "less/**",
-                                { "from": "dist/fonts/**", "trim": 1 }
+                                {
+                                    "from": "dist/fonts/**",
+                                    "trim": 1
+                                }
                             ]
                         }
                     },
@@ -76,6 +80,7 @@
             "esp.json",
             "expansive.json"
         ],
-        "version": ">=0.10.0"
+        "version": ">=0.10.0",
+        "origin": "embedthis/esp-angular-skeleton"
     }
 }

@@ -52,7 +52,7 @@
     },
     "pak": {
         "export": [
-            "css/**",
+            "less/**",
             "fonts/**"
         ],
         "origin": "@npm/font-awesome"
