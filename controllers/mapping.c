@@ -32,10 +32,10 @@ static void updateMapping() {
 
 ESP_EXPORT int esp_controller_kickstart_mapping(HttpRoute *route, MprModule *module)
 {
-    espDefineAction(route, "mapping-create", createMapping);
-    espDefineAction(route, "mapping-get", getMapping);
-    espDefineAction(route, "mapping-list", listMappings);
-    espDefineAction(route, "mapping-remove", removeMapping);
-    espDefineAction(route, "mapping-update", updateMapping);
+    espDefineAction(route, "mapping/create", createMapping);
+    espDefineAction(route, "mapping/get", getMapping);
+    espDefineAction(route, "mapping/list", listMappings);
+    espDefineAction(route, "mapping/remove", removeMapping);
+    espDefineAction(route, "mapping/update", updateMapping);
     return 0;
 }

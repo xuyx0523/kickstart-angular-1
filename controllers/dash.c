@@ -123,7 +123,7 @@ static void getStream() {
 
 ESP_EXPORT int esp_controller_kickstart_dash(HttpRoute *route, MprModule *module) 
 {
-    espDefineAction(route, "dash-get", getDash);
-    espDefineAction(route, "dash-cmd-stream", getStream);
+    espDefineAction(route, "dash/get", getDash);
+    espDefineAction(route, "dash/stream", getStream);
     return 0;
 }

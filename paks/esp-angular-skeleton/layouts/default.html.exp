@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" ng-csp>
+<head>
+    <@ partial('header') @>
+</head>
+<body data-config='<% renderConfig(); %> id='body' ng-cloak>
+    <@ partial('nav') @>
+    <main class="container" ng-cloak>
+        <@ content @>
+    </main>
+    <@ partial('footer') @>
+</body>
+</html>

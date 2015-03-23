@@ -1,0 +1,19 @@
+<!DOCCTYPE html>
+<html lang="en">
+<head>
+    <@ partial('header') @>
+</head>
+<body id='body' ng-controller="HomeControl" data-config='<% renderConfig(); %>'>
+    <header>
+        <@ partial('nav') @>
+    </header>
+    <main class="container ng-cloak">
+        <@ partial('sidebar') @>
+        <@ content @>
+
+    </main>
+    <@ partial('feedback') @>
+    <@ partial('footer') @>
+</body>
+</html>
+

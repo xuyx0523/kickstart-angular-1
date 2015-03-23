@@ -1,0 +1,148 @@
+<div ng-init="currentPane='Details'">
+    <nav>
+        <ul class="nav nav-tabs">
+            <li ng-repeat="pane in ['Details', 'VLAN Mappings']"  ng-class="{active: currentPane == pane}">
+                <a ng-click="selectPane(pane)">{{pane}}</a>
+            <li>
+        </ul>
+    </nav>
+    <!--
+                <a ng-click="click('{{'#/services/' + pane | lowercase}}')">{{pane}}</a>
+                <a ng-click="pane | lowercase">{{pane}}</a>
+    <li ng-class="{{panel == 'mappings'}}"><a href="#/">Details</a></li>
+    <li ng-class="Esp.navClass('/post/')" ng-show="Esp.can('edit')"> <a href="#/post/">Mappings</a></li>
+    -->
+
+    <section ng-show="currentPane == 'Details'">
+        <fieldset>
+            <h3>Port Details</h3>
+            <form name="portForm" class="form-horizontal">
+                <div class="control-group">
+                    <div class="control-label" for="inputName">Name</div>
+                    <div class="controls">
+                        <div class="input-prepend">
+                            <span class="add-on">tty</span>
+                            <span class="input-small uneditable-input">{{port.name}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">Status</div>
+                    <div class="controls">
+                        <input type="text" class="input-small uneditable-input" ng-model='port.status'>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">Admin Mode</div>
+                    <div class="controls">
+                        <label class="radio">
+                            <input type='radio' ng-model='port.mode' value='Online'>Online
+                        </label>
+                        <label class="radio">
+                            <input type='radio' ng-model='port.mode' value='Offline'>Offline
+                        </label>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">Auto Negotiate</div>
+                    <div class="controls">
+                        <label class="checkbox">
+                            <input type='checkbox' ng-model='port.negotiate' ng-true-value='Enabled' ng-false-value='Disabled'>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">Duplex</div>
+                    <div class="controls">
+                        <label class="radio">
+                            <input type='radio' ng-model='port.duplex' value='Half'>Half
+                        </label>
+                        <label class="radio">
+                            <input type='radio' ng-model='port.duplex' value='Full'>Full
+                        </label>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">Flow Control</div>
+                    <div class="controls">
+                        <label class="checkbox">
+                            <input type='checkbox' ng-model='port.flowControl' ng-true-value='Enabled' ng-false-value='Disabled'>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">Jumbo</div>
+                    <div class="controls">
+                        <label class="checkbox">
+                            <input type='checkbox' ng-model='port.jumbo' ng-true-value='Enabled' ng-false-value='Disabled'
+                        </label>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">Speed</div>
+                    <div class="controls">
+                        <select ng-model="port.speed" ng-options="speed for speed in ['1000', '10000', '40000']" class='input-small'></select>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" ng-click='save()'>Save</button>
+                <button class="btn" esp-click="/port/list">Cancel</button>
+            </form>
+        </fieldset>
+    </section>
+
+    <section ng-show="currentPane == 'VLAN Mappings'">
+        <h3>VLANS for Port: tty{{port.name}}</h3>
+        <table class="table table-striped table-bordered table-hover table-condensed">
+            <thead><tr><th ng-repeat="header in ['VLAN']" ng-click="click($index)">{{header | titlecase}}</th></tr></thead>
+            <tbody>
+            <tr ng-repeat="vlan in mappings.data" ng-click="clickVlan($index)">
+                <td ng-repeat="column in ['vlan.name']">{{vlan[column]}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-primary" ng-show="Esp.can('edit')" esp-click="edit@/vlan/">Add Port to VLAN</button>
+    </section>
+    </div>
+</div>
+
+<!--
+    See bootstrap
+    Or use <select esp-name="" esp-label=""
+    Or use <input type="checkbox" esp-name="" esp-label=""
+    Or use <input type="radio" esp-name="" esp-label=""
+
+            <esp-select name="state" label="State" options="[100, 1000]">
+                Use name as label if label missing
+                Auto set class from fieldErrors
+            <esp-checkbox name="enabled" values="['enabled', 'disabled']" labels="[]">
+                Lables default to
+                OR values="{ Enabled: true, Disabled: false}"
+            <esp-radio name="duplex" values="['half', 'full']">
+                Labels default to titlecase of the values
+                OR values="{ Half: .5, Full: 1.0}"
+            <esp-text>
+            <esp-textarea>
+
+
+            MOB - other style
+            <table border="0">
+                <tr><td> Name           </td><td><%  text("name", 0);                                             %></td></tr>
+                <tr><td> Status         </td><td><%  text("status", 0);                                           %></td></tr>
+                <tr><td> Admin Mode     </td><td><%  radio("mode", "{'Up', 'Down'}", 0);                     %></td></tr>
+                <tr><td> Auto Negotiate </td><td><%  checkbox("negotiate", "Enabled", 0);                     %></td></tr>
+                <tr><td> Duplex         </td><td><%  radio("duplex", "{'Full', 'Half'}", 0);                      %></td></tr>
+                <tr><td> Flow Control   </td><td><%  checkbox("flowControl", "Enabled", 0);                       %></td></tr>
+                <tr><td> Jumbo          </td><td><%  checkbox("jumbo", "Enabled", 0);                             %></td></tr>
+                <tr><td> Speed          </td><td><%  dropdown("speed", makeGrid("[100, 1000, 10000, 40000]"), 0); %></td></tr>
+                <tr><td> Type           </td><td><%  text("type", 0);                                             %></td></tr>
+            </table>
+-->
+

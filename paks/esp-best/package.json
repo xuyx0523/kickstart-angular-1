@@ -1,20 +1,10 @@
 {
     "name": "esp-best",
-    "description": "ESP Best Practices Angular Skeleton",
-    "version": "5.2.1",
+    "description": "ESP Best Practices Angular",
+    "version": "5.3.0",
     "keywords": [
-        "esp",
+        "esp"
     ],
-    "dependencies": {
-        "esp-angular-mvc": "~5.2",
-        "less": ">=1.3.3",
-        "bootstrap": "~3",
-        "angular-bootstrap": ">=0.7.0",
-        "html5shiv": "*",
-        "font-awesome": "*",
-        "more": "*",
-        "respond": "*"
-    },
     "licenses": [ {
             "type": "GPL",
             "url": "http://www.gnu.org/licenses/gpl-2.0.html"
@@ -23,59 +13,29 @@
             "url": "https://embedthis.com/licensing/"
         }
     ],
-    "export": [ {
-            from: "*.less",
-            to: '${LIB}/esp-best',
-            overwrite: true,
-        }
-    ],
-    "app": {
-        "esp": {
-            "generate": {
-                "-appweb": "esp-angular-mvc/appweb.conf",
-                "?appweb": "esp-best/appweb.conf",
-            }
-        },
-        "http": {
-            "?auth": {
-                "store": "app",
-            },
-        },
-        "?mode": "debug",
-        "modes": {
-            "debug": {
-                "http": {
-                    "auth": {
-                        "auto": {
-                            "?name": "",
-                            "?roles": [ "*" ],
-                        },
-                    },
-                    content: {
-                        "?stylesheets": "less",
-                    },
-                },
-            },
-            "release": {
-                "http": {
-                    "auth": {
-                        "auto": {
-                            "url": "",
-                        },
-                    },
-                    "cache": [{
-                        "client": "1day",
-                        "extensions": [ "css", "gif", "ico", "jpeg", "jpg", "js", "html", "less", "png", "pdf", "txt" ],
-                    }],
-                    "content": {
-                        "?combine":     [ "c", "css", "html", "js" ],
-                        "?compress":    [ "css", "html", "js", "txt", "xml" ],
-                        "?minify":      [ "css", "html", "js" ],
-                        "?stylesheets": "css",
-                    },
-                    "?redirect": "https://"
-                },
-            },
-        },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/embedthis/esp-best.git"
     },
+    "dependencies": {
+        "esp-angular-skeleton": "^5.3",
+        "html5shiv": "^3.7",
+        "font-awesome": "^4.3",
+        "more": "^0.0",
+        "respond": "^1.4"
+    },
+    "pak": {
+        "export": [
+            {  
+                "from": "js/*.js", 
+                "to": "esp-best/" 
+            }, {  
+                "from": "contents/**", 
+                "to": "${TOP}", 
+                "overwrite": false
+            }
+        ],
+        "manage": "esp.json",
+        "version": ">=0.10.0"
+    }
 }

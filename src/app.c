@@ -9,20 +9,18 @@
 static void commonController(HttpConn *conn) 
 {
     HttpRoute   *route;
-    cchar       *loginRequired, *uri, *stem;
+    cchar       *loginRequired, *uri;
 
     if (!httpLoggedIn(conn)) {
         uri = getUri();
         route = conn->rx->route;
-        if (!route->serverPrefix || sstarts(uri, route->serverPrefix)) {
-            stem = (route->serverPrefix) ?  &uri[slen(route->serverPrefix)] : uri;
-            if (smatch(stem, "/user/login") || smatch(stem, "/user/logout") || smatch(stem, "/user/forgot")) {
-                return;
-            }
-            loginRequired = espGetConfig(conn->rx->route, "app.http.auth.require.users", 0);
-            if (loginRequired && *loginRequired) {
-                httpError(conn, HTTP_CODE_UNAUTHORIZED, "Access Denied. Login required");
-            }
+        if (smatch(uri, "/user/login") || smatch(uri, "/user/logout") || smatch(uri, "/user/forgot") ||
+            sstarts(uri, "/assets/") || sstarts(uri, "/css/")) {
+            return;
+        }
+        loginRequired = espGetConfig(conn->rx->route, "http.auth.require.users", 0);
+        if (loginRequired && *loginRequired) {
+            httpError(conn, HTTP_CODE_UNAUTHORIZED, "Access Denied. Login required");
         }
     }
 }
@@ -58,7 +56,7 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
     /*
         Restrict to a single simultaneous login
      */
-    if (espTestConfig(rx->route, "app.http.auth.login.single", "true")) {
+    if (espTestConfig(rx->route, "http.auth.login.single", "true")) {
         if (!espIsCurrentSession(conn)) {
             feedback("error", "Another user still logged in");
             httpTrace(conn, "auth.login.error", "error", "msg=\"Too many simultaneous users\"");

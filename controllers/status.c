@@ -23,6 +23,6 @@ static void getStatus() {
 
 ESP_EXPORT int esp_controller_kickstart_status(HttpRoute *route, MprModule *module)
 {
-    espDefineAction(route, "status-get", getStatus);
+    espDefineAction(route, "status/get", getStatus);
     return 0;
 }

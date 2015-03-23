@@ -1,0 +1,113 @@
+{
+    "esp": {
+        "generate": {
+            "appweb": "esp-best/appweb.conf",
+            "migration": "esp-mvc/generate/migration.c",
+            "controller": "esp-mvc/controller.c",
+            "clientModel": "esp-angular-mvc/model.js",
+            "clientController": "esp-angular-mvc/controller.js",
+            "clientList": "esp-angular-mvc/list.html",
+            "clientEdit": "esp-angular-mvc/edit.html",
+            "module": "esp-mvc/src/app.c",
+            "controllerSingleton": "esp-angular-mvc/generate/controllerSingleton.c"
+        },
+        "mappings": {
+            "auth": {
+                "login": "http.auth.login",
+                "store": "http.auth.store"
+            },
+            "formats": "http.formats",
+            "prefix": "http.prefix",
+            "timeouts": "http.timeouts"
+        }
+    },
+    "http": {
+        "server": {
+            "listen": [
+                "http://127.0.0.1:4000",
+                "https://127.0.0.1:4443"
+            ],
+            "ssl": {
+                "certificate": "crt/self.crt",
+                "key": "crt/self.key"
+            }
+        },
+        "auth": {
+            "auto": {
+                "url": "/user/login"
+            },
+            "roles": {
+                "user": [
+                    "view"
+                ],
+                "administrator": [
+                    "view",
+                    "edit"
+                ]
+            },
+            "store": "app"
+        },
+        "database": "mdb://kickstart.mdb",
+        "formats": {
+            "date": "yyyy-MM-dd",
+            "float": 2,
+            "int": 0,
+            "response": "json"
+        },
+        "headers": {
+            "x-add": {
+                "Content-Security-Policy": "allow 'self'; unsafe-inline; img-src 'self'"
+            }
+        },
+        "routes": [
+            "esp-restful",
+            {
+                "pattern": "^/{controller}/stream",
+                "timeouts": {
+                    "inactivity": "2mins",
+                    "request": "10mins"
+                }
+            }
+        ],
+        "timeouts": {
+            "refresh": "1sec",
+            "session": "30mins"
+        },
+        "xsrf": true
+    },
+    "modes": {
+        "debug": {
+            "esp": {
+                "optimize": false,
+                "combine": false
+            },
+            "http": {
+                "auth": {
+                    "auto": {
+                        "name": "admin",
+                        "roles": [
+                            "administrator"
+                        ]
+                    }
+                },
+                "compress": false
+            }
+        },
+        "release": {
+            "esp": {
+                "optimize": true,
+                "combine": true
+            },
+            "http": {
+                "cache": true,
+                "compress": true,
+                "redirect": "secure",
+                "auth": {
+                    "auto": {
+                        "url": ""
+                    }
+                }
+            }
+        }
+    }
+}

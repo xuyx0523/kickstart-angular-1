@@ -1,0 +1,40 @@
+{
+    "meta": {
+        "url": "https://embedthis.com/appweb/demo/"
+    },
+    "services": {
+        "clean-css": true
+    },
+    "debug": {
+        "services": {
+            "compress": false,
+            "render-js": {
+                "usemap": false
+            },
+            "ng-compile-html": false,
+            "ng-package": false
+        }
+    },
+    "release": {
+        "services": {
+            "compress": false,
+            "minify-css": {
+                "minify": true
+            },
+            "render-js": {
+                "usemap": false
+            },
+            "ng-compile-js": {
+                "files": [
+                    "contents/**.js",
+                    "lib/esp*/**.js",
+                    "lib/angular*/**.js"
+                ]
+            },
+            "ng-package": true,
+            "minify-js": {
+                "usemap": false
+            }
+        }
+    }
+}

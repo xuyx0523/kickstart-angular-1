@@ -1,19 +1,60 @@
 {
     "name": "font-awesome",
-    "description": "Icon font for Bootstrap",
-    "version": "4.0.0",
+    "description": "The iconic font and CSS framework",
+    "version": "4.3.0",
     "keywords": [
-        "esp",
+        "font",
+        "awesome",
+        "fontawesome",
+        "icon",
+        "font",
+        "bootstrap"
     ],
-    "export": [
+    "homepage": "http://fontawesome.io/",
+    "bugs": {
+        "url": "http://github.com/FortAwesome/Font-Awesome/issues"
+    },
+    "author": {
+        "name": "Dave Gandy",
+        "email": "dave@fontawesome.io",
+        "web": "http://twitter.com/davegandy"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/FortAwesome/Font-Awesome.git"
+    },
+    "contributors": [
         {
-            from: [
-                "css/*",
-                "font/*",
-                "less/*",
-            ],
-            to: '${LIB}/font-awesome',
-            overwrite: true,
+            "name": "Rob Madole",
+            "web": "http://twitter.com/robmadole"
+        },
+        {
+            "name": "Geremia Taglialatela",
+            "web": "http://twitter.com/gtagliala"
+        },
+        {
+            "name": "Travis Chase",
+            "web": "http://twitter.com/supercodepoet"
         }
-    ]
+    ],
+    "licenses": [
+        {
+            "type": "OFL-1.1",
+            "url": "http://scripts.sil.org/OFL"
+        },
+        {
+            "type": "MIT",
+            "url": "http://opensource.org/licenses/mit-license.html"
+        }
+    ],
+    "engines": {
+        "node": ">=0.10.3"
+    },
+    "pak": {
+        "export": [
+            "css/**",
+            "fonts/**"
+        ],
+        "origin": "@npm/font-awesome"
+    }
 }

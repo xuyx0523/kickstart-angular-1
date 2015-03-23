@@ -1,0 +1,10 @@
+<h3>Ports</h3>
+<table class="table table-striped table-bordered table-hover table-condensed"
+        ng-init="columns = ['name',  'mode', 'negotiate', 'duplex', 'flowControl', 'jumbo', 'speed', 'status']">
+    <thead><tr><th ng-repeat="header in columns" ng-click="click($index)">{{header | titlecase}}</th></tr></thead>
+    <tbody>
+    <tr ng-repeat="port in ports.data" ng-click="click($index)">
+        <td ng-repeat="column in columns">{{port[column]}}</td>
+    </tr>
+    </tbody>
+</table>

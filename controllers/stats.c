@@ -17,7 +17,7 @@ static void traffic() {}
 
 ESP_EXPORT int esp_controller_kickstart_stats(HttpRoute *route, MprModule *module)
 {
-    espDefineAction(route, "stats-data", data);
-    espDefineAction(route, "stats-cmd-traffic", traffic);
+    espDefineAction(route, "stats/data", data);
+    espDefineAction(route, "stats/traffic", traffic);
     return 0;
 }

@@ -1,15 +1,17 @@
 {
     "name": "more",
     "description": "Collection of CSS polyfills for emerging HTML5 elements",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "keywords": [
-        "esp",
+        "esp"
     ],
-    "export": [
-        {
-            from: "*.less",
-            to: '${LIB}/more',
-            overwrite: true,
-        }
-    ]
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/embedthis/more.git"
+    },
+    "pak": {
+        "export": "*.less",
+        "version": ">=0.10.0",
+        "origin": "embedthis/more"
+    }
 }

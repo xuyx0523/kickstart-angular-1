@@ -1,0 +1,44 @@
+{
+    "name": "esp-mgr-skeleton",
+    "description": "ESP Management Console Skeleton",
+    "version": "5.3.0",
+    "keywords": [
+        "esp"
+    ],
+    "licenses": [
+        {
+            "type": "GPL",
+            "url": "http://www.gnu.org/licenses/gpl-2.0.html"
+        },
+        {
+            "type": "Commercial",
+            "url": "https://embedthis.com/licensing/"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/embedthis/esp-mgr-skeleton.git"
+    },
+    "dependencies": {
+        "esp-best": "^5.3",
+        "esp-gui": "^5.3"
+    },
+    "pak": {
+        "blend": {
+            "pak": {
+                "?mode": "debug",
+                "?import": true
+            }
+        },
+        "export": {
+            "from": [
+                "contents/**",
+                "layouts/**",
+                "partials/**"
+            ],
+            "to": "${TOP}",
+            "overwrite": false
+        },
+        "version": ">=0.10.0"
+    }
+}

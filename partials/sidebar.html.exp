@@ -1,0 +1,16 @@
+
+        <nav class="sidebar nav-collapse col-sm-2" ng-show="showNav">
+            <ul class="nav nav-tabs nav-stacked">
+                <esp-menu href="/" value="Dash" icon="fa fa-tachometer"></esp-menu>
+                <esp-menu href="/port/list" value="Ports" icon="fa fa-sitemap"></esp-menu>
+                <esp-menu href="/vlan/list" value="VLANs" icon="glyphicon glyphicon-hdd"></esp-menu>
+                <esp-menu ng-show="Esp.can('edit')" href="/setting" value="Settings" icon="glyphicon glyphicon-cog"></esp-menu>
+                <esp-menu href="/user/list" value="Users" icon="glyphicon glyphicon-user"></esp-menu>
+                <esp-menu href="/event/list" value="Events" icon="glyphicon glyphicon-list"></esp-menu>
+                <esp-menu href="" value="Demos" icon="fa fa-signal">
+                    <esp-menu href="/demo/demo-svg" value="SVG"></esp-menu>
+                    <esp-menu href="/demo/demo-1" value="Demo 1"></esp-menu>
+                    <esp-menu href="/demo/demo-2" value="Demo 2"></esp-menu>
+                </esp-menu>
+            </ul>
+        </nav>

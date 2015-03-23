@@ -18,6 +18,6 @@ static void demo1() {
 
 ESP_EXPORT int esp_controller_kickstart_demo(HttpRoute *route, MprModule *module) 
 {
-    espDefineAction(route, "demo-cmd-demo1", demo1);
+    espDefineAction(route, "demo/demo1", demo1);
     return 0;
 }

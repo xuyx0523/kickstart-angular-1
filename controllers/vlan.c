@@ -104,15 +104,15 @@ ESP_EXPORT int esp_controller_kickstart_vlan(HttpRoute *route, MprModule *module
 {
     Edi     *edi;
 
-    espDefineAction(route, "vlan-create", createVlan);
-    espDefineAction(route, "vlan-get", getVlan);
-    espDefineAction(route, "vlan-init", initVlan);
-    espDefineAction(route, "vlan-list", listVlans);
-    espDefineAction(route, "vlan-remove", removeVlan);
-    espDefineAction(route, "vlan-update", updateVlan);
-    espDefineAction(route, "vlan-mappings", getVlanMappings);
-    espDefineAction(route, "vlan-addPort", addPort);
-    espDefineAction(route, "vlan-removePort", removePort);
+    espDefineAction(route, "vlan/create", createVlan);
+    espDefineAction(route, "vlan/get", getVlan);
+    espDefineAction(route, "vlan/init", initVlan);
+    espDefineAction(route, "vlan/list", listVlans);
+    espDefineAction(route, "vlan/remove", removeVlan);
+    espDefineAction(route, "vlan/update", updateVlan);
+    espDefineAction(route, "vlan/mappings", getVlanMappings);
+    espDefineAction(route, "vlan/addPort", addPort);
+    espDefineAction(route, "vlan/removePort", removePort);
 
     edi = espGetRouteDatabase(route);
     ediAddValidation(edi, "unique", "vlan", "name", 0);

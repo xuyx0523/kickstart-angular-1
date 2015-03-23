@@ -114,19 +114,19 @@ ESP_EXPORT int esp_controller_kickstart_user(HttpRoute *route, MprModule *module
 {
     Edi     *edi;
 
-    espDefineAction(route, "user-create", createUser);
-    espDefineAction(route, "user-get", getUser);
-    espDefineAction(route, "user-list", listUsers);
-    espDefineAction(route, "user-index", indexUser);
-    espDefineAction(route, "user-init", initUser);
+    espDefineAction(route, "user/create", createUser);
+    espDefineAction(route, "user/get", getUser);
+    espDefineAction(route, "user/list", listUsers);
+    espDefineAction(route, "user/index", indexUser);
+    espDefineAction(route, "user/init", initUser);
 
-    espDefineAction(route, "user-remove", removeUser);
-    espDefineAction(route, "user-update", updateUser);
+    espDefineAction(route, "user/remove", removeUser);
+    espDefineAction(route, "user/update", updateUser);
 
-    espDefineAction(route, "user-cmd-check", checkAuthenticated);
-    espDefineAction(route, "user-cmd-forgot", forgotPassword);
-    espDefineAction(route, "user-cmd-login", loginUser);
-    espDefineAction(route, "user-cmd-logout", logoutUser);
+    espDefineAction(route, "user/check", checkAuthenticated);
+    espDefineAction(route, "user/forgot", forgotPassword);
+    espDefineAction(route, "user/login", loginUser);
+    espDefineAction(route, "user/logout", logoutUser);
 
     edi = espGetRouteDatabase(route);
     ediAddValidation(edi, "present", "user", "username", 0);

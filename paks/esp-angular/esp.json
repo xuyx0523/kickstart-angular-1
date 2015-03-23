@@ -1,0 +1,13 @@
+{
+    "esp": {
+        "mappings": {
+            "auth": {
+                "login": "http.auth.login",
+                "store": "http.auth.store"
+            },
+            "formats":   "http.formats",
+            "prefix":    "http.prefix",
+            "timeouts": "http.timeouts"
+        }
+    }
+}

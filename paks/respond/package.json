@@ -1,22 +1,38 @@
 {
     "name": "respond",
-    "description": "Polyfill for CSS media queries",
-    "version": "1.1.0",
-    "keywords": [
-        "esp",
-    ],
-    "export": [
+    "description": "min/max-width media query polyfill",
+    "version": "1.4.2",
+    "homepage": "https://github.com/scottjehl/Respond",
+    "author": {
+        "name": "Scott Jehl",
+        "email": "scott@filamentgroup.com",
+        "url": "http://filamentgroup.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/scottjehl/Respond.git"
+    },
+    "bugs": {
+        "url": "https://github.com/scottjehl/Respond/issues"
+    },
+    "licenses": [
         {
-            from: "*.js",
-            to: '${LIB}/respond',
-            overwrite: true,
+            "type": "MIT",
+            "url": "https://github.com/scottjehl/Respond/blob/master/LICENSE-MIT"
         }
     ],
-    "app": {
-        "client": {
-            "+scripts": [ 
-                "${LIB}/respond/respond.js" 
-            ]
-        }
-    }
+    "devDependencies": {
+        "grunt-cli": "~0.1",
+        "grunt": "~0.4.0",
+        "grunt-contrib-jshint": "~0.2.0",
+        "grunt-contrib-qunit": "~0.3.0",
+        "grunt-contrib-uglify": "0.2.7"
+    },
+    "pak": {
+        "export": "dest/respond.min.js",
+        "origin": "scottjehl/Respond"
+    },
+    "files": [
+        "dest/**"
+    ]
 }
