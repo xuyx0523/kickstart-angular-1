@@ -53,7 +53,13 @@
     "pak": {
         "export": [
             "less/**",
-            "fonts/**"
+            {
+                "from": [
+                    "fonts/*.eot",
+                    "fonts/*.woff",
+                    "fonts/*.ttf"
+                ]
+            }
         ],
         "origin": "@npm/font-awesome"
     }
