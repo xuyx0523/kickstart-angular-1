@@ -15,6 +15,7 @@
         "bootstrap": "^3.3",
         "esp-angular": "^5.3",
         "esp-mgr-skeleton": "^5.3",
+        "exp-gzip": "^0.2",
         "font-awesome": "^4.3"
     },
     "_FUTURE_directories": {

@@ -2,6 +2,13 @@
     expansive.json - Configuration for esp-angular-skeleton
  */
 {
+    "control": {
+        "post": [
+            "ng-package",
+            "compile-esp",
+            "compress",
+        ],
+    },
     "services": {
         "clean-css": true
     },

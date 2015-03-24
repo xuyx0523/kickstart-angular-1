@@ -28,11 +28,15 @@ Expansive.load({
                         if (match) {
                             trace('Compile', 'esp compile', path)
                             run([esp, 'compile', path])
+                            path.remove()
                         }
                     }
                 } else {
                     trace('Compile', 'esp compile')
                     run([esp, 'compile'])
+                    for each (path in expansive.directories.dist.files('**.esp')) {
+                        path.remove()
+                    }
                 }
             }
         `

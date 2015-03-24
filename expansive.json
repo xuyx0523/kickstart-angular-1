@@ -2,6 +2,13 @@
     "meta": {
         "url": "https://embedthis.com/appweb/demo/"
     },
+    "control": {
+        "post": [
+            "ng-package",
+            "compile-esp",
+            "compress"
+        ]
+    },
     "services": {
         "clean-css": true
     },
