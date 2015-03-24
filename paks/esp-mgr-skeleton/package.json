@@ -1,7 +1,7 @@
 {
     "name": "esp-mgr-skeleton",
     "description": "ESP Management Console Skeleton",
-    "version": "5.3.0",
+    "version": "5.4.0",
     "keywords": [
         "esp"
     ],
@@ -20,8 +20,8 @@
         "url": "git://github.com/embedthis/esp-mgr-skeleton.git"
     },
     "dependencies": {
-        "esp-best": "^5.3",
-        "esp-gui": "^5.3"
+        "esp-best": "^5.4",
+        "esp-gui": "^5.4"
     },
     "pak": {
         "blend": {
@@ -39,6 +39,7 @@
             "to": "${TOP}",
             "overwrite": false
         },
-        "version": ">=0.10.0"
+        "version": ">=0.10.0",
+        "origin": "embedthis/esp-mgr-skeleton"
     }
 }

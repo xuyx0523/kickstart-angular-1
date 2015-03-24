@@ -1,7 +1,7 @@
 {
     "name": "esp-mvc",
     "description": "ESP MVC Framework",
-    "version": "5.3.0",
+    "version": "5.4.0",
     "keywords": [
         "esp"
     ],
@@ -20,7 +20,7 @@
         "url": "git://github.com/embedthis/esp-mvc.git"
     },
     "dependencies": {
-        "esp-server": "~5.3"
+        "esp-server": "^5.4"
     },
     "pak": {
         "manage": "esp.json",

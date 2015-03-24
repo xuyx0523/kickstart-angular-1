@@ -1,7 +1,7 @@
 {
     "name": "esp-best",
     "description": "ESP Best Practices Angular",
-    "version": "5.3.0",
+    "version": "5.4.0",
     "keywords": [
         "esp"
     ],
@@ -20,7 +20,7 @@
         "url": "git://github.com/embedthis/esp-best.git"
     },
     "dependencies": {
-        "esp-angular-skeleton": "^5.3",
+        "esp-angular-skeleton": "^5.4",
         "html5shiv": "^3.7",
         "font-awesome": "^4.3",
         "more": "^0.0",

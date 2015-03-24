@@ -13,8 +13,9 @@
     },
     "dependencies": {
         "bootstrap": "^3.3",
-        "esp-angular": "^5.3",
-        "esp-mgr-skeleton": "^5.3",
+        "esp-angular": "^5.4",
+        "esp-angular-skeleton": "^5.4",
+        "esp-mgr-skeleton": "^5.4",
         "exp-gzip": "^0.2",
         "font-awesome": "^4.3"
     },

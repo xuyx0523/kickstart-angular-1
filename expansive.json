@@ -21,7 +21,7 @@
     },
     "release": {
         "services": {
-            "compress": false,
+            "compress": true,
             "minify-css": {
                 "minify": true
             },
@@ -33,15 +33,12 @@
                 ]
             },
             "ng-package": true,
-            "render-js": {
-                "usemap": false
-            },
-            "minify-js": {
-                "usemap": false
-            },
             "render-css": {
                 "usemap": false,
                 "usemin": true
+            },
+            "render-js": {
+                "usemap": false
             }
         }
     }

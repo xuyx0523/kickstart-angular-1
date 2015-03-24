@@ -14,21 +14,14 @@
     },
     debug: {
         services: {
-            "compress": false,
+            "?compress": false,
             "ng-compile-html": false,
             "ng-package": false
         }
     },
     release: {
         services: {
-            "compress": false,
-            "render-js": {
-                "usemap": false
-            },
-            "render-css": {
-                "usemap": false,
-                "usemin": true
-            },
+            "?compress": true,
             "ng-compile-js": {
                 "files": [
                     "contents/**.js",
@@ -36,7 +29,14 @@
                     "lib/angular*/**.js"
                 ]
             },
-            "ng-package": true
+            "ng-package": true,
+            "render-css": {
+                "usemap": false,
+                "usemin": true
+            },
+            "render-js": {
+                "usemap": false
+            }
         }
     }
 }
