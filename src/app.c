@@ -8,12 +8,10 @@
  */
 static void commonController(HttpConn *conn) 
 {
-    HttpRoute   *route;
     cchar       *loginRequired, *uri;
 
     if (!httpLoggedIn(conn)) {
         uri = getUri();
-        route = conn->rx->route;
         if (smatch(uri, "/user/login") || smatch(uri, "/user/logout") || smatch(uri, "/user/forgot") ||
             sstarts(uri, "/assets/") || sstarts(uri, "/css/")) {
             return;
