@@ -42,7 +42,7 @@
                         {
                             "from": [
                                 "dist/fonts/*.eot",
-                                "dist/fonts/*.woff",
+                                "dist/fonts/*.woff*",
                                 "dist/fonts/*.ttf"
                             ],
                             "trim": 1
@@ -57,7 +57,7 @@
                         {
                             "from": [
                                 "fonts/*.eot",
-                                "fonts/*.woff",
+                                "fonts/*.woff*",
                                 "fonts/*.ttf"
                             ]
                         }

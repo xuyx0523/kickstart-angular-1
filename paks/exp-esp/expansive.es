@@ -7,6 +7,7 @@ Expansive.load({
     transforms: [{
         name:   'compile-esp',
         files:  null,
+        remove: false,
         script: `
             function post(meta, service) {
                 let esp = Cmd.locate('esp')
@@ -28,14 +29,18 @@ Expansive.load({
                         if (match) {
                             trace('Compile', 'esp compile', path)
                             run([esp, 'compile', path])
-                            path.remove()
+                            if (service.remove) {
+                                path.remove()
+                            }
                         }
                     }
                 } else {
                     trace('Compile', 'esp compile')
                     run([esp, 'compile'])
                     for each (path in expansive.directories.dist.files('**.esp')) {
-                        path.remove()
+                        if (service.remove) {
+                            path.remove()
+                        }
                     }
                 }
             }

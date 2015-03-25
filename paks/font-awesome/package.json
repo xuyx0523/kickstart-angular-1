@@ -56,7 +56,7 @@
             {
                 "from": [
                     "fonts/*.eot",
-                    "fonts/*.woff",
+                    "fonts/*.woff*",
                     "fonts/*.ttf"
                 ]
             }
