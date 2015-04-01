@@ -6,6 +6,6 @@ angular.module('app').factory('Table', function (EspResource) {
     { 
         name: '@name' 
     }, {
-        list: { 'method': 'GET', url: '/table/list' },
+        list: { 'method': 'GET', url: ':server/table/list' },
     });
 });

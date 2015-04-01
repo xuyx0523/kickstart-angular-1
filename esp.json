@@ -62,7 +62,7 @@
         "routes": [
             "esp-restful",
             {
-                "pattern": "^/{controller}/stream",
+                "pattern": "/{controller}/stream",
                 "timeouts": {
                     "inactivity": "2mins",
                     "request": "10mins"
