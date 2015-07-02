@@ -1,0 +1,40 @@
+/*
+    start.me -- MakeMe file for Kickstart
+ */
+
+Me.load({
+    targets: {
+        render: {
+            build: `
+                run('pak mode release')
+                run('expansive --clean render')
+                trace('Render', 'expansive --clean render')
+                run('pak mode debug')
+            `,
+        },
+        push: {
+            build: `
+                run('git add dist contents')
+                run('git commit -m"PUSH" -a')
+                run('git push')
+                trace('Commit', 'Push to site')
+            `,
+            depends: [ 'render' ],
+        },
+        validate: {
+            action: `
+                run('expansive --clean render')
+                for each (f in Path('dist').files('**/*.html')) {
+                    let data = f.readString()
+                    data = data.replace('700|Open', '').
+                    replace(/https:..embedthis.com.catalog.search./g, 'https://embedthis.com/catalog/#/?keywords=').
+                    replace(/frameborder="" allowfullscreen="0" height="390" width="640"/g, '').
+                    replace(/\\<\\/form\\>/g, '<input type="submit" value="Submit"></form>')
+                    trace('Patch', f)
+                    f.write(data)
+                }
+                run('expansive -q --norender')
+            `
+        },
+    }
+})
