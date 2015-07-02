@@ -10,9 +10,9 @@ This software is licensed under the Embedthis Commercial Software License.  See 
 
 To build, you will need to install MakeMe. See:
 
-    https://github.com/embedthis/me
+    https://github.com/embedthis/makeme
 and
-    https://embedthis.com/me
+    https://embedthis.com/makeme
 
 <pre>
     ./configure

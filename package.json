@@ -12,12 +12,13 @@
         "url": "git://github.com/embedthis/kickstart.git"
     },
     "dependencies": {
-        "bootstrap": "^3.3",
-        "esp-angular": "^5.4",
-        "esp-angular-skeleton": "^5.4",
-        "esp-mgr-skeleton": "^5.4",
-        "exp-gzip": "^0.2",
-        "font-awesome": "^4.3"
+        "bootstrap": "~3.3",
+        "esp-angular": "~5.4",
+        "esp-angular-skeleton": "~5.4",
+        "esp-mgr-skeleton": "~5.4",
+        "exp-esp": "~0.1",
+        "exp-gzip": "~0.2",
+        "font-awesome": "~4.3"
     },
     "_FUTURE_directories": {
         "cache": "dist/cache",
@@ -65,5 +66,9 @@
                 }
             }
         }
+    },
+    "directories": {
+        "dist": "dist",
+        "controllers": "controllers"
     }
 }

@@ -1,7 +1,7 @@
 /*
-    app.c -- ${UAPP} Application Module (esp-server)
+    app.c -- ${UAPP} Application Module (esp-mvc)
 
-    This module is loaded when Appweb starts.
+    This module is loaded when ESP starts.
  */
 #include "esp.h"
 

@@ -7,7 +7,24 @@
             "ng-package",
             "compile-esp",
             "compress"
-        ]
+        ],
+        "deploy": {
+            "from": [
+                "dist/**",
+                "db/*.*",
+                "!db/*.bak",
+                "cache/*.dylib",
+                "cache/*.so",
+                "cache/*.dll",
+                "cache/*.lib",
+                "esp.json",
+                "package.json"
+            ],
+            "to": "deploy",
+            "flatten": false,
+            "clean": true,
+            "script": ""
+        }
     },
     "services": {
         "clean-css": true

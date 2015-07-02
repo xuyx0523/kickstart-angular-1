@@ -1,11 +1,9 @@
 {
     "esp": {
         "generate": {
-            "-appweb": "esp-mvc/generate/appweb.conf",
             "-controller": "esp-mvc/generate/controller.c",
             "-controllerSingleton": "esp-mvc/generate/controllerSingleton.c",
 
-            "?appweb": "esp-angular-skeleton/generate/appweb.conf",
             "?clientModel": "esp-angular-skeleton/generate/model.js",
             "?clientController": "esp-angular-skeleton/generate/controller.js",
             "?clientList": "esp-angular-skeleton/generate/list.html",
@@ -20,7 +18,6 @@
             "?date": "yyyy-MM-dd",
             "?float": 2
         },
-        "-routes": "esp-server",
         "?routes": "esp-restful"
     }
 }
