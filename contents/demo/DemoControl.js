@@ -65,9 +65,9 @@ angular.module('app').config(function($routeProvider) {
         resolve: { action: esp.checkAuth },
     };
     $routeProvider.when('/demo/demo-1', angular.extend({}, Default, {
-        templateUrl: esp.url('/demo/1.html'),
+        templateUrl: esp.url('/demo/demo-1.html'),
     }));
     $routeProvider.when('/demo/demo-2', angular.extend({}, Default, {
-        templateUrl: esp.url('/demo/2.html'),
+        templateUrl: esp.url('/demo/demo-2.html'),
     }));
 });
