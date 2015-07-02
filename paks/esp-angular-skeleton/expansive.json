@@ -10,32 +10,32 @@
         ],
     },
     "services": {
-        "clean-css": true
+        "?clean-css": true
     },
     debug: {
         services: {
             "?compress": false,
-            "ng-compile-html": false,
-            "ng-package": false
+            "?ng-compile-html": false,
+            "?ng-package": false
         }
     },
     release: {
         services: {
             "?compress": true,
             "ng-compile-js": {
-                "files": [
+                "?files": [
                     "contents/**.js",
                     "lib/esp*/**.js",
                     "lib/angular*/**.js"
                 ]
             },
-            "ng-package": true,
+            "?ng-package": true,
             "render-css": {
-                "usemap": false,
-                "usemin": true
+                "?usemap": false,
+                "?usemin": true
             },
             "render-js": {
-                "usemap": false
+                "?usemap": false
             }
         }
     }

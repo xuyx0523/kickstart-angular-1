@@ -3,10 +3,6 @@ esp-angular-skeleton
 
 Pak for esp-angular-skeleton
 
-### To install:
-
-    pak install esp-angular-skeleton
-
 ### Description
 
 The esp-angular-skeleton is a starter skeleton for ESP using
@@ -20,6 +16,53 @@ mangling of scripts.
 
 The skeleton includes templates for ESP to generate controllers, scaffolds 
 and database migrations.
+
+### Provides
+
+* contents/css &mdash; Application less stylesheets
+* contents/index.esp &mdash; Default home page
+* contents/main.js &mdash; Primary application script
+* esp.json &mdash; ESP configuration file
+* expansive.json &mdash; Expansive configuration file
+* layouts/default.html.exp &mdash; Master web page layout
+* paks/ &mdash; Installed packages
+* partials/ &mdash; Web page partial content
+
+### Dependencies
+
+The esp-angular-skeleton package depends upon:
+
+* [angular](https://www.npmjs.com/search?q=angular) for the AngularJS framework
+* [angular-animate](https://github.com/embedthis/exp-css) Animations for Angular
+* [angular-bootstrap](https://github.com/embedthis/angular-bootstrap) Bootstrap UI for Angular
+* [angular-route](https://github.com/embedthis/angular-bootstrap) AngularJS Router
+* [bootstrap](https://www.npmjs.com/search?q=bootstrap) Bootstrap CSS
+* [esp-angular](https://github.com/embedthis/exp-css) ESP support for Angular
+* [esp-mvc](https://github.com/embedthis/esp-mvc) for ESP MVC application support.
+
+* [exp-css](https://github.com/embedthis/exp-css) Expansive CSS plugin
+* [exp-esp](https://github.com/embedthis/exp-esp) Expansive ESP plugin to compile ESP controllers and pages
+* [exp-less](https://github.com/embedthis/exp-less) Expansive Less plugin
+* [exp-js](https://github.com/embedthis/exp-js) Expansive JS plugin
+* [html5shiv](https://www.npmjs.com/search?q=html5shiv) For HTML5 polyfills
+* [jquery](https://www.npmjs.com/search?q=jquery) jQuery client side library
+
+### Installation
+
+    pak install esp-angular-skeleton
+
+### Building
+
+    expansive render
+
+### Running
+
+    expansive
+
+or
+
+    expansive render
+    esp
 
 ### Configuration
 

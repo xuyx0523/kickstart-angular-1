@@ -6,47 +6,53 @@
 Expansive.load({
     transforms: [{
         name:    'compile-esp',
-        clean:   'esp clean'
-        command: 'esp compile'
+        clean:   'esp clean',
+        command: 'esp compile',
+        esp:     Cmd.locate('esp'),
         files:   null,
         remove:  false,
         script: `
             function post(meta, service) {
-                let esp = Cmd.locate('esp')
+                let esp = service.esp
                 if (!esp) {
                     trace('Warn', 'Cannot find esp')
                     return
                 }
-                if (expansive.filters || service.files) {
-                    let files = expansive.directories.dist.files(service.files || '**.esp')
-                    for each (path in files) {
-                        let match = false
-                        for each (filter in expansive.filters) {
-                            filter = expansive.directories.dist.join(Path(filter).trimComponents(1))
-                            if (filter.startsWith(path) || path.startsWith(filter)) {
-                                match = true
-                                break
+                try {
+                    if (expansive.filters || service.files) {
+                        let files = expansive.directories.dist.files(service.files || '**.esp')
+                        for each (path in files) {
+                            let match = false
+                            for each (filter in expansive.filters) {
+                                filter = expansive.directories.dist.join(Path(filter).trimComponents(1))
+                                if (filter.startsWith(path) || path.startsWith(filter)) {
+                                    match = true
+                                    break
+                                }
+                            }
+                            if (match) {
+                                trace('Compile', service.command, path)
+                                run(service.command.split(' ') + [path])
+                                if (service.remove) {
+                                    path.remove()
+                                }
                             }
                         }
-                        if (match) {
-                            trace('Compile', service.command, path)
-                            run(service.command.split(' ') + [path])
+                    } else {
+                        trace('Clean', service.clean)
+                        run(service.clean)
+                        trace('Compile', service.command)
+                        run(service.command)
+                        for each (path in expansive.directories.dist.files('**.esp')) {
                             if (service.remove) {
                                 path.remove()
+                                path.dirname.remove()
                             }
                         }
                     }
-                } else {
-                    vtrace('Clean', service.clean)
-                    run(service.clean)
-                    trace('Compile', service.command)
-                    run(service.clean)
-                    run(service.command)
-                    for each (path in expansive.directories.dist.files('**.esp')) {
-                        if (service.remove) {
-                            path.remove()
-                        }
-                    }
+                } catch (e) {
+                    trace('Error', "ESP compilation failed")
+                    print(e)
                 }
             }
         `
