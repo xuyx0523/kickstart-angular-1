@@ -9,7 +9,6 @@ Me.load({
                 run('pak mode release')
                 run('expansive --clean render')
                 trace('Render', 'expansive --clean render')
-                run('pak mode debug')
             `,
         },
         push: {
@@ -18,6 +17,7 @@ Me.load({
                 run('git commit -m"PUSH" -a')
                 run('git push')
                 trace('Commit', 'Push to site')
+                run('pak mode debug')
             `,
             depends: [ 'render' ],
         },

@@ -26,13 +26,30 @@
         "db": "dist/db"
     },
     "pak": {
-        "mode": "debug",
+        "mode": "release",
         "import": true,
         "render": {
             "js": [
-                "${TOP}/${CONTENTS}/main.js",
-                "${TOP}/${CONTENTS}/**.js.ng",
-                "${TOP}/${CONTENTS}/**.js"
+                "contents/main.js",
+                "contents/dash/Dash.js",
+                "contents/dash/DashControl.js",
+                "contents/demo/DemoControl.js",
+                "contents/event/Event.js",
+                "contents/event/EventControl.js",
+                "contents/home/HomeControl.js",
+                "contents/main.js",
+                "contents/port/Port.js",
+                "contents/port/PortControl.js",
+                "contents/setting/Setting.js",
+                "contents/setting/SettingControl.js",
+                "contents/status/Status.js",
+                "contents/status/StatusControl.js",
+                "contents/table/Table.js",
+                "contents/table/TableControl.js",
+                "contents/user/User.js",
+                "contents/user/UserControl.js",
+                "contents/vlan/Vlan.js",
+                "contents/vlan/VlanControl.js"
             ]
         },
         "overrides": {
@@ -70,5 +87,29 @@
     "directories": {
         "dist": "dist",
         "controllers": "controllers"
+    },
+    "installedDependencies": {
+        "angular": true,
+        "angular-animate": true,
+        "angular-bootstrap": true,
+        "angular-route": true,
+        "bootstrap": true,
+        "esp-angular": true,
+        "esp-angular-skeleton": true,
+        "esp-best": true,
+        "esp-gui": true,
+        "esp-mgr-skeleton": true,
+        "esp-mvc": true,
+        "exp-css": true,
+        "exp-esp": true,
+        "exp-gzip": true,
+        "exp-js": true,
+        "exp-less": true,
+        "exp-ng": true,
+        "font-awesome": true,
+        "html5shiv": true,
+        "jquery": true,
+        "more": true,
+        "respond": true
     }
 }
