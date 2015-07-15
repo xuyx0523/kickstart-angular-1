@@ -1,7 +1,7 @@
 {
     "name": "exp-esp",
     "description": "ESP Plugin for Expansive",
-    "version": "0.2.2",
+    "version": "0.1.0",
     "keywords": [
         "expansive-plugin",
         "esp"
@@ -12,6 +12,7 @@
         "url": "git://github.com/embedthis/exp-esp.git"
     },
     "pak": {
+        "version": ">=0.10",
         "origin": "embedthis/exp-esp"
     }
 }

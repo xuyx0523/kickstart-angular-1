@@ -90,7 +90,7 @@
     <footer id="author" ng-cloak>
         <span class="pull-right">Powered by ESP &mdash; &copy; Embedthis Software</span>
     </footer>
-    <script src=".all.js"></script>
+    <script src="./all.js"></script>
     
 
 </body>
