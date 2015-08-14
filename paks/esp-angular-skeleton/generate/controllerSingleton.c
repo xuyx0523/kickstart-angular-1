@@ -42,7 +42,8 @@ static void update${UCONTROLLER}() {
 /*
     Dynamic module initialization
  */
-ESP_EXPORT int esp_controller_${NAME}_${CONTROLLER}(HttpRoute *route, MprModule *module) {
+ESP_EXPORT int esp_controller_${NAME}_${CONTROLLER}(HttpRoute *route, MprModule *module) 
+{
     espDefineAction(route, "${CONTROLLER}/create", create${UCONTROLLER});
     espDefineAction(route, "${CONTROLLER}/get", get${UCONTROLLER});
     espDefineAction(route, "${CONTROLLER}/init", init${UCONTROLLER});

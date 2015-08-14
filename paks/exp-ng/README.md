@@ -1,15 +1,15 @@
-exp-ng
+exp-angular
 ===
 
 Expansive plugin for Angular applications.
 
 ### Overview
 
-The exp-ng plugin provides build tooling for Angular applications. It provides the 'ng-compile-html' service to compile Angular HTML views into pure Javascript. The 'ng-compile-js' service annotates Angular scripts so they can be minfied and the 'package-ng' service bundles multiple Angular scripts into a single loadable application file.
+The exp-angular plugin provides build tooling for Angular applications. It provides the 'ng-compile-html' service to compile Angular HTML views into pure Javascript. The 'ng-compile-js' service annotates Angular scripts so they can be minfied and the 'package-ng' service bundles multiple Angular scripts into a single loadable application file.
 
 ### To install:
 
-    pak install exp-ng
+    pak install exp-angular
 
 ### Services
 

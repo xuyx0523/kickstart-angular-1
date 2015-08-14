@@ -1,4 +1,4 @@
-esp-best License
+Embedthis License
 ===
 
 This software is distributed under the GPL open source license.

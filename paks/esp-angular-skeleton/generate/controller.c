@@ -34,7 +34,7 @@ static void list${UCONTROLLER}() {
 /*
     Redirect to get a properly terminated URL. Essential for relative URL references.
  */
-static void redirectPost() {
+static void redirect${UCONTROLLER}() {
     redirect(sjoin(getUri(), "/", NULL));
 }
 
@@ -56,7 +56,8 @@ static void update${UCONTROLLER}() {
 /*
     Dynamic module initialization
  */
-ESP_EXPORT int esp_controller_${NAME}_${CONTROLLER}(HttpRoute *route, MprModule *module) {
+ESP_EXPORT int esp_controller_${NAME}_${CONTROLLER}(HttpRoute *route, MprModule *module) 
+{
     espDefineAction(route, "${CONTROLLER}/create", create${UCONTROLLER});
     espDefineAction(route, "${CONTROLLER}/get", get${UCONTROLLER});
     espDefineAction(route, "${CONTROLLER}/init", init${UCONTROLLER});
@@ -74,4 +75,5 @@ ${DEFINE_ACTIONS}
     ediAddValidation(edi, "format", "${CONTROLLER}", "phone", "/^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/");
 #endif
     return 0;
+
 }

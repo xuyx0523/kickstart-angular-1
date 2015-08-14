@@ -1,7 +1,7 @@
 {
-    "name": "esp-best",
+    "name": "esp-angular-best",
     "description": "ESP Best Practices Angular",
-    "version": "5.4.1",
+    "version": "5.4.3",
     "keywords": [
         "esp"
     ],
@@ -17,7 +17,7 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git://github.com/embedthis/esp-best.git"
+        "url": "git://github.com/embedthis/esp-angular-best.git"
     },
     "dependencies": {
         "esp-angular-skeleton": "~5.4",
@@ -26,11 +26,14 @@
         "more": "~0.0",
         "respond": "~1.4"
     },
+    "devDependencies": {
+        "pak": ">=0.11.3"
+    },
     "pak": {
         "export": [
             {
                 "from": "js/*.js",
-                "to": "esp-best/"
+                "to": "esp-angular-best/"
             },
             {
                 "from": "contents/**",
@@ -39,7 +42,6 @@
             }
         ],
         "manage": "esp.json",
-        "version": ">=0.10.0",
-        "origin": "embedthis/esp-best"
+        "origin": "embedthis/esp-angular-best"
     }
 }

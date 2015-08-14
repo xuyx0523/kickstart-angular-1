@@ -2,7 +2,7 @@
     "esp": {
         "generate": {
             "-appweb": "esp-angular-skeleton/appweb.conf",
-            "?appweb": "esp-best/appweb.conf"
+            "?appweb": "esp-angular-best/appweb.conf"
         }
     },
     "http": {

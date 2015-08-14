@@ -1,7 +1,7 @@
 {
     "esp": {
         "generate": {
-            "appweb": "esp-best/appweb.conf",
+            "appweb": "esp-angular-best/appweb.conf",
             "migration": "esp-mvc/generate/migration.c",
             "controller": "esp-mvc/controller.c",
             "clientModel": "esp-angular-mvc/model.js",

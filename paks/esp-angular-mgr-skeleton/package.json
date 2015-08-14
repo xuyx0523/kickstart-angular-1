@@ -1,0 +1,47 @@
+{
+    "name": "esp-angular-mgr-skeleton",
+    "description": "ESP Management Console Skeleton",
+    "version": "5.4.3",
+    "keywords": [
+        "esp"
+    ],
+    "licenses": [
+        {
+            "type": "GPL",
+            "url": "http://www.gnu.org/licenses/gpl-2.0.html"
+        },
+        {
+            "type": "Commercial",
+            "url": "https://embedthis.com/licensing/"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/embedthis/esp-angular-mgr-skeleton.git"
+    },
+    "dependencies": {
+        "esp-angular-best": "~5.4",
+        "esp-angular-gui": "~5.4"
+    },
+    "devDependencies": {
+        "pak": ">=0.11.3"
+    },
+    "pak": {
+        "blend": {
+            "pak": {
+                "?mode": "debug",
+                "?import": true
+            }
+        },
+        "export": {
+            "from": [
+                "contents/**",
+                "layouts/**",
+                "partials/**"
+            ],
+            "to": "${TOP}",
+            "overwrite": false
+        },
+        "origin": "embedthis/esp-angular-mgr-skeleton"
+    }
+}

@@ -1,7 +1,7 @@
 {
     "name": "esp-angular-skeleton",
     "description": "ESP Angular MVC Application Skeleton",
-    "version": "5.4.1",
+    "version": "5.4.4",
     "keywords": [
         "esp"
     ],
@@ -16,10 +16,13 @@
         }
     ],
     "dependencies": {
-        "exp-ng": "~0.1",
+        "exp-angular": "~0.1",
         "angular-bootstrap": "~0.7",
         "esp-angular": "~5.4",
         "esp-mvc": "~5.4"
+    },
+    "devDependencies": {
+        "pak": ">=0.11.3"
     },
     "repository": {
         "type": "git",
@@ -86,7 +89,6 @@
             "esp.json",
             "expansive.json"
         ],
-        "version": ">=0.10.0",
         "origin": "embedthis/esp-angular-skeleton"
     }
 }

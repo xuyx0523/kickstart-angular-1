@@ -1,7 +1,7 @@
-esp-best
+esp-angular-best
 ===
 
-ESP best practices pak. Package of esp-best for the [Pak Package Manager](https://github.com/embedthis/pak).
+ESP best practices pak. Package of esp-angular-best for the [Pak Package Manager](https://github.com/embedthis/pak).
 
 ### Provides
 
@@ -21,11 +21,11 @@ Also includes:
 
 ### To install:
 
-    pak install esp-best
+    pak install esp-angular-best
 
 ### Description
 
-The esp-best pak wraps a set of best-practice paks into one convenient installable pak.
+The esp-angular-best pak wraps a set of best-practice paks into one convenient installable pak.
 It provides a skeleton for an Angular/Bootstrap/ESP application.
 
 ### Configuration
@@ -49,7 +49,7 @@ See [esp-angular-skeleton README](https://github.com/embedthis/esp-angular-skele
 {
     "esp": {
         "generate": {
-            "appweb": "esp-best/appweb.conf"
+            "appweb": "esp-angular-best/appweb.conf"
         }
     },
     "http": {

@@ -1,7 +1,7 @@
 {
-    "name": "esp-gui",
+    "name": "esp-angular-gui",
     "description": "ESP GUI Extensions for Angular",
-    "version": "5.4.1",
+    "version": "5.4.3",
     "keywords": [
         "esp"
     ],
@@ -13,17 +13,19 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git://github.com/embedthis/esp-gui.git"
+        "url": "git://github.com/embedthis/esp-angular-gui.git"
     },
     "dependencies": {
         "angular-bootstrap": "~0.7"
     },
+    "devDependencies": {
+        "pak": ">=0.11.3"
+    },
     "pak": {
         "export": {
             "from": "*.js",
-            "to": "esp-gui/"
+            "to": "esp-angular-gui/"
         },
-        "version": ">=0.10.0",
-        "origin": "embedthis/esp-gui"
+        "origin": "embedthis/esp-angular-gui"
     }
 }

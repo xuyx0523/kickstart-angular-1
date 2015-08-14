@@ -1,7 +1,7 @@
 {
     "name": "esp-mvc",
     "description": "ESP Server-Side HTML",
-    "version": "5.4.0",
+    "version": "5.4.1",
     "keywords": [
         "esp"
     ],
@@ -20,6 +20,9 @@
         "exp-less": "~0.2",
         "exp-css": "~0.2",
         "exp-esp": "~0.2"
+    },
+    "devDependencies": {
+        "pak": ">=0.11.3"
     },
     "repository": {
         "type": "git",
@@ -52,12 +55,11 @@
             "esp.json",
             "expansive.json"
         ],
-        "version": ">=0.10",
+        "scripts": {
+            "install": {
+                "script": "mkdir('contents'); mkdir('layouts'); mkdir('partials')"
+            }
+        },
         "origin": "embedthis/esp-mvc"
-    },
-    "scripts": {
-        "install": {
-            "script": "mkdir('contents'); mkdir('layouts'); mkdir('partials')"
-        }
     }
 }
