@@ -1,6 +1,0 @@
-{
-}
-        <section class="content col-sm-10" id="content">
-            <div ng-view class="ng-cloak"></div>
-        </section>
-

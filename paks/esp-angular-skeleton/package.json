@@ -16,6 +16,7 @@
         }
     ],
     "dependencies": {
+        "exp-gzip": "~0.2",
         "exp-angular": "~0.1",
         "angular-bootstrap": "~0.7",
         "esp-angular": "~5.4",
@@ -33,6 +34,9 @@
     ],
     "pak": {
         "blend": {
+            "devDependencies": {
+                "?esp": "~6.x"
+            },
             "pak": {
                 "?mode": "debug",
                 "?import": true,

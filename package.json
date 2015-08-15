@@ -20,11 +20,6 @@
         "exp-gzip": "~0.2",
         "font-awesome": "~4.3"
     },
-    "_FUTURE_directories": {
-        "cache": "dist/cache",
-        "dist": "dist/web",
-        "db": "dist/db"
-    },
     "pak": {
         "mode": "release",
         "import": true,
@@ -88,30 +83,7 @@
         "dist": "dist",
         "controllers": "controllers"
     },
-    "installedDependencies": {
-        "angular": true,
-        "angular-animate": true,
-        "angular-bootstrap": true,
-        "angular-route": true,
-        "bootstrap": true,
-        "esp-angular": true,
-        "esp-angular-best": true,
-        "esp-angular-gui": true,
-        "esp-angular-mgr-skeleton": true,
-        "esp-angular-skeleton": true,
-        "esp-mgr-skeleton": true,
-        "esp-mvc": true,
-        "exp-angular": true,
-        "exp-css": true,
-        "exp-esp": true,
-        "exp-gzip": true,
-        "exp-js": true,
-        "exp-less": true,
-        "exp-ng": true,
-        "font-awesome": true,
-        "html5shiv": true,
-        "jquery": true,
-        "more": true,
-        "respond": true
+    "devDependencies": {
+        "esp": "~6.x"
     }
 }
