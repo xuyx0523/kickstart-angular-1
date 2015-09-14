@@ -3,9 +3,12 @@
  */
 html, body {
     /* Select from concrete, linen, zigzag, tissue */
-    background: url('../assets/backgrounds/concrete.png');
     background: url('../assets/linen.png');
     -webkit-font-smoothing: antialiased !important;
+}
+
+body {
+    
 }
 
 .navbar {
@@ -14,6 +17,9 @@ html, body {
         .navbar-brand i {
             font-size: 15px;
         }
+    }
+    .navbar-right {
+        margin-right: 0;
     }
     .navbar-form {
         .form-control {
@@ -53,7 +59,6 @@ main.container {
     max-width: 100%;
     width: 100%;
 
-    //  MOB - simplify this somehow
     .sidebar {
         padding: 40px 0 0 0;
         line-height: 20px;
@@ -77,7 +82,6 @@ main.container {
                     &:hover {
                         cursor: pointer;
                     }
-                    //  MOB - switch to font awesome?
                     .glyphicon, i {
                         text-align: center;
                         font-size: @font-size-larger;
@@ -172,6 +176,11 @@ main.container {
                 margin-top: 20px;   
             }
 
+        }
+        input[type="radio"], input[type="checkbox"] {
+            position: relative;
+            margin-left: 0px;
+            margin-right: 10px;
         }
     }
 }

@@ -18,7 +18,6 @@ ESP_EXPORT int esp_controller_kickstart_setting(HttpRoute *route, MprModule *mod
     Edi     *edi;
 
     edi = espGetRouteDatabase(route);
-    //  MOB - inconsistent setting/settings
     espDefineAction(route, "setting/get", getSettings);
     espDefineAction(route, "setting/update", updateSettings);
     ediAddValidation(edi, "format", "settings", "email", "(^$|@)");

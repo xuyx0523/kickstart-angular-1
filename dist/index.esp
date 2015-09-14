@@ -32,7 +32,6 @@
                             <li class="message" ng-repeat="event in events" esp-click="/event/{{events[$index].id}}">
                                 <i class="severity fa fa-inverse event-{{event.type}}" ng-class="Esp.faclass(event.type)"></i>
                                 <span>{{event.title}}</span>
-                                <!-- MOB - should really convert to xx mins ago -->
                                 <span class="time"><i class="fa fa-clock-o"></i> {{event.date}}</span>
                             </li>
                             <li class="footer"><a href="#/event/list">View all events</a></li>

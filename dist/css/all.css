@@ -9015,7 +9015,6 @@ fieldset[disabled] .btn-danger.active {
 html,
 body {
   /* Select from concrete, linen, zigzag, tissue */
-  background: url('../assets/backgrounds/concrete.png');
   background: url('../assets/linen.png');
   -webkit-font-smoothing: antialiased !important;
 }
@@ -9024,6 +9023,9 @@ body {
 }
 .navbar .navbar-header .navbar-brand i {
   font-size: 15px;
+}
+.navbar .navbar-right {
+  margin-right: 0;
 }
 .navbar .navbar-form .form-control {
   background-color: #2f2f2f;
@@ -9174,6 +9176,12 @@ main.container .content .panel table .small {
 }
 main.container .content .panel .btn {
   margin-top: 20px;
+}
+main.container .content input[type="radio"],
+main.container .content input[type="checkbox"] {
+  position: relative;
+  margin-left: 0px;
+  margin-right: 10px;
 }
 /* Log notification pulldown */
 .notify {

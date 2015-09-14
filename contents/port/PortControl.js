@@ -9,7 +9,6 @@ angular.module('app').controller('PortControl', function (Esp, Port, Vlan, $root
         Setup the select dropdowns
      */
     $scope.options = {
-        //  MOB - get better name than "options" more unique
         speed: {
             "1000":  "1000",
             "10000": "10000",
@@ -58,7 +57,6 @@ angular.module('app').controller('PortControl', function (Esp, Port, Vlan, $root
         });
     };
 
-    //  MOB - Replace this with esp-tab directive
     $scope.selectPane = function(pane) {
         $scope.currentPane = pane;
         if (pane == 'Details') {
@@ -70,7 +68,6 @@ angular.module('app').controller('PortControl', function (Esp, Port, Vlan, $root
 
     $scope.addPortToVlan = function(vlan) {
         Vlan.list(null, $scope, {vlans: "data"}, function(response) {
-            //  MOB - alternatively, do this on the server side?
             for (var i = 0; i < $scope.vlans.length; i++) {
                 if ($scope.vlans[i].name == vlan) {
                     break;

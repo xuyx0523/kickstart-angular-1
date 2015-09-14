@@ -18,9 +18,7 @@ angular.module('app').controller('DemoControl', function (Demo, Esp, $scope, $ti
             var period = 500;
             function fetch() {
                 var prior = (gdata.length > 0) ? gdata[gdata.length - 1][1] : 0;
-                //  MOB - should use web sockets
                 Demo.demo1({prior: prior}, function(response) {
-                    //  MOB - need to send data: { prior: prior},
                     if (gdata.length > 50) {
                         gdata.shift();
                     }

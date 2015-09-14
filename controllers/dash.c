@@ -29,7 +29,6 @@
 #endif
 
 #if DEMO || 1
-    //  MOB - should not persist port stats?
     //  Separate table
 static void demoData() {
     EdiGrid     *ports;
@@ -37,14 +36,12 @@ static void demoData() {
     cchar       *value;
     int         r;
 
-    //  MOB - should not persist port stats?
     //  Separate table
     ports = readTable("port");
     for (r = 0; r < ports->nrecords; r++) {
         r += (random() % (ports->nrecords / 3));
         if (r < ports->nrecords) {
             port = ports->records[r];
-            //  MOB ediIncField, ediGetFieldAsInt
             value = ediGetFieldValue(port, "rxBytes");
             ediSetField(port, "rxBytes", itos(stoi(value) + (random() % 1000)));
             value = ediGetFieldValue(port, "rxPackets");
@@ -74,7 +71,6 @@ static cchar *getDashData(HttpConn *conn) {
         nevents = events->nrecords;
         events->nrecords = min(events->nrecords, 5);
     }
-    //  MOB - should this be in data/schema format?
     mprPutToBuf(buf, "\"system\":{\"events\": %s, \"eventCount\": %d}", ediGridAsJson(events, 0), nevents);
 
     mprPutToBuf(buf, "}");
@@ -89,9 +85,6 @@ static void getDash() {
     render(getDashData(getConn()));
 }
 
-/*
-    MOB - normally this would push data on-demand
- */
 static void updateStream(HttpConn *conn) {
     Esp     *esp;
     ssize   count;

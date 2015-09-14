@@ -17,7 +17,6 @@ angular.module('app').controller('EventControl', function (Esp, Event, $filter, 
          */
         Event.list(null, $scope, {events: "data"}, function(response) {
             angular.forEach($scope.events, function(value, key) {
-                //  MOB - perhaps JSON should already be in the right date format
                 value.date = $filter('format')(value.date, response.schema, 'date');
             });
         });

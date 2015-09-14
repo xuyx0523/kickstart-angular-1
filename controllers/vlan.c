@@ -65,7 +65,6 @@ static void addPort() {
 
     /*
         Check if mapping already exists
-        MOB - Need API to to multipare (AND) queries
      */
     if ((maps = readWhere("mapping", "portId", "==", port->id)) != 0) {
         for (i = 0; i < maps->nrecords; i++) {
