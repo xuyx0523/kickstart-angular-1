@@ -56,7 +56,7 @@
         },
         "headers": {
             "x-add": {
-                "Content-Security-Policy": "allow 'self'; unsafe-inline; img-src 'self'"
+                "Content-Security-Policy": "default-src 'self' ws://${request:host}"
             }
         },
         "routes": [
