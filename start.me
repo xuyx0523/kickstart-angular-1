@@ -12,7 +12,7 @@ Me.load({
             `,
         },
         push: {
-            build: `
+            action: `
                 run('git add dist contents')
                 run('git commit -m"PUSH" -a')
                 run('git push')
