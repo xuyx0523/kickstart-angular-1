@@ -39,10 +39,10 @@ ESP_EXPORT int esp_controller_kickstart_port(HttpRoute *route, MprModule *module
 
     edi = espGetRouteDatabase(route);
     ediAddValidation(edi, "format", "port", "mode", "^(Online|Offline)$");
-    ediAddValidation(edi, "format", "port", "negotiate", "^(Enabled|Disabled)$");
+    ediAddValidation(edi, "format", "port", "negotiate", "^(1|0)$");
     ediAddValidation(edi, "format", "port", "duplex", "^(Half|Full)$");
-    ediAddValidation(edi, "format", "port", "flowControl", "^(Enabled|Disabled)$");
-    ediAddValidation(edi, "format", "port", "jumbo", "^(Enabled|Disabled)$");
+    ediAddValidation(edi, "format", "port", "flowControl", "^(1|0)$");
+    ediAddValidation(edi, "format", "port", "jumbo", "^(1|0)$");
     ediAddValidation(edi, "format", "port", "name", "^tty\\d\\d$");
     ediAddValidation(edi, "format", "port", "speed", "^(1000|10000|40000)$");
     return 0;

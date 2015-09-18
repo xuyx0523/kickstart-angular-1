@@ -33,7 +33,11 @@
         "services": {
             "compress": false,
             "ng-compile-html": false,
-            "ng-package": false
+            "ng-package": false,
+            "render-js": {
+                "usemin": false,
+                "usemap": false
+            }
         }
     },
     "release": {

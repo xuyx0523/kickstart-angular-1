@@ -24,7 +24,7 @@
                             <li class="footer"><a href="#/event/list">View all events</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown" ng-controller="UserControl">
+                    <li ng-if="Esp.can('edit')" class="dropdown" ng-controller="UserControl">
                         <a href="#" class="dropdown-toggle" ng-cloak>{{authname()}} 
                             <b class="caret"></b>
                         </a>
@@ -35,6 +35,11 @@
                                 </a>
                             </li>
                         </ul>
+                    </li>
+                    <li ng-if="!Esp.can('edit')" ng-controller="UserControl">
+                        <a ng-href="#/user/login">
+                            <i class="fa fa-power-off"></i>
+                        </a>
                     </li>
                     <li><a href=""><i class="fa fa-question"></i></a></li>
                 </ul>

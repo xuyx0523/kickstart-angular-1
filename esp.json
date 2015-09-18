@@ -55,8 +55,8 @@
             "response": "json"
         },
         "headers": {
-            "x-add": {
-                "Content-Security-Policy": "default-src 'self' ws://${request:host}"
+            "add": {
+                "Content-Security-Policy": "default-src 'self' ws: wss: 'unsafe-inline'"
             }
         },
         "routes": [
