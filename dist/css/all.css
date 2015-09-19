@@ -9084,6 +9084,7 @@ main.container .sidebar .nav-tabs li a {
   border-radius: 0;
   border-top: 1px solid #424242;
   border-bottom: 1px solid #282828;
+  background-color: transparent;
   color: #eeeeee;
 }
 main.container .sidebar .nav-tabs li a:hover {
