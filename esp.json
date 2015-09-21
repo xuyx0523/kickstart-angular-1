@@ -59,6 +59,11 @@
                 "Content-Security-Policy": "default-src 'self' ws: wss: 'unsafe-inline'"
             }
         },
+        "timeouts": {
+            "refresh": "1sec",
+            "session": "30mins"
+        },
+        "xsrf": true,
         "routes": [
             "esp-restful",
             {
@@ -68,12 +73,7 @@
                     "request": "10mins"
                 }
             }
-        ],
-        "timeouts": {
-            "refresh": "1sec",
-            "session": "30mins"
-        },
-        "xsrf": true
+        ]
     },
     "modes": {
         "debug": {
