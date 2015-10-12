@@ -13,6 +13,10 @@
             "?store": "app"
         },
         "?database": "default",
+        "formats": {
+            "?date": "yyyy-MM-dd",
+            "?float": 2
+        },
         "?routes": "esp-restful"
     },
     "modes": {

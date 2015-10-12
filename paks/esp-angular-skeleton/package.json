@@ -1,7 +1,7 @@
 {
     "name": "esp-angular-skeleton",
     "description": "ESP Angular MVC Application Skeleton",
-    "version": "5.4.5",
+    "version": "5.5.0",
     "keywords": [
         "esp"
     ],
@@ -16,13 +16,14 @@
         }
     ],
     "dependencies": {
-        "exp-gzip": "~0.2",
-        "exp-angular": "~0.1",
+        "exp-gzip": "~0.3",
         "angular-bootstrap": "~0.7",
-        "esp-angular": "~5.4",
-        "esp-mvc": "~5.4"
+        "exp-angular": "~0.2",
+        "esp-angular": "~5.5",
+        "esp-mvc": "~5.5"
     },
     "devDependencies": {
+        "expansive": ">=0.6.0",
         "pak": ">=0.11.3"
     },
     "repository": {
@@ -35,18 +36,15 @@
     "pak": {
         "blend": {
             "devDependencies": {
+                "?expansive": ">=0.6.0",
                 "?esp": "~6.x"
+            },
+            "directories": {
+                "?export": "contents/lib"
             },
             "pak": {
                 "?mode": "debug",
                 "?import": true,
-                "?render": {
-                    "js": [
-                        "${TOP}/${CONTENTS}/main.js",
-                        "${TOP}/${CONTENTS}/**.js.ng",
-                        "${TOP}/${CONTENTS}/**.js"
-                    ]
-                },
                 "?overrides": {
                     "bootstrap": {
                         "pak": {

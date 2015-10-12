@@ -13,40 +13,20 @@
     },
     "dependencies": {
         "bootstrap": "~3.3",
-        "esp-angular": "~5.4",
-        "esp-angular-skeleton": "~5.4",
-        "esp-angular-mgr-skeleton": "~5.4",
-        "exp-esp": "~0.1",
-        "exp-gzip": "~0.2",
+        "esp-angular": "~5.5",
+        "esp-angular-skeleton": "~5.5",
+        "esp-angular-mgr-skeleton": "~5.5",
+        "exp-esp": "~0.3",
+        "exp-gzip": "~0.3",
         "font-awesome": "~4.3"
+    },
+    "devDependencies": {
+        "expansive": ">=0.6.0",
+        "esp": "~6.x"
     },
     "pak": {
         "mode": "release",
         "import": true,
-        "render": {
-            "js": [
-                "contents/main.js",
-                "contents/dash/Dash.js",
-                "contents/dash/DashControl.js",
-                "contents/demo/DemoControl.js",
-                "contents/event/Event.js",
-                "contents/event/EventControl.js",
-                "contents/home/HomeControl.js",
-                "contents/main.js",
-                "contents/port/Port.js",
-                "contents/port/PortControl.js",
-                "contents/setting/Setting.js",
-                "contents/setting/SettingControl.js",
-                "contents/status/Status.js",
-                "contents/status/StatusControl.js",
-                "contents/table/Table.js",
-                "contents/table/TableControl.js",
-                "contents/user/User.js",
-                "contents/user/UserControl.js",
-                "contents/vlan/Vlan.js",
-                "contents/vlan/VlanControl.js"
-            ]
-        },
         "overrides": {
             "bootstrap": {
                 "pak": {
@@ -80,10 +60,8 @@
         }
     },
     "directories": {
+        "export": "contents/lib",
         "dist": "dist",
         "controllers": "controllers"
-    },
-    "devDependencies": {
-        "esp": "~6.x"
     }
 }

@@ -39,9 +39,11 @@ Expansive.load({
                             }
                         }
                     } else {
-                        trace('Clean', service.clean)
-                        run(service.clean)
-                        trace('Compile', service.command)
+                        if (expansive.modify.everything) {
+                            trace('Clean', service.clean)
+                            run(service.clean)
+                            trace('Compile', service.command)
+                        }
                         run(service.command)
                         for each (path in expansive.directories.dist.files('**.esp')) {
                             if (service.remove) {
@@ -60,13 +62,17 @@ Expansive.load({
     }, {
         name:     'serve-esp',
         command:  'esp',
-        trace:    '--trace stdout:4',
+        options:  '--trace stdout:4',
         script: `
             let service = expansive.services['serve-esp']
+            //  DEPRECATE service.trace
+            let options = service.options || service.trace
+            let endpoint: Uri = Uri(expansive.options.listen || expansive.control.listen || '127.0.0.1:4000').complete()
+            let listen = endpoint.host + (endpoint.port ? (':' + endpoint.port) : '')
             if (service.command == 'esp') {
-                service.command += ' ' + service.trace + ' ' + (expansive.control.listen || '127.0.0.1:5000')
+                service.command += ' ' + options + ' ' + listen
             } else {
-                service.command += ' ' + service.trace
+                service.command += ' ' + options
             }
             expansive.control.server ||= service.command
         `

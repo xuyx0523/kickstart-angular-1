@@ -103,42 +103,36 @@ To generate a migration
 
 #### expansive.json
 
-* compile-less-css.enable &mdash; Enable the compile-less-css service to process less files.
-* compile-less-css.stylesheet &mdash; Primary stylesheet to update if any less file changes.
+* less.enable &mdash; Enable the compile-less-css service to process less files.
+* less.dependencies &mdash; Explicit map of dependencies if not using "stylesheet".
+* less.files &mdash; Array of less files to compile.
+* less.stylesheet &mdash; Primary stylesheet to update if any less file changes.
     If specified, the "dependencies" map will be automatically created.
-* compile-less-css.dependencies &mdash; Explicit map of dependencies if not using "stylesheet".
-* compile-less-css.documents &mdash; Array of less files to compile.
-* prefix-css.enable &mdash; Enable running autoprefixer on CSS files to handle browser specific extensions.
-* minify-css.enable &mdash; Enable minifying CSS files.
-* minify-js.enable &mdash; Enable minifying script files.
-* minify-js.files &mdash; Array of files to minify. Files are relative to 'source'.
-* minify-js.compress &mdash; Enable compression of script files.
-* minify-js.mangle &mdash; Enable mangling of Javascript variable and function names.
-* minify-js.dotmin &mdash; Set '.min.js' as the output file extension after minification. Otherwise will be '.js'.
-* minify-js.exclude &mdash; Array of files to exclude from minification. Files are relative to 'source'.
+* css.enable &mdash; Enable minifying CSS files.
+* js.enable &mdash; Enable minifying script files.
+* js.files &mdash; Array of files to minify. Files are relative to 'source'.
+* js.compress &mdash; Enable compression of script files.
+* js.mangle &mdash; Enable mangling of Javascript variable and function names.
+* js.dotmin &mdash; Set '.min.js' as the output file extension after minification. Otherwise will be '.js'.
 
 ```
 {
     services: {
-        'compile-less-css': {
+        'less': {
             enable: true,
             stylesheet: 'css/all.css',
             dependencies: { 'css/all.css.less' : '**.less' },
-            documents: [ '!**.less', '**.css.less' ]
+            files: [ '!**.less', '**.css.less' ]
         },
-        'prefix-css': {
+        'css': {
             enable: true,
         },
-        'minify-css': {
-            enable: true,
-        },
-        'minify-js': {
+        'js': {
             enable: true,
             files:      null,
             compress:   true,
             mangle:     true,
             dotmin:     false,
-            exclude:    []
         }
     }
 }
@@ -146,5 +140,5 @@ To generate a migration
 
 ### Download
 
-* [Pak](https://embedthis.com/pak/download.html)
-* [Expansive](https://embedthis.com/expansive/download.html)
+* [Pak](https://embedthis.com/pak/)
+* [Expansive](https://embedthis.com/expansive/)

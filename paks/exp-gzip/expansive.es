@@ -7,6 +7,7 @@ Expansive.load({
     transforms: {
         name:   'compress',
         files:  [ '**.html', '**.css', '**.js', '**.ttf' ],
+        keep:   true,
         script: `
             function post(meta, service) {
                 let gzip = Cmd.locate('gzip')
@@ -16,7 +17,11 @@ Expansive.load({
                 }
                 for each (file in directories.dist.files(service.files, {directories: false})) {
                     file.joinExt('gz', true).remove()
-                    Cmd.run('gzip --keep "' + file + '"', {filter: true})
+                    if (service.keep) {
+                        Cmd.run('gzip --keep "' + file + '"', {filter: true})
+                    } else {
+                        Cmd.run('gzip  "' + file + '"', {filter: true})
+                    }
                 }
             }
         `

@@ -1,6 +1,6 @@
 {
     "name": "angular-route",
-    "version": "1.3.16",
+    "version": "1.4.3",
     "description": "AngularJS router module",
     "main": "index.js",
     "scripts": {
@@ -24,7 +24,7 @@
     },
     "homepage": "http://angularjs.org",
     "dependencies": {
-        "angular": "^1.3"
+        "angular": "~1.4"
     },
     "pak": {
         "export": "angular*",

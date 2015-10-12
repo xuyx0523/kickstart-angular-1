@@ -1,7 +1,7 @@
 {
     "name": "esp-angular",
     "description": "Embedthis ESP for Angular",
-    "version": "5.4.5",
+    "version": "5.5.0",
     "keywords": [
         "esp"
     ],
@@ -20,8 +20,8 @@
         "url": "git://github.com/embedthis/esp-angular.git"
     },
     "dependencies": {
-        "angular-route": "~1.3",
-        "angular-animate": "~1.3"
+        "angular-route": "~1.4",
+        "angular-animate": "~1.4"
     },
     "devDependencies": {
         "pak": ">=0.11.3"

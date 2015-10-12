@@ -45,7 +45,15 @@
                     "edit"
                 ]
             },
-            "store": "app"
+            "store": "app",
+            "__require": {
+                "users": [
+                    "*"
+                ],
+                "roles": [
+                    "view"
+                ]
+            }
         },
         "database": "mdb://kickstart.mdb",
         "formats": {
@@ -55,8 +63,9 @@
             "response": "json"
         },
         "headers": {
-            "add": {
-                "Content-Security-Policy": "default-src 'self' ws: wss: 'unsafe-inline'"
+            "set": {
+                /* Angular needs unsafe-inline for applying message digests */
+                "Content-Security-Policy": "default-src 'self' ws: wss: data: 'unsafe-inline"
             }
         },
         "timeouts": {
@@ -83,10 +92,16 @@
             },
             "http": {
                 "auth": {
-                    "auto": {
+                    "__auto": {
                         "name": "admin",
                         "roles": [
                             "administrator"
+                        ]
+                    },
+                    "auto": {
+                        "name": "",
+                        "roles": [
+                            "*"
                         ]
                     }
                 },

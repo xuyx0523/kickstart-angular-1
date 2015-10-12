@@ -3,11 +3,15 @@
 <head>
     <@ partial('header') @>
 </head>
-<body data-config='<% renderConfig(); %> id='body'>
-    <@ partial('nav') @>
-    <main class="content" ng-cloak>
+<body id='body' ng-controller="HomeControl" data-config='<% renderConfig(); %>'>
+    <header>
+        <@ partial('nav') @>
+    </header>
+    <main class="container" ng-cloak>
+        <@ partial('sidebar') @>
         <@ content @>
     </main>
     <@ partial('footer') @>
 </body>
 </html>
+

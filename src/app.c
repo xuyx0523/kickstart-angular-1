@@ -8,18 +8,24 @@
  */
 static void commonController(HttpConn *conn) 
 {
-    cchar       *loginRequired, *uri;
+    cchar       *loginRequired, *upath;
 
     if (!httpLoggedIn(conn)) {
-        uri = getUri();
-        if (smatch(uri, "/user/login") || smatch(uri, "/user/logout") || smatch(uri, "/user/forgot") ||
-            sstarts(uri, "/assets/") || sstarts(uri, "/css/")) {
+        upath = conn->rx->pathInfo;
+        if (smatch(upath, "/user/login") || smatch(upath, "/user/logout") || smatch(upath, "/user/forgot") ||
+            sstarts(upath, "/assets/") || sstarts(upath, "/css/") || smatch(upath, "/") || smatch(upath, "/index.esp") ||
+            scontains(upath, "/fonts/") ||
+            sends(upath, ".html") || sends(upath, ".js") || sends(upath, ".css")) {
             return;
         }
         loginRequired = espGetConfig(conn->rx->route, "http.auth.require.users", 0);
         if (loginRequired && *loginRequired) {
             httpError(conn, HTTP_CODE_UNAUTHORIZED, "Access Denied. Login required");
+            return;
         }
+    } else if (!httpCanUser(conn, 0)) {
+        httpError(conn, HTTP_CODE_UNAUTHORIZED, "Access Denied. Insufficient privilege");
+        return;
     }
 }
 

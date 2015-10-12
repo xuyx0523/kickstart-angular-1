@@ -1,7 +1,7 @@
 {
     "name": "esp-angular-mgr-skeleton",
     "description": "ESP Management Console Skeleton",
-    "version": "5.4.3",
+    "version": "5.5.0",
     "keywords": [
         "esp"
     ],
@@ -20,8 +20,8 @@
         "url": "git://github.com/embedthis/esp-angular-mgr-skeleton.git"
     },
     "dependencies": {
-        "esp-angular-best": "~5.4",
-        "esp-angular-gui": "~5.4"
+        "esp-angular-best": "~5.5",
+        "esp-angular-gui": "~5.5"
     },
     "devDependencies": {
         "pak": ">=0.11.3"

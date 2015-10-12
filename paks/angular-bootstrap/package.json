@@ -1,7 +1,7 @@
 {
     "name": "angular-bootstrap",
     "description": "Angular UI Bootstrap support",
-    "version": "0.7.1",
+    "version": "0.7.2",
     "keywords": [
         "esp"
     ],
@@ -10,7 +10,8 @@
         "url": "git://github.com/embedthis/angular-bootstrap.git"
     },
     "dependencies": {
-        "angular": "~1.3",
+        "jquery": "~2",
+        "angular": "~1.4",
         "bootstrap": "~3.3",
         "html5shiv": "~3.7"
     },

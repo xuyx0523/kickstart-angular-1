@@ -99,55 +99,48 @@ or
 
 #### expansive.json
 
-* compile-html.enable &mdash; Compile Angular HTML files into pure Javascript.
-* compile-less-css.enable &mdash; Enable the compile-less-css service to process less files.
-* compile-less-css.stylesheet &mdash; Primary stylesheet to update if any less file changes.
+* less.enable &mdash; Enable the compile-less-css service to process less files.
+* less.dependencies &mdash; Explicit map of dependencies if not using "stylesheet". 
+* less.files &mdash; Array of less files to compile.
+* less.stylesheet &mdash; Primary stylesheet to update if any less file changes.
     If specified, the "dependencies" map will be automatically created. 
-* compile-less-css.dependencies &mdash; Explicit map of dependencies if not using "stylesheet". 
-* compile-less-css.documents &mdash; Array of less files to compile.
-* compile-ng-js.files &mdash; Array of Angular Javasccript files to compile.
-* prefix-css.enable &mdash; Enable running autoprefixer on CSS files to handle browser specific extensions.
-* minify-css.enable &mdash; Enable minifying CSS files.
-* minify-js.enable &mdash; Enable minifying script files.
-* minify-js.files &mdash; Array of files to minify. Files are relative to 'contents'.
-* minify-js.compress &mdash; Enable compression of script files.
-* minify-js.mangle &mdash; Enable mangling of Javascript variable and function names.
-* minify-js.dotmin &mdash; Set '.min.js' as the output file extension after minification. Otherwise will be '.js'.
-* minify-js.exclude &mdash; Array of files to exclude from minification. Files are relative to 'contents'.
-* package-ng.exclude &mdash; Package Angular applications into a single Javascript file.
+* ng-compile-js.files &mdash; Array of Angular Javasccript files to compile.
+* ng-compile-html.enable &mdash; Compile Angular HTML files into pure Javascript.
+* css.enable &mdash; Enable minifying CSS files.
+* js.compress &mdash; Enable compression of script files.
+* js.dotmin &mdash; Set '.min.js' as the output file extension after minification. Otherwise will be '.js'.
+* js.enable &mdash; Enable minifying script files.
+* js.files &mdash; Array of files to minify. Files are relative to 'contents'.
+* js.mangle &mdash; Enable mangling of Javascript variable and function names.
 
 ```
 {
     services: {
-        'compile-less-css': {
+        'css': {
+            enable: true,
+        },
+        'less': {
             enable: true,
             stylesheet: 'css/all.css',
             dependencies: { 'css/all.css.less' : '**.less' },
             documents: [ '!**.less', '**.css.less' ]
         },
-        'compile-ng-js': {
-            files: [
-                '**.js',
-                '!lib/**.js',
-                'lib/esp*/**.js',
-                'lib/angular*/**.js',
-            ]
-        },
-        'prefix-css': {
-            enable: true,
-        },
-        'minify-css': {
-            enable: true,
-        },
-        'minify-js': {
+        'js': {
             enable: true,
             files:      null,
             compress:   true,
             mangle:     true,
             dotmin:     false,
-            exclude:    []
         },
-        'package-ng':   false
+        'ng-compile-js': {
+            files: [
+                '**.js',
+                '!lib/**.js',
+                'lib/angular*/**.js',
+                'lib/esp*/**.js'
+            ]
+        },
+        'ng-package':   false
     }
 }
 ```

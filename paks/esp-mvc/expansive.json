@@ -23,8 +23,8 @@
     },
     release: {
         services: {
-            "minify-css": {
-                minify: true
+            "css": {
+                "?minify": true
             }
         }
     }

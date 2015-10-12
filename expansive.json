@@ -1,6 +1,6 @@
 {
     "meta": {
-        "url": "https://embedthis.com/appweb/demo/"
+        "site": "https://embedthis.com/appweb/demo/"
     },
     "control": {
         "post": [
@@ -24,42 +24,68 @@
             "flatten": false,
             "clean": true,
             "script": ""
+        },
+        "render": {
+            "js": [
+                "main.js",
+                "dash/Dash.js",
+                "dash/DashControl.js",
+                "demo/DemoControl.js",
+                "event/Event.js",
+                "event/EventControl.js",
+                "home/HomeControl.js",
+                "port/Port.js",
+                "port/PortControl.js",
+                "setting/Setting.js",
+                "setting/SettingControl.js",
+                "status/Status.js",
+                "status/StatusControl.js",
+                "table/Table.js",
+                "table/TableControl.js",
+                "user/User.js",
+                "user/UserControl.js",
+                "vlan/Vlan.js",
+                "vlan/VlanControl.js"
+            ]
         }
-    },
-    "services": {
-        "clean-css": true
     },
     "debug": {
         "services": {
             "compress": false,
-            "ng-compile-html": false,
-            "ng-package": false,
-            "render-js": {
+            "html": false,
+            "js": {
+                "minify": false,
                 "usemin": false,
                 "usemap": false
-            }
+            },
+            "ng-compile-html": false,
+            "ng-package": false
         }
     },
     "release": {
         "services": {
             "compress": true,
-            "minify-css": {
-                "minify": true
-            },
-            "ng-compile-js": {
-                "files": [
-                    "contents/**.js",
-                    "lib/esp*/**.js",
-                    "lib/angular*/**.js"
-                ]
-            },
-            "ng-package": true,
-            "render-css": {
+            "css": {
+                "minify": true,
                 "usemap": false,
                 "usemin": true
             },
-            "render-js": {
+            "js": {
+                "minify": false,
+                "usemin": false,
                 "usemap": false
+            },
+            "ng-compile-js": {
+                "files": [
+                    "**.js",
+                    "!lib/**.js",
+                    "lib/angular*/**.js",
+                    "lib/esp*/**.js"
+                ]
+            },
+            "ng-package": {
+                "minify": true,
+                "dotmin": true
             }
         }
     }
