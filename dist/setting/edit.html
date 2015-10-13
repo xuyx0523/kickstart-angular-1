@@ -1,0 +1,16 @@
+<ul class="breadcrumb">
+    <li>Settings</li>
+    <li><i class="icon-home"></i> <a href="#">Home</a></li>
+</ul>
+<div class="panel">
+<h2>Settings</h2>
+	<form name="settingForm" class="form-horizontal">
+	    <esp-input-group ng-model="setting"></esp-input-group>
+	    <div class="form-group">
+	        <div class="col-sm-offset-2 col-sm-4">
+	            <button class="btn btn-primary"  ng-show="Esp.can('edit')" ng-click='save()'>Save</button>
+	            <button class="btn" esp-click="/">Cancel</button>
+	        </div>
+	    </div>
+	</form>
+</div>

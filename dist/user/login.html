@@ -1,0 +1,34 @@
+<!--
+    user-login.html - Modal user/password login dialog.
+
+    This uses the Angular-UI modal directive. It observes the "modal" attribute and displays the modal if it is true.
+    The options are defined in UserControl.js which is the controller for this dialog.
+ -->
+<esp-modal class="modal">
+    <div class="modal-dialog login">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Log in</h4>
+            </div>
+            <form class="form-horizontal">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type='text' class="form-control" ng-model='user.username' autofocus
+                        placeholder="account">
+                    </div>
+                    <div class="form-group">
+                        <input id='password' type='password' class="form-control" ng-model='user.password'>
+                        <a class="forgot-password" ng-click="forgot()">Forgot password?</a>
+                        <!--
+                        <input type='checkbox' ng-model="user.remember" value="true"> <span class="remember-me">Remember me</span>
+                        -->
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button class="btn btn-primary" ng-click='login($dialog)'>OK</button>
+                    <button class="btn" ng-click='$dismiss()'>Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</esp-modal>

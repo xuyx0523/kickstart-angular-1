@@ -2,5 +2,5 @@
     <title><@= meta.title @></title>
     <meta charset="utf-8" />
     <meta name="description" content="<@= meta.description || meta.title @>">
-    <link rel="icon" href="@~/assets/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="@~/images/favicon.ico" type="image/x-icon">
     <@ renderStyles() @>

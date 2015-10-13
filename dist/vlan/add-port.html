@@ -1,0 +1,24 @@
+<ul class="breadcrumb">
+    <li>VLAN</li>
+    <li><a href="#/vlan/list">VLANs</a></li>
+    <li><i class="icon-home"></i> <a href="#">Home</a></li>
+</ul>
+<div ng-include src="Esp.url('/vlan/panes.html')" ng-init="currentPane='Ports'"></div>
+<div class="panel">
+    <h2>Add port to {{vlan.name}}</h2>
+    <form name="addPortForm" class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-sm-3">Name</label>
+            <div class="input-group col-xs-4" ng-class='{"has-error": fieldErrors.title}'>
+                <span class="input-group-addon">tty</span>
+                <input type='text' class="form-control" ng-model='port.num' placeholder="NN">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-8">
+                <button class="btn btn-primary" ng-click='addPort("tty" + port.num)'>Add</button>
+                <button class="btn" esp-click="/port/{{port.id}}/vlans">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>
