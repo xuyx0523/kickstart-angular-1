@@ -4,9 +4,9 @@
 {
     "control": {
         "post": [
-            "ng-package",
+            "angular-package",
             "compile-esp",
-            "compress",
+            "gzip",
         ],
         "?render": {
             "?js": [
@@ -18,41 +18,48 @@
     },
     debug: {
         services: {
-            "?compress": false,
+            "?angular": {
+                "?html": false,
+                "?js": true,
+                "?package": false
+            },
+            "?gzip": false,
             "?html": false,
             "?js": {
                 "?minify": false,
                 "?usemin": true,
                 "?usemap": true
-            },
-            "?ng-compile-html": false,
-            "?ng-package": false
+            }
         }
     },
     release: {
         services: {
-            "?compress": true,
+            "?angular": {
+                "?html": true,
+                "?js": true,
+                "?package": true,
+                "?-scripts": {
+                    "?files": [
+                        "**.js",
+                        "!lib/**.js",
+                        "lib/angular*/**.js",
+                        "lib/esp*/**.js",
+                        "!**.min.js"
+                    ]
+                },
+                "?minify": true,
+                "?dotmin": true,
+            },
             "?css": {
                 "?minify": true,
-                "?usemin": true,
-                "?usemap": false
+                "?usemap": false,
+                "?usemin": true
             },
+            "?gzip": true,
             "?js": {
                 "?minify": true,
                 "?usemin": true,
                 "?usemap": false
-            },
-            "?ng-compile-js": {
-                "?files": [
-                    "**.js",
-                    "!lib/**.js",
-                    "lib/angular*/**.js",
-                    "lib/esp*/**.js"
-                ]
-            },
-            "?ng-package": {
-                "?minify": true,
-                "?dotmin": true
             }
         }
     }

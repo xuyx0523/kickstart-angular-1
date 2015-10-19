@@ -64,7 +64,6 @@
         },
         "headers": {
             "set": {
-                /* Angular needs unsafe-inline for applying live data via two-way binding */
                 "Content-Security-Policy": "default-src 'self' ws: wss: data:; style-src 'self' 'unsafe-inline'"
             }
         },

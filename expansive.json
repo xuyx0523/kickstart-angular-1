@@ -4,9 +4,9 @@
     },
     "control": {
         "post": [
-            "ng-package",
+            "angular-package",
             "compile-esp",
-            "compress"
+            "gzip"
         ],
         "deploy": {
             "from": [
@@ -51,41 +51,48 @@
     },
     "debug": {
         "services": {
-            "compress": false,
-            "html": false,
+            "angular": {
+                "html": false,
+                "js": true,
+                "package": false
+            },
+            "gzip": false,
             "js": {
                 "minify": false,
                 "usemin": false,
                 "usemap": false
             },
-            "ng-compile-html": false,
-            "ng-package": false
+            "html": false,
+            "angular-html": false,
+            "angular-package": false
         }
     },
     "release": {
         "services": {
-            "compress": true,
+            "angular": {
+                "html": true,
+                "js": true,
+                "package": true,
+                "scripts": [
+                    "**.js",
+                    "!lib/**.js",
+                    "lib/angular*/**.js",
+                    "lib/esp*/**.js",
+                    "!**.min.js"
+                ],
+                "minify": true,
+                "dotmin": true
+            },
             "css": {
                 "minify": true,
                 "usemap": false,
                 "usemin": true
             },
+            "gzip": true,
             "js": {
                 "minify": false,
                 "usemin": false,
                 "usemap": false
-            },
-            "ng-compile-js": {
-                "files": [
-                    "**.js",
-                    "!lib/**.js",
-                    "lib/angular*/**.js",
-                    "lib/esp*/**.js"
-                ]
-            },
-            "ng-package": {
-                "minify": true,
-                "dotmin": true
             }
         }
     }

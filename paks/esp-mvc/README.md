@@ -103,7 +103,7 @@ To generate a migration
 
 #### expansive.json
 
-* less.enable &mdash; Enable the compile-less-css service to process less files.
+* less.enable &mdash; Enable the less service to process less files.
 * less.dependencies &mdash; Explicit map of dependencies if not using "stylesheet".
 * less.files &mdash; Array of less files to compile.
 * less.stylesheet &mdash; Primary stylesheet to update if any less file changes.
@@ -128,7 +128,7 @@ To generate a migration
             enable: true,
         },
         'js': {
-            enable: true,
+            enable:     true,
             files:      null,
             compress:   true,
             mangle:     true,

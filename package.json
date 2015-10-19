@@ -21,7 +21,7 @@
         "font-awesome": "~4.3"
     },
     "devDependencies": {
-        "expansive": ">=0.6.0",
+        "expansive": ">=0.7.0",
         "esp": "~6.x"
     },
     "pak": {

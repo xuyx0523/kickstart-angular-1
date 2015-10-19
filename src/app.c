@@ -13,7 +13,7 @@ static void commonController(HttpConn *conn)
     if (!httpLoggedIn(conn)) {
         upath = conn->rx->pathInfo;
         if (smatch(upath, "/user/login") || smatch(upath, "/user/logout") || smatch(upath, "/user/forgot") ||
-            sstarts(upath, "/assets/") || sstarts(upath, "/css/") || smatch(upath, "/") || smatch(upath, "/index.esp") ||
+            sstarts(upath, "/images/") || sstarts(upath, "/css/") || smatch(upath, "/") || smatch(upath, "/index.esp") ||
             scontains(upath, "/fonts/") ||
             sends(upath, ".html") || sends(upath, ".js") || sends(upath, ".css")) {
             return;
