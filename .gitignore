@@ -17,8 +17,6 @@ macosx-x64-*
 linux-*-*
 *.min.html
 *.html.js
-*.min.js
 db/kickstart.*
 /start.me
 all.html.js
-all*.min.css
