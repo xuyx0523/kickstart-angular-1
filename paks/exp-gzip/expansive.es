@@ -11,9 +11,7 @@ Expansive.load({
         extra:  null,
 
         transforms: {
-            mappings: {
-                'html' 'css', 'js' 'ttf'
-            },
+            mappings: [ 'html', 'css', 'js', 'ttf']
 
             init: function(transform) {
                 transform.gzip = Cmd.locate('gzip')
@@ -28,7 +26,7 @@ Expansive.load({
 
             render: function(contents, meta, transform) {
                 if (meta.isDocument) {
-                    transform.files.push(meta.path)
+                    transform.files.push(meta.dest)
                 }
                 return contents
             },
@@ -36,22 +34,26 @@ Expansive.load({
             post: function(transform) {
                 let service = transform.service
                 let files = transform.files
-                if (files.length > 0) {
-                    trace('Compress', Object.getOwnPropertyNames(transform.mappings).join(' '))
+                /*
+                    Double check all files in dist with the mapping patterns. This compresses ./files
+                 */
+                let patterns = []
+                for each (ext in Object.getOwnPropertyNames(transform.mappings)) {
+                    patterns.push('**.' + ext)
                 }
-                if (service.extra && service.extra.length > 0) {
-                    let dist = directories.dist
-                    service.extra.push('!**.gz')
-                    files += dist.files(service.extra, {directories: false, contents: true})
-                    trace('Compress', service.extra)
-                }
+                patterns.push('!**.gz')
+                trace('Compress', patterns.join(' '))
+                files += directories.dist.files(patterns, {directories: false, contents: true})
+
                 for each (file in files.unique()) {
-                    file.joinExt('gz', true).remove()
-                    vtrace('Compress', file)
-                    if (transform.service.keep) {
-                        Cmd.run('gzip --keep "' + file + '"', {filter: true})
-                    } else {
-                        Cmd.run('gzip  "' + file + '"', {filter: true})
+                    let dest = file.joinExt('gz', true)
+                    if (file.exists && !dest.exists) {
+                        vtrace('Compress', file)
+                        if (transform.service.keep) {
+                            Cmd.run('gzip --keep "' + file + '"', {filter: true})
+                        } else {
+                            Cmd.run('gzip  "' + file + '"', {filter: true})
+                        }
                     }
                 }
             }

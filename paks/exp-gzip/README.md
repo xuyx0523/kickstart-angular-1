@@ -11,10 +11,10 @@ Provides the 'compress' service.
 
 ### To configure in expansive.json:
 
-* compress.enable &mdash; Enable compressing all files using gzip.
-* compress.extra &mdash; Extra files to compress. Typically used to compress unprocessed files from ./files.
-* compress.mappings &mdash; File extensions to compress. Defaults to: mappings: { 'html' 'css', 'js' 'ttf' }.
-* compress.keep &mdash; Keep uncompressed file after compressing. Defaults to true.
+* gzip.enable &mdash; Enable compressing all files using gzip.
+* gzip.extra &mdash; Extra files to compress. Typically used to compress unprocessed files from ./files.
+* gzip.mappings &mdash; File extensions to compress. Defaults to: [ 'html', 'css', 'js', 'ttf' ].
+* gzip.keep &mdash; Keep uncompressed file after compressing. Defaults to true.
 
 ```
 {
