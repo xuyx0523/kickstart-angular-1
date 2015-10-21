@@ -3,11 +3,6 @@
         "site": "https://embedthis.com/appweb/demo/"
     },
     "control": {
-        "post": [
-            "angular-package",
-            "compile-esp",
-            "gzip"
-        ],
         "deploy": {
             "from": [
                 "dist/**",
@@ -24,6 +19,9 @@
             "flatten": false,
             "clean": true,
             "script": ""
+        },
+        "pipeline": {
+            "post": [ "angular-package", "esp", "gzip" ]
         },
         "render": {
             "js": [
