@@ -18,7 +18,7 @@
             },
             "http": {
                 "auth": {
-                    "auto": {
+                    "?auto": {
                         "?name": "",
                         "?roles": [ "*" ]
                     }
@@ -33,7 +33,7 @@
             },
             "http": {
                 "auth": {
-                    "auto": {
+                    "?auto": {
                         "url": ""
                     }
                 },

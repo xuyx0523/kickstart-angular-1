@@ -11,7 +11,7 @@ Expansive.load({
         extra:  null,
 
         transforms: {
-            mappings: [ 'html', 'css', 'js', 'ttf']
+            mappings: [ 'html', 'css', 'js', 'ttf', 'xml' ]
 
             init: function(transform) {
                 transform.gzip = Cmd.locate('gzip')

@@ -3,11 +3,9 @@
  */
 {
     "control": {
-        "post": [
-            "angular-package",
-            "compile-esp",
-            "gzip",
-        ],
+        "?pipeline": {
+            '?post': [ "angular-package", "esp", "gzip" ]
+        },
         "?render": {
             "?js": [
                 "main.js",

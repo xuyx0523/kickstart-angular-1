@@ -1,7 +1,7 @@
 
         <nav class="navbar navbar-inverse navbar-static-top">
             <div class="navbar-header">
-                <a class="navbar-brand ng-cloak" href="#"><i class="glyphicon glyphicon-tower"></i> Kickstart</sup></a>
+                <a class="navbar-brand ng-cloak" href="#/"><i class="glyphicon glyphicon-tower"></i> Kickstart</sup></a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right ng-cloak">

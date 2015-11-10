@@ -1,5 +1,6 @@
 {
     "esp": {
+        "app": true,
         "generate": {
             "appweb": "esp-angular-best/appweb.conf",
             "migration": "esp-mvc/generate/migration.c",
@@ -64,12 +65,17 @@
         },
         "headers": {
             "set": {
-                "Content-Security-Policy": "default-src 'self' ws: wss: data:; style-src 'self' 'unsafe-inline'"
+                /* Angular requires unsafe-inline */
+                "Content-Security-Policy": "default-src 'self' ws: wss: data:; style-src 'self' 'unsafe-inline'",
+                "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
             }
         },
         "timeouts": {
             "refresh": "1sec",
             "session": "30mins"
+        },
+        "pipeline": {
+            "handlers": 'espHandler'
         },
         "xsrf": true,
         "routes": [

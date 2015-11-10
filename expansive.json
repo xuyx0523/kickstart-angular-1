@@ -21,7 +21,11 @@
             "script": ""
         },
         "pipeline": {
-            "post": [ "angular-package", "esp", "gzip" ]
+            "post": [
+                "angular-package",
+                "esp",
+                "gzip"
+            ]
         },
         "render": {
             "js": [
