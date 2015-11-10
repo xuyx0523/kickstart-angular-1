@@ -25,7 +25,7 @@
         "esp": "~6.x"
     },
     "pak": {
-        "mode": "debug",
+        "mode": "release",
         "import": true,
         "overrides": {
             "bootstrap": {
