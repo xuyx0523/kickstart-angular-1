@@ -1,0 +1,26 @@
+<ul class="breadcrumb">
+    <li>Port</li>
+    <li><a href="#/port/list">Ports</a></li>
+    <li><i class="icon-home"></i><a href="#/">Home</a></li>
+</ul>
+<div ng-include src="Esp.url('/port/panes.html')" ng-init="currentPane='Details'"></div>
+<div class="panel">
+    <h2>Port Details</h2>
+    <form name="portForm" class="form-horizontal">
+        <esp-input ng-model="port.name" readonly inputClass="col-sm-4" label="Name"></esp-input>
+        <esp-input ng-model="port.status" inputClass="col-sm-4"></esp-input>
+        <esp-input ng-model="port.mode" label="Admin Mode" type="radio"></esp-input>
+        <esp-input ng-model="port.negotiate" label="Auto Negotiate" type="checkbox"></esp-input>
+        <esp-input ng-model="port.duplex" type="radio"></esp-input>
+        <esp-input ng-model="port.flowControl" type="checkbox"></esp-input>
+        <esp-input ng-model="port.jumbo" type="checkbox"></esp-input>
+        <esp-input ng-model="port.speed" inputClass="col-sm-3" type="select"></esp-input>
+
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-8">
+                <button class="btn btn-primary" ng-click='save()'>Save</button>
+                <button class="btn" esp-click="/port/list">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

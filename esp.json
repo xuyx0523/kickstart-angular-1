@@ -74,9 +74,6 @@
             "refresh": "1sec",
             "session": "30mins"
         },
-        "pipeline": {
-            "handlers": 'espHandler'
-        },
         "xsrf": true,
         "routes": [
             "esp-restful",
