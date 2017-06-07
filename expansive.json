@@ -58,6 +58,9 @@
                 "js": true,
                 "package": false
             },
+            "esp": {
+                "compile": "esp compile"
+            },
             "gzip": false,
             "js": {
                 "minify": false,
@@ -89,6 +92,9 @@
                 "minify": true,
                 "usemap": false,
                 "usemin": true
+            },
+            "esp": {
+                "compile": "appweb-esp compile"
             },
             "gzip": true,
             "js": {
