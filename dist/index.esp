@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" ng-csp>
 <head>
-    
     <title>Kickstart</title>
     <meta charset="utf-8" />
     <meta name="description" content="Kickstart Appweb / ESP Demonstration Application">
@@ -13,7 +12,6 @@
 </head>
 <body id='body' ng-controller="HomeControl" data-config='<% renderConfig(); %>'>
     <header>
-        
         <nav class="navbar navbar-inverse navbar-static-top">
             <div class="navbar-header">
                 <a class="navbar-brand ng-cloak" href="#/"><i class="glyphicon glyphicon-tower"></i> Kickstart</sup></a>
@@ -63,7 +61,6 @@
 
     </header>
     <main class="container" ng-cloak>
-        
         <nav class="sidebar nav-collapse col-sm-2" ng-show="showNav">
             <ul class="nav nav-tabs nav-stacked">
                 <esp-menu href="/" value="Dash" icon="fa fa-tachometer"></esp-menu>
@@ -81,7 +78,6 @@
         </section>
 
     </main>
-    
     <div ng-repeat="(field, msg) in feedback">
         <span class="ng-hide-remove" ng-class="'feedback-' + field" ng-cloak>{{msg}}</span>
     </div>

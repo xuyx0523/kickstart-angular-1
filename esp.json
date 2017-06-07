@@ -118,7 +118,7 @@
             "http": {
                 "cache": true,
                 "compress": true,
-                "redirect": "secure",
+                "__redirect": "secure",
                 "auth": {
                     "auto": {
                         "url": ""
