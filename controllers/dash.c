@@ -38,15 +38,17 @@ static void demoData() {
 
     //  Separate table
     ports = readTable("port");
-    for (r = 0; r < ports->nrecords; r++) {
-        r += (random() % (ports->nrecords / 3));
-        if (r < ports->nrecords) {
-            port = ports->records[r];
-            value = ediGetFieldValue(port, "rxBytes");
-            ediSetField(port, "rxBytes", itos(stoi(value) + (random() % 1000)));
-            value = ediGetFieldValue(port, "rxPackets");
-            ediSetField(port, "rxPackets", itos(stoi(value) + (random() % 1000)));
-            updateRec(port);
+    if (ports) {
+        for (r = 0; r < ports->nrecords; r++) {
+            r += (random() % (ports->nrecords / 3));
+            if (r < ports->nrecords) {
+                port = ports->records[r];
+                value = ediGetFieldValue(port, "rxBytes");
+                ediSetField(port, "rxBytes", itos(stoi(value) + (random() % 1000)));
+                value = ediGetFieldValue(port, "rxPackets");
+                ediSetField(port, "rxPackets", itos(stoi(value) + (random() % 1000)));
+                updateRec(port);
+            }
         }
     }
 }
