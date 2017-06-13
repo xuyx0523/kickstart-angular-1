@@ -1,11 +1,7 @@
 LICENSE.md - Embedthis Kickstart Licenses
 ===
 
-This software is distributed under a commercial license only.
-Commercial licenses for this software and support services are 
-available from Embedthis Software.
-
-* [Embedthis Commercial License](https://embedthis.com/licensing/)
+This software is distributed under the [MIT](http://opensource.org/licenses/MIT) license.
 
 Third Party Licenses
 ===
