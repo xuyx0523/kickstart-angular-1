@@ -6,11 +6,11 @@
 /*
     Common base controller used for all requests
  */
-static void commonController(HttpConn *conn) 
+static void commonController(HttpConn *conn)
 {
     cchar       *loginRequired, *upath;
 
-    if (!httpLoggedIn(conn)) {
+    if (!httpIsAuthenticated(conn)) {
         upath = conn->rx->pathInfo;
         if (smatch(upath, "/user/login") || smatch(upath, "/user/logout") || smatch(upath, "/user/forgot") ||
             sstarts(upath, "/images/") || sstarts(upath, "/css/") || smatch(upath, "/") || smatch(upath, "/index.esp") ||
@@ -86,7 +86,7 @@ ESP_EXPORT int esp_app_kickstart(HttpRoute *route, MprModule *module)
 
     /*
         Demo Mode.
-        This code sets up a private, in-memory, readonly database for each user. 
+        This code sets up a private, in-memory, readonly database for each user.
      */
     if ((edi = espGetRouteDatabase(route)) == 0) {
         mprLog("kickstart", 0, "Cannot get route database in esp_app_kickstart");
