@@ -6,7 +6,7 @@ Me.load({
     targets: {
         render: {
             build: `
-                run('pak mode release')
+                run('pak profile release')
                 run('expansive --clean render')
                 trace('Render', 'expansive --clean render')
             `,
@@ -17,7 +17,7 @@ Me.load({
                 run('git commit -m"PUSH" -a')
                 run('git push')
                 trace('Commit', 'Push to site')
-                run('pak mode debug')
+                run('pak profile debug')
             `,
             depends: [ 'render' ],
         },

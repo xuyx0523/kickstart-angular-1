@@ -1,0 +1,62 @@
+{
+    "name": "kickstart",
+    "title": "Kickstart",
+    "description": "Kickstart Appweb / ESP Demonstration Application",
+    "version": "0.8.1",
+    "keywords": [
+        "appweb",
+        "esp"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/embedthis/kickstart.git"
+    },
+    "dependencies": {
+        "bootstrap": "~3.3",
+        "esp-angular": "~5.5",
+        "esp-angular-skeleton": "~5.5",
+        "esp-angular-mgr-skeleton": "~5.5",
+        "exp-esp": "~0.3",
+        "exp-gzip": "~0.3",
+        "font-awesome": "~4.3"
+    },
+    "devDependencies": {
+        "expansive": ">=0.7.0",
+        "esp": "~7.x"
+    },
+    "profile": "release",
+    "import": true,
+    "overrides": {
+        "bootstrap": {
+            "export": [
+                "less/**",
+                {
+                    "from": [
+                        "dist/fonts/*.eot",
+                        "dist/fonts/*.woff*",
+                        "dist/fonts/*.ttf"
+                    ],
+                    "trim": 1
+                }
+            ]
+        },
+        "font-awesome": {
+            "export": [
+                "less/**",
+                {
+                    "from": [
+                        "fonts/*.eot",
+                        "fonts/*.woff*",
+                        "fonts/*.ttf"
+                    ]
+                }
+            ]
+        }
+    },
+    "directories": {
+        "export": "contents/lib",
+        "dist": "dist",
+        "controllers": "controllers"
+    },
+    "pak": "release"
+}
