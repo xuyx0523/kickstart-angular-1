@@ -14,7 +14,5 @@
     "devDependencies": {
         "expansive": ">=0.7.0"
     },
-    "pak": {
-        "origin": "embedthis/exp-gzip"
-    }
+    "origin": "embedthis/exp-gzip"
 }

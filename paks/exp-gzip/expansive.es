@@ -4,14 +4,13 @@
     Compress final content
  */
 Expansive.load({
-
     services: {
         name:   'gzip',
         keep:   true,
         extra:  null,
 
         transforms: {
-            mappings: [ 'html', 'css', 'js', 'ttf', 'xml' ]
+            mappings: [ 'html', 'css', 'js', 'txt', 'ttf', 'xml' ]
 
             init: function(transform) {
                 transform.gzip = Cmd.locate('gzip')
@@ -33,7 +32,7 @@ Expansive.load({
 
             post: function(transform) {
                 let service = transform.service
-                let files = transform.files
+                let files = transform.files || []
                 /*
                     Double check all files in dist with the mapping patterns. This compresses ./files
                  */
@@ -50,9 +49,14 @@ Expansive.load({
                     if (file.exists && !dest.exists) {
                         vtrace('Compress', file)
                         if (transform.service.keep) {
-                            Cmd.run('gzip --keep "' + file + '"', {filter: true})
+                            //  Alpine does not have --keep
+                            //  Cmd.run('gzip --keep "' + file + '"', {filter: true})
+                            let keep = file.joinExt('keep', true)
+                            Path(file).copy(keep)
+                            Cmd.run('gzip "' + file + '"', {filter: true})
+                            Path(keep).rename(file)
                         } else {
-                            Cmd.run('gzip  "' + file + '"', {filter: true})
+                            Cmd.run('gzip "' + file + '"', {filter: true})
                         }
                     }
                 }
