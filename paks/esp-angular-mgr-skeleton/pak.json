@@ -1,7 +1,7 @@
 {
     "name": "esp-angular-mgr-skeleton",
     "description": "ESP Management Console Skeleton",
-    "version": "5.5.0",
+    "version": "5.5.1",
     "keywords": [
         "esp"
     ],
@@ -26,25 +26,21 @@
     "devDependencies": {
         "pak": ">=0.11.3"
     },
-    "pak": {
-        "blend": {
-            "devDependencies": {
-                "?esp": "~6.x"
-            },
-            "pak": {
-                "?mode": "debug",
-                "?import": true
-            }
+    "blend": {
+        "devDependencies": {
+            "?esp": ">=7.0"
         },
-        "export": {
-            "from": [
-                "contents/**",
-                "layouts/**",
-                "partials/**"
-            ],
-            "to": "${TOP}",
-            "overwrite": false
-        },
-        "origin": "embedthis/esp-angular-mgr-skeleton"
-    }
+        "?profile": "debug",
+        "?import": true
+    },
+    "export": {
+        "from": [
+            "contents/**",
+            "layouts/**",
+            "partials/**"
+        ],
+        "to": "${TOP}",
+        "overwrite": false
+    },
+    "origin": "embedthis/esp-angular-mgr-skeleton"
 }

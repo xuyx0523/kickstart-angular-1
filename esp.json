@@ -65,7 +65,6 @@
         },
         "headers": {
             "set": {
-                /* Angular requires unsafe-inline */
                 "Content-Security-Policy": "default-src 'self' ws: wss: data:; style-src 'self' 'unsafe-inline'",
                 "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
             }
@@ -90,7 +89,9 @@
         "debug": {
             "esp": {
                 "optimize": false,
-                "combine": false
+                "combine": false,
+                "compile": true,
+                "update": true
             },
             "http": {
                 "auth": {
@@ -113,7 +114,9 @@
         "release": {
             "esp": {
                 "optimize": true,
-                "combine": true
+                "combine": true,
+                "compile": true,
+                "update": true
             },
             "http": {
                 "cache": true,
@@ -123,7 +126,8 @@
                     "auto": {
                         "url": ""
                     }
-                }
+                },
+                "redirect": "https://"
             }
         }
     }

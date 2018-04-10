@@ -10,7 +10,7 @@
             "store": "app"
         }
     },
-    "modes": {
+    "profiles": {
         "debug": {
             "esp": {
                 "optimize": false,

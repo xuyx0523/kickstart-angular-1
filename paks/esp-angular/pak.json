@@ -1,7 +1,7 @@
 {
     "name": "esp-angular",
     "description": "Embedthis ESP for Angular",
-    "version": "5.5.0",
+    "version": "5.5.1",
     "keywords": [
         "esp"
     ],
@@ -29,12 +29,10 @@
     "ignore": [
         "doc**"
     ],
-    "pak": {
-        "export": {
-            "from": "*.js",
-            "to": "esp-angular/"
-        },
-        "manage": "esp.json",
-        "origin": "embedthis/esp-angular"
-    }
+    "export": {
+        "from": "*.js",
+        "to": "esp-angular/"
+    },
+    "manage": "esp.json",
+    "origin": "embedthis/esp-angular"
 }

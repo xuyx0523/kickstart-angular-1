@@ -1,7 +1,7 @@
 {
     "name": "exp-esp",
     "description": "ESP Plugin for Expansive",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "keywords": [
         "expansive-plugin",
         "esp"
@@ -14,7 +14,5 @@
     "devDependencies": {
         "expansive": ">=0.7.0"
     },
-    "pak": {
-        "origin": "embedthis/exp-esp"
-    }
+    "origin": "embedthis/exp-esp"
 }

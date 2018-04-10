@@ -1,7 +1,7 @@
 {
     "name": "esp-mvc",
     "description": "ESP Server-Side HTML",
-    "version": "5.5.0",
+    "version": "5.5.2",
     "keywords": [
         "esp"
     ],
@@ -34,35 +34,31 @@
     "ignore": [
         "test**"
     ],
-    "pak": {
-        "blend": {
-            "directories": {
-                "?dist": "dist",
-                "?controllers": "controllers"
-            },
-            "pak": {
-                "?mode": "debug",
-                "?import": true
-            }
+    "blend": {
+        "directories": {
+            "?dist": "dist",
+            "?controllers": "controllers"
         },
-        "export": {
-            "from": [
-                "contents/**",
-                "layouts/**",
-                "partials/**"
-            ],
-            "to": "${TOP}",
-            "overwrite": false
-        },
-        "manage": [
-            "esp.json",
-            "expansive.json"
+        "?profile": "debug",
+        "?import": true
+    },
+    "export": {
+        "from": [
+            "contents/**",
+            "layouts/**",
+            "partials/**"
         ],
-        "scripts": {
-            "install": {
-                "script": "mkdir('contents'); mkdir('layouts'); mkdir('partials')"
-            }
-        },
-        "origin": "embedthis/esp-mvc"
-    }
+        "to": "${TOP}",
+        "overwrite": false
+    },
+    "manage": [
+        "esp.json",
+        "expansive.json"
+    ],
+    "scripts": {
+        "install": {
+            "script": "mkdir('contents'); mkdir('layouts'); mkdir('partials')"
+        }
+    },
+    "origin": "embedthis/esp-mvc"
 }

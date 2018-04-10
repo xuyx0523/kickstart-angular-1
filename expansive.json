@@ -13,7 +13,8 @@
                 "cache/*.dll",
                 "cache/*.lib",
                 "esp.json",
-                "package.json"
+                "package.json",
+                "appweb.conf"
             ],
             "to": "deploy",
             "flatten": false,
@@ -51,7 +52,7 @@
             ]
         }
     },
-    "debug": {
+    "dev": {
         "services": {
             "angular": {
                 "html": false,
@@ -72,7 +73,7 @@
             "angular-package": false
         }
     },
-    "release": {
+    "prod": {
         "services": {
             "angular": {
                 "html": true,

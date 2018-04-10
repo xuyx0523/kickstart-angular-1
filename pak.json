@@ -11,20 +11,39 @@
         "type": "git",
         "url": "git://github.com/embedthis/kickstart.git"
     },
+    "skeletons": {
+        "esp-angular-skeleton": "~5.5",
+        "esp-angular-mgr-skeleton": "~5.5"
+    },
     "dependencies": {
+        "angular": "~1.4",
+        "angular-animate": "~1.4",
+        "angular-bootstrap": "~*",
+        "angular-route": "~1.4",
         "bootstrap": "~3.3",
         "esp-angular": "~5.5",
-        "esp-angular-skeleton": "~5.5",
-        "esp-angular-mgr-skeleton": "~5.5",
+        "esp-angular-best": "~*",
+        "esp-angular-gui": "~*",
+        "esp-mvc": "~*",
+        "exp-angular": "~*",
+        "exp-canon": "~*",
+        "exp-css": "~*",
         "exp-esp": "~0.3",
         "exp-gzip": "~0.3",
-        "font-awesome": "~4.3"
+        "exp-html": "~*",
+        "exp-js": "~*",
+        "exp-less": "~*",
+        "font-awesome": "~4.3",
+        "html5shiv": "~*",
+        "jquery": "~*",
+        "more": "~*",
+        "respond": "~*"
     },
     "devDependencies": {
         "expansive": ">=0.7.0",
         "esp": "~7.x"
     },
-    "profile": "release",
+    "profile": "prod",
     "import": true,
     "overrides": {
         "bootstrap": {
@@ -57,6 +76,5 @@
         "export": "contents/lib",
         "dist": "dist",
         "controllers": "controllers"
-    },
-    "pak": "release"
+    }
 }

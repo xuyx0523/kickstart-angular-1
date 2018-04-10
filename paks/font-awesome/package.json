@@ -50,17 +50,16 @@
     "engines": {
         "node": ">=0.10.3"
     },
-    "pak": {
-        "export": [
-            "less/**",
-            {
-                "from": [
-                    "fonts/*.eot",
-                    "fonts/*.woff*",
-                    "fonts/*.ttf"
-                ]
-            }
-        ],
-        "origin": "@npm/font-awesome"
-    }
+    "export": [
+        "less/**",
+        {
+            "from": [
+                "fonts/*.eot",
+                "fonts/*.woff*",
+                "fonts/*.ttf"
+            ]
+        }
+    ],
+    "origin": "@npm/font-awesome",
+    "migrated": true
 }

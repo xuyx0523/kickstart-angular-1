@@ -63,11 +63,11 @@ Expansive.load({
             post: function(transform) {
                 let service = transform.service
                 if (service.combine) {
-                    trace('Compile', 'All esp files')
+                    trace('Run', service.compile)
                     Cmd.run(service.compile)
                 } else {
                     for each (file in transform.files) {
-                        trace('Compile', file)
+                        trace('Run', service.compile + ' ' + file)
                         Cmd.run(service.compile + ' ' + file)
                     }
                 }

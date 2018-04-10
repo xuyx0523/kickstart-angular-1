@@ -1,5 +1,6 @@
 {
     "esp": {
+        "?app": true,
         "generate": {
             "?appweb": "esp-mvc/generate/appweb.conf",
             "?controller": "esp-mvc/generate/controller.c",
@@ -19,17 +20,21 @@
         },
         "?routes": "esp-restful"
     },
-    "modes": {
+    "profiles": {
         "debug": {
             "esp": {
+                "combine": false,
+                "compile": true,
                 "optimize": false,
-                "combine": false
+                "update": true
             }
         },
         "release": {
             "esp": {
+                "combine": true,
+                "compile": true,
                 "optimize": true,
-                "combine": true
+                "update": true
             },
             "http": {
                 "compress": true

@@ -11,8 +11,8 @@ Provides the 'esp' service.
 
 ### To configure in expansive.json:
 
-* clean &mdash; Command to use to clean the cache. Defaults to 'esp clean'.
-* compile &mdash; Command to use to compile the files. Defaults to 'esp compile'.
+* clean &mdash; Command to use to clean the cache. Defaults to 'esp clean'. If using Appweb, set to 'appweb-esp clean'.
+* compile &mdash; Command to use to compile the files. Defaults to 'esp compile'. If using Appweb, set to 'appweb-esp compile'.
 * enable &mdash; Set to true to enable the compilation of ESP files. Defaults to true.
 * esp &mdash; Set to the path to the esp command. Appweb users may need to set this to 'appesp'.
 * keep &mdash; Keep the dist/\**.esp files after compilation. Note: this means you cannot do stand-alone 
@@ -25,9 +25,10 @@ Provides the 'esp' service.
 {
     services: {
         'esp': {
-            esp: '/path/to/esp/command,
-            keep: true
-            serve: 'esp --log stdout:4 --trace stdout:4 LISTEN',
+            clean: 'appweb-esp clean',
+            compile: 'appweb-esp compile',
+            keep: true,
+            serve: 'appweb --log stdout:4 --trace stdout:4 LISTEN',
         }
     }
 }

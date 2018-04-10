@@ -83,24 +83,23 @@
     "dependencies": {
         "jquery": "x.*"
     },
-    "pak": {
-        "render": {
-            "css": [
-                "css/bootstrap.*",
-                "css/bootstrap-theme.*"
-            ]
-        },
-        "origin": "@npm/bootstrap",
-        "export": [
-            "less/**",
-            {
-                "from": [
-                    "dist/fonts/*.eot",
-                    "dist/fonts/*.woff*",
-                    "dist/fonts/*.ttf"
-                ],
-                "trim": 1
-            }
+    "render": {
+        "css": [
+            "css/bootstrap.*",
+            "css/bootstrap-theme.*"
         ]
-    }
+    },
+    "origin": "@npm/bootstrap",
+    "migrated": true,
+    "export": [
+        "less/**",
+        {
+            "from": [
+                "dist/fonts/*.eot",
+                "dist/fonts/*.woff*",
+                "dist/fonts/*.ttf"
+            ],
+            "trim": 1
+        }
+    ]
 }

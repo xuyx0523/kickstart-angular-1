@@ -1,7 +1,7 @@
 {
     "name": "esp-angular-gui",
     "description": "ESP GUI Extensions for Angular",
-    "version": "5.5.0",
+    "version": "5.5.1",
     "keywords": [
         "esp"
     ],
@@ -22,11 +22,9 @@
         "expansive": ">=0.7.0",
         "pak": ">=0.11.3"
     },
-    "pak": {
-        "export": {
-            "from": "*.js",
-            "to": "esp-angular-gui/"
-        },
-        "origin": "embedthis/esp-angular-gui"
-    }
+    "export": {
+        "from": "*.js",
+        "to": "esp-angular-gui/"
+    },
+    "origin": "embedthis/esp-angular-gui"
 }

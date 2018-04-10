@@ -18,8 +18,6 @@
     "devDependencies": {
         "pak": ">=0.11.0"
     },
-    "pak": {
-        "export": "*.js",
-        "origin": "embedthis/angular-bootstrap"
-    }
+    "export": "*.js",
+    "origin": "embedthis/angular-bootstrap"
 }

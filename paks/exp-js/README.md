@@ -32,10 +32,10 @@ The **js** transform provides configuration control for the other js services.
 * extract &mdash; Extract inline scripts into external script files. Defaults to to false. Set to true to enable or set
     to a filename to contain all extracted scripts.
 * files &mdash; List of scripts to render. Defaults to [ 'lib/\*\*.js*, '!lib/\*\*.map' ]
-* force &mdash; Always minify even if a minified version exists in contents. Defaults to false.
 * mappings &mdash; Set of extensions to transform. Defaults to: mappings: [ 'js', 'min.js', 'min.map', 'min.js.map' ]
-* mangle &mdash; Enable mangling of Javascript variable and function names. Default to true.
-* minify &mdash; Enable minifying of Javascript files. Will also generate map files if the js-render transform defines 'usemap' to be true. Default to false.
+* minify &mdash; Enable minifying Javascript files. Will also generate map files if the js-render transform defines 'usemap' to be true. Default to false.
+* options &mdash; Uglifyjs command options to use when minifying Javascript files. Defaults to:
+--compress dead_code=true,conditionals=true,booleans=true,unused=true,if_return=true,join_vars=true,drop_console=true --mangle
 * usemap &mdash; Use minified Javascript if corresponding source maps is present. Default to true.
 * usemin &mdash; Use minified Javascript if present. Default to true.
 
@@ -62,7 +62,7 @@ To support using Content Security Policy headers, the js-extract transform extra
 
 ## Example
 
-The `debug` collection will be selected if the package.json `pak.mode` is set to debug. Similarly for the `release` collection.
+The `debug` collection will be selected if the pak.json `profile` is set to debug. Similarly for the `release` collection.
 
 ```
 debug: {

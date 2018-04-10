@@ -1,0 +1,88 @@
+{
+    "name": "esp-angular-skeleton",
+    "description": "ESP Angular MVC Application Skeleton",
+    "version": "5.5.1",
+    "keywords": [
+        "esp"
+    ],
+    "licenses": [
+        {
+            "type": "GPL",
+            "url": "http://www.gnu.org/licenses/gpl-2.0.html"
+        },
+        {
+            "type": "Commercial",
+            "url": "https://embedthis.com/licensing/"
+        }
+    ],
+    "dependencies": {
+        "exp-gzip": "~0.3",
+        "angular-bootstrap": "~0.7",
+        "exp-angular": "~0.2",
+        "esp-angular": "~5.5",
+        "esp-mvc": "~5.5"
+    },
+    "devDependencies": {
+        "expansive": ">=0.6.0",
+        "pak": ">=0.11.3"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/embedthis/esp-angular-skeleton.git"
+    },
+    "ignore": [
+        "start.me"
+    ],
+    "blend": {
+        "devDependencies": {
+            "?expansive": ">=0.7.0",
+            "?esp": ">=7.0"
+        },
+        "directories": {
+            "?export": "contents/lib"
+        },
+        "?profile": "debug",
+        "?import": true,
+        "?overrides": {
+            "bootstrap": {
+                "export": [
+                    "less/**",
+                    {
+                        "from": [
+                            "dist/fonts/*.eot",
+                            "dist/fonts/*.woff*",
+                            "dist/fonts/*.ttf"
+                        ],
+                        "trim": 1
+                    }
+                ]
+            },
+            "font-awesome": {
+                "export": [
+                    "less/**",
+                    {
+                        "from": [
+                            "fonts/*.eot",
+                            "fonts/*.woff*",
+                            "fonts/*.ttf"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "export": {
+        "from": [
+            "contents/**",
+            "partials/**",
+            "layouts/**"
+        ],
+        "to": "${TOP}",
+        "overwrite": false
+    },
+    "manage": [
+        "esp.json",
+        "expansive.json"
+    ],
+    "origin": "embedthis/esp-angular-skeleton"
+}
