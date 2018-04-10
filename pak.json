@@ -57,5 +57,6 @@
         "export": "contents/lib",
         "dist": "dist",
         "controllers": "controllers"
-    }
+    },
+    "pak": "release"
 }

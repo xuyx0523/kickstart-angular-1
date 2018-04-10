@@ -86,7 +86,7 @@
             }
         ]
     },
-    "modes": {
+    "profiles": {
         "debug": {
             "esp": {
                 "optimize": false,
