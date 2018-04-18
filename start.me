@@ -6,7 +6,7 @@ Me.load({
     targets: {
         render: {
             build: `
-                run('pak profile release')
+                run('pak profile prod')
                 run('expansive --clean render')
                 trace('Render', 'expansive --clean render')
             `,
