@@ -32,9 +32,9 @@ Expansive.load({
                     let ecfg = esp.readJSON()
                     let package = expansive.package
                     if (package.pak) {
-                        let mode = package.pak.mode
-                        if (mode && ecfg.modes) {
-                            blend(ecfg, ecfg.modes[mode], {combine: true})
+                        let profile = package.profile
+                        if (profile && ecfg.profiles) {
+                            blend(ecfg, ecfg.profiles[profile], {combine: true})
                         }
                     }
                     if (ecfg.esp) {

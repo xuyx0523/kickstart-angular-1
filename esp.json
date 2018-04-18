@@ -109,6 +109,8 @@
             "esp": {
                 "optimize": true,
                 "combine": true,
+                "compile": true,
+                "pppp": 42,
             },
             "http": {
                 "cache": true,
