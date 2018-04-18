@@ -86,7 +86,7 @@
         ]
     },
     "profiles": {
-        "debug": {
+        "dev": {
             "esp": {
                 "optimize": false,
                 "combine": false,
@@ -95,12 +95,6 @@
             },
             "http": {
                 "auth": {
-                    "__auto": {
-                        "name": "admin",
-                        "roles": [
-                            "administrator"
-                        ]
-                    },
                     "auto": {
                         "name": "",
                         "roles": [
@@ -111,23 +105,19 @@
                 "compress": false
             }
         },
-        "release": {
+        "prod": {
             "esp": {
                 "optimize": true,
                 "combine": true,
-                "compile": true,
-                "update": true
             },
             "http": {
                 "cache": true,
                 "compress": true,
-                "__redirect": "secure",
                 "auth": {
                     "auto": {
                         "url": ""
                     }
                 },
-                "redirect": "https://"
             }
         }
     }
