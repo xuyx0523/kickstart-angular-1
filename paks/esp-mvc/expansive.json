@@ -22,7 +22,7 @@
             script: ''
         }
     },
-    release: {
+    prod: {
         services: {
             "css": {
                 "?minify": true

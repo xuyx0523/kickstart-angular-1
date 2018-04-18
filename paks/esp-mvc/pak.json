@@ -21,7 +21,7 @@
         "exp-css": "~0.3",
         "exp-esp": "~0.3",
         "exp-html": "~0.2",
-        "exp-canon": "~0.1"
+        "exp-canon": "~0.3"
     },
     "devDependencies": {
         "expansive": ">=0.7.0",

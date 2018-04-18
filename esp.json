@@ -83,7 +83,8 @@
                     "request": "10mins"
                 }
             }
-        ]
+        ],
+        "showErrors": true
     },
     "profiles": {
         "dev": {
@@ -110,7 +111,7 @@
                 "optimize": true,
                 "combine": true,
                 "compile": true,
-                "pppp": 42,
+                "update": true
             },
             "http": {
                 "cache": true,
@@ -120,6 +121,7 @@
                         "url": ""
                     }
                 },
+                "redirect": false,
             }
         }
     }

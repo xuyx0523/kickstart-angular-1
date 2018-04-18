@@ -10,7 +10,7 @@
         "url": "git://github.com/embedthis/angular-bootstrap.git"
     },
     "dependencies": {
-        "jquery": "~2",
+        "jquery": "~3",
         "angular": "~1.4",
         "bootstrap": "~3.3",
         "html5shiv": "~3.7"

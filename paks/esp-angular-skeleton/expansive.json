@@ -14,7 +14,7 @@
             ]
         },
     },
-    debug: {
+    dev: {
         services: {
             "?angular": {
                 "?html": false,
@@ -30,7 +30,7 @@
             }
         }
     },
-    release: {
+    prod: {
         services: {
             "?angular": {
                 "?html": true,
