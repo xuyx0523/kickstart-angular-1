@@ -65,7 +65,7 @@
         },
         "headers": {
             "set": {
-                "Content-Security-Policy": "default-src 'self' ws: wss: data:; style-src 'self' 'unsafe-inline'",
+                // "Content-Security-Policy": "default-src 'self' ws: wss: data:; style-src 'self' 'unsafe-inline'",
                 "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
             }
         },
