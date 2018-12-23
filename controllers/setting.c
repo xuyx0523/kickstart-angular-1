@@ -3,17 +3,17 @@
  */
 #include "esp.h"
 
-static void getSettings() { 
+static void getSettings() {
     sendRec(readRec("settings", "1"));
 }
 
-static void updateSettings() { 
+static void updateSettings() {
     if (canUser("edit", 1)) {
         sendResult(updateRecFromParams("settings"));
     }
 }
 
-ESP_EXPORT int esp_controller_kickstart_setting(HttpRoute *route, MprModule *module)
+ESP_EXPORT int esp_controller_kickstart_setting(HttpRoute *route)
 {
     Edi     *edi;
 

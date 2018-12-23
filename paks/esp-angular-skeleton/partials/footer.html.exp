@@ -2,7 +2,7 @@
         <span class="ng-hide-remove" ng-class="'feedback-' + field" ng-cloak>{{msg}}</span>
     </div>
     <@
-        if (meta.mode == 'debug') {
+        if (meta.mode == 'debug' || meta.mode == 'dev') {
             renderScripts()
         } else {
             renderScripts(['!**.js'], 'all.min.js')

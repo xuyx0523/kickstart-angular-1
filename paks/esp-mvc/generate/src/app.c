@@ -11,7 +11,7 @@
 static void base(HttpConn *conn) {
 }
 
-ESP_EXPORT int esp_app_${APP}(HttpRoute *route, MprModule *module) {
+ESP_EXPORT int esp_app_${APP}(HttpRoute *route) {
     espDefineBase(route, base);
     return 0;
 }

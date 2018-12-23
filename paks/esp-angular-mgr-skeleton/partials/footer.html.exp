@@ -6,10 +6,9 @@
         <span class="pull-right">Powered by ESP &mdash; &copy; Embedthis Software 2015</span>
     </footer>
     <@
-        if (meta.mode == 'debug') {
+        if (meta.mode == 'debug' || meta.mode == 'dev') {
             renderScripts()
         } else {
             renderScripts(['!**.js'], 'all.min.js')
         }
     @>
-

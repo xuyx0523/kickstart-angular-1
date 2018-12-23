@@ -16,7 +16,7 @@ static void demo1() {
     render("{\"data\": [{\"value\": \"%.1f\"}]}", result);
 }
 
-ESP_EXPORT int esp_controller_kickstart_demo(HttpRoute *route, MprModule *module) 
+ESP_EXPORT int esp_controller_kickstart_demo(HttpRoute *route) 
 {
     espDefineAction(route, "demo/demo1", demo1);
     return 0;

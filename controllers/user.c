@@ -7,14 +7,14 @@ static void checkAuthenticated() {
     sendResult(httpIsAuthenticated(getConn()));
 }
 
-static void createUser() { 
+static void createUser() {
     if (canUser("edit", 1)) {
         setParam("password", mprMakePassword(param("password"), 0, 0));
         sendResult(createRecFromParams("user"));
     }
 }
 
-static void getUser() { 
+static void getUser() {
     EdiRec      *rec;
     if ((rec = readRec("user", param("id"))) != 0) {
         /* Don't send the real password back to the user */
@@ -44,13 +44,13 @@ static void listUsers() {
     sendGrid(users);
 }
 
-static void removeUser() { 
+static void removeUser() {
     if (canUser("edit", 1)) {
         sendResult(removeRec("user", param("id")));
     }
 }
 
-static void updateUser() { 
+static void updateUser() {
     EdiRec  *rec;
     cchar   *password;
     if (canUser("edit", 1)) {
@@ -101,16 +101,16 @@ static void loginUser() {
             mprSerialize(conn->user->abilities, MPR_JSON_QUOTES), remember ? "true" : "false");
     } else {
         sendResult(feedback("error", "Invalid Login"));
-    }       
+    }
 }
 
-static void logoutUser() {                                                                             
+static void logoutUser() {
     httpLogout(getConn());
     espClearCurrentSession(getConn());
     sendResult(1);
 }
 
-ESP_EXPORT int esp_controller_kickstart_user(HttpRoute *route, MprModule *module) 
+ESP_EXPORT int esp_controller_kickstart_user(HttpRoute *route) 
 {
     Edi     *edi;
 

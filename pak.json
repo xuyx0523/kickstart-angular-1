@@ -41,7 +41,7 @@
     },
     "devDependencies": {
         "expansive": ">=0.7.0",
-        "esp": "~7.x"
+        "esp": "~8.x-"
     },
     "profile": "prod",
     "import": true,

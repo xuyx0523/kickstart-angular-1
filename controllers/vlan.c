@@ -99,7 +99,7 @@ static void removePort() {
     sendResult(feedback("error", "Cannot find: mapping"));
 }
 
-ESP_EXPORT int esp_controller_kickstart_vlan(HttpRoute *route, MprModule *module)
+ESP_EXPORT int esp_controller_kickstart_vlan(HttpRoute *route)
 {
     Edi     *edi;
 

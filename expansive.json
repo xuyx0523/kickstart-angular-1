@@ -59,6 +59,11 @@
                 "js": true,
                 "package": false
             },
+            "css": {
+                "minify": false,
+                "usemap": false,
+                "usemin": false,
+            },
             "esp": {
                 "compile": "esp compile"
             },

@@ -77,7 +77,7 @@ static bool verifyUser(HttpConn *conn, cchar *username, cchar *password)
 }
 
 
-ESP_EXPORT int esp_app_kickstart(HttpRoute *route, MprModule *module)
+ESP_EXPORT int esp_app_kickstart(HttpRoute *route)
 {
     Edi     *edi;
 

@@ -27,10 +27,9 @@ static void listTables() {
     renderString(mprGetBufStart(buf));
 }
 
-ESP_EXPORT int esp_controller_kickstart_table(HttpRoute *route, MprModule *module)
+ESP_EXPORT int esp_controller_kickstart_table(HttpRoute *route)
 {
     espDefineAction(route, "table/get", getTable);
     espDefineAction(route, "table/list", listTables);
     return 0;
 }
-

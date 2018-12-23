@@ -10,7 +10,7 @@ static void createMapping() {
         sendResult(feedback("error", "Cannot find: %s", param("vlan")));
         return;
     }
-    setParam("vlanId", getField(vlan, "id")); 
+    setParam("vlanId", getField(vlan, "id"));
     sendResult(createRecFromParams("mapping"));
 }
 
@@ -30,7 +30,7 @@ static void updateMapping() {
     sendResult(updateRecFromParams("mapping"));
 }
 
-ESP_EXPORT int esp_controller_kickstart_mapping(HttpRoute *route, MprModule *module)
+ESP_EXPORT int esp_controller_kickstart_mapping(HttpRoute *route)
 {
     espDefineAction(route, "mapping/create", createMapping);
     espDefineAction(route, "mapping/get", getMapping);

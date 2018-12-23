@@ -54,7 +54,7 @@ static void demoData() {
 }
 #endif
 
-static cchar *getDashData(HttpConn *conn) { 
+static cchar *getDashData(HttpConn *conn) {
     EdiGrid     *events, *ports, *vlans;
     MprBuf      *buf;
     int         nevents;
@@ -103,7 +103,7 @@ static void updateStream(HttpConn *conn) {
     }
 }
 
-static void getStream() {
+static void getSocketStream() {
     HttpConn    *conn;
     MprEvent    *timer;
     MprTicks    period;
@@ -116,9 +116,9 @@ static void getStream() {
     httpSetWebSocketData(conn, timer);
 }
 
-ESP_EXPORT int esp_controller_kickstart_dash(HttpRoute *route, MprModule *module) 
+ESP_EXPORT int esp_controller_kickstart_dash(HttpRoute *route)
 {
     espDefineAction(route, "dash/get", getDash);
-    espDefineAction(route, "dash/stream", getStream);
+    espDefineAction(route, "dash/stream", getSocketStream);
     return 0;
 }

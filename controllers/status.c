@@ -17,11 +17,11 @@ static void getStatus() {
         grid->nrecords = min(grid->nrecords, 5);
     }
     httpAddHeaderString(conn, "Content-Type", "application/json");
-    espRender(conn, "{\n  \"eventCount\": %d, \"data\": %s, \"schema\": %s}\n", 
-        count, ediGridAsJson(grid, 0), ediGetGridSchemaAsJson(grid)); 
+    espRender(conn, "{\n  \"eventCount\": %d, \"data\": %s, \"schema\": %s}\n",
+        count, ediGridAsJson(grid, 0), ediGetGridSchemaAsJson(grid));
 }
 
-ESP_EXPORT int esp_controller_kickstart_status(HttpRoute *route, MprModule *module)
+ESP_EXPORT int esp_controller_kickstart_status(HttpRoute *route)
 {
     espDefineAction(route, "status/get", getStatus);
     return 0;
