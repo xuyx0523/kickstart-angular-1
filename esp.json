@@ -28,10 +28,10 @@
                 "http://127.0.0.1:4000",
                 "https://127.0.0.1:4443"
             ],
-            "ssl": {
-                "certificate": "crt/self.crt",
-                "key": "crt/self.key"
-            }
+        },
+        "ssl": {
+            "certificate": "crt/self.crt",
+            "key": "crt/self.key"
         },
         "auth": {
             "auto": {
@@ -65,7 +65,7 @@
         },
         "headers": {
             "set": {
-                "Content-Security-Policy": "default-src 'self' ws: wss: data:; style-src 'self' 'unsafe-inline'",
+                // "Content-Security-Policy": "default-src 'self' ws: wss: data:; style-src 'self' 'unsafe-inline'",
                 "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
             }
         },
@@ -121,7 +121,7 @@
                         "url": ""
                     }
                 },
-                "redirect": false,
+                "redirect": false
             }
         }
     }
