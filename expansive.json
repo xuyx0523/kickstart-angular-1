@@ -100,7 +100,7 @@
                 "usemin": true
             },
             "esp": {
-                "compile": "appweb-esp compile",
+                "compile": "esp compile",
                 "combine": true
             },
             "gzip": true,
