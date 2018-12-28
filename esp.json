@@ -23,16 +23,6 @@
         }
     },
     "http": {
-        "server": {
-            "listen": [
-                "http://127.0.0.1:4000",
-                "https://127.0.0.1:4443"
-            ],
-        },
-        "ssl": {
-            "certificate": "crt/self.crt",
-            "key": "crt/self.key"
-        },
         "auth": {
             "auto": {
                 "url": "/user/login"
@@ -103,7 +93,17 @@
                         ]
                     }
                 },
-                "compress": false
+                "compress": false,
+                "server": {
+                    "listen": [
+                        "http://127.0.0.1:4000",
+                        "https://127.0.0.1:4443"
+                    ],
+                },
+                "ssl": {
+                    "certificate": "crt/self.crt",
+                    "key": "crt/self.key"
+                },
             }
         },
         "prod": {
