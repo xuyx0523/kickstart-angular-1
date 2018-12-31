@@ -106,8 +106,8 @@
             "gzip": true,
             "js": {
                 "minify": false,
-                "usemin": false,
-                "usemap": false
+                "usemap": false,
+                "usemin": false
             }
         }
     }

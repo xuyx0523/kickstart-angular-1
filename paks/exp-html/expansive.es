@@ -23,6 +23,7 @@ Expansive.load({
                         contents = run(transform.htmlmin + ' ' + transform.service.options, contents)
                         contents += '\n'
                     } catch (e) {
+                    print("HERE", meta.dist)
                         if (expansive.options.debug) {
                             print('Cannot minify', meta.source, '\n', e)
                             print('Contents', contents)
