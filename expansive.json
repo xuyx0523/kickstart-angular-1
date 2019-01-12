@@ -62,7 +62,7 @@
             "css": {
                 "minify": false,
                 "usemap": false,
-                "usemin": false,
+                "usemin": false
             },
             "esp": {
                 "compile": "esp compile"

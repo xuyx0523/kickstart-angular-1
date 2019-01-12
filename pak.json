@@ -1,7 +1,7 @@
 {
-    "name": "kickstart",
+    "name": "kickstart-angular-1",
     "title": "Kickstart",
-    "description": "Kickstart Appweb / ESP Demonstration Application",
+    "description": "Kickstart ESP Demo for Angular 1",
     "version": "0.8.2",
     "keywords": [
         "appweb",
@@ -9,7 +9,7 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git://github.com/embedthis/kickstart.git"
+        "url": "git://github.com/embedthis/kickstart-angular-1.git"
     },
     "skeletons": {
         "esp-angular-skeleton": "~5.5",

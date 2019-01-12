@@ -55,7 +55,6 @@
         },
         "headers": {
             "set": {
-                // "Content-Security-Policy": "default-src 'self' ws: wss: data:; style-src 'self' 'unsafe-inline'",
                 "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
             }
         },
@@ -96,13 +95,13 @@
                 "compress": false,
                 "server": {
                     "listen": [
-                        "http://:80",
-                    ],
+                        "http://:80"
+                    ]
                 },
                 "ssl": {
                     "certificate": "crt/self.crt",
                     "key": "crt/self.key"
-                },
+                }
             }
         },
         "prod": {
@@ -123,10 +122,11 @@
                 "redirect": false,
                 "server": {
                     "listen": [
-                        "http://:80",
-                    ],
+                        "http://:80"
+                    ]
                 },
-                "ssl": { },
+                "ssl": {
+                }
             }
         }
     }

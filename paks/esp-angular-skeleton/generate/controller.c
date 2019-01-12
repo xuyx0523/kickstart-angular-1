@@ -6,21 +6,21 @@
 /*
     Create a new resource in the database
  */
-static void create${UCONTROLLER}() { 
+static void create${UCONTROLLER}() {
     sendResult(updateRec(createRec("${TABLE}", params())));
 }
 
 /*
     Get a resource
  */
-static void get${UCONTROLLER}() { 
+static void get${UCONTROLLER}() {
     sendRec(readRec("${TABLE}", param("id")));
 }
 
 /*
     Initialize a new resource for the client to complete
  */
-static void init${UCONTROLLER}() { 
+static void init${UCONTROLLER}() {
     sendRec(createRec("${TABLE}", 0));
 }
 
@@ -41,7 +41,7 @@ static void redirect${UCONTROLLER}() {
 /*
     Remove a resource identified by the "id" parameter
  */
-static void remove${UCONTROLLER}() { 
+static void remove${UCONTROLLER}() {
     sendResult(removeRec("${TABLE}", param("id")));
 }
 
@@ -49,14 +49,14 @@ static void remove${UCONTROLLER}() {
     Update an existing resource in the database
     If "id" is not defined, this is the same as a create
  */
-static void update${UCONTROLLER}() { 
+static void update${UCONTROLLER}() {
     sendResult(updateRec(setFields(readRec("${TABLE}", param("id")), params())));
 }
 
 /*
     Dynamic module initialization
  */
-ESP_EXPORT int esp_controller_${NAME}_${CONTROLLER}(HttpRoute *route, MprModule *module) 
+ESP_EXPORT int esp_controller_${NAME}_${CONTROLLER}(HttpRoute *route)
 {
     espDefineAction(route, "${CONTROLLER}/create", create${UCONTROLLER});
     espDefineAction(route, "${CONTROLLER}/get", get${UCONTROLLER});
@@ -66,7 +66,7 @@ ESP_EXPORT int esp_controller_${NAME}_${CONTROLLER}(HttpRoute *route, MprModule 
     espDefineAction(route, "${CONTROLLER}/update", update${UCONTROLLER});
     espDefineAction(route, "${CONTROLLER}/", list${UCONTROLLER});
     espDefineAction(route, "${CONTROLLER}", redirect${UCONTROLLER});
-${DEFINE_ACTIONS}    
+${DEFINE_ACTIONS}
 #if SAMPLE_VALIDATIONS
     Edi *edi = espGetRouteDatabase(route);
     ediAddValidation(edi, "present", "${CONTROLLER}", "title", 0);

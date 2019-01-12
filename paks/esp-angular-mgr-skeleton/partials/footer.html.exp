@@ -12,3 +12,4 @@
             renderScripts(['!**.js'], 'all.min.js')
         }
     @>
+
