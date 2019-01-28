@@ -1,6 +1,6 @@
 {
-    "name": "kickstart-angular-1",
-    "title": "Kickstart",
+    "name": "kickstart",
+    "title": "Kickstart for Angular",
     "description": "Kickstart ESP Demo for Angular 1",
     "version": "0.8.2",
     "keywords": [
