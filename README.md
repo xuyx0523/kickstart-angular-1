@@ -1,4 +1,4 @@
-Embedthis Kickstart Management Application
+ Embedthis Kickstart Management Application
 ===
 
 Kickstart is a sample application that demonstrates use of [ESP](https://www.embedthis.com/esp) to create a device management application. It uses [Expansive](https://www.expansive.com) to build and render web pages at build time.
